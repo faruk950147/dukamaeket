@@ -1,26 +1,20 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
-from django.http import HttpResponse
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.utils.html import mark_safe
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-from django.contrib.auth.models import PermissionsMixin
-from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.validators import UnicodeUsernameValidator
-from django.contrib.auth.models import User
-from django.utils.html import mark_safe
 
-#account apps 
+# Custom user manager
 from account.managers import UserManager
 
 
-# Create your models here.
+# ---------------- USER ----------------
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
         max_length=150,
-        validators=[UnicodeUsernameValidator, ],
-        unique=True
+        unique=True,
+        validators=[UnicodeUsernameValidator()],
     )
     email = models.EmailField(
         max_length=150,
@@ -30,20 +24,23 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     joined_date = models.DateTimeField(auto_now_add=True)
+
     objects = UserManager()
 
     USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = ["email", ]
+    REQUIRED_FIELDS = ["email"]
 
     class Meta:
         ordering = ['id']
-        verbose_name_plural = '1 User'
-    
-    def __str__(self):
-        return f'{self.username}'
+        verbose_name_plural = 'Users'
 
+    def __str__(self):
+        return self.username
+
+
+# ---------------- PROFILE ----------------
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profiles')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     image = models.FileField(upload_to='profiles', null=True, blank=True)
     country = models.CharField(max_length=150, null=True, blank=True)
     city = models.CharField(max_length=150, null=True, blank=True)
@@ -53,29 +50,27 @@ class Profile(models.Model):
     address = models.TextField(max_length=500, null=True, blank=True)
     joined_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
-    
+
     class Meta:
         ordering = ['id']
-        verbose_name_plural = '2 Profiles'
-        
+        verbose_name_plural = 'Profiles'
+
     @property
-    def image_tag(self):   
+    def image_tag(self):
         if self.image:
-            return mark_safe('<img src="%s" width="50" height="50"/>' % (self.image.url))
-        return mark_safe('<span>No Image</span>')  
-        
+            return mark_safe(f'<img src="{self.image.url}" width="50" height="50"/>')
+        return mark_safe('<span>No Image</span>')
+
     def __str__(self):
-        return f"{self.user.username}'s Profile"   
-         
-    @receiver(post_save, sender=User)
-    def Created_By_Profile(sender, instance, created, **kwargs):
-        try:
-            if created:
-                #create profile
-                profile = Profile.objects.create(user=instance)
-                profile.save()
-            else:
-                return HttpResponse('Profile has mot created')
-        except Exception as e:
-            print(e)
-            
+        return f"{self.user.username}'s Profile"
+
+
+# ---------------- SIGNAL ----------------
+@receiver(post_save, sender=User)
+def create_or_update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        # Create a profile automatically when a new user is created
+        Profile.objects.create(user=instance)
+    else:
+        # Save profile when user is updated
+        instance.profile.save()
