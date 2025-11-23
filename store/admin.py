@@ -42,6 +42,11 @@ class ImageGalleryInline(admin.TabularInline):
     readonly_fields = ('image_tag',)
 
 
+class ProductVariantInline(admin.TabularInline):
+    model = ProductVariant
+    extra = 1
+    readonly_fields = ('image_tag',)
+
 # ===================================================================
 # PRODUCT ADMIN
 # ===================================================================
@@ -60,7 +65,7 @@ class ProductAdmin(admin.ModelAdmin):
 
     prepopulated_fields = {'slug': ('title',)}
 
-    inlines = [ImageGalleryInline]   # gallery inline added
+    inlines = [ImageGalleryInline, ProductVariantInline]   # gallery inline added
 
 
 # ===================================================================
