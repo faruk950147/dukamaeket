@@ -155,7 +155,7 @@ class ImageGallery(models.Model):
 
     class Meta:
         ordering = ['id']
-        verbose_name_plural = '04. Product Images'
+        verbose_name_plural = '04. Images Galleries'
 
     def __str__(self):
         return f"{self.product.title} - {self.image_tag}"
