@@ -1,7 +1,7 @@
 from django.contrib import admin
 from store.models import (
     Category, Brand, Product, ImageGallery,
-    Color, Size, Slider, Review
+    Color, ProductVariant, Size, Slider, Review,
 )
 
 
@@ -103,3 +103,10 @@ class ReviewAdmin(admin.ModelAdmin):
     list_editable = ('status',)
     search_fields = ('product__title', 'user__username')
     list_filter = ('status', 'rate', 'created_date')
+
+@admin.register(ProductVariant)
+class ProductVariantAdmin(admin.ModelAdmin):
+    list_display = ('id', 'product', 'color', 'size', 'price', 'stock', 'status')
+    list_editable = ('status',)
+    search_fields = ('product__title', 'color__title', 'size__title')
+    list_filter = ('status', 'color', 'size')

@@ -321,3 +321,24 @@ class Review(models.Model):
 
     def __str__(self):
         return self.subject if self.subject else f"Review by {self.user.username} on {self.product.title}"
+
+
+# =========================================================
+# 11. PRODUCT VARIANT MODEL
+# =========================================================
+class ProductVariant(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='variants')
+    color = models.ForeignKey(Color, on_delete=models.SET_NULL, blank=True, null=True)
+    size = models.ForeignKey(Size, on_delete=models.SET_NULL, blank=True, null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    stock = models.PositiveIntegerField(default=0)
+
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('product', 'color', 'size')
+        verbose_name_plural = '09. Product Variants'
+
+    def __str__(self):
+        return f"{self.product.title} - {self.size} - {self.color}"
