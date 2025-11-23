@@ -9,12 +9,11 @@ from django.db.models import Avg
 
 User = get_user_model()
 
-
-# ---------------- STATUS CHOICES ----------------
-class StatusChoices(models.TextChoices):
-    ACTIVE = 'ACTIVE', 'Active'
-    INACTIVE = 'INACTIVE', 'Inactive'
-
+# ---------------- STATUS ----------------
+STATUS_CHOICES = (
+    ('active', 'Active'),
+    ('inactive', 'Inactive'),
+)
 
 # ---------------- HELPER FUNCTION ----------------
 def generate_unique_slug(model_class, title):
@@ -26,16 +25,15 @@ def generate_unique_slug(model_class, title):
         counter += 1
     return slug
 
-
 # ---------------- CATEGORY ----------------
 class Category(models.Model):
     parent = models.ForeignKey('self', related_name='children', on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=150, unique=True)
-    slug = models.SlugField(max_length=150, unique=True, null=True, blank=True)
-    keyword = models.CharField(max_length=150, default='N/A', null=True, blank=True)
-    description = models.CharField(max_length=150, default='N/A', null=True, blank=True)
-    image = models.ImageField(upload_to='categories/%Y/%m/%d/')
-    status = models.CharField(max_length=8, choices=StatusChoices.choices, default=StatusChoices.ACTIVE)
+    slug = models.SlugField(max_length=150, unique=True, blank=True, null=True)
+    keyword = models.CharField(max_length=150, default='N/A', blank=True, null=True)
+    description = models.CharField(max_length=150, default='N/A', blank=True, null=True)
+    image = models.ImageField(upload_to='categories/%Y/%m/%d/', blank=True, null=True)
+    status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -48,22 +46,18 @@ class Category(models.Model):
             self.slug = generate_unique_slug(Category, self.title)
         super().save(*args, **kwargs)
 
+    def __str__(self):
+        return f"{self.title} - {self.get_status_display()}"
+
     @property
     def image_tag(self):
         if self.image and hasattr(self.image, 'url'):
             return mark_safe(f'<img src="{self.image.url}" alt="{self.title}" style="max-width:100px; max-height:100px;"/>')
         return mark_safe('<span>No Image Available</span>')
 
-    def __str__(self):
-        title = getattr(self, 'title', 'Unknown Category')
-        status = getattr(self, 'status', 'INACTIVE')
-        return f"{title} - {self.get_status_display() if hasattr(self, 'get_status_display') else status}"
-
-
 # ---------------- CATEGORY TRANSLATION ----------------
 class CategoryTranslation(models.Model):
     LANGUAGE_CHOICES = [('en', 'English'), ('bn', 'Bangla')]
-
     category = models.ForeignKey(Category, related_name='translations', on_delete=models.CASCADE)
     language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES)
     title = models.CharField(max_length=150)
@@ -75,19 +69,16 @@ class CategoryTranslation(models.Model):
         verbose_name_plural = "Category Translations"
 
     def __str__(self):
-        category_title = getattr(self.category, 'title', 'Unknown Category')
-        language = getattr(self, 'language', 'en')
-        return f"{category_title} ({language})"
-
+        return f"{self.category.title} ({self.language})"
 
 # ---------------- BRAND ----------------
 class Brand(models.Model):
     title = models.CharField(max_length=150, unique=True)
-    slug = models.SlugField(max_length=150, unique=True, null=True, blank=True)
-    keyword = models.CharField(max_length=150, default='N/A', null=True, blank=True)
-    description = models.CharField(max_length=150, default='N/A', null=True, blank=True)
-    image = models.ImageField(upload_to='brands/%Y/%m/%d/')
-    status = models.CharField(max_length=8, choices=StatusChoices.choices, default=StatusChoices.ACTIVE)
+    slug = models.SlugField(max_length=150, unique=True, blank=True, null=True)
+    keyword = models.CharField(max_length=150, default='N/A', blank=True, null=True)
+    description = models.CharField(max_length=150, default='N/A', blank=True, null=True)
+    image = models.ImageField(upload_to='brands/%Y/%m/%d/', blank=True, null=True)
+    status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -100,22 +91,18 @@ class Brand(models.Model):
             self.slug = generate_unique_slug(Brand, self.title)
         super().save(*args, **kwargs)
 
+    def __str__(self):
+        return f"{self.title} - {self.get_status_display()}"
+
     @property
     def image_tag(self):
         if self.image and hasattr(self.image, 'url'):
             return mark_safe(f'<img src="{self.image.url}" alt="{self.title}" style="max-width:50px; max-height:50px;"/>')
         return mark_safe('<span>No Image Available</span>')
 
-    def __str__(self):
-        title = getattr(self, 'title', 'Unknown Brand')
-        status = getattr(self, 'status', 'INACTIVE')
-        return f"{title} - {self.get_status_display() if hasattr(self, 'get_status_display') else status}"
-
-
 # ---------------- BRAND TRANSLATION ----------------
 class BrandTranslation(models.Model):
     LANGUAGE_CHOICES = [('en', 'English'), ('bn', 'Bangla')]
-
     brand = models.ForeignKey(Brand, related_name='translations', on_delete=models.CASCADE)
     language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES)
     title = models.CharField(max_length=150)
@@ -127,27 +114,24 @@ class BrandTranslation(models.Model):
         verbose_name_plural = "Brand Translations"
 
     def __str__(self):
-        brand_title = getattr(self.brand, 'title', 'Unknown Brand')
-        language = getattr(self, 'language', 'en')
-        return f"{brand_title} ({language})"
-
+        return f"{self.brand.title} ({self.language})"
 
 # ---------------- PRODUCT ----------------
 class Product(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
+    brand = models.ForeignKey(Brand, related_name='products', on_delete=models.CASCADE)
     title = models.CharField(max_length=150, unique=True)
-    slug = models.SlugField(max_length=150, unique=True, null=True, blank=True)
+    slug = models.SlugField(max_length=150, unique=True, blank=True, null=True)
     old_price = models.DecimalField(decimal_places=2, max_digits=10, default=1000.00)
     sale_price = models.DecimalField(decimal_places=2, max_digits=10, default=500.00)
     available_stock = models.PositiveIntegerField(validators=[MaxValueValidator(1000)], default=0)
     discount_percent = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], default=0)
-    keyword = models.TextField(default='N/A', null=True, blank=True)
-    description = models.TextField(default='N/A', null=True, blank=True)
-    image = models.ImageField(upload_to='products/%Y/%m/%d/')
-    offers_deadline = models.DateTimeField(blank=True, null=True)
-    is_timeline = models.CharField(max_length=8, choices=StatusChoices.choices, default=StatusChoices.ACTIVE)
-    status = models.CharField(max_length=8, choices=StatusChoices.choices, default=StatusChoices.ACTIVE)
+    keyword = models.TextField(default='N/A', blank=True, null=True)
+    description = models.TextField(default='N/A', blank=True, null=True)
+    image = models.ImageField(upload_to='products/%Y/%m/%d/', blank=True, null=True)
+    deadline = models.DateTimeField(blank=True, null=True)
+    is_timeline = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
+    status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -167,8 +151,11 @@ class Product(models.Model):
             calculated_price = self.old_price - (self.old_price * self.discount_percent / 100)
             if round(calculated_price, 2) != round(self.sale_price, 2):
                 raise ValidationError("Sale price does not match discount percent.")
-        if self.offers_deadline and self.offers_deadline < timezone.now():
-            raise ValidationError("Offer deadline cannot be in the past.")
+        if self.deadline and self.deadline < timezone.now():
+            raise ValidationError("Deadline cannot be in the past.")
+
+    def __str__(self):
+        return f"{self.title} - {self.get_status_display()}"
 
     @property
     def image_tag(self):
@@ -177,31 +164,23 @@ class Product(models.Model):
         return mark_safe('<span>No Image Available</span>')
 
     @property
-    def offers_remaining(self):
-        if self.offers_deadline and self.is_timeline == StatusChoices.ACTIVE:
-            remaining = self.offers_deadline - timezone.now()
+    def remaining(self):
+        if self.deadline and self.is_timeline == 'active':
+            remaining = self.deadline - timezone.now()
             return max(0, int(remaining.total_seconds()))
         return 0
 
-    @property    
+    @property
     def average_review(self):
-        reviews = Review.objects.filter(product=self, status=StatusChoices.ACTIVE).aggregate(average=Avg('rate'))
-        return float(reviews["average"] or 0)
-    
+        return float(self.reviews.filter(status='active').aggregate(Avg('rate'))['rate__avg'] or 0)
+
     @property
     def count_review(self):
-        return Review.objects.filter(product=self, status=StatusChoices.ACTIVE).count()
-
-    def __str__(self):
-        title = getattr(self, 'title', 'Unknown Product')
-        status = getattr(self, 'status', 'INACTIVE')
-        return f"{title} - {self.get_status_display() if hasattr(self, 'get_status_display') else status}"
-
+        return self.reviews.filter(status='active').count()
 
 # ---------------- PRODUCT TRANSLATION ----------------
 class ProductTranslation(models.Model):
     LANGUAGE_CHOICES = [('en', 'English'), ('bn', 'Bangla')]
-
     product = models.ForeignKey(Product, related_name='translations', on_delete=models.CASCADE)
     language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES)
     title = models.CharField(max_length=150)
@@ -213,10 +192,27 @@ class ProductTranslation(models.Model):
         verbose_name_plural = "Product Translations"
 
     def __str__(self):
-        product_title = getattr(self.product, 'title', 'Unknown Product')
-        language = getattr(self, 'language', 'en')
-        return f"{product_title} ({language})"
+        return f"{self.product.title} ({self.language})"
 
+# ---------------- IMAGE GALLERY ----------------
+class ImageGallery(models.Model):
+    product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='products/%Y/%m/%d/', blank=True, null=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['id']
+        verbose_name_plural = '04. Product Images'
+
+    def __str__(self):
+        return f"{self.product.title} - {self.image_tag}"
+
+    @property
+    def image_tag(self):
+        if self.image and hasattr(self.image, 'url'):
+            return mark_safe(f'<img src="{self.image.url}" alt="{self.product.title}" style="max-width:50px; max-height:50px;"/>')
+        return mark_safe('<span>No Image Available</span>')
 
 # ---------------- COLOR ----------------
 class Color(models.Model):
@@ -228,18 +224,15 @@ class Color(models.Model):
     class Meta:
         ordering = ['id']
         verbose_name_plural = '05. Product Colors'
-    
+
+    def __str__(self):
+        return f"{self.title} ({self.code})"
+
     @property
     def color_tag(self):
         if self.code:
             return mark_safe(f'<div style="width:30px; height:30px; background-color:{self.code}; border:1px solid #000;"></div>')
         return ""
-    
-    def __str__(self):
-        title = getattr(self, 'title', 'Unknown Color')
-        code = getattr(self, 'code', '')
-        return f"{title} ({code})" if code else title
-
 
 # ---------------- COLOR TRANSLATION ----------------
 class ColorTranslation(models.Model):
@@ -253,27 +246,21 @@ class ColorTranslation(models.Model):
         verbose_name_plural = "Color Translations"
 
     def __str__(self):
-        color_title = getattr(self.color, 'title', 'Unknown Color')
-        language = getattr(self, 'language', 'en')
-        return f"{color_title} ({language})"
-
+        return f"{self.color.title} ({self.language})"
 
 # ---------------- SIZE ----------------
 class Size(models.Model):
     title = models.CharField(max_length=20, unique=True)
     code = models.CharField(max_length=10, unique=True)
     created_date = models.DateTimeField(auto_now_add=True)
-    updated_date = models.DateTimeField(auto_now=True)   
+    updated_date = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['id']
         verbose_name_plural = '06. Product Sizes'
 
     def __str__(self):
-        title = getattr(self, 'title', 'Unknown Size')
-        code = getattr(self, 'code', '')
-        return f"{title} ({code})" if code else title
-
+        return f"{self.title} ({self.code})"
 
 # ---------------- SIZE TRANSLATION ----------------
 class SizeTranslation(models.Model):
@@ -287,16 +274,13 @@ class SizeTranslation(models.Model):
         verbose_name_plural = "Size Translations"
 
     def __str__(self):
-        size_title = getattr(self.size, 'title', 'Unknown Size')
-        language = getattr(self, 'language', 'en')
-        return f"{size_title} ({language})"
-
+        return f"{self.size.title} ({self.language})"
 
 # ---------------- SLIDER ----------------
 class Slider(models.Model):
     title = models.CharField(max_length=150, unique=True)
-    image = models.ImageField(upload_to='sliders/%Y/%m/%d/')
-    status = models.CharField(max_length=8, choices=StatusChoices.choices, default=StatusChoices.ACTIVE)
+    image = models.ImageField(upload_to='sliders/%Y/%m/%d/', blank=True, null=True)
+    status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -304,26 +288,37 @@ class Slider(models.Model):
         ordering = ['id']
         verbose_name_plural = '04. Sliders'
 
+    def __str__(self):
+        return f"{self.title} - {self.get_status_display()}"
+
     @property
     def image_tag(self):
         if self.image and hasattr(self.image, 'url'):
             return mark_safe(f'<img src="{self.image.url}" alt="{self.title}" style="max-width:100px; max-height:50px;"/>')
         return mark_safe('<span>No Image Available</span>')
 
-    def __str__(self):
-        title = getattr(self, 'title', 'Unknown Slider')
-        status = getattr(self, 'status', 'INACTIVE')
-        return f"{title} - {self.get_status_display() if hasattr(self, 'get_status_display') else status}"
+# ---------------- SLIDER TRANSLATION ----------------
+class SliderTranslation(models.Model):
+    LANGUAGE_CHOICES = [('en', 'English'), ('bn', 'Bangla')]
+    slider = models.ForeignKey(Slider, related_name='translations', on_delete=models.CASCADE)
+    language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES)
+    title = models.CharField(max_length=150)
 
+    class Meta:
+        unique_together = ('slider', 'language')
+        verbose_name_plural = "Slider Translations"
+
+    def __str__(self):
+        return f"{self.slider.title} ({self.language})"
 
 # ---------------- REVIEW ----------------
 class Review(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='reviews', on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     subject = models.CharField(max_length=50, null=True, blank=True)
     comment = models.TextField(null=True, blank=True)
     rate = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)])
-    status = models.CharField(max_length=8, choices=StatusChoices.choices, default=StatusChoices.ACTIVE)
+    status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -332,8 +327,19 @@ class Review(models.Model):
         verbose_name_plural = '11. Reviews'
 
     def __str__(self):
-        if self.subject and self.subject.strip():
-            return self.subject
-        user_name = getattr(self.user, 'username', 'Unknown User')
-        product_title = getattr(self.product, 'title', 'Unknown Product')
-        return f"Review by {user_name} on {product_title}"
+        return self.subject if self.subject else f"Review by {self.user.username} on {self.product.title}"
+
+# ---------------- REVIEW TRANSLATION ----------------
+class ReviewTranslation(models.Model):
+    LANGUAGE_CHOICES = [('en', 'English'), ('bn', 'Bangla')]
+    review = models.ForeignKey(Review, related_name='translations', on_delete=models.CASCADE)
+    language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES)
+    subject = models.CharField(max_length=50)
+    comment = models.TextField()
+
+    class Meta:
+        unique_together = ('review', 'language')
+        verbose_name_plural = "Review Translations"
+
+    def __str__(self):
+        return f"{self.review.subject} ({self.language})"
