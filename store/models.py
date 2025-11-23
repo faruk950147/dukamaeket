@@ -55,22 +55,6 @@ class Category(models.Model):
             return mark_safe(f'<img src="{self.image.url}" alt="{self.title}" style="max-width:100px; max-height:100px;"/>')
         return mark_safe('<span>No Image Available</span>')
 
-# ---------------- CATEGORY TRANSLATION ----------------
-class CategoryTranslation(models.Model):
-    LANGUAGE_CHOICES = [('en', 'English'), ('bn', 'Bangla')]
-    category = models.ForeignKey(Category, related_name='translations', on_delete=models.CASCADE)
-    language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES)
-    title = models.CharField(max_length=150)
-    keyword = models.CharField(max_length=150, null=True, blank=True)
-    description = models.CharField(max_length=150, null=True, blank=True)
-
-    class Meta:
-        unique_together = ('category', 'language')
-        verbose_name_plural = "Category Translations"
-
-    def __str__(self):
-        return f"{self.category.title} ({self.language})"
-
 # ---------------- BRAND ----------------
 class Brand(models.Model):
     title = models.CharField(max_length=150, unique=True)
@@ -99,22 +83,6 @@ class Brand(models.Model):
         if self.image and hasattr(self.image, 'url'):
             return mark_safe(f'<img src="{self.image.url}" alt="{self.title}" style="max-width:50px; max-height:50px;"/>')
         return mark_safe('<span>No Image Available</span>')
-
-# ---------------- BRAND TRANSLATION ----------------
-class BrandTranslation(models.Model):
-    LANGUAGE_CHOICES = [('en', 'English'), ('bn', 'Bangla')]
-    brand = models.ForeignKey(Brand, related_name='translations', on_delete=models.CASCADE)
-    language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES)
-    title = models.CharField(max_length=150)
-    keyword = models.CharField(max_length=150, null=True, blank=True)
-    description = models.CharField(max_length=150, null=True, blank=True)
-
-    class Meta:
-        unique_together = ('brand', 'language')
-        verbose_name_plural = "Brand Translations"
-
-    def __str__(self):
-        return f"{self.brand.title} ({self.language})"
 
 # ---------------- PRODUCT ----------------
 class Product(models.Model):
@@ -178,22 +146,6 @@ class Product(models.Model):
     def count_review(self):
         return self.reviews.filter(status='active').count()
 
-# ---------------- PRODUCT TRANSLATION ----------------
-class ProductTranslation(models.Model):
-    LANGUAGE_CHOICES = [('en', 'English'), ('bn', 'Bangla')]
-    product = models.ForeignKey(Product, related_name='translations', on_delete=models.CASCADE)
-    language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES)
-    title = models.CharField(max_length=150)
-    keyword = models.TextField(null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
-
-    class Meta:
-        unique_together = ('product', 'language')
-        verbose_name_plural = "Product Translations"
-
-    def __str__(self):
-        return f"{self.product.title} ({self.language})"
-
 # ---------------- IMAGE GALLERY ----------------
 class ImageGallery(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
@@ -234,20 +186,6 @@ class Color(models.Model):
             return mark_safe(f'<div style="width:30px; height:30px; background-color:{self.code}; border:1px solid #000;"></div>')
         return ""
 
-# ---------------- COLOR TRANSLATION ----------------
-class ColorTranslation(models.Model):
-    LANGUAGE_CHOICES = [('en', 'English'), ('bn', 'Bangla')]
-    color = models.ForeignKey(Color, related_name='translations', on_delete=models.CASCADE)
-    language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES)
-    title = models.CharField(max_length=20)
-
-    class Meta:
-        unique_together = ('color', 'language')
-        verbose_name_plural = "Color Translations"
-
-    def __str__(self):
-        return f"{self.color.title} ({self.language})"
-
 # ---------------- SIZE ----------------
 class Size(models.Model):
     title = models.CharField(max_length=20, unique=True)
@@ -261,20 +199,6 @@ class Size(models.Model):
 
     def __str__(self):
         return f"{self.title} ({self.code})"
-
-# ---------------- SIZE TRANSLATION ----------------
-class SizeTranslation(models.Model):
-    LANGUAGE_CHOICES = [('en', 'English'), ('bn', 'Bangla')]
-    size = models.ForeignKey(Size, related_name='translations', on_delete=models.CASCADE)
-    language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES)
-    title = models.CharField(max_length=20)
-
-    class Meta:
-        unique_together = ('size', 'language')
-        verbose_name_plural = "Size Translations"
-
-    def __str__(self):
-        return f"{self.size.title} ({self.language})"
 
 # ---------------- SLIDER ----------------
 class Slider(models.Model):
@@ -297,20 +221,6 @@ class Slider(models.Model):
             return mark_safe(f'<img src="{self.image.url}" alt="{self.title}" style="max-width:100px; max-height:50px;"/>')
         return mark_safe('<span>No Image Available</span>')
 
-# ---------------- SLIDER TRANSLATION ----------------
-class SliderTranslation(models.Model):
-    LANGUAGE_CHOICES = [('en', 'English'), ('bn', 'Bangla')]
-    slider = models.ForeignKey(Slider, related_name='translations', on_delete=models.CASCADE)
-    language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES)
-    title = models.CharField(max_length=150)
-
-    class Meta:
-        unique_together = ('slider', 'language')
-        verbose_name_plural = "Slider Translations"
-
-    def __str__(self):
-        return f"{self.slider.title} ({self.language})"
-
 # ---------------- REVIEW ----------------
 class Review(models.Model):
     product = models.ForeignKey(Product, related_name='reviews', on_delete=models.CASCADE)
@@ -328,18 +238,3 @@ class Review(models.Model):
 
     def __str__(self):
         return self.subject if self.subject else f"Review by {self.user.username} on {self.product.title}"
-
-# ---------------- REVIEW TRANSLATION ----------------
-class ReviewTranslation(models.Model):
-    LANGUAGE_CHOICES = [('en', 'English'), ('bn', 'Bangla')]
-    review = models.ForeignKey(Review, related_name='translations', on_delete=models.CASCADE)
-    language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES)
-    subject = models.CharField(max_length=50)
-    comment = models.TextField()
-
-    class Meta:
-        unique_together = ('review', 'language')
-        verbose_name_plural = "Review Translations"
-
-    def __str__(self):
-        return f"{self.review.subject} ({self.language})"
