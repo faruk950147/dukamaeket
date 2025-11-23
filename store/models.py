@@ -9,30 +9,47 @@ from django.db.models import Avg
 
 User = get_user_model()
 
-# ---------------- STATUS ----------------
+
+# =========================================================
+# 01. STATUS CHOICES
+# =========================================================
 STATUS_CHOICES = (
     ('active', 'Active'),
     ('inactive', 'Inactive'),
 )
 
-# ---------------- HELPER FUNCTION ----------------
+
+# =========================================================
+# 02. HELPER FUNCTION
+# =========================================================
 def generate_unique_slug(model_class, title):
     base_slug = slugify(title)
     slug = base_slug
     counter = 1
+
     while model_class.objects.filter(slug=slug).exists():
         slug = f"{base_slug}-{counter}"
         counter += 1
+
     return slug
 
-# ---------------- CATEGORY ----------------
+
+# =========================================================
+# 03. CATEGORY MODEL
+# =========================================================
 class Category(models.Model):
-    parent = models.ForeignKey('self', related_name='children', on_delete=models.CASCADE, null=True, blank=True)
+    parent = models.ForeignKey(
+        'self',
+        related_name='children',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
     title = models.CharField(max_length=150, unique=True)
-    slug = models.SlugField(max_length=150, unique=True, blank=True, null=True)
-    keyword = models.CharField(max_length=150, default='N/A', blank=True, null=True)
-    description = models.CharField(max_length=150, default='N/A', blank=True, null=True)
-    image = models.ImageField(upload_to='categories/%Y/%m/%d/', blank=True, null=True)
+    slug = models.SlugField(max_length=150, unique=True)
+    keyword = models.CharField(max_length=150, default='N/A')
+    description = models.CharField(max_length=150, default='N/A')
+    image = models.ImageField(upload_to='categories/%Y/%m/%d/')
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
@@ -52,16 +69,22 @@ class Category(models.Model):
     @property
     def image_tag(self):
         if self.image and hasattr(self.image, 'url'):
-            return mark_safe(f'<img src="{self.image.url}" alt="{self.title}" style="max-width:100px; max-height:100px;"/>')
+            return mark_safe(
+                f'<img src="{self.image.url}" alt="{self.title}" '
+                f'style="max-width:100px; max-height:100px;"/>'
+            )
         return mark_safe('<span>No Image Available</span>')
 
-# ---------------- BRAND ----------------
+
+# =========================================================
+# 04. BRAND MODEL
+# =========================================================
 class Brand(models.Model):
     title = models.CharField(max_length=150, unique=True)
-    slug = models.SlugField(max_length=150, unique=True, blank=True, null=True)
-    keyword = models.CharField(max_length=150, default='N/A', blank=True, null=True)
-    description = models.CharField(max_length=150, default='N/A', blank=True, null=True)
-    image = models.ImageField(upload_to='brands/%Y/%m/%d/', blank=True, null=True)
+    slug = models.SlugField(max_length=150, unique=True)
+    keyword = models.CharField(max_length=150, default='N/A')
+    description = models.CharField(max_length=150, default='N/A')
+    image = models.ImageField(upload_to='brands/%Y/%m/%d/')
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
@@ -81,25 +104,43 @@ class Brand(models.Model):
     @property
     def image_tag(self):
         if self.image and hasattr(self.image, 'url'):
-            return mark_safe(f'<img src="{self.image.url}" alt="{self.title}" style="max-width:50px; max-height:50px;"/>')
+            return mark_safe(
+                f'<img src="{self.image.url}" alt="{self.title}" '
+                f'style="max-width:50px; max-height:50px;"/>'
+            )
         return mark_safe('<span>No Image Available</span>')
 
-# ---------------- PRODUCT ----------------
+
+# =========================================================
+# 05. PRODUCT MODEL
+# =========================================================
 class Product(models.Model):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand, related_name='products', on_delete=models.CASCADE)
     title = models.CharField(max_length=150, unique=True)
-    slug = models.SlugField(max_length=150, unique=True, blank=True, null=True)
-    old_price = models.DecimalField(decimal_places=2, max_digits=10, default=1000.00)
-    sale_price = models.DecimalField(decimal_places=2, max_digits=10, default=500.00)
-    available_stock = models.PositiveIntegerField(validators=[MaxValueValidator(1000)], default=0)
-    discount_percent = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], default=0)
-    keyword = models.TextField(default='N/A', blank=True, null=True)
-    description = models.TextField(default='N/A', blank=True, null=True)
-    image = models.ImageField(upload_to='products/%Y/%m/%d/', blank=True, null=True)
+    slug = models.SlugField(max_length=150, unique=True)
+
+    old_price = models.DecimalField(max_digits=10, decimal_places=2, default=1000.00)
+    sale_price = models.DecimalField(max_digits=10, decimal_places=2, default=500.00)
+
+    available_stock = models.PositiveIntegerField(
+        validators=[MaxValueValidator(1000)],
+        default=0
+    )
+    discount_percent = models.PositiveIntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+        default=0
+    )
+
+    keyword = models.TextField(default='N/A')
+    description = models.TextField(default='N/A')
+
+    image = models.ImageField(upload_to='products/%Y/%m/%d/')
     deadline = models.DateTimeField(blank=True, null=True)
+
     is_timeline = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
+
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -115,10 +156,13 @@ class Product(models.Model):
     def clean(self):
         if self.sale_price > self.old_price:
             raise ValidationError("Sale price cannot be greater than old price.")
+
         if self.discount_percent > 0:
             calculated_price = self.old_price - (self.old_price * self.discount_percent / 100)
+
             if round(calculated_price, 2) != round(self.sale_price, 2):
                 raise ValidationError("Sale price does not match discount percent.")
+
         if self.deadline and self.deadline < timezone.now():
             raise ValidationError("Deadline cannot be in the past.")
 
@@ -128,7 +172,10 @@ class Product(models.Model):
     @property
     def image_tag(self):
         if self.image and hasattr(self.image, 'url'):
-            return mark_safe(f'<img src="{self.image.url}" alt="{self.title}" style="max-width:50px; max-height:50px;"/>')
+            return mark_safe(
+                f'<img src="{self.image.url}" alt="{self.title}" '
+                f'style="max-width:50px; max-height:50px;"/>'
+            )
         return mark_safe('<span>No Image Available</span>')
 
     @property
@@ -140,16 +187,21 @@ class Product(models.Model):
 
     @property
     def average_review(self):
-        return float(self.reviews.filter(status='active').aggregate(Avg('rate'))['rate__avg'] or 0)
+        return float(
+            self.reviews.filter(status='active').aggregate(Avg('rate'))['rate__avg'] or 0
+        )
 
     @property
     def count_review(self):
         return self.reviews.filter(status='active').count()
-
-# ---------------- IMAGE GALLERY ----------------
+   
+   
+# =========================================================
+# 06. IMAGE GALLERY MODEL
+# =========================================================
 class ImageGallery(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='products/%Y/%m/%d/', blank=True, null=True)
+    image = models.ImageField(upload_to='products/%Y/%m/%d/')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -163,13 +215,20 @@ class ImageGallery(models.Model):
     @property
     def image_tag(self):
         if self.image and hasattr(self.image, 'url'):
-            return mark_safe(f'<img src="{self.image.url}" alt="{self.product.title}" style="max-width:50px; max-height:50px;"/>')
+            return mark_safe(
+                f'<img src="{self.image.url}" alt="{self.product.title}" '
+                f'style="max-width:50px; max-height:50px;"/>'
+            )
         return mark_safe('<span>No Image Available</span>')
 
-# ---------------- COLOR ----------------
+
+# =========================================================
+# 07. COLOR MODEL
+# =========================================================
 class Color(models.Model):
     title = models.CharField(max_length=20, unique=True)
     code = models.CharField(max_length=20, unique=True)
+
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -183,13 +242,20 @@ class Color(models.Model):
     @property
     def color_tag(self):
         if self.code:
-            return mark_safe(f'<div style="width:30px; height:30px; background-color:{self.code}; border:1px solid #000;"></div>')
+            return mark_safe(
+                f'<div style="width:30px; height:30px; background-color:{self.code}; '
+                f'border:1px solid #000;"></div>'
+            )
         return ""
 
-# ---------------- SIZE ----------------
+
+# =========================================================
+# 08. SIZE MODEL
+# =========================================================
 class Size(models.Model):
     title = models.CharField(max_length=20, unique=True)
     code = models.CharField(max_length=10, unique=True)
+
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -200,11 +266,15 @@ class Size(models.Model):
     def __str__(self):
         return f"{self.title} ({self.code})"
 
-# ---------------- SLIDER ----------------
+
+# =========================================================
+# 09. SLIDER MODEL
+# =========================================================
 class Slider(models.Model):
     title = models.CharField(max_length=150, unique=True)
-    image = models.ImageField(upload_to='sliders/%Y/%m/%d/', blank=True, null=True)
+    image = models.ImageField(upload_to='sliders/%Y/%m/%d/')
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
+
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -218,17 +288,30 @@ class Slider(models.Model):
     @property
     def image_tag(self):
         if self.image and hasattr(self.image, 'url'):
-            return mark_safe(f'<img src="{self.image.url}" alt="{self.title}" style="max-width:100px; max-height:50px;"/>')
+            return mark_safe(
+                f'<img src="{self.image.url}" alt="{self.title}" '
+                f'style="max-width:100px; max-height:50px;"/>'
+            )
         return mark_safe('<span>No Image Available</span>')
 
-# ---------------- REVIEW ----------------
+
+# =========================================================
+# 10. REVIEW MODEL
+# =========================================================
 class Review(models.Model):
     product = models.ForeignKey(Product, related_name='reviews', on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
     subject = models.CharField(max_length=50, null=True, blank=True)
     comment = models.TextField(null=True, blank=True)
-    rate = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)])
+
+    rate = models.IntegerField(
+        default=1,
+        validators=[MinValueValidator(1), MaxValueValidator(5)]
+    )
+
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
+
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 

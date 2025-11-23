@@ -1,81 +1,105 @@
 from django.contrib import admin
 from store.models import (
-    Category,
-    Brand,
-    Product,
-    Color,
-    Size,
-    Slider,
-    Review,
-    ImageGallery
+    Category, Brand, Product, ImageGallery,
+    Color, Size, Slider, Review
 )
 
-# ---------------- CATEGORY ----------------
+
+# ===================================================================
+# CATEGORY ADMIN
+# ===================================================================
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'status', 'created_date', 'image_tag')
-    list_filter = ('status', 'created_date')
-    search_fields = ('title', 'keyword', 'description')
+    list_display = ('id', 'title', 'parent', 'status', 'image_tag')
+    list_editable = ('status',)
+    search_fields = ('title',)
+    list_filter = ('status', 'parent')
     readonly_fields = ('image_tag',)
 
-# ---------------- BRAND ----------------
+    prepopulated_fields = {'slug': ('title',)}  # slug auto fill
+
+
+# ===================================================================
+# BRAND ADMIN
+# ===================================================================
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'status', 'created_date', 'image_tag')
-    list_filter = ('status', 'created_date')
-    search_fields = ('title', 'keyword', 'description')
+    list_display = ('id', 'title', 'status', 'image_tag')
+    list_editable = ('status',)
+    search_fields = ('title',)
+    list_filter = ('status',)
     readonly_fields = ('image_tag',)
 
-# ---------------- PRODUCT ----------------
+    prepopulated_fields = {'slug': ('title',)}
+
+
+# ===================================================================
+# IMAGE GALLERY INLINE 
+# ===================================================================
+class ImageGalleryInline(admin.TabularInline):
+    model = ImageGallery
+    extra = 1
+    readonly_fields = ('image_tag',)
+
+
+# ===================================================================
+# PRODUCT ADMIN
+# ===================================================================
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'category', 'brand', 'sale_price', 'available_stock', 'status', 'image_tag')
-    list_filter = ('status', 'category', 'brand', 'created_date')
-    search_fields = ('title', 'keyword', 'description')
-    readonly_fields = ('image_tag', 'average_review', 'count_review', 'remaining')
-    fieldsets = (
-        (None, {
-            'fields': ('title', 'category', 'brand', 'old_price', 'sale_price', 'discount_percent', 'available_stock', 'keyword', 'description', 'image', 'deadline', 'is_timeline', 'status')
-        }),
-        ('Statistics', {
-            'fields': ('average_review', 'count_review', 'remaining')
-        }),
+    list_display = (
+        'id', 'title', 'category', 'brand',
+        'old_price', 'sale_price',
+        'discount_percent', 'available_stock',
+        'status', 'image_tag'
     )
+    list_editable = ('status',)
+    search_fields = ('title', 'keyword')
+    list_filter = ('category', 'brand', 'status')
+    readonly_fields = ('image_tag', 'average_review', 'count_review')
 
-# ---------------- IMAGE GALLERY ----------------
-@admin.register(ImageGallery)
-class ImageGalleryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'product', 'image_tag', 'created_date')
-    readonly_fields = ('image_tag',)
-    search_fields = ('product__title',)
-    list_filter = ('product', 'created_date')
+    prepopulated_fields = {'slug': ('title',)}
 
-# ---------------- COLOR ----------------
+    inlines = [ImageGalleryInline]   # gallery inline added
+
+
+# ===================================================================
+# COLOR ADMIN
+# ===================================================================
 @admin.register(Color)
 class ColorAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'code', 'color_tag', 'created_date')
+    list_display = ('id', 'title', 'code', 'color_tag')
     readonly_fields = ('color_tag',)
     search_fields = ('title', 'code')
-    list_filter = ('created_date',)
 
-# ---------------- SIZE ----------------
+
+# ===================================================================
+# SIZE ADMIN
+# ===================================================================
 @admin.register(Size)
 class SizeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'code', 'created_date')
+    list_display = ('id', 'title', 'code')
     search_fields = ('title', 'code')
-    list_filter = ('created_date',)
 
-# ---------------- SLIDER ----------------
+
+# ===================================================================
+# SLIDER ADMIN
+# ===================================================================
 @admin.register(Slider)
 class SliderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'status', 'image_tag', 'created_date')
-    list_filter = ('status', 'created_date')
+    list_display = ('id', 'title', 'status', 'image_tag')
+    list_editable = ('status',)
     readonly_fields = ('image_tag',)
     search_fields = ('title',)
+    list_filter = ('status',)
 
-# ---------------- REVIEW ----------------
+
+# ===================================================================
+# REVIEW ADMIN
+# ===================================================================
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('id', 'product', 'user', 'subject', 'rate', 'status', 'created_date')
+    list_display = ('id', 'product', 'user', 'rate', 'status', 'created_date')
+    list_editable = ('status',)
+    search_fields = ('product__title', 'user__username')
     list_filter = ('status', 'rate', 'created_date')
-    search_fields = ('product__title', 'user__username', 'subject', 'comment')
