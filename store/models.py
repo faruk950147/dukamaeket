@@ -210,7 +210,7 @@ class Slider(models.Model):
 
     class Meta:
         ordering = ['id']
-        verbose_name_plural = '04. Sliders'
+        verbose_name_plural = '07. Sliders'
 
     def __str__(self):
         return f"{self.title} - {self.get_status_display()}"
@@ -234,7 +234,7 @@ class Review(models.Model):
 
     class Meta:
         ordering = ['id']
-        verbose_name_plural = '11. Reviews'
+        verbose_name_plural = '08. Reviews'
 
     def __str__(self):
         return self.subject if self.subject else f"Review by {self.user.username} on {self.product.title}"
