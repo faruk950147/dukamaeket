@@ -73,7 +73,7 @@ class SizeAdmin(admin.ModelAdmin):
 # =========================================================
 @admin.register(ProductVariant)
 class ProductVariantAdmin(admin.ModelAdmin):
-    list_display = ('product', 'size', 'color', 'price', 'stock', 'status', 'image_tag')
+    list_display = ('product', 'size', 'color', 'variant_price', 'available_stock', 'status', 'image_tag')
     list_filter = ('status',)
     readonly_fields = ('image_tag',)
 
