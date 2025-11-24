@@ -228,7 +228,7 @@ class ImageGallery(models.Model):
 class Color(models.Model):
     title = models.CharField(max_length=20, unique=True)
     code = models.CharField(max_length=20, unique=True)
-
+    image = models.ImageField(upload_to='colors/%Y/%m/%d/')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -247,6 +247,15 @@ class Color(models.Model):
                 f'border:1px solid #000;"></div>'
             )
         return ""
+    
+    @property
+    def image_tag(self):
+        if self.image and hasattr(self.image, 'url'):
+            return mark_safe(
+                f'<img src="{self.image.url}" alt="{self.title}" '
+                f'style="max-width:50px; max-height:50px;"/>'
+            )
+        return mark_safe('<span>No Image Available</span>')
 
 
 # =========================================================
@@ -341,7 +350,7 @@ class ProductVariant(models.Model):
         verbose_name_plural = '09. Product Variants'
 
     def __str__(self):
-        return f"{self.product.title} - {self.size} - {self.color}"
+        return f"{self.product.title} - {self.size or 'No Size'} - {self.color or 'No Color'}"
 
     @property
     def image_tag(self):

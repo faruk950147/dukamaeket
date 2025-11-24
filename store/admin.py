@@ -73,8 +73,8 @@ class ProductAdmin(admin.ModelAdmin):
 # ===================================================================
 @admin.register(Color)
 class ColorAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'code', 'color_tag')
-    readonly_fields = ('color_tag',)
+    list_display = ('id', 'title', 'code', 'color_tag', 'image_tag')
+    readonly_fields = ('color_tag', 'image_tag')
     search_fields = ('title', 'code')
 
 
