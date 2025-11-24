@@ -1,0 +1,4 @@
+Main product image (Product page)	1000 × 1000 px বা 1200 × 1200 px
+Thumbnail / Category page	300 × 300 px বা 400 × 400 px
+Zoom-enabled product image	1500 × 1500 px বা 2000 × 2000 px
+Banner-like hero product	1600 × 900 px বা 1920 × 1080 px
