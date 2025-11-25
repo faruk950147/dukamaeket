@@ -111,3 +111,4 @@ class AdvancementAdmin(admin.ModelAdmin):
 class AcceptancePaymentAdmin(admin.ModelAdmin):
     list_display = ('title', 'amount', 'status', 'image_tag', 'created_date', 'updated_date')
     list_filter = ('status',)
+    readonly_fields = ('image_tag',)
