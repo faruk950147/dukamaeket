@@ -9,7 +9,7 @@ from .models import (
 # =========================================================
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'status', 'created_date', 'updated_date', 'image_tag')
+    list_display = ('title', 'parent', 'status', 'created_date', 'updated_date', 'image_tag')
     list_filter = ('status',)
     search_fields = ('title', 'keyword', 'description')
     prepopulated_fields = {'slug': ('title',)}

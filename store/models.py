@@ -63,7 +63,7 @@ class Category(models.Model):
     @property
     def image_tag(self):
         if self.image and hasattr(self.image, 'url'):
-            return mark_safe(f'<img src="{self.image.url}" alt="{self.title}" style="max-width:100px; max-height:100px;"/>')
+            return mark_safe(f'<img src="{self.image.url}" alt="{self.title}" style="max-width:50px; max-height:50px;"/>')
         return mark_safe('<span>No Image</span>')
 
 # =========================================================
@@ -275,7 +275,7 @@ class Slider(models.Model):
     @property
     def image_tag(self):
         if self.image and hasattr(self.image, 'url'):
-            return mark_safe(f'<img src="{self.image.url}" alt="{self.title}" style="max-width:100px; max-height:50px;"/>')
+            return mark_safe(f'<img src="{self.image.url}" alt="{self.title}" style="max-width:50px; max-height:50px;"/>')
         return mark_safe('<span>No Image</span>')
 
 # =========================================================
@@ -321,7 +321,7 @@ class Advancement(models.Model):
     @property
     def image_tag(self):
         if self.image and hasattr(self.image, 'url'):
-            return mark_safe(f'<img src="{self.image.url}" width="80" style="border-radius:8px;" />')
+            return mark_safe(f'<img src="{self.image.url}" width="50" style="border-radius:8px;" />')
         return "No Image"
 
 # =========================================================
