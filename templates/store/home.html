@@ -16,16 +16,16 @@
 <section class="features__area pt-20">
     <div class="container">
         <div class="row row-cols-xxl-4 row-cols-xl-4 row-cols-lg-4 row-cols-md-2 row-cols-sm-2 row-cols-1 gx-0">
-            {% if  %}
-            {% for  in  %}
+            {% if acceptance_payments %}
+            {% for acceptance_payment in acceptance_payments %}
             <div class="col">
                 <div class="features__item d-flex white-bg">
                     <div class="features__icon mr-20">
-                        <i class="fal fa-truck"></i>
+                        <img src="{{ acceptance_payment.image.url }}" alt="{{ acceptance_payment.title|title }}">
                     </div>
                     <div class="features__content">
-                        <h6>FREE DELIVERY</h6>
-                        <p>For all orders over $120</p>
+                        <h6>{{ acceptance_payment.title|title }}</h6>
+                        <p> {{acceptance_payment.amount}} % {{ acceptance_payment.subtitle|title }}</p>
                     </div>
                 </div>
             </div>
