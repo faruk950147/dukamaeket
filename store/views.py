@@ -22,7 +22,7 @@ class HomeView(generic.View):
     def get(self, request):
         # Sliders
         sliders = Slider.objects.filter(status='active')
-        # banner
+        # Features Sliders
         features_sliders = Advancement.objects.filter(status='active', advancement_type='feature')
         # Top Deals
         top_deals = Product.objects.filter(
