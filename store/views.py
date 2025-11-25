@@ -20,25 +20,11 @@ from store.models import (
 @method_decorator(never_cache, name='dispatch')
 class HomeView(generic.View):
     def get(self, request):
-        # Sliders
-        sliders = Slider.objects.filter(status='active')
-        # Features Sliders
-        features_sliders = Advancement.objects.filter(status='active', advancement_type='feature')
-        # Top Deals
-        top_deals = Product.objects.filter(
-            status='active', 
-            is_timeline='active', 
-            deadline__gte=timezone.now()).order_by('-discount_percent')[:5]
-        # Featured Products
-        featured_products = Product.objects.filter(
-            is_featured='active',
-            status='active'
-        ).distinct()[:5]
         context = {
-            'sliders': sliders,
-            'features_sliders': features_sliders,
-            'top_deals': top_deals,
-            'featured_products': featured_products,
+            'sliders': Slider.objects.filter(status='active')[:4],
+            'features_sliders': Advancement.objects.filter(status='active', advancement_type='feature')[:4],
+            'top_deals': Product.objects.filter(status='active', is_deadline='active', deadline__gte=timezone.now())[:5],
+            'featured_products': Product.objects.filter(status='active', is_featured='active')[:5],
         }
         return render(request, 'store/home.html', context)
 

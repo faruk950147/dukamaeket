@@ -35,21 +35,24 @@
       </div>
       <div class="col-xl-5">
         <div class="row">
-          {% if banners %}
-          {% for banner in banners %}
+          {% if features_sliders %}
+          {% for features_slider in features_sliders %}
           <div class="col-xl-6 col-lg-6 col-md-6">
             <div class="banner__item p-relative w-img mb-30">
               <div class="banner__img b-radius-2">
-                <a href="product-details.html"><img src="{% static "assets/img/banner/banner-10.jpg" %}" alt="" /></a>
+                  <a href="product-details.html"><img src="{{features_slider.image.url}}" alt="{{features_slider.title|title}}"  style="width: 300px; height: 150px;" /></a>
               </div>
               <div class="banner__content banner__content-2">
                 <h6>
-                  <a href="product-details.html"
-                    >Canyon <br />
-                    Star Raider</a
-                  >
+                  <a href="product-details.html">{{features_slider.title|title}}</a>
                 </h6>
-                <p>Headphone & Audio</p>
+                <p>
+                  {% if features_slider.sub_title %}
+                  {{features_slider.sub_title|title}}
+                  {% else %}
+                  {{features_slider.product.title|title}}
+                  {% endif %}
+                </p>
               </div>
             </div>
           </div>
