@@ -43,49 +43,25 @@
 <section class="banner__area pt-20 pb-10">
     <div class="container">
         <div class="row">
-
+            {% if cates %}
+            {% for cat in cates %}
             <div class="col-xl-4 col-lg-4 col-md-6">
                 <div class="banner__item p-relative w-img mb-30">
                     <div class="banner__img">
                         <a href="product-details.html">
-                            <img src="{% static 'assets/img/banner/banner-1.jpg' %}" alt="">
+                            <img src="{{ cat.image.url }}" alt="{{ cat.title|title }}" style="width: 300px; height: 150px;">
                         </a>
                     </div>
                     <div class="banner__content">
-                        <h6><a href="product-details.html">Intelligent <br> New Touch Control</a></h6>
-                        <p>Discount 20% On Products</p>
+                        <h6><a href="product-details.html">{{ cat.title|title }}</a></h6>
+                        <p>{{ cat.description|title }}</p>
                     </div>
                 </div>
             </div>
-
-            <div class="col-xl-4 col-lg-4 col-md-6">
-                <div class="banner__item p-relative mb-30 w-img">
-                    <div class="banner__img">
-                        <a href="product-details.html">
-                            <img src="{% static 'assets/img/banner/banner-2.jpg' %}" alt="">
-                        </a>
-                    </div>
-                    <div class="banner__content">
-                        <h6><a href="product-details.html">On-sale <br> Best Prices</a></h6>
-                        <p>Limited Time: Online Only!</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-4 col-lg-4 col-md-6">
-                <div class="banner__item p-relative mb-30 w-img">
-                    <div class="banner__img">
-                        <a href="product-details.html">
-                            <img src="{% static 'assets/img/banner/banner-3.jpg' %}" alt="">
-                        </a>
-                    </div>
-                    <div class="banner__content">
-                        <h6><a href="product-details.html">Hot Sale <br> Super Laptops 2022</a></h6>
-                        <p>Free Shipping All Order</p>
-                    </div>
-                </div>
-            </div>
-
+            {% endfor %}
+            {% else %}
+            <p>No Banners Found </p>
+            {% endif %}
         </div>
     </div>
 </section>

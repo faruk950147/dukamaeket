@@ -6,5 +6,5 @@ def store_context(request):
         'children',              # Level 1
         'children__children'     # Level 2
     )
-    cats = Category.objects.filter(status='active')
+    cats =  Category.objects.filter(status='active', children__isnull=True).distinct()
     return {'categories': categories, 'cats': cats}
