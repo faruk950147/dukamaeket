@@ -4,7 +4,6 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.utils import timezone
 from store.models import (
-    AcceptancePayment,
     Category,
     Brand,
     Product,
@@ -14,7 +13,6 @@ from store.models import (
     ProductVariant,
     Review,
     Advancement,
-    AcceptancePayment,
     Slider
 )
 # Create your views here.
@@ -25,7 +23,7 @@ class HomeView(generic.View):
         # Sliders
         sliders = Slider.objects.filter(status='active')
         # banner
-        banners = Advancement.objects.filter(status='active', advancement_type='banner')
+        features_sliders = Advancement.objects.filter(status='active', advancement_type='feature')
         # Top Deals
         top_deals = Product.objects.filter(
             status='active', 
@@ -38,7 +36,7 @@ class HomeView(generic.View):
         ).distinct()[:5]
         context = {
             'sliders': sliders,
-            'banners': banners,
+            'features_sliders': features_sliders,
             'top_deals': top_deals,
             'featured_products': featured_products,
         }
