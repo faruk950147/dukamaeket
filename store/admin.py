@@ -9,7 +9,7 @@ from .models import (
 # =========================================================
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'parent', 'status', 'created_date', 'updated_date', 'image_tag')
+    list_display = ('id', 'title', 'parent', 'status', 'created_date', 'updated_date', 'image_tag')
     list_filter = ('status',)
     search_fields = ('title', 'keyword', 'description')
     prepopulated_fields = {'slug': ('title',)}
@@ -19,7 +19,7 @@ class CategoryAdmin(admin.ModelAdmin):
 # =========================================================
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
-    list_display = ('title', 'status', 'created_date', 'updated_date', 'image_tag')
+    list_display = ('id', 'title', 'status', 'created_date', 'updated_date', 'image_tag')
     list_filter = ('status',)
     search_fields = ('title', 'keyword', 'description')
     prepopulated_fields = {'slug': ('title',)}
@@ -39,7 +39,7 @@ class ProductVariantInline(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'brand', 'sale_price', 'old_price', 'status', 'remaining', 'image_tag')
+    list_display = ('id', 'title', 'category', 'brand', 'sale_price', 'old_price', 'status', 'remaining', 'image_tag')
     list_filter = ('status', 'category', 'brand', 'is_deadline', 'is_featured')
     search_fields = ('title', 'keyword', 'description')
     prepopulated_fields = {'slug': ('title',)}
@@ -50,7 +50,7 @@ class ProductAdmin(admin.ModelAdmin):
 # =========================================================
 @admin.register(ImageGallery)
 class ImageGalleryAdmin(admin.ModelAdmin):
-    list_display = ('product', 'image_tag', 'created_date')
+    list_display = ('id', 'product', 'image_tag', 'created_date')
     readonly_fields = ('image_tag',)
 
 # =========================================================
@@ -58,7 +58,7 @@ class ImageGalleryAdmin(admin.ModelAdmin):
 # =========================================================
 @admin.register(Color)
 class ColorAdmin(admin.ModelAdmin):
-    list_display = ('title', 'code', 'color_tag', 'image_tag', 'created_date')
+    list_display = ('id', 'title', 'code', 'color_tag', 'image_tag', 'created_date')
     readonly_fields = ('color_tag', 'image_tag')
 
 # =========================================================
@@ -66,14 +66,14 @@ class ColorAdmin(admin.ModelAdmin):
 # =========================================================
 @admin.register(Size)
 class SizeAdmin(admin.ModelAdmin):
-    list_display = ('title', 'code', 'created_date')
+    list_display = ('id', 'title', 'code', 'created_date')
 
 # =========================================================
 # 07. PRODUCT VARIANT ADMIN
 # =========================================================
 @admin.register(ProductVariant)
 class ProductVariantAdmin(admin.ModelAdmin):
-    list_display = ('product', 'size', 'color', 'variant_price', 'available_stock', 'status', 'image_tag')
+    list_display = ('id', 'product', 'size', 'color', 'variant_price', 'available_stock', 'status', 'image_tag')
     list_filter = ('status',)
     readonly_fields = ('image_tag',)
 
@@ -82,7 +82,7 @@ class ProductVariantAdmin(admin.ModelAdmin):
 # =========================================================
 @admin.register(Slider)
 class SliderAdmin(admin.ModelAdmin):
-    list_display = ('title', 'product', 'status', 'image_tag')
+    list_display = ('id', 'title', 'product', 'status', 'image_tag')
     list_filter = ('status',)
     readonly_fields = ('image_tag',)
 
@@ -91,7 +91,7 @@ class SliderAdmin(admin.ModelAdmin):
 # =========================================================
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('subject', 'product', 'user', 'rate', 'status', 'created_date')
+    list_display = ('id', 'subject', 'product', 'user', 'rate', 'status', 'created_date')
     list_filter = ('status', 'rate')
     search_fields = ('subject', 'comment', 'user__username', 'product__title')
 
@@ -100,7 +100,7 @@ class ReviewAdmin(admin.ModelAdmin):
 # =========================================================
 @admin.register(Advancement)
 class AdvancementAdmin(admin.ModelAdmin):
-    list_display = ('title', 'advancement_type', 'product', 'status', 'image_tag')
+    list_display = ('id', 'title', 'advancement_type', 'product', 'status', 'image_tag')
     list_filter = ('status', 'advancement_type')
     readonly_fields = ('image_tag',)
 
@@ -109,6 +109,6 @@ class AdvancementAdmin(admin.ModelAdmin):
 # =========================================================
 @admin.register(AcceptancePayment)
 class AcceptancePaymentAdmin(admin.ModelAdmin):
-    list_display = ('title', 'amount', 'status', 'image_tag', 'created_date', 'updated_date')
+    list_display = ('id', 'title', 'amount', 'status', 'image_tag', 'created_date', 'updated_date')
     list_filter = ('status',)
     readonly_fields = ('image_tag',)
