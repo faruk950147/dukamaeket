@@ -24,6 +24,8 @@ class HomeView(generic.View):
     def get(self, request):
         # Sliders
         sliders = Slider.objects.filter(status='active')
+        # banner
+        banners = Advancement.objects.filter(status='active', advancement_type='banner')
         # Top Deals
         top_deals = Product.objects.filter(
             status='active', 
@@ -37,6 +39,7 @@ class HomeView(generic.View):
         ).distinct()[:5]
         context = {
             'sliders': sliders,
+            'banners': banners,
             'top_deals': top_deals,
             'featured_products': featured_products,
         }
