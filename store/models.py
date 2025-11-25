@@ -113,7 +113,8 @@ class Product(models.Model):
     description = models.TextField(default='N/A')
     image = models.ImageField(upload_to='products/%Y/%m/%d/')
     deadline = models.DateTimeField(blank=True, null=True)
-    is_timeline = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
+    is_deadline = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
+    is_featured = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
@@ -148,7 +149,7 @@ class Product(models.Model):
 
     @property
     def remaining(self):
-        if self.deadline and self.is_timeline == 'active':
+        if self.deadline and self.is_deadline == 'active':
             remaining = self.deadline - timezone.now()
             return max(0, int(remaining.total_seconds()))
         return 0

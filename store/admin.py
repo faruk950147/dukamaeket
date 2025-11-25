@@ -40,7 +40,7 @@ class ProductVariantInline(admin.TabularInline):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'brand', 'sale_price', 'old_price', 'status', 'remaining', 'image_tag')
-    list_filter = ('status', 'category', 'brand', 'is_timeline')
+    list_filter = ('status', 'category', 'brand', 'is_deadline', 'is_featured')
     search_fields = ('title', 'keyword', 'description')
     prepopulated_fields = {'slug': ('title',)}
     inlines = [ImageGalleryInline, ProductVariantInline]

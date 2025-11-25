@@ -33,8 +33,7 @@ class HomeView(generic.View):
             deadline__gte=timezone.now()).order_by('-discount_percent')[:5]
         # Featured Products
         featured_products = Product.objects.filter(
-            advancements__advancement_type='feature',
-            advancements__status='active',
+            is_featured='active',
             status='active'
         ).distinct()[:5]
         context = {
