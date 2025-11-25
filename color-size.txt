@@ -2,3 +2,44 @@ Main product image (Product page)	1000 × 1000 px বা 1200 × 1200 px
 Thumbnail / Category page	300 × 300 px বা 400 × 400 px
 Zoom-enabled product image	1500 × 1500 px বা 2000 × 2000 px
 Banner-like hero product	1600 × 900 px বা 1920 × 1080 px
+
+from django.utils import timezone
+from django.db.models import Sum
+from django.views import generic
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
+from django.shortcuts import render
+from .models import Product
+
+@method_decorator(never_cache, name='dispatch')
+class HomeView(generic.View):
+    def get(self, request):
+        # Top Deals
+        top_deals = Product.objects.filter(
+            status='active',
+            discount_percent__gt=0,
+            is_timeline='active',
+            deadline__gt=timezone.now()
+        ).order_by('-discount_percent')[:10]
+
+        # Top Selling
+        top_selling = Product.objects.filter(
+            status='active'
+        ).annotate(
+            total_sold=Sum('sold_items__quantity')
+        ).order_by('-total_sold')[:10]
+
+        # Featured Products
+        featured_products = Product.objects.filter(
+            advancements__advancement_type='feature',
+            advancements__status='active',
+            status='active'
+        ).distinct()[:10]
+
+        context = {
+            'top_deals': top_deals,
+            'top_selling': top_selling,
+            'featured_products': featured_products,
+        }
+
+        return render(request, 'home.html', context)

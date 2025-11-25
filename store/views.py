@@ -2,12 +2,45 @@ from django.shortcuts import render
 from django.views import generic
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
+from django.utils import timezone
+from store.models import (
+    AcceptancePayment,
+    Category,
+    Brand,
+    Product,
+    ImageGallery,
+    Color,
+    Size,
+    ProductVariant,
+    Review,
+    Advancement,
+    AcceptancePayment,
+    Slider
+)
 # Create your views here.
 
 @method_decorator(never_cache, name='dispatch')
 class HomeView(generic.View):
     def get(self, request):
-        return render(request, 'store/home.html')
+        # Sliders
+        sliders = Slider.objects.filter(status='active')
+        # Top Deals
+        top_deals = Product.objects.filter(
+            status='active', 
+            is_timeline='active', 
+            deadline__gte=timezone.now()).order_by('-discount_percent')[:5]
+        # Featured Products
+        featured_products = Product.objects.filter(
+            advancements__advancement_type='feature',
+            advancements__status='active',
+            status='active'
+        ).distinct()[:5]
+        context = {
+            'sliders': sliders,
+            'top_deals': top_deals,
+            'featured_products': featured_products,
+        }
+        return render(request, 'store/home.html', context)
 
 @method_decorator(never_cache, name='dispatch')
 class ProductDetailView(generic.View):
