@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import (
+from store.models import (
     Category, Brand, Product, ImageGallery, Color, Size, ProductVariant,
     Slider, Review, Advancement, AcceptancePayment
 )
