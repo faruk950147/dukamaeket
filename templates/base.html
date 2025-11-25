@@ -219,36 +219,31 @@
                                             {% if categories %}
                                                 {% for category in categories %}
                                                     <li>
-                                                        <a href="">{{ category.title|title }} <i class="far fa-angle-down"></i></a>
+                                                        <a href="#">{{ category.title|title }}{% if category.children.all %} <i class="far fa-angle-down"></i>{% endif %}</a>
 
-                                                        <ul class="mega-menu">
-
-                                                            {% if category.children.all %}
-
-                                                                <li>
-
-                                                                    {# ---------- MAIN CHILD (Level 1) ---------- #}
-                                                                    {% for main_child in category.children.all %}
-                                                                        <a href="#">{{ main_child.title|title }}</a>
+                                                        {% if category.children.all %}
+                                                            <ul class="mega-menu">
+                                                                {% for main_child in category.children.all %}
+                                                                    <li>
+                                                                        <a href="#">{{ main_child.title|title }}{% if main_child.children.all %} <i class="far fa-angle-down"></i>{% endif %}</a>
 
                                                                         {% if main_child.children.all %}
                                                                             <ul class="mega-item">
-                                                                                {# ---------- SUB CHILD (Level 2) ---------- #}
                                                                                 {% for sub_child in main_child.children.all %}
                                                                                     <li><a href="#">{{ sub_child.title|title }}</a></li>
                                                                                 {% endfor %}
                                                                             </ul>
                                                                         {% endif %}
 
-                                                                    {% endfor %}
-
-                                                                </li>
-
-                                                            {% else %}
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        {% else %}
+                                                            <ul class="mega-menu">
                                                                 <li><a>No Sub Categories Found</a></li>
-                                                            {% endif %}
+                                                            </ul>
+                                                        {% endif %}
 
-                                                        </ul>
                                                     </li>
                                                 {% endfor %}
                                             {% else %}
