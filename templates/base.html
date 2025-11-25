@@ -102,18 +102,15 @@
                                     <div class="header__search-cat">
                                         <select>
                                             <option>All Categories</option>
-                                            <option>Best Seller Products</option>
-                                            <option>Top 10 Offers</option>
-                                            <option>New Arrivals</option>
-                                            <option>Phones &amp; Tablets</option>
-                                            <option>Electronics &amp; Digital</option>
-                                            <option>Fashion &amp; Clothings</option>
-                                            <option>Jewelry &amp; Watches</option>
-                                            <option>Health &amp; Beauty</option>
-                                            <option>Sound &amp; Speakers</option>
-                                            <option>TV &amp; Audio</option>
-                                            <option>Computers</option>
+                                        {% if cats %}
+                                        {% for cat in cats %}
+                                            <option>{{cat.title|title}}</option>
+                                        {% endfor %}
+                                        {% else %}
+                                         <option>No categories Found</option>
+                                        {% endif %}
                                         </select>
+                                        
                                     </div>
                                 </form>
                             </div>
@@ -219,13 +216,13 @@
                                             {% if categories %}
                                                 {% for category in categories %}
                                                     <li>
-                                                        <a href="#">{{ category.title|title }}{% if category.children.all %} <i class="far fa-angle-down"></i>{% endif %}</a>
+                                                        <a href="#">{{ category.title|title }}</a>
 
                                                         {% if category.children.all %}
                                                             <ul class="mega-menu">
                                                                 {% for main_child in category.children.all %}
                                                                     <li>
-                                                                        <a href="#">{{ main_child.title|title }}{% if main_child.children.all %} <i class="far fa-angle-down"></i>{% endif %}</a>
+                                                                        <a href="#">{{ main_child.title|title }}</a>
 
                                                                         {% if main_child.children.all %}
                                                                             <ul class="mega-item">
