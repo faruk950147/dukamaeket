@@ -7,13 +7,9 @@ from store.models import (
     Category,
     Brand,
     Product,
-    ImageGallery,
-    Color,
-    Size,
-    ProductVariant,
-    Review,
     Advancement,
-    Slider
+    Slider,
+    AcceptancePayment
 )
 # Create your views here.
 
@@ -23,6 +19,7 @@ class HomeView(generic.View):
         context = {
             'sliders': Slider.objects.filter(status='active')[:4],
             'features_sliders': Advancement.objects.filter(status='active', advancement_type='feature')[:4],
+            'payments': AcceptancePayment.objects.filter(status='active')[:4],
             'top_deals': Product.objects.filter(status='active', is_deadline='active', deadline__gte=timezone.now())[:5],
             'featured_products': Product.objects.filter(status='active', is_featured='active')[:5],
         }
