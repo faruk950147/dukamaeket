@@ -8,41 +8,47 @@ class Command(BaseCommand):
         response = requests.get('https://dummyjson.com/products')
         data = response.json()
 
-        for p in data['products']:
-
-            # Brand create/get
+        for p in data.get('products', []):  # safe fallback
+            # Safe brand
+            brand_name = p.get('brand', 'Unknown')
             brand_obj, _ = Brand.objects.get_or_create(
-                title=p['brand'],
+                title=brand_name,
                 defaults={
-                    "keyword": p['brand'],
-                    "description": p['brand'],
+                    "keyword": brand_name,
+                    "description": brand_name,
                 }
             )
 
-            # Category create/get
+            # Safe category
+            category_name = p.get('category', 'General')
             category_obj, _ = Category.objects.get_or_create(
-                title=p['category'],
+                title=category_name,
                 defaults={
-                    "keyword": p['category'],
-                    "description": p['category'],
+                    "keyword": category_name,
+                    "description": category_name,
                 }
             )
 
-            # Product create
+            # Safe price conversion
+            price = Decimal(f"{p.get('price', 0):.2f}")
+            old_price = Decimal(f"{(p.get('price', 0) + 100):.2f}")
+            discount = int(p.get('discountPercentage', 0))
+
+            # Create product
             product = Product.objects.create(
-                title=p['title'],
-                description=p['description'],
-                old_price=Decimal(p['price']) + 100,     # Just example
-                sale_price=Decimal(p['price']),
-                discount_percent=int(p['discountPercentage']),
-                available_stock=p['stock'],
+                title=p.get('title', 'No Title'),
+                description=p.get('description', ''),
+                old_price=old_price,
+                sale_price=price,
+                discount_percent=discount,
+                available_stock=p.get('stock', 0),
                 brand=brand_obj,
                 category=category_obj,
-                image=p['thumbnail'],  # URL image assign
+                image=p.get('thumbnail', ''),  # URL
             )
 
-            # Product Gallery Images save
-            for img_url in p['images']:
+            # Product images
+            for img_url in p.get('images', []):
                 ImageGallery.objects.create(
                     product=product,
                     image=img_url

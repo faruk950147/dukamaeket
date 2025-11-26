@@ -122,8 +122,8 @@ class Product(ImageTagMixin):
     title = models.CharField(max_length=150, unique=True)
     slug = models.SlugField(max_length=150, unique=True, blank=True)
     
-    old_price = models.DecimalField(max_digits=12, decimal_places=2, default=Decimal('1000.00'))
-    sale_price = models.DecimalField(max_digits=12, decimal_places=2, default=Decimal('1000.00'))
+    old_price = models.DecimalField(max_digits=150, decimal_places=2, default=Decimal('1000.00'))
+    sale_price = models.DecimalField(max_digits=150, decimal_places=2, default=Decimal('1000.00'))
 
     available_stock = models.PositiveIntegerField(validators=[MaxValueValidator(10000)], default=0)
     discount_percent = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], default=0)
@@ -248,7 +248,7 @@ class ProductVariant(ImageTagMixin):
     color = models.ForeignKey(Color, blank=True, null=True, on_delete=models.SET_NULL)
     size = models.ForeignKey(Size, blank=True, null=True, on_delete=models.SET_NULL)
     
-    variant_price = models.DecimalField(max_digits=12, decimal_places=2)
+    variant_price = models.DecimalField(max_digits=150, decimal_places=2)
     available_stock = models.PositiveIntegerField(default=0)
     
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
