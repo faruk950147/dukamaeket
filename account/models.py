@@ -41,7 +41,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 # ---------------- PROFILE ----------------
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    image = models.FileField(upload_to='profiles', null=True, blank=True)
+    image = models.FileField(upload_to='profiles', default='defaults/default.jpg')
     country = models.CharField(max_length=150, null=True, blank=True)
     city = models.CharField(max_length=150, null=True, blank=True)
     home_city = models.CharField(max_length=150, null=True, blank=True)
