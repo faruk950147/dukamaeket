@@ -20,10 +20,11 @@ class HomeView(generic.View):
             'sliders': Slider.objects.filter(status='active')[:4],
             'features_sliders': Advancement.objects.filter(status='active', advancement_type='feature')[:4],
             'acceptance_payments': AcceptancePayment.objects.filter(status='active')[:4],
-            'cates': Category.objects.filter(status='active', children__isnull=True).distinct()[:3], # distinct() used when the ForeignKey
-            'top_deals': Product.objects.filter(status='active', is_deadline='active', deadline__gte=timezone.now())[:5],
-            'featured_products': Product.objects.filter(status='active', is_featured='active')[:5],
+            'cates': Category.objects.filter(status='active', children__isnull=True).distinct()[:3],
+            'top_deals': Product.objects.filter(status='active', is_deadline=True, deadline__gte=timezone.now())[:5],
+            'featured_products': Product.objects.filter(status='active',is_featured=True)[:5],
         }
+
         return render(request, 'store/home.html', context)
 
 @method_decorator(never_cache, name='dispatch')
