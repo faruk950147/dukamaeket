@@ -18,8 +18,10 @@ STATUS_CHOICES = (
     ('inactive', 'Inactive'),
 )
 
-ADVANCEMENT_TYPE_CHOICES = (
-    ('banner', 'Banner'),
+SLIDER_TYPE_CHOICES = (
+    ('none', 'None'),
+    ('slider', 'Slider'),
+    ('add', 'Add'),
     ('feature', 'Feature'),
     ('promotion', 'Promotion'),
 )
@@ -274,6 +276,7 @@ class Slider(ImageTagMixin):
     image = models.ImageField(upload_to='sliders/%Y/%m/%d/', default='defaults/default.jpg')
     
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
+    slider_type = models.CharField(max_length=10, choices=SLIDER_TYPE_CHOICES, default='none')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -308,31 +311,7 @@ class Review(models.Model):
         return self.subject if self.subject else f"Review by {self.user.username}"
 
 # =========================================================
-# 13. ADVANCEMENT MODEL
-# =========================================================
-class Advancement(ImageTagMixin):
-    advancement_type = models.CharField(max_length=20, choices=ADVANCEMENT_TYPE_CHOICES, default='banner')
-    product = models.ForeignKey(Product, related_name='advancements', on_delete=models.CASCADE)
-    
-    title = models.CharField(max_length=150, unique=True, blank=True, null=True)
-    subtitle = models.CharField(max_length=150, blank=True, null=True)
-    
-    image = models.ImageField(upload_to='advancements/%Y/%m/%d/', default='defaults/default.jpg')
-    
-    status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
-    is_featured = models.BooleanField(default=False)
-    created_date = models.DateTimeField(auto_now_add=True)
-    updated_date = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        ordering = ['id']
-        verbose_name_plural = '10. Advancements'
-
-    def __str__(self):
-        return f"{self.title} ({self.get_status_display()})"
-
-# =========================================================
-# 14. ACCEPTANCE PAYMENT MODEL
+# 13. ACCEPTANCE PAYMENT MODEL
 # =========================================================
 class AcceptancePayment(ImageTagMixin):
     title = models.CharField(max_length=150, unique=True, blank=True, null=True)

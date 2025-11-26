@@ -1,7 +1,7 @@
 from django.contrib import admin
 from store.models import (
     Category, Brand, Product, ImageGallery, Color, Size,
-    ProductVariant, Slider, Review, Advancement, AcceptancePayment
+    ProductVariant, Slider, Review, AcceptancePayment
 )
 
 # =========================================================
@@ -10,10 +10,11 @@ from store.models import (
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'parent', 'slug', 'keyword', 'description', 'status', 'is_featured', 'created_date', 'updated_date', 'image_tag')
-    list_filter = ('status', 'parent')
+    list_filter = ('status', 'parent', 'is_featured')
     search_fields = ('title', 'slug', 'keyword', 'description')
     readonly_fields = ('id', 'image_tag', 'created_date', 'updated_date')
-    fields = ('parent', 'title', 'slug', 'keyword', 'description', 'image', 'image_tag', 'status')
+    fields = ('parent', 'title', 'slug', 'keyword', 'description', 'image', 'image_tag', 'status', 'is_featured')
+    prepopulated_fields = {'slug': ('title',)}
 
 # =========================================================
 # 02. BRAND ADMIN
@@ -21,10 +22,11 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'slug', 'keyword', 'description', 'status', 'is_featured', 'created_date', 'updated_date', 'image_tag')
-    list_filter = ('status',)
+    list_filter = ('status', 'is_featured')
     search_fields = ('title', 'slug', 'keyword', 'description')
     readonly_fields = ('id', 'image_tag', 'created_date', 'updated_date')
-    fields = ('title', 'slug', 'keyword', 'description', 'image', 'image_tag', 'status')
+    fields = ('title', 'slug', 'keyword', 'description', 'image', 'image_tag', 'status', 'is_featured')
+    prepopulated_fields = {'slug': ('title',)}
 
 # =========================================================
 # 03. IMAGE GALLERY INLINE
@@ -45,16 +47,7 @@ class ProductVariantInline(admin.TabularInline):
     fields = ('color', 'size', 'variant_price', 'available_stock', 'status', 'image_tag', 'created_date', 'updated_date')
 
 # =========================================================
-# 05. ADVANCEMENT INLINE
-# =========================================================
-class AdvancementInline(admin.TabularInline):
-    model = Advancement
-    extra = 1
-    readonly_fields = ('image_tag', 'created_date', 'updated_date')
-    fields = ('advancement_type', 'product', 'title', 'subtitle', 'image', 'image_tag', 'status', 'created_date', 'updated_date')
-
-# =========================================================
-# 06. PRODUCT ADMIN
+# 05. PRODUCT ADMIN
 # =========================================================
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -62,11 +55,12 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('status', 'category', 'brand', 'is_deadline', 'is_featured')
     search_fields = ('title', 'slug', 'keyword', 'description')
     readonly_fields = ('id', 'image_tag', 'created_date', 'updated_date')
-    inlines = [ImageGalleryInline, ProductVariantInline, AdvancementInline]
+    inlines = [ImageGalleryInline, ProductVariantInline]
     fields = ('category', 'brand', 'title', 'slug', 'old_price', 'sale_price', 'discount_percent', 'available_stock', 'keyword', 'description', 'image', 'image_tag', 'deadline', 'is_deadline', 'is_featured', 'status')
+    prepopulated_fields = {'slug': ('title',)}
 
 # =========================================================
-# 07. COLOR ADMIN
+# 06. COLOR ADMIN
 # =========================================================
 @admin.register(Color)
 class ColorAdmin(admin.ModelAdmin):
@@ -76,7 +70,7 @@ class ColorAdmin(admin.ModelAdmin):
     fields = ('title', 'code', 'image', 'image_tag')
 
 # =========================================================
-# 08. SIZE ADMIN
+# 07. SIZE ADMIN
 # =========================================================
 @admin.register(Size)
 class SizeAdmin(admin.ModelAdmin):
@@ -86,18 +80,19 @@ class SizeAdmin(admin.ModelAdmin):
     fields = ('title', 'code')
 
 # =========================================================
-# 09. SLIDER ADMIN
+# 08. SLIDER ADMIN
 # =========================================================
 @admin.register(Slider)
 class SliderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'product', 'status', 'created_date', 'updated_date', 'image_tag')
+    list_display = ('id', 'title', 'product', 'status', 'slider_type', 'created_date', 'updated_date', 'image_tag')
     list_filter = ('status',)
     search_fields = ('title',)
     readonly_fields = ('id', 'image_tag', 'created_date', 'updated_date')
-    fields = ('product', 'title', 'image', 'image_tag', 'status')
+    fields = ('product', 'title', 'image', 'image_tag', 'status', 'slider_type')
+
 
 # =========================================================
-# 10. REVIEW ADMIN
+# 09. REVIEW ADMIN
 # =========================================================
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
@@ -108,23 +103,12 @@ class ReviewAdmin(admin.ModelAdmin):
     fields = ('product', 'user', 'subject', 'comment', 'rate', 'status')
 
 # =========================================================
-# 11. ADVANCEMENT ADMIN
-# =========================================================
-@admin.register(Advancement)
-class AdvancementAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'advancement_type', 'product', 'status', 'is_featured', 'created_date', 'updated_date', 'image_tag')
-    list_filter = ('status', 'advancement_type')
-    search_fields = ('title', 'subtitle')
-    readonly_fields = ('id', 'image_tag', 'created_date', 'updated_date')
-    fields = ('advancement_type', 'product', 'title', 'subtitle', 'image', 'image_tag', 'status')
-
-# =========================================================
-# 12. ACCEPTANCE PAYMENT ADMIN
+# 10. ACCEPTANCE PAYMENT ADMIN
 # =========================================================
 @admin.register(AcceptancePayment)
 class AcceptancePaymentAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'subtitle', 'amount', 'status', 'is_featured', 'created_date', 'updated_date', 'image_tag')
-    list_filter = ('status',)
+    list_filter = ('status', 'is_featured')
     search_fields = ('title', 'subtitle')
     readonly_fields = ('id', 'image_tag', 'created_date', 'updated_date')
-    fields = ('title', 'subtitle', 'image', 'image_tag', 'amount', 'status')
+    fields = ('title', 'subtitle', 'image', 'image_tag', 'amount', 'status', 'is_featured')
