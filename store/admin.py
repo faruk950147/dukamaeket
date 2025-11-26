@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import (
+from store.models import (
     Category, Brand, Product, ImageGallery, Color, Size,
     ProductVariant, Slider, Review, Advancement, AcceptancePayment
 )
@@ -58,7 +58,7 @@ class AdvancementInline(admin.TabularInline):
 # =========================================================
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'category', 'brand', 'old_price', 'sale_price', 'discount_percent', 'available_stock', 'is_deadline', 'is_featured', 'status', 'created_date', 'updated_date', 'image_tag')
+    list_display = ('id', 'title', 'slug', 'category', 'brand', 'old_price', 'sale_price', 'discount_percent', 'available_stock', 'is_deadline', 'is_featured', 'status', 'created_date', 'updated_date', 'image_tag')
     list_filter = ('status', 'category', 'brand', 'is_deadline', 'is_featured')
     search_fields = ('title', 'slug', 'keyword', 'description')
     readonly_fields = ('id', 'image_tag', 'created_date', 'updated_date')
