@@ -9,7 +9,7 @@ from store.models import (
 # =========================================================
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'parent', 'slug', 'keyword', 'description', 'status', 'created_date', 'updated_date', 'image_tag')
+    list_display = ('id', 'title', 'parent', 'slug', 'keyword', 'description', 'status', 'is_featured', 'created_date', 'updated_date', 'image_tag')
     list_filter = ('status', 'parent')
     search_fields = ('title', 'slug', 'keyword', 'description')
     readonly_fields = ('id', 'image_tag', 'created_date', 'updated_date')
@@ -20,7 +20,7 @@ class CategoryAdmin(admin.ModelAdmin):
 # =========================================================
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'slug', 'keyword', 'description', 'status', 'created_date', 'updated_date', 'image_tag')
+    list_display = ('id', 'title', 'slug', 'keyword', 'description', 'status', 'is_featured', 'created_date', 'updated_date', 'image_tag')
     list_filter = ('status',)
     search_fields = ('title', 'slug', 'keyword', 'description')
     readonly_fields = ('id', 'image_tag', 'created_date', 'updated_date')
@@ -112,7 +112,7 @@ class ReviewAdmin(admin.ModelAdmin):
 # =========================================================
 @admin.register(Advancement)
 class AdvancementAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'advancement_type', 'product', 'status', 'created_date', 'updated_date', 'image_tag')
+    list_display = ('id', 'title', 'advancement_type', 'product', 'status', 'is_featured', 'created_date', 'updated_date', 'image_tag')
     list_filter = ('status', 'advancement_type')
     search_fields = ('title', 'subtitle')
     readonly_fields = ('id', 'image_tag', 'created_date', 'updated_date')
@@ -123,7 +123,7 @@ class AdvancementAdmin(admin.ModelAdmin):
 # =========================================================
 @admin.register(AcceptancePayment)
 class AcceptancePaymentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'subtitle', 'amount', 'status', 'created_date', 'updated_date', 'image_tag')
+    list_display = ('id', 'title', 'subtitle', 'amount', 'status', 'is_featured', 'created_date', 'updated_date', 'image_tag')
     list_filter = ('status',)
     search_fields = ('title', 'subtitle')
     readonly_fields = ('id', 'image_tag', 'created_date', 'updated_date')

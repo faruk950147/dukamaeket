@@ -68,6 +68,7 @@ class Category(ImageTagMixin):
     image = models.ImageField(upload_to='categories/%Y/%m/%d/', default='defaults/default.jpg')
     
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
+    is_featured = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -97,6 +98,7 @@ class Brand(ImageTagMixin):
     image = models.ImageField(upload_to='brands/%Y/%m/%d/', default='defaults/default.jpg')
     
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
+    is_featured = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -318,6 +320,7 @@ class Advancement(ImageTagMixin):
     image = models.ImageField(upload_to='advancements/%Y/%m/%d/', default='defaults/default.jpg')
     
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
+    is_featured = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -339,6 +342,7 @@ class AcceptancePayment(ImageTagMixin):
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
+    is_featured = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
