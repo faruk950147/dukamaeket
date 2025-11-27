@@ -1051,3 +1051,10 @@ WARNING 2025-11-27 21:36:33,423 django.server basehttp "GET /static/assets/flati
 WARNING 2025-11-27 21:36:33,511 django.server basehttp "GET /static/assets/css/style.css.map HTTP/1.1" 404 1999
 WARNING 2025-11-27 21:36:35,421 django.server basehttp "GET /static/assets/js/swiper-bundle.min.js.map HTTP/1.1" 404 2029
 WARNING 2025-11-27 21:36:35,509 django.server basehttp "GET /static/assets/js/bootstrap.bundle.min.js.map HTTP/1.1" 404 2038
+WARNING 2025-11-27 21:52:03,798 django.request log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-27 21:52:03,806 django.server basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3576
+WARNING 2025-11-27 21:52:03,877 django.server basehttp "GET /static/assets/js/bootstrap.bundle.min.js.map HTTP/1.1" 404 2038
+WARNING 2025-11-27 21:52:03,882 django.server basehttp "GET /static/assets/js/swiper-bundle.min.js.map HTTP/1.1" 404 2029
+WARNING 2025-11-27 21:52:03,955 django.server basehttp "GET /static/assets/flaticon/flaticon.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 21:52:03,961 django.server basehttp "GET /static/assets/css/bootstrap.min.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 21:52:03,970 django.server basehttp "GET /static/assets/css/style.css.map HTTP/1.1" 404 1999
