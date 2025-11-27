@@ -14,11 +14,16 @@
                   <h2 data-animation="fadeInLeft" data-delay="1.7s" class="pt-15 slider-title pb-5">
                     {{slider.title|title}}
                   </h2>
-                  {% if slider.product.discount_percent %}
-                  <p class="pr-20 slider_text" data-animation="fadeInLeft" data-delay="1.9s">
-                    {{slider.product.discount_percent}} %
+                  <p class="pr-20 slider_text">
+                    {{slider.sub_title|title}}
+                    {% if slider.product.discount_percent %}
+                    <span data-animation="fadeInLeft" data-delay="1.9s">
+                      {{slider.product.discount_percent}} %
+                    </span>
+                    {% else %}
+                    <span>No Off Product</span>
+                    {% endif %}
                   </p>
-                  {% endif %}
                   <div class="slider-bottom-btn mt-65">
                     <a data-animation="fadeInUp" data-delay="1.15s" href="shop.html" class="st-btn-border b-radius-2">Discover now</a>
                   </div>
