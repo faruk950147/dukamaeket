@@ -158,7 +158,7 @@ a:hover {
 
 a,
 button {
-  color: #1F2024;
+  color: inherit;
   outline: none;
   border: none;
   background: transparent;

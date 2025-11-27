@@ -1484,3 +1484,4 @@ WARNING 2025-11-27 21:36:35,509 django.server basehttp "GET /static/assets/js/bo
 INFO 2025-11-27 21:38:47,004 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 2, Featured Products: 0
 INFO 2025-11-27 21:38:47,052 django.server basehttp "GET / HTTP/1.1" 200 103781
 INFO 2025-11-27 21:38:47,093 django.server basehttp "GET /static/assets/css/style.css HTTP/1.1" 304 0
+INFO 2025-11-27 21:51:01,359 django.utils.autoreload autoreload Watching for file changes with StatReloader
