@@ -4,7 +4,6 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.utils import timezone
 from django.db.models import Avg
-from django.db.models.functions import Coalesce
 from store.models import (
     Category,
     Brand,
@@ -17,59 +16,46 @@ import logging
 
 logger = logging.getLogger('project')
 
+# =========================================================
+# HOME PAGE
+# =========================================================
 @method_decorator(never_cache, name='dispatch')
 class HomeView(generic.View):
     def get(self, request):
-        # =====================================================
-        # Sliders
-        # =====================================================
         sliders = Slider.objects.filter(status='active')[:4]
         feature_sliders = Slider.objects.filter(status='active', slider_type='feature')[:4]
-
-        # =====================================================
-        # Acceptance Payments
-        # =====================================================
         acceptance_payments = AcceptancePayment.objects.filter(status='active')[:4]
 
-        # =====================================================
         # Featured Categories
-        # =====================================================
         cates = Category.objects.filter(
             status='active',
             children__isnull=True,
             is_featured=True
         ).distinct()[:3]
 
-        # =====================================================
         # Top Deals
-        # =====================================================
         top_deals = Product.objects.filter(
             status='active',
             is_deadline=True,
             deadline__gte=timezone.now()
-        ).annotate(avg_rate=Coalesce(Avg('reviews__rate'), 0))[:5]
+        ).annotate(avg_rate=Avg('reviews__rate')).order_by('deadline')[:5]
 
-        # =====================================================
+        first_top_deal = top_deals.first()
+
         # Featured Products
-        # =====================================================
         featured_products = Product.objects.filter(
             status='active',
             is_featured=True
-        ).annotate(avg_rate=Coalesce(Avg('reviews__rate'), 0))[:5]
+        ).annotate(avg_rate=Avg('reviews__rate'))[:5] # related new field add this method
 
-        # =====================================================
         # Logging
-        # =====================================================
         logger.info(
             f"User {request.user if request.user.is_authenticated else 'Anonymous'} visited Home page. "
-            f"Sliders: {len(sliders)}, Feature Sliders: {len(feature_sliders)}, "
-            f"AcceptancePayments: {len(acceptance_payments)}, Categories: {len(cates)}, "
-            f"Top Deals: {len(top_deals)}, Featured Products: {len(featured_products)}"
+            f"Sliders: {sliders.count()}, Feature Sliders: {feature_sliders.count()}, "
+            f"AcceptancePayments: {acceptance_payments.count()}, Categories: {cates.count()}, "
+            f"Top Deals: {top_deals.count()}, Featured Products: {featured_products.count()}"
         )
 
-        # =====================================================
-        # Context
-        # =====================================================
         context = {
             'sliders': sliders,
             'features_sliders': feature_sliders,
@@ -77,9 +63,10 @@ class HomeView(generic.View):
             'cates': cates,
             'top_deals': top_deals,
             'featured_products': featured_products,
+            'first_top_deal': first_top_deal,
         }
-
         return render(request, 'store/home.html', context)
+    
 @method_decorator(never_cache, name='dispatch')
 class ProductDetailView(generic.View):
     def get(self, request):

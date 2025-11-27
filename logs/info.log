@@ -1078,3 +1078,224 @@ INFO 2025-11-27 19:47:24,088 django.utils.autoreload autoreload Watching for fil
 INFO 2025-11-27 19:52:25,982 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\config\settings.py changed, reloading.
 INFO 2025-11-27 19:52:27,195 django.utils.autoreload autoreload Watching for file changes with StatReloader
 INFO 2025-11-27 19:52:55,491 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:44:00,466 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:44:02,041 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:44:12,089 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:44:13,154 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:44:14,876 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:44:15,734 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:44:24,756 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:44:25,695 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:44:35,021 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:44:36,047 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:44:53,580 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:44:54,580 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:45:03,737 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:45:04,676 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:45:07,753 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:45:08,658 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:45:12,621 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:45:14,124 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:45:17,355 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:45:19,180 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:45:26,902 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:45:27,950 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:45:29,634 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:45:30,654 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:45:36,541 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:45:37,500 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:45:43,770 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:45:44,863 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:46:02,250 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:46:03,477 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:46:14,157 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:46:15,471 django.utils.autoreload autoreload Watching for file changes with StatReloader
+ERROR 2025-11-27 20:48:48,219 django.request log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py", line 51, in get
+    first_top_deal = top_deals.first()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\db\models\query.py", line 1105, in first
+    queryset = self.order_by("pk")
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\db\models\query.py", line 1724, in order_by
+    raise TypeError("Cannot reorder a query once a slice has been taken.")
+TypeError: Cannot reorder a query once a slice has been taken.
+ERROR 2025-11-27 20:48:48,225 django.server basehttp "GET / HTTP/1.1" 500 114161
+ERROR 2025-11-27 20:48:48,808 django.request log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py", line 51, in get
+    first_top_deal = top_deals.first()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\db\models\query.py", line 1105, in first
+    queryset = self.order_by("pk")
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\db\models\query.py", line 1724, in order_by
+    raise TypeError("Cannot reorder a query once a slice has been taken.")
+TypeError: Cannot reorder a query once a slice has been taken.
+ERROR 2025-11-27 20:48:48,821 django.server basehttp "GET / HTTP/1.1" 500 114148
+WARNING 2025-11-27 20:48:49,234 django.request log Not Found: /favicon.ico
+WARNING 2025-11-27 20:48:49,235 django.server basehttp "GET /favicon.ico HTTP/1.1" 404 3465
+ERROR 2025-11-27 20:51:35,091 django.request log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py", line 51, in get
+    first_top_deal = top_deals.first()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\db\models\query.py", line 1105, in first
+    queryset = self.order_by("pk")
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\db\models\query.py", line 1724, in order_by
+    raise TypeError("Cannot reorder a query once a slice has been taken.")
+TypeError: Cannot reorder a query once a slice has been taken.
+ERROR 2025-11-27 20:51:35,099 django.server basehttp "GET / HTTP/1.1" 500 114285
+INFO 2025-11-27 20:52:00,305 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:52:02,214 django.utils.autoreload autoreload Watching for file changes with StatReloader
+ERROR 2025-11-27 20:52:13,283 django.request log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py", line 51, in get
+    first_top_deal = top_deals.first()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\db\models\query.py", line 1105, in first
+    queryset = self.order_by("pk")
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\db\models\query.py", line 1724, in order_by
+    raise TypeError("Cannot reorder a query once a slice has been taken.")
+TypeError: Cannot reorder a query once a slice has been taken.
+ERROR 2025-11-27 20:52:13,290 django.server basehttp "GET / HTTP/1.1" 500 114285
+INFO 2025-11-27 20:52:51,928 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:52:53,764 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:53:05,633 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:53:06,833 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:53:35,356 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 2, Featured Products: 0
+INFO 2025-11-27 20:53:35,489 django.server basehttp "GET / HTTP/1.1" 200 103539
+INFO 2025-11-27 20:53:35,796 django.server basehttp "GET /static/assets/css/bootstrap.css HTTP/1.1" 200 206116
+INFO 2025-11-27 20:53:35,822 django.server basehttp "GET /static/assets/css/backtotop.css HTTP/1.1" 200 1165
+INFO 2025-11-27 20:53:35,830 django.server basehttp "GET /static/assets/css/magnific-popup.css HTTP/1.1" 200 6951
+INFO 2025-11-27 20:53:35,837 django.server basehttp "GET /static/assets/css/swiper-bundle.css HTTP/1.1" 200 15806
+INFO 2025-11-27 20:53:35,841 django.server basehttp "GET /static/assets/css/nice-select.css HTTP/1.1" 200 3359
+INFO 2025-11-27 20:53:35,856 django.server basehttp "GET /static/assets/css/preloader.css HTTP/1.1" 200 542
+INFO 2025-11-27 20:53:35,858 django.server basehttp "GET /static/assets/css/font-awesome-pro.css HTTP/1.1" 200 173777
+INFO 2025-11-27 20:53:35,871 django.server basehttp "GET /static/assets/css/owl-carousel.css HTTP/1.1" 200 2937
+INFO 2025-11-27 20:53:35,874 django.server basehttp "GET /static/assets/flaticon/flaticon.css HTTP/1.1" 200 1115
+INFO 2025-11-27 20:53:35,883 django.server basehttp "GET /static/assets/css/animate.css HTTP/1.1" 200 68606
+INFO 2025-11-27 20:53:35,890 django.server basehttp "GET /static/assets/css/default.css HTTP/1.1" 200 8364
+INFO 2025-11-27 20:53:35,915 django.server basehttp "GET /static/assets/js/vendor/jquery.js HTTP/1.1" 200 89501
+INFO 2025-11-27 20:53:35,926 django.server basehttp "GET /static/assets/css/style.css HTTP/1.1" 200 132331
+INFO 2025-11-27 20:53:35,935 django.server basehttp "GET /static/assets/img/logo/logo1.svg HTTP/1.1" 200 4969
+INFO 2025-11-27 20:53:35,939 django.server basehttp "GET /static/assets/img/cart/20.jpg HTTP/1.1" 200 115168
+INFO 2025-11-27 20:53:35,957 django.server basehttp "GET /static/assets/css/meanmenu.css HTTP/1.1" 200 2711
+INFO 2025-11-27 20:53:35,963 django.server basehttp "GET /media/sliders/2025/11/27/burkha_1.jpg HTTP/1.1" 200 106642
+INFO 2025-11-27 20:53:35,970 django.server basehttp "GET /media/sliders/2025/11/27/feature_8.jpg HTTP/1.1" 200 98181
+INFO 2025-11-27 20:53:35,986 django.server basehttp "GET /static/assets/js/vendor/waypoints.js HTTP/1.1" 200 8833
+INFO 2025-11-27 20:53:35,987 django.server basehttp "GET /static/assets/js/meanmenu.js HTTP/1.1" 200 11264
+INFO 2025-11-27 20:53:35,989 django.server basehttp "GET /static/assets/js/bootstrap-bundle.js HTTP/1.1" 200 80821
+INFO 2025-11-27 20:53:36,035 django.server basehttp "GET /static/assets/js/swiper-bundle.js HTTP/1.1" 200 141251
+INFO 2025-11-27 20:53:36,043 django.server basehttp "GET /static/assets/js/tweenmax.js HTTP/1.1" 200 111645
+INFO 2025-11-27 20:53:36,091 django.server basehttp "GET /static/assets/js/owl-carousel.js HTTP/1.1" 200 42766
+INFO 2025-11-27 20:53:36,093 django.server basehttp "GET /static/assets/js/magnific-popup.js HTTP/1.1" 200 20216
+INFO 2025-11-27 20:53:36,106 django.server basehttp "GET /static/assets/js/parallax.js HTTP/1.1" 200 15991
+INFO 2025-11-27 20:53:36,124 django.server basehttp "GET /media/sliders/2025/11/27/l-b_2.jpg HTTP/1.1" 200 6384325
+INFO 2025-11-27 20:53:36,127 django.server basehttp "GET /static/assets/js/backtotop.js HTTP/1.1" 200 1003
+INFO 2025-11-27 20:53:36,130 django.server basehttp "GET /static/assets/js/nice-select.js HTTP/1.1" 200 2942
+INFO 2025-11-27 20:53:36,150 django.server basehttp "GET /static/assets/js/countdown.min.js HTTP/1.1" 200 7233
+INFO 2025-11-27 20:53:36,156 django.server basehttp "GET /static/assets/js/counterup.js HTTP/1.1" 200 1067
+INFO 2025-11-27 20:53:36,167 django.server basehttp "GET /static/assets/js/wow.js HTTP/1.1" 200 8415
+INFO 2025-11-27 20:53:36,173 django.server basehttp "GET /static/assets/js/isotope-pkgd.js HTTP/1.1" 200 35503
+INFO 2025-11-27 20:53:36,179 django.server basehttp "GET /static/assets/js/ajax-form.js HTTP/1.1" 200 1202
+INFO 2025-11-27 20:53:36,183 django.server basehttp "GET /static/assets/js/imagesloaded-pkgd.js HTTP/1.1" 200 5594
+INFO 2025-11-27 20:53:36,190 django.server basehttp "GET /static/assets/js/main.js HTTP/1.1" 200 14734
+INFO 2025-11-27 20:53:36,208 django.server basehttp "GET /media/sliders/2025/11/27/l-b_1.jpg HTTP/1.1" 200 194527
+INFO 2025-11-27 20:53:36,224 django.server basehttp "GET /static/assets/img/logo/logo-white.png HTTP/1.1" 200 4586
+INFO 2025-11-27 20:53:36,224 django.server basehttp "GET /media/acceptance_payments/2025/11/27/truck.jpg HTTP/1.1" 200 1523
+INFO 2025-11-27 20:53:36,235 django.server basehttp "GET /media/acceptance_payments/2025/11/27/money-check-dollar.jpg HTTP/1.1" 200 1487
+INFO 2025-11-27 20:53:36,244 django.server basehttp "GET /media/acceptance_payments/2025/11/27/messages.jpg HTTP/1.1" 200 1591
+INFO 2025-11-27 20:53:36,245 django.server basehttp "GET /media/acceptance_payments/2025/11/27/download.jpg HTTP/1.1" 200 1386
+INFO 2025-11-27 20:53:36,254 django.server basehttp "GET /media/categories/2025/11/27/burkha.jpg HTTP/1.1" 200 25247
+INFO 2025-11-27 20:53:36,260 django.server basehttp "GET /media/categories/2025/11/27/lehega.jpg HTTP/1.1" 200 32110
+INFO 2025-11-27 20:53:36,277 django.server basehttp "GET /media/products/2025/11/27/Lehenga-p_3.jpg HTTP/1.1" 200 71702
+INFO 2025-11-27 20:53:36,289 django.server basehttp "GET /static/assets/img/banner/banner-4.jpg HTTP/1.1" 200 21873
+INFO 2025-11-27 20:53:36,311 django.server basehttp "GET /media/categories/2025/11/27/feature_7.jpg HTTP/1.1" 200 2320832
+INFO 2025-11-27 20:53:36,322 django.server basehttp "GET /media/products/2025/11/27/Lehenga-p_1.png HTTP/1.1" 200 294799
+INFO 2025-11-27 20:53:36,323 django.server basehttp "GET /static/assets/img/product/tp-1.jpg HTTP/1.1" 200 18315
+INFO 2025-11-27 20:53:36,327 django.server basehttp "GET /static/assets/img/banner/banner-5.jpg HTTP/1.1" 200 11153
+INFO 2025-11-27 20:53:36,340 django.server basehttp "GET /static/assets/img/features-product/fpb-1.jpg HTTP/1.1" 200 16319
+INFO 2025-11-27 20:53:36,360 django.server basehttp "GET /static/assets/img/features-product/fp-1.jpg HTTP/1.1" 200 2939
+INFO 2025-11-27 20:53:36,460 django.server basehttp "GET /static/assets/img/banner/banner-7.jpg HTTP/1.1" 200 1656
+INFO 2025-11-27 20:53:36,461 django.server basehttp "GET /static/assets/img/banner/banner-6.jpg HTTP/1.1" 200 11956
+INFO 2025-11-27 20:53:36,487 django.server basehttp "GET /static/assets/fonts/fa-light-300.woff2 HTTP/1.1" 200 189452
+INFO 2025-11-27 20:53:36,507 django.server basehttp "GET /static/assets/fonts/fa-regular-400.woff2 HTTP/1.1" 200 173220
+INFO 2025-11-27 20:53:36,513 django.server basehttp "GET /static/assets/img/banner/banner-8.jpg HTTP/1.1" 200 12760
+INFO 2025-11-27 20:53:36,532 django.server basehttp "GET /static/assets/flaticon/flaticon10fb.ttf?845a83d3775f78f799f148d44e25858f HTTP/1.1" 200 3576
+INFO 2025-11-27 20:53:36,534 django.server basehttp "GET /static/assets/fonts/fa-solid-900.woff2 HTTP/1.1" 200 140704
+INFO 2025-11-27 20:53:36,547 django.server basehttp "GET /static/assets/fonts/fa-brands-400.woff2 HTTP/1.1" 200 77376
+INFO 2025-11-27 20:53:36,557 django.server basehttp "GET /static/assets/img/brand/brand-1.jpg HTTP/1.1" 200 8601
+INFO 2025-11-27 20:53:36,557 django.server basehttp "GET /static/assets/img/brand/brand-2.jpg HTTP/1.1" 200 6570
+INFO 2025-11-27 20:53:36,565 django.server basehttp "GET /static/assets/img/banner/banner-9.jpg HTTP/1.1" 200 12236
+INFO 2025-11-27 20:53:36,570 django.server basehttp "GET /static/assets/img/brand/brand-4.jpg HTTP/1.1" 200 8428
+INFO 2025-11-27 20:53:36,574 django.server basehttp "GET /static/assets/img/brand/brand-3.jpg HTTP/1.1" 200 6675
+INFO 2025-11-27 20:53:36,575 django.server basehttp "GET /static/assets/img/brand/brand-5.jpg HTTP/1.1" 200 7825
+INFO 2025-11-27 20:53:36,581 django.server basehttp "GET /static/assets/img/brand/brand-6.jpg HTTP/1.1" 200 9587
+INFO 2025-11-27 20:53:36,581 django.server basehttp "GET /static/assets/img/quick-view/quick-view-1.jpg HTTP/1.1" 200 15121
+INFO 2025-11-27 20:53:36,597 django.server basehttp "GET /static/assets/img/quick-view/quick-nav-3.jpg HTTP/1.1" 200 2007
+INFO 2025-11-27 20:53:36,600 django.server basehttp "GET /static/assets/img/quick-view/quick-view-2.jpg HTTP/1.1" 200 14814
+INFO 2025-11-27 20:53:36,606 django.server basehttp "GET /static/assets/img/quick-view/quick-nav-2.jpg HTTP/1.1" 200 1479
+INFO 2025-11-27 20:53:36,607 django.server basehttp "GET /static/assets/img/quick-view/quick-view-4.jpg HTTP/1.1" 200 25450
+INFO 2025-11-27 20:53:36,617 django.server basehttp "GET /static/assets/img/quick-view/quick-view-3.jpg HTTP/1.1" 200 19984
+INFO 2025-11-27 20:53:36,617 django.server basehttp "GET /static/assets/img/quick-view/quick-nav-1.jpg HTTP/1.1" 200 1742
+INFO 2025-11-27 20:53:36,759 django.server basehttp "GET /static/assets/img/payment/payment.png HTTP/1.1" 200 8086
+INFO 2025-11-27 20:53:36,759 django.server basehttp "GET /static/assets/img/brand/app_ios.png HTTP/1.1" 200 3826
+INFO 2025-11-27 20:53:36,760 django.server basehttp "GET /static/assets/img/brand/app_android.png HTTP/1.1" 200 4030
+INFO 2025-11-27 20:53:36,762 django.server basehttp "GET /static/assets/img/quick-view/quick-nav-4.jpg HTTP/1.1" 200 1777
+INFO 2025-11-27 20:53:36,778 django.server basehttp "GET /media/sliders/2025/11/27/kameez.png HTTP/1.1" 200 2320832
+INFO 2025-11-27 20:53:36,780 django.server basehttp "GET /media/sliders/2025/11/27/l.png HTTP/1.1" 200 2502237
+INFO 2025-11-27 20:53:38,109 django.server basehttp "GET /static/assets/img/favicon.png HTTP/1.1" 200 887
+INFO 2025-11-27 20:56:13,283 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:56:14,358 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:56:19,890 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 2, Featured Products: 0
+INFO 2025-11-27 20:56:20,038 django.server basehttp "GET / HTTP/1.1" 200 102750
+INFO 2025-11-27 20:57:05,477 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 20:57:09,529 django.utils.autoreload autoreload Watching for file changes with StatReloader

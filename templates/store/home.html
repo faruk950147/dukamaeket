@@ -80,20 +80,20 @@
                     </div>
                     <div class="offer-time">
                         <span class="offer-title d-none d-sm-block">Hurry Up! Offer ends in:</span>
-                        {% for top_deal in top_deals %}
-                            {% if top_deal.deadline %}
-                                <div class="countdown">
-                                    <div class="countdown-inner b-radius" data-countdown="" data-date="{{ top_deal.deadline|date:'M d Y H:i:s' }}">
-                                        <ul class="text-center">
-                                            <li><span data-days="">0</span> Days</li>
-                                            <li><span data-hours="">0</span> Hours</li>
-                                            <li><span data-minutes="">0</span> Mins</li>
-                                            <li><span data-seconds="">0</span> Secs</li>
-                                        </ul>
-                                    </div>
+                        {% if first_top_deal and first_top_deal.deadline %}
+                            <div class="countdown">
+                                <div class="countdown-inner b-radius"
+                                    data-countdown=""
+                                    data-date="{{ first_top_deal.deadline|date:'c' }}">
+                                    <ul class="text-center">
+                                        <li><span data-days="">0</span> Days</li>
+                                        <li><span data-hours="">0</span> Hours</li>
+                                        <li><span data-minutes="">0</span> Mins</li>
+                                        <li><span data-seconds="">0</span> Secs</li>
+                                    </ul>
                                 </div>
-                            {% endif %}
-                        {% endfor %}
+                            </div>
+                        {% endif %}
 
                     </div>
                 </div>
@@ -112,9 +112,23 @@
                             <div class="product__thumb fix">
                                 <div class="product-image w-img">
                                     <a href="product-details.html">
-                                        <img src="{{top_deal.image.url}}" alt="{{top_deal.title|title}}">
+                                        <img src="{{top_deal.image.url}}" alt="{{top_deal.title|title}}" style="width: 260px; height: 300px;">
                                     </a>
                                 </div>
+                                {% if top_deal.deadline %}
+                                <div class="countdown countdown-small mt-5">
+                                    <div class="countdown-inner b-radius"
+                                        data-countdown=""
+                                        data-date="{{ top_deal.deadline|date:'c' }}">
+                                        <ul class="text-center" style="padding:0; list-style:none; display:flex; justify-content:center; gap:10px;">
+                                            <li><span data-days="">0</span>d</li>
+                                            <li><span data-hours="">0</span>h</li>
+                                            <li><span data-minutes="">0</span>m</li>
+                                            <li><span data-seconds="">0</span>s</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                {% endif %}
                                 <div class="product__offer">
                                     <span class="discount">-{{top_deal.discount_percent}}%</span>
                                 </div>

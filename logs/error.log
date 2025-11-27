@@ -866,3 +866,95 @@ Traceback (most recent call last):
     raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
 django.template.exceptions.TemplateSyntaxError: Invalid filter: 'int'
 ERROR 2025-11-27 14:34:15,807 django.server basehttp "GET / HTTP/1.1" 500 387661
+ERROR 2025-11-27 20:48:48,219 django.request log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py", line 51, in get
+    first_top_deal = top_deals.first()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\db\models\query.py", line 1105, in first
+    queryset = self.order_by("pk")
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\db\models\query.py", line 1724, in order_by
+    raise TypeError("Cannot reorder a query once a slice has been taken.")
+TypeError: Cannot reorder a query once a slice has been taken.
+ERROR 2025-11-27 20:48:48,225 django.server basehttp "GET / HTTP/1.1" 500 114161
+ERROR 2025-11-27 20:48:48,808 django.request log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py", line 51, in get
+    first_top_deal = top_deals.first()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\db\models\query.py", line 1105, in first
+    queryset = self.order_by("pk")
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\db\models\query.py", line 1724, in order_by
+    raise TypeError("Cannot reorder a query once a slice has been taken.")
+TypeError: Cannot reorder a query once a slice has been taken.
+ERROR 2025-11-27 20:48:48,821 django.server basehttp "GET / HTTP/1.1" 500 114148
+ERROR 2025-11-27 20:51:35,091 django.request log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py", line 51, in get
+    first_top_deal = top_deals.first()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\db\models\query.py", line 1105, in first
+    queryset = self.order_by("pk")
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\db\models\query.py", line 1724, in order_by
+    raise TypeError("Cannot reorder a query once a slice has been taken.")
+TypeError: Cannot reorder a query once a slice has been taken.
+ERROR 2025-11-27 20:51:35,099 django.server basehttp "GET / HTTP/1.1" 500 114285
+ERROR 2025-11-27 20:52:13,283 django.request log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py", line 51, in get
+    first_top_deal = top_deals.first()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\db\models\query.py", line 1105, in first
+    queryset = self.order_by("pk")
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\db\models\query.py", line 1724, in order_by
+    raise TypeError("Cannot reorder a query once a slice has been taken.")
+TypeError: Cannot reorder a query once a slice has been taken.
+ERROR 2025-11-27 20:52:13,290 django.server basehttp "GET / HTTP/1.1" 500 114285
