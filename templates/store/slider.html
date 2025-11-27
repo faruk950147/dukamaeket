@@ -53,6 +53,11 @@
                   {{features_slider.product.title|title}}
                   {% endif %}
                 </p>
+                <p>
+                  {% if features_slider.product.discount_percent %}
+                  {{features_slider.product.discount_percent|title}} %
+                  {% endif %}
+                </p>
               </div>
             </div>
           </div>
