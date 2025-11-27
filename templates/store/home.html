@@ -24,8 +24,8 @@
                         <img src="{{ acceptance_payment.image.url }}" alt="{{ acceptance_payment.title|title }}">
                     </div>
                     <div class="features__content">
-                        <h6>{{ acceptance_payment.title|title }}</h6>
-                        <p> {{acceptance_payment.help_time}}  {{ acceptance_payment.sub_title|title }}</p>
+                        <h6>{{ acceptance_payment.title|title|truncatewords:5 }}</h6>
+                        <p> {{acceptance_payment.help_time}}  {{ acceptance_payment.sub_title|title|truncatewords:5 }}</p>
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                         </a>
                     </div>
                     <div class="banner__content">
-                        <h6><a href="product-details.html">{{ cat.title|title }}</a></h6>
+                        <h6><a href="product-details.html">{{ cat.title|title|truncatewords:5 }}</a></h6>
                         <p>{{ cat.description|title }}</p>
                     </div>
                 </div>
@@ -145,7 +145,7 @@
                                 </div>
                             </div>
                             <div class="product__content">
-                                <h6><a href="product-details.html">{{top_deal.title|title}}</a></h6>
+                                <h6><a href="product-details.html">{{top_deal.title|title|truncatewords:5}}</a></h6>
                                 <div class="rating mb-5">
                                     <ul>
                                         {% with top_deal.avg_rate|default:0|floatformat:0 as rating %}
