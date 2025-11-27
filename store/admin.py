@@ -84,11 +84,11 @@ class SizeAdmin(admin.ModelAdmin):
 # =========================================================
 @admin.register(Slider)
 class SliderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'product', 'status', 'slider_type', 'created_date', 'updated_date', 'image_tag')
+    list_display = ('id', 'title', 'sub_title', 'product', 'status', 'slider_type', 'created_date', 'updated_date', 'image_tag')
     list_filter = ('status',)
     search_fields = ('title',)
     readonly_fields = ('id', 'image_tag', 'created_date', 'updated_date')
-    fields = ('product', 'title', 'image', 'image_tag', 'status', 'slider_type')
+    fields = ('product', 'title', 'sub_title', 'image', 'image_tag', 'status', 'slider_type')
 
 
 # =========================================================
@@ -107,8 +107,8 @@ class ReviewAdmin(admin.ModelAdmin):
 # =========================================================
 @admin.register(AcceptancePayment)
 class AcceptancePaymentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'subtitle', 'amount', 'status', 'is_featured', 'created_date', 'updated_date', 'image_tag')
+    list_display = ('id', 'title', 'sub_title', 'help_time', 'status', 'is_featured', 'created_date', 'updated_date', 'image_tag')
     list_filter = ('status', 'is_featured')
-    search_fields = ('title', 'subtitle')
+    search_fields = ('title', 'sub_title')
     readonly_fields = ('id', 'image_tag', 'created_date', 'updated_date')
-    fields = ('title', 'subtitle', 'image', 'image_tag', 'amount', 'status', 'is_featured')
+    fields = ('title', 'sub_title', 'image', 'image_tag', 'help_time', 'status', 'is_featured')

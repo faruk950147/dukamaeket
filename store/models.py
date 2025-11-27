@@ -272,6 +272,7 @@ class ProductVariant(ImageTagMixin):
 class Slider(ImageTagMixin):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     title = models.CharField(max_length=150, unique=True)
+    sub_title = models.CharField(max_length=150, blank=True, null=True) 
     
     image = models.ImageField(upload_to='sliders/%Y/%m/%d/', default='defaults/default.jpg')
     
@@ -314,11 +315,11 @@ class Review(models.Model):
 # 13. ACCEPTANCE PAYMENT MODEL
 # =========================================================
 class AcceptancePayment(ImageTagMixin):
-    title = models.CharField(max_length=150, unique=True, blank=True, null=True)
-    subtitle = models.CharField(max_length=150, blank=True, null=True)
+    title = models.CharField(max_length=150, unique=True)
+    sub_title = models.CharField(max_length=150)
     
     image = models.ImageField(upload_to='acceptance_payments/%Y/%m/%d/', default='defaults/default.jpg')
-    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    help_time = models.PositiveIntegerField(default=100)
     
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
     is_featured = models.BooleanField(default=False)

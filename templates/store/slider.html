@@ -47,16 +47,13 @@
                   <a href="product-details.html">{{features_slider.title|title}}</a>
                 </h6>
                 <p>
-                  {% if features_slider.sub_title %}
                   {{features_slider.sub_title|title}}
-                  {% else %}
-                  {{features_slider.product.title|title}}
+                  {% if features_slider.product.discount_percent %}
+                  {{features_slider.product.discount_percent}} %
                   {% endif %}
                 </p>
-                <p>
-                  {% if features_slider.product.discount_percent %}
-                  {{features_slider.product.discount_percent|title}} %
-                  {% endif %}
+                <p class="mt-2">
+                  {{features_slider.product.title|title}}
                 </p>
               </div>
             </div>
