@@ -142,3 +142,100 @@ EMAIL_PORT = 587
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# ============================= logging =================================
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {name} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname}: {message}',
+            'style': '{',
+        },
+    },
+
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG',
+            'formatter': 'simple',
+        },
+
+        'file_debug': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'level': 'DEBUG',
+            'filename': os.path.join(BASE_DIR, 'logs/debug.log'),
+            'maxBytes': 5 * 1024 * 1024,
+            'backupCount': 3,
+            'formatter': 'verbose',
+        },
+
+        'file_info': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'level': 'INFO',
+            'filename': os.path.join(BASE_DIR, 'logs/info.log'),
+            'maxBytes': 5 * 1024 * 1024,
+            'backupCount': 3,
+            'formatter': 'verbose',
+        },
+
+        'file_warning': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'level': 'WARNING',
+            'filename': os.path.join(BASE_DIR, 'logs/warning.log'),
+            'maxBytes': 5 * 1024 * 1024,
+            'backupCount': 3,
+            'formatter': 'verbose',
+        },
+
+        'file_error': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'level': 'ERROR',
+            'filename': os.path.join(BASE_DIR, 'logs/error.log'),
+            'maxBytes': 5 * 1024 * 1024,
+            'backupCount': 3,
+            'formatter': 'verbose',
+        },
+
+        'file_critical': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'level': 'CRITICAL',
+            'filename': os.path.join(BASE_DIR, 'logs/critical.log'),
+            'maxBytes': 5 * 1024 * 1024,
+            'backupCount': 3,
+            'formatter': 'verbose',
+        },
+    },
+
+    'loggers': {
+        'django': {
+            'handlers': [
+                'console',
+                'file_debug',
+                'file_info',
+                'file_warning',
+                'file_error',
+                'file_critical',
+            ],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+
+        'project': {
+            'handlers': [
+                'console',
+                'file_debug',
+                'file_info',
+                'file_warning',
+                'file_error',
+                'file_critical',
+            ],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    }
+}
