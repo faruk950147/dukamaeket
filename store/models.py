@@ -139,6 +139,8 @@ class Product(ImageTagMixin):
     deadline = models.DateTimeField(blank=True, null=True)
     is_deadline = models.BooleanField(default=False)
     is_featured = models.BooleanField(default=False)
+    sold = models.PositiveIntegerField(default=0)
+
 
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
     created_date = models.DateTimeField(auto_now_add=True)
@@ -179,6 +181,14 @@ class Product(ImageTagMixin):
     @property
     def count_review(self):
         return self.reviews.filter(status='active').count()
+    
+    @property
+    def sold_percentage(self):
+        if self.available_stock:
+            return round((self.sold / self.available_stock) * 100, 2)
+        return 0
+
+        
 
     def __str__(self):
         return f"{self.title} ({self.get_status_display()})"

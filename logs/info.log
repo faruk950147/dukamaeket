@@ -1,176 +1,1067 @@
-INFO 2025-11-27 11:30:40,840 django.utils.autoreload autoreload Watching for file changes with StatReloader
-INFO 2025-11-27 11:30:53,308 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
-INFO 2025-11-27 11:30:53,448 django.server basehttp "GET / HTTP/1.1" 200 95936
-INFO 2025-11-27 11:30:53,824 django.server basehttp "GET /static/assets/css/animate.css HTTP/1.1" 200 68606
-INFO 2025-11-27 11:30:53,828 django.server basehttp "GET /static/assets/css/preloader.css HTTP/1.1" 200 542
-INFO 2025-11-27 11:30:53,846 django.server basehttp "GET /static/assets/css/bootstrap.css HTTP/1.1" 200 206116
-INFO 2025-11-27 11:30:53,864 django.server basehttp "GET /static/assets/css/meanmenu.css HTTP/1.1" 200 2711
-INFO 2025-11-27 11:30:53,918 django.server basehttp "GET /static/assets/css/backtotop.css HTTP/1.1" 200 1165
-INFO 2025-11-27 11:30:53,919 django.server basehttp "GET /static/assets/css/magnific-popup.css HTTP/1.1" 200 6951
-INFO 2025-11-27 11:30:53,920 django.server basehttp "GET /static/assets/css/owl-carousel.css HTTP/1.1" 200 2937
-INFO 2025-11-27 11:30:53,926 django.server basehttp "GET /static/assets/css/nice-select.css HTTP/1.1" 200 3359
-INFO 2025-11-27 11:30:53,936 django.server basehttp "GET /static/assets/css/default.css HTTP/1.1" 200 8364
-INFO 2025-11-27 11:30:53,936 django.server basehttp "GET /static/assets/flaticon/flaticon.css HTTP/1.1" 200 1115
-INFO 2025-11-27 11:30:53,957 django.server basehttp "GET /static/assets/img/logo/logo1.svg HTTP/1.1" 200 4969
-INFO 2025-11-27 11:30:53,976 django.server basehttp "GET /static/assets/css/swiper-bundle.css HTTP/1.1" 200 15806
-INFO 2025-11-27 11:30:53,981 django.server basehttp "GET /static/assets/js/vendor/jquery.js HTTP/1.1" 200 89501
-INFO 2025-11-27 11:30:53,982 django.server basehttp "GET /static/assets/css/font-awesome-pro.css HTTP/1.1" 200 173777
-INFO 2025-11-27 11:30:53,998 django.server basehttp "GET /static/assets/img/cart/20.jpg HTTP/1.1" 200 115168
-INFO 2025-11-27 11:30:54,011 django.server basehttp "GET /media/sliders/2025/11/27/burkha_1.jpg HTTP/1.1" 200 106642
-INFO 2025-11-27 11:30:54,012 django.server basehttp "GET /media/sliders/2025/11/27/feature_8.jpg HTTP/1.1" 200 98181
-INFO 2025-11-27 11:30:54,077 django.server basehttp "GET /static/assets/js/vendor/waypoints.js HTTP/1.1" 200 8833
-INFO 2025-11-27 11:30:54,085 django.server basehttp "GET /static/assets/js/bootstrap-bundle.js HTTP/1.1" 200 80821
-INFO 2025-11-27 11:30:54,106 django.server basehttp "GET /static/assets/js/meanmenu.js HTTP/1.1" 200 11264
-INFO 2025-11-27 11:30:54,131 django.server basehttp "GET /static/assets/js/tweenmax.js HTTP/1.1" 200 111645
-INFO 2025-11-27 11:30:54,147 django.server basehttp "GET /static/assets/js/swiper-bundle.js HTTP/1.1" 200 141251
-INFO 2025-11-27 11:30:54,176 django.server basehttp "GET /static/assets/js/owl-carousel.js HTTP/1.1" 200 42766
-INFO 2025-11-27 11:30:54,184 django.server basehttp "GET /static/assets/js/magnific-popup.js HTTP/1.1" 200 20216
-INFO 2025-11-27 11:30:54,203 django.server basehttp "GET /static/assets/js/parallax.js HTTP/1.1" 200 15991
-INFO 2025-11-27 11:30:54,220 django.server basehttp "GET /static/assets/js/backtotop.js HTTP/1.1" 200 1003
-INFO 2025-11-27 11:30:54,264 django.server basehttp "GET /static/assets/js/nice-select.js HTTP/1.1" 200 2942
-INFO 2025-11-27 11:30:54,348 django.server basehttp "GET /media/sliders/2025/11/27/l-b_2.jpg HTTP/1.1" 200 6384325
-INFO 2025-11-27 11:30:54,375 django.server basehttp "GET /static/assets/js/countdown.min.js HTTP/1.1" 200 7583
-INFO 2025-11-27 11:30:54,433 django.server basehttp "GET /static/assets/js/counterup.js HTTP/1.1" 200 1067
-INFO 2025-11-27 11:30:54,469 django.server basehttp "GET /static/assets/js/wow.js HTTP/1.1" 200 8415
-INFO 2025-11-27 11:30:54,485 django.server basehttp "GET /static/assets/js/isotope-pkgd.js HTTP/1.1" 200 35503
-INFO 2025-11-27 11:30:54,503 django.server basehttp "GET /static/assets/flaticon/flaticon10fb.ttf?845a83d3775f78f799f148d44e25858f HTTP/1.1" 200 3576
-INFO 2025-11-27 11:30:54,510 django.server basehttp "GET /static/assets/fonts/fa-regular-400.woff2 HTTP/1.1" 200 173220
-INFO 2025-11-27 11:30:54,528 django.server basehttp "GET /static/assets/fonts/fa-solid-900.woff2 HTTP/1.1" 200 140704
-INFO 2025-11-27 11:30:54,529 django.server basehttp "GET /static/assets/fonts/fa-light-300.woff2 HTTP/1.1" 200 189452
-INFO 2025-11-27 11:30:54,636 django.server basehttp "GET /static/assets/fonts/fa-brands-400.woff2 HTTP/1.1" 200 77376
-INFO 2025-11-27 11:30:54,661 django.server basehttp "GET /static/assets/js/imagesloaded-pkgd.js HTTP/1.1" 200 5594
-INFO 2025-11-27 11:30:54,703 django.server basehttp "GET /static/assets/js/ajax-form.js HTTP/1.1" 200 1202
-INFO 2025-11-27 11:30:54,734 django.server basehttp "GET /media/sliders/2025/11/27/l-b_1.jpg HTTP/1.1" 200 194527
-INFO 2025-11-27 11:30:54,750 django.server basehttp "GET /media/acceptance_payments/2025/11/27/truck.jpg HTTP/1.1" 200 1523
-INFO 2025-11-27 11:30:54,751 django.server basehttp "GET /static/assets/img/logo/logo-white.png HTTP/1.1" 200 4586
-INFO 2025-11-27 11:30:54,786 django.server basehttp "GET /media/acceptance_payments/2025/11/27/money-check-dollar.jpg HTTP/1.1" 200 1487
-INFO 2025-11-27 11:30:54,818 django.server basehttp "GET /media/categories/2025/11/27/burkha.jpg HTTP/1.1" 200 25247
-INFO 2025-11-27 11:30:54,900 django.server basehttp "GET /media/categories/2025/11/27/feature_7.jpg HTTP/1.1" 200 2320832
-INFO 2025-11-27 11:30:54,950 django.server basehttp "GET /media/categories/2025/11/27/lehega.jpg HTTP/1.1" 200 32110
-INFO 2025-11-27 11:30:55,107 django.server basehttp "GET /media/acceptance_payments/2025/11/27/download.jpg HTTP/1.1" 200 1386
-INFO 2025-11-27 11:30:55,108 django.server basehttp "GET /media/acceptance_payments/2025/11/27/messages.jpg HTTP/1.1" 200 1591
-INFO 2025-11-27 11:30:55,113 django.server basehttp "GET /static/assets/img/product/tp-1.jpg HTTP/1.1" 200 18315
-INFO 2025-11-27 11:30:55,118 django.server basehttp "GET /static/assets/img/banner/banner-4.jpg HTTP/1.1" 200 21873
-INFO 2025-11-27 11:30:55,179 django.server basehttp "GET /static/assets/img/banner/banner-6.jpg HTTP/1.1" 200 11956
-INFO 2025-11-27 11:30:55,186 django.server basehttp "GET /static/assets/img/banner/banner-8.jpg HTTP/1.1" 200 12760
-INFO 2025-11-27 11:30:55,202 django.server basehttp "GET /static/assets/img/banner/banner-7.jpg HTTP/1.1" 200 1656
-INFO 2025-11-27 11:30:55,212 django.server basehttp "GET /static/assets/img/banner/banner-5.jpg HTTP/1.1" 200 11153
-INFO 2025-11-27 11:30:55,231 django.server basehttp "GET /static/assets/img/features-product/fp-1.jpg HTTP/1.1" 200 2939
-INFO 2025-11-27 11:30:55,233 django.server basehttp "GET /static/assets/img/brand/brand-1.jpg HTTP/1.1" 200 8601
-INFO 2025-11-27 11:30:55,234 django.server basehttp "GET /static/assets/img/banner/banner-9.jpg HTTP/1.1" 200 12236
-INFO 2025-11-27 11:30:55,235 django.server basehttp "GET /static/assets/img/features-product/fpb-1.jpg HTTP/1.1" 200 16319
-INFO 2025-11-27 11:30:55,236 django.server basehttp "GET /static/assets/img/brand/brand-2.jpg HTTP/1.1" 200 6570
-INFO 2025-11-27 11:30:55,239 django.server basehttp "GET /static/assets/img/brand/brand-3.jpg HTTP/1.1" 200 6675
-INFO 2025-11-27 11:30:55,264 django.server basehttp "GET /static/assets/img/brand/brand-6.jpg HTTP/1.1" 200 9587
-INFO 2025-11-27 11:30:55,266 django.server basehttp "GET /static/assets/img/brand/brand-4.jpg HTTP/1.1" 200 8428
-INFO 2025-11-27 11:30:55,266 django.server basehttp "GET /static/assets/img/brand/brand-5.jpg HTTP/1.1" 200 7825
-INFO 2025-11-27 11:30:55,267 django.server basehttp "GET /static/assets/img/quick-view/quick-view-3.jpg HTTP/1.1" 200 19984
-INFO 2025-11-27 11:30:55,280 django.server basehttp "GET /static/assets/img/quick-view/quick-view-2.jpg HTTP/1.1" 200 14814
-INFO 2025-11-27 11:30:55,293 django.server basehttp "GET /static/assets/img/quick-view/quick-view-1.jpg HTTP/1.1" 200 15121
-INFO 2025-11-27 11:30:55,295 django.server basehttp "GET /static/assets/img/quick-view/quick-view-4.jpg HTTP/1.1" 200 25450
-INFO 2025-11-27 11:30:55,303 django.server basehttp "GET /static/assets/img/quick-view/quick-nav-2.jpg HTTP/1.1" 200 1479
-INFO 2025-11-27 11:30:55,310 django.server basehttp "GET /static/assets/img/quick-view/quick-nav-1.jpg HTTP/1.1" 200 1742
-INFO 2025-11-27 11:30:55,311 django.server basehttp "GET /static/assets/img/quick-view/quick-nav-3.jpg HTTP/1.1" 200 2007
-INFO 2025-11-27 11:30:55,312 django.server basehttp "GET /static/assets/img/quick-view/quick-nav-4.jpg HTTP/1.1" 200 1777
-INFO 2025-11-27 11:30:55,329 django.server basehttp "GET /static/assets/img/brand/app_ios.png HTTP/1.1" 200 3826
-INFO 2025-11-27 11:30:55,329 django.server basehttp "GET /static/assets/img/brand/app_android.png HTTP/1.1" 200 4030
-INFO 2025-11-27 11:30:55,330 django.server basehttp "GET /static/assets/img/payment/payment.png HTTP/1.1" 200 8086
-INFO 2025-11-27 11:30:55,377 django.server basehttp "GET /static/assets/img/favicon.png HTTP/1.1" 200 887
-INFO 2025-11-27 11:31:05,375 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
-INFO 2025-11-27 11:31:05,453 django.server basehttp "GET / HTTP/1.1" 200 95936
-INFO 2025-11-27 11:31:09,867 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
-INFO 2025-11-27 11:31:09,936 django.server basehttp "GET / HTTP/1.1" 200 95936
-INFO 2025-11-27 11:31:52,635 django.utils.autoreload autoreload Watching for file changes with StatReloader
-INFO 2025-11-27 11:31:59,347 django.server basehttp "GET /admin/ HTTP/1.1" 302 0
-INFO 2025-11-27 11:31:59,425 django.server basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4173
-INFO 2025-11-27 11:32:00,131 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
-INFO 2025-11-27 11:32:00,332 django.server basehttp "GET / HTTP/1.1" 200 95936
-INFO 2025-11-27 11:32:00,648 django.server basehttp "GET /static/assets/css/preloader.css HTTP/1.1" 200 542
-INFO 2025-11-27 11:32:00,664 django.server basehttp "GET /static/assets/css/bootstrap.css HTTP/1.1" 200 206116
-INFO 2025-11-27 11:32:00,683 django.server basehttp "GET /static/assets/css/swiper-bundle.css HTTP/1.1" 200 15806
-INFO 2025-11-27 11:32:00,796 django.server basehttp "GET /static/assets/css/backtotop.css HTTP/1.1" 200 1165
-INFO 2025-11-27 11:32:00,855 django.server basehttp "GET /static/assets/css/magnific-popup.css HTTP/1.1" 200 6951
-INFO 2025-11-27 11:32:00,855 django.server basehttp "GET /static/assets/flaticon/flaticon.css HTTP/1.1" 200 1115
-INFO 2025-11-27 11:32:00,855 django.server basehttp "GET /static/assets/css/nice-select.css HTTP/1.1" 200 3359
-INFO 2025-11-27 11:32:00,856 django.server basehttp "GET /static/assets/css/meanmenu.css HTTP/1.1" 200 2711
-INFO 2025-11-27 11:32:00,883 django.server basehttp "GET /static/assets/css/default.css HTTP/1.1" 200 8364
-INFO 2025-11-27 11:32:00,883 django.server basehttp "GET /static/assets/js/vendor/jquery.js HTTP/1.1" 200 89501
-INFO 2025-11-27 11:32:00,884 django.server basehttp "GET /static/assets/css/animate.css HTTP/1.1" 200 68606
-INFO 2025-11-27 11:32:00,903 django.server basehttp "GET /static/assets/css/style.css HTTP/1.1" 200 132331
-INFO 2025-11-27 11:32:00,930 django.server basehttp "GET /static/assets/css/font-awesome-pro.css HTTP/1.1" 200 173777
-INFO 2025-11-27 11:32:00,943 django.server basehttp "GET /static/assets/css/owl-carousel.css HTTP/1.1" 200 2937
-INFO 2025-11-27 11:32:00,968 django.server basehttp "GET /media/sliders/2025/11/27/feature_8.jpg HTTP/1.1" 200 98181
-INFO 2025-11-27 11:32:00,970 django.server basehttp "GET /static/assets/img/cart/20.jpg HTTP/1.1" 200 115168
-INFO 2025-11-27 11:32:00,982 django.server basehttp "GET /static/assets/img/logo/logo1.svg HTTP/1.1" 200 4969
-INFO 2025-11-27 11:32:00,999 django.server basehttp "GET /media/sliders/2025/11/27/burkha_1.jpg HTTP/1.1" 200 106642
-INFO 2025-11-27 11:32:01,012 django.server basehttp "GET /static/assets/js/vendor/waypoints.js HTTP/1.1" 200 8833
-INFO 2025-11-27 11:32:01,039 django.server basehttp "GET /static/assets/js/bootstrap-bundle.js HTTP/1.1" 200 80821
-INFO 2025-11-27 11:32:01,072 django.server basehttp "GET /static/assets/js/meanmenu.js HTTP/1.1" 200 11264
-INFO 2025-11-27 11:32:01,133 django.server basehttp "GET /static/assets/js/swiper-bundle.js HTTP/1.1" 200 141251
-INFO 2025-11-27 11:32:01,144 django.server basehttp "GET /media/sliders/2025/11/27/l-b_2.jpg HTTP/1.1" 200 6384325
-INFO 2025-11-27 11:32:01,179 django.server basehttp "GET /static/assets/js/tweenmax.js HTTP/1.1" 200 111645
-INFO 2025-11-27 11:32:01,200 django.server basehttp "GET /static/assets/js/owl-carousel.js HTTP/1.1" 200 42766
-INFO 2025-11-27 11:32:01,212 django.server basehttp "GET /static/assets/js/magnific-popup.js HTTP/1.1" 200 20216
-INFO 2025-11-27 11:32:01,220 django.server basehttp "GET /static/assets/js/parallax.js HTTP/1.1" 200 15991
-INFO 2025-11-27 11:32:01,250 django.server basehttp "GET /static/assets/js/nice-select.js HTTP/1.1" 200 2942
-INFO 2025-11-27 11:32:01,251 django.server basehttp "GET /static/assets/js/backtotop.js HTTP/1.1" 200 1003
-INFO 2025-11-27 11:32:01,258 django.server basehttp "GET /static/assets/js/countdown.min.js HTTP/1.1" 200 7583
-INFO 2025-11-27 11:32:01,264 django.server basehttp "GET /static/assets/js/counterup.js HTTP/1.1" 200 1067
-INFO 2025-11-27 11:32:01,291 django.server basehttp "GET /static/assets/js/wow.js HTTP/1.1" 200 8415
-INFO 2025-11-27 11:32:01,298 django.server basehttp "GET /static/assets/js/isotope-pkgd.js HTTP/1.1" 200 35503
-INFO 2025-11-27 11:32:01,318 django.server basehttp "GET /media/sliders/2025/11/27/l-b_1.jpg HTTP/1.1" 200 194527
-INFO 2025-11-27 11:32:01,332 django.server basehttp "GET /static/assets/js/main.js HTTP/1.1" 200 14734
-INFO 2025-11-27 11:32:01,333 django.server basehttp "GET /static/assets/js/ajax-form.js HTTP/1.1" 200 1202
-INFO 2025-11-27 11:32:01,335 django.server basehttp "GET /static/assets/js/imagesloaded-pkgd.js HTTP/1.1" 200 5594
-INFO 2025-11-27 11:32:01,349 django.server basehttp "GET /static/assets/img/logo/logo-white.png HTTP/1.1" 200 4586
-INFO 2025-11-27 11:32:01,356 django.server basehttp "GET /media/acceptance_payments/2025/11/27/truck.jpg HTTP/1.1" 200 1523
-INFO 2025-11-27 11:32:01,364 django.server basehttp "GET /media/acceptance_payments/2025/11/27/money-check-dollar.jpg HTTP/1.1" 200 1487
-INFO 2025-11-27 11:32:01,370 django.server basehttp "GET /media/categories/2025/11/27/lehega.jpg HTTP/1.1" 200 32110
-INFO 2025-11-27 11:32:01,370 django.server basehttp "GET /media/acceptance_payments/2025/11/27/messages.jpg HTTP/1.1" 200 1591
-INFO 2025-11-27 11:32:01,374 django.server basehttp "GET /media/acceptance_payments/2025/11/27/download.jpg HTTP/1.1" 200 1386
-INFO 2025-11-27 11:32:01,412 django.server basehttp "GET /media/categories/2025/11/27/feature_7.jpg HTTP/1.1" 200 2320832
-INFO 2025-11-27 11:32:01,419 django.server basehttp "GET /static/assets/img/product/tp-1.jpg HTTP/1.1" 200 18315
-INFO 2025-11-27 11:32:01,420 django.server basehttp "GET /media/categories/2025/11/27/burkha.jpg HTTP/1.1" 200 25247
-INFO 2025-11-27 11:32:01,432 django.server basehttp "GET /static/assets/img/banner/banner-4.jpg HTTP/1.1" 200 21873
-INFO 2025-11-27 11:32:01,433 django.server basehttp "GET /static/assets/img/banner/banner-5.jpg HTTP/1.1" 200 11153
-INFO 2025-11-27 11:32:01,446 django.server basehttp "GET /static/assets/img/features-product/fpb-1.jpg HTTP/1.1" 200 16319
-INFO 2025-11-27 11:32:01,634 django.server basehttp "GET /static/assets/fonts/fa-regular-400.woff2 HTTP/1.1" 200 173220
-INFO 2025-11-27 11:32:01,745 django.server basehttp "GET /static/assets/img/features-product/fp-1.jpg HTTP/1.1" 200 2939
-INFO 2025-11-27 11:32:01,751 django.server basehttp "GET /static/assets/img/banner/banner-6.jpg HTTP/1.1" 200 11956
-INFO 2025-11-27 11:32:01,756 django.server basehttp "GET /static/assets/img/banner/banner-8.jpg HTTP/1.1" 200 12760
-INFO 2025-11-27 11:32:01,835 django.server basehttp "GET /static/assets/img/banner/banner-7.jpg HTTP/1.1" 200 1656
-INFO 2025-11-27 11:32:01,840 django.server basehttp "GET /static/assets/flaticon/flaticon10fb.ttf?845a83d3775f78f799f148d44e25858f HTTP/1.1" 200 3576
-INFO 2025-11-27 11:32:01,855 django.server basehttp "GET /static/assets/fonts/fa-light-300.woff2 HTTP/1.1" 200 189452
-INFO 2025-11-27 11:32:01,916 django.server basehttp "GET /static/assets/fonts/fa-brands-400.woff2 HTTP/1.1" 200 77376
-INFO 2025-11-27 11:32:01,917 django.server basehttp "GET /static/assets/fonts/fa-solid-900.woff2 HTTP/1.1" 200 140704
-INFO 2025-11-27 11:32:01,924 django.server basehttp "GET /static/assets/img/banner/banner-9.jpg HTTP/1.1" 200 12236
-INFO 2025-11-27 11:32:01,928 django.server basehttp "GET /static/assets/img/brand/brand-1.jpg HTTP/1.1" 200 8601
-INFO 2025-11-27 11:32:01,931 django.server basehttp "GET /static/assets/img/brand/brand-2.jpg HTTP/1.1" 200 6570
-INFO 2025-11-27 11:32:01,934 django.server basehttp "GET /static/assets/img/brand/brand-3.jpg HTTP/1.1" 200 6675
-INFO 2025-11-27 11:32:01,948 django.server basehttp "GET /static/assets/img/brand/brand-4.jpg HTTP/1.1" 200 8428
-INFO 2025-11-27 11:32:01,948 django.server basehttp "GET /static/assets/img/brand/brand-5.jpg HTTP/1.1" 200 7825
-INFO 2025-11-27 11:32:01,954 django.server basehttp "GET /static/assets/img/quick-view/quick-view-1.jpg HTTP/1.1" 200 15121
-INFO 2025-11-27 11:32:01,963 django.server basehttp "GET /static/assets/img/brand/brand-6.jpg HTTP/1.1" 200 9587
-INFO 2025-11-27 11:32:01,964 django.server basehttp "GET /static/assets/img/quick-view/quick-view-2.jpg HTTP/1.1" 200 14814
-INFO 2025-11-27 11:32:01,980 django.server basehttp "GET /static/assets/img/quick-view/quick-view-3.jpg HTTP/1.1" 200 19984
-INFO 2025-11-27 11:32:01,991 django.server basehttp "GET /static/assets/img/quick-view/quick-nav-1.jpg HTTP/1.1" 200 1742
-INFO 2025-11-27 11:32:02,000 django.server basehttp "GET /static/assets/img/quick-view/quick-view-4.jpg HTTP/1.1" 200 25450
-INFO 2025-11-27 11:32:02,015 django.server basehttp "GET /static/assets/img/quick-view/quick-nav-2.jpg HTTP/1.1" 200 1479
-INFO 2025-11-27 11:32:02,025 django.server basehttp "GET /static/assets/img/quick-view/quick-nav-4.jpg HTTP/1.1" 200 1777
-INFO 2025-11-27 11:32:02,026 django.server basehttp "GET /static/assets/img/quick-view/quick-nav-3.jpg HTTP/1.1" 200 2007
-INFO 2025-11-27 11:32:02,034 django.server basehttp "GET /static/assets/img/brand/app_ios.png HTTP/1.1" 200 3826
-INFO 2025-11-27 11:32:02,034 django.server basehttp "GET /static/assets/img/brand/app_android.png HTTP/1.1" 200 4030
-INFO 2025-11-27 11:32:02,035 django.server basehttp "GET /static/assets/img/payment/payment.png HTTP/1.1" 200 8086
-INFO 2025-11-27 11:32:04,148 django.server basehttp "GET /media/sliders/2025/11/27/kameez.png HTTP/1.1" 200 2320832
-INFO 2025-11-27 11:32:04,149 django.server basehttp "GET /media/sliders/2025/11/27/l.png HTTP/1.1" 200 2502237
-INFO 2025-11-27 11:32:04,475 django.server basehttp "GET /static/assets/img/favicon.png HTTP/1.1" 200 887
-INFO 2025-11-27 11:40:51,974 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\config\settings.py changed, reloading.
-INFO 2025-11-27 11:40:53,597 django.utils.autoreload autoreload Watching for file changes with StatReloader
-INFO 2025-11-27 11:41:00,167 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\config\settings.py changed, reloading.
-INFO 2025-11-27 11:41:01,568 django.utils.autoreload autoreload Watching for file changes with StatReloader
-INFO 2025-11-27 11:41:06,713 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\config\settings.py changed, reloading.
-INFO 2025-11-27 11:41:08,964 django.utils.autoreload autoreload Watching for file changes with StatReloader
-INFO 2025-11-27 11:41:14,444 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\config\settings.py changed, reloading.
-INFO 2025-11-27 11:41:15,780 django.utils.autoreload autoreload Watching for file changes with StatReloader
-INFO 2025-11-27 11:41:23,410 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\config\settings.py changed, reloading.
-INFO 2025-11-27 11:41:24,528 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 13:35:03,797 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 13:35:14,021 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
+INFO 2025-11-27 13:35:14,579 django.server basehttp "GET / HTTP/1.1" 200 96129
+WARNING 2025-11-27 13:35:14,915 django.server basehttp "GET /static/assets/css/bootstrap.min.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 13:35:14,937 django.request log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-27 13:35:15,086 django.server basehttp "GET /static/assets/flaticon/flaticon.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 13:35:15,117 django.server basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3576
+WARNING 2025-11-27 13:35:15,280 django.server basehttp "GET /static/assets/css/style.css.map HTTP/1.1" 404 1999
+WARNING 2025-11-27 13:35:15,426 django.server basehttp "GET /static/assets/js/bootstrap.bundle.min.js.map HTTP/1.1" 404 2038
+WARNING 2025-11-27 13:35:15,522 django.server basehttp "GET /static/assets/js/swiper-bundle.min.js.map HTTP/1.1" 404 2029
+INFO 2025-11-27 13:35:48,707 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
+INFO 2025-11-27 13:35:48,810 django.server basehttp "GET / HTTP/1.1" 200 96015
+WARNING 2025-11-27 13:35:49,101 django.request log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-27 13:35:49,147 django.server basehttp "GET /static/assets/css/bootstrap.min.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 13:35:49,152 django.server basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3576
+WARNING 2025-11-27 13:35:49,166 django.server basehttp "GET /static/assets/css/style.css.map HTTP/1.1" 404 1999
+WARNING 2025-11-27 13:35:49,274 django.server basehttp "GET /static/assets/flaticon/flaticon.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 13:35:49,355 django.server basehttp "GET /static/assets/js/bootstrap.bundle.min.js.map HTTP/1.1" 404 2038
+WARNING 2025-11-27 13:35:49,473 django.server basehttp "GET /static/assets/js/swiper-bundle.min.js.map HTTP/1.1" 404 2029
+INFO 2025-11-27 13:41:38,374 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
+ERROR 2025-11-27 13:41:39,968 django.request log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\smartif.py", line 180, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: 'product.avg_rate|float'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py", line 65, in get
+    return render(request, 'store/home.html', context)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 961, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 894, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\smartif.py", line 171, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\smartif.py", line 182, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 897, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 705, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 615, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'float'
+ERROR 2025-11-27 13:41:40,019 django.server basehttp "GET / HTTP/1.1" 500 366873
+INFO 2025-11-27 13:43:30,140 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
+ERROR 2025-11-27 13:43:31,067 django.request log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py", line 65, in get
+    return render(request, 'store/home.html', context)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 489, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 705, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 615, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'mul'
+ERROR 2025-11-27 13:43:31,097 django.server basehttp "GET / HTTP/1.1" 500 298873
+INFO 2025-11-27 13:46:45,960 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
+ERROR 2025-11-27 13:46:47,319 django.request log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py", line 65, in get
+    return render(request, 'store/home.html', context)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 489, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 705, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 615, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'mul'
+ERROR 2025-11-27 13:46:47,362 django.server basehttp "GET / HTTP/1.1" 500 298843
+INFO 2025-11-27 13:48:34,618 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
+ERROR 2025-11-27 13:48:35,372 django.request log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py", line 65, in get
+    return render(request, 'store/home.html', context)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 489, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 705, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 615, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'mul'
+ERROR 2025-11-27 13:48:35,404 django.server basehttp "GET / HTTP/1.1" 500 298684
+INFO 2025-11-27 13:49:16,792 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
+ERROR 2025-11-27 13:49:17,891 django.request log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py", line 65, in get
+    return render(request, 'store/home.html', context)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 489, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 705, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 615, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'mul'
+ERROR 2025-11-27 13:49:17,924 django.server basehttp "GET / HTTP/1.1" 500 299272
+INFO 2025-11-27 13:50:08,552 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\models.py changed, reloading.
+INFO 2025-11-27 13:50:10,372 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 13:50:28,292 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\models.py changed, reloading.
+INFO 2025-11-27 13:50:33,115 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 13:50:36,477 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\models.py changed, reloading.
+INFO 2025-11-27 13:50:39,590 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 13:50:47,373 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\models.py changed, reloading.
+INFO 2025-11-27 13:50:49,068 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 13:53:16,773 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\models.py changed, reloading.
+INFO 2025-11-27 13:53:19,071 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 13:53:24,570 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
+ERROR 2025-11-27 13:53:25,460 django.request log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py", line 65, in get
+    return render(request, 'store/home.html', context)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 489, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 705, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 615, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'mul'
+ERROR 2025-11-27 13:53:25,519 django.server basehttp "GET / HTTP/1.1" 500 299272
+INFO 2025-11-27 13:53:28,227 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
+ERROR 2025-11-27 13:53:29,027 django.request log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py", line 65, in get
+    return render(request, 'store/home.html', context)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 489, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 705, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 615, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'mul'
+ERROR 2025-11-27 13:53:29,057 django.server basehttp "GET / HTTP/1.1" 500 299272
+INFO 2025-11-27 13:56:06,706 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\models.py changed, reloading.
+INFO 2025-11-27 13:56:08,121 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 13:58:59,975 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 13:59:03,525 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
+ERROR 2025-11-27 13:59:04,785 django.request log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py", line 65, in get
+    return render(request, 'store/home.html', context)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 489, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 705, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 615, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'mul'
+ERROR 2025-11-27 13:59:04,825 django.server basehttp "GET / HTTP/1.1" 500 299272
+INFO 2025-11-27 14:04:38,592 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\models.py changed, reloading.
+INFO 2025-11-27 14:04:41,210 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 14:04:43,831 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\models.py changed, reloading.
+INFO 2025-11-27 14:04:45,275 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 14:05:35,776 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\models.py changed, reloading.
+INFO 2025-11-27 14:05:37,915 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 14:05:51,042 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\models.py changed, reloading.
+INFO 2025-11-27 14:05:52,489 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 14:08:26,279 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
+INFO 2025-11-27 14:08:26,439 django.server basehttp "GET / HTTP/1.1" 200 92330
+INFO 2025-11-27 14:08:26,579 django.server basehttp "GET /media/sliders/2025/11/27/feature_8.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:08:26,579 django.server basehttp "GET /media/sliders/2025/11/27/burkha_1.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:08:26,655 django.server basehttp "GET /media/sliders/2025/11/27/l-b_2.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:08:26,674 django.server basehttp "GET /static/assets/js/countdown.min.js HTTP/1.1" 304 0
+INFO 2025-11-27 14:08:26,750 django.server basehttp "GET /media/sliders/2025/11/27/l-b_1.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:08:26,763 django.server basehttp "GET /media/acceptance_payments/2025/11/27/money-check-dollar.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:08:26,763 django.server basehttp "GET /media/acceptance_payments/2025/11/27/messages.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:08:26,787 django.server basehttp "GET /media/categories/2025/11/27/lehega.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:08:26,790 django.server basehttp "GET /media/acceptance_payments/2025/11/27/truck.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:08:26,818 django.server basehttp "GET /media/categories/2025/11/27/feature_7.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:08:26,875 django.server basehttp "GET /media/acceptance_payments/2025/11/27/download.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:08:27,005 django.server basehttp "GET /media/categories/2025/11/27/burkha.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:08:28,533 django.server basehttp "GET /media/sliders/2025/11/27/l.png HTTP/1.1" 304 0
+INFO 2025-11-27 14:08:28,534 django.server basehttp "GET /media/sliders/2025/11/27/kameez.png HTTP/1.1" 304 0
+INFO 2025-11-27 14:09:29,769 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
+INFO 2025-11-27 14:09:29,954 django.server basehttp "GET / HTTP/1.1" 200 95936
+INFO 2025-11-27 14:09:52,264 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
+INFO 2025-11-27 14:09:52,429 django.server basehttp "GET / HTTP/1.1" 200 95936
+INFO 2025-11-27 14:12:18,214 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
+INFO 2025-11-27 14:12:18,325 django.server basehttp "GET / HTTP/1.1" 200 95311
+INFO 2025-11-27 14:13:49,824 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
+INFO 2025-11-27 14:13:49,944 django.server basehttp "GET / HTTP/1.1" 200 95312
+WARNING 2025-11-27 14:13:59,447 django.server basehttp "GET /static/assets/js/bootstrap.bundle.min.js.map HTTP/1.1" 404 2038
+WARNING 2025-11-27 14:13:59,449 django.request log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-27 14:13:59,769 django.server basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3576
+WARNING 2025-11-27 14:13:59,800 django.server basehttp "GET /static/assets/css/style.css.map HTTP/1.1" 404 1999
+WARNING 2025-11-27 14:14:00,119 django.server basehttp "GET /static/assets/css/bootstrap.min.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 14:14:00,173 django.server basehttp "GET /static/assets/flaticon/flaticon.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 14:14:00,474 django.server basehttp "GET /static/assets/js/swiper-bundle.min.js.map HTTP/1.1" 404 2029
+INFO 2025-11-27 14:17:27,060 project views User Anonymous visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
+INFO 2025-11-27 14:17:27,643 django.server basehttp "GET / HTTP/1.1" 200 93066
+INFO 2025-11-27 14:20:45,060 django.server basehttp "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-11-27 14:20:45,159 django.server basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4173
+INFO 2025-11-27 14:20:45,673 django.server basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2808
+INFO 2025-11-27 14:20:45,673 django.server basehttp "GET /static/admin/css/base.css HTTP/1.1" 200 22120
+INFO 2025-11-27 14:20:45,692 django.server basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 200 16565
+INFO 2025-11-27 14:20:45,825 django.server basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+INFO 2025-11-27 14:20:45,850 django.server basehttp "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+INFO 2025-11-27 14:20:45,874 django.server basehttp "GET /static/admin/css/login.css HTTP/1.1" 200 951
+INFO 2025-11-27 14:20:46,025 django.server basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-11-27 14:20:49,820 django.server basehttp "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2025-11-27 14:20:49,929 django.server basehttp "GET /admin/ HTTP/1.1" 200 15156
+INFO 2025-11-27 14:20:50,021 django.server basehttp "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+INFO 2025-11-27 14:20:50,071 django.server basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+INFO 2025-11-27 14:20:50,072 django.server basehttp "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+INFO 2025-11-27 14:20:54,619 django.server basehttp "GET /admin/store/product/ HTTP/1.1" 200 27840
+INFO 2025-11-27 14:20:54,663 django.server basehttp "GET /static/admin/css/changelists.css HTTP/1.1" 200 6878
+INFO 2025-11-27 14:20:54,679 django.server basehttp "GET /static/admin/js/core.js HTTP/1.1" 200 6208
+INFO 2025-11-27 14:20:54,679 django.server basehttp "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+INFO 2025-11-27 14:20:54,713 django.server basehttp "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+INFO 2025-11-27 14:20:54,720 django.server basehttp "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+INFO 2025-11-27 14:20:54,775 django.server basehttp "GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+INFO 2025-11-27 14:20:54,777 django.server basehttp "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9777
+INFO 2025-11-27 14:20:54,778 django.server basehttp "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+INFO 2025-11-27 14:20:54,811 django.server basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-11-27 14:20:54,830 django.server basehttp "GET /media/defaults/default.jpg HTTP/1.1" 200 2588
+INFO 2025-11-27 14:20:54,918 django.server basehttp "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+INFO 2025-11-27 14:20:54,930 django.server basehttp "GET /static/admin/img/icon-no.svg HTTP/1.1" 200 560
+INFO 2025-11-27 14:20:55,035 django.server basehttp "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+INFO 2025-11-27 14:20:55,089 django.server basehttp "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+INFO 2025-11-27 14:20:55,118 django.server basehttp "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+INFO 2025-11-27 14:20:55,126 django.server basehttp "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+INFO 2025-11-27 14:20:55,141 django.server basehttp "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+INFO 2025-11-27 14:21:02,784 django.server basehttp "GET /admin/store/product/1/change/ HTTP/1.1" 200 41714
+INFO 2025-11-27 14:21:02,889 django.server basehttp "GET /static/admin/css/forms.css HTTP/1.1" 200 8525
+INFO 2025-11-27 14:21:02,890 django.server basehttp "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 586
+INFO 2025-11-27 14:21:02,907 django.server basehttp "GET /static/admin/js/inlines.js HTTP/1.1" 200 15628
+INFO 2025-11-27 14:21:02,908 django.server basehttp "GET /static/admin/js/calendar.js HTTP/1.1" 200 9141
+INFO 2025-11-27 14:21:02,912 django.server basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-11-27 14:21:02,926 django.server basehttp "GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 200 19319
+INFO 2025-11-27 14:21:02,956 django.server basehttp "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 200 392
+INFO 2025-11-27 14:21:02,976 django.server basehttp "GET /static/admin/css/widgets.css HTTP/1.1" 200 11973
+INFO 2025-11-27 14:21:03,038 django.server basehttp "GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+INFO 2025-11-27 14:21:03,193 django.server basehttp "GET /static/admin/img/inline-delete.svg HTTP/1.1" 200 537
+INFO 2025-11-27 14:21:03,261 django.server basehttp "GET /static/admin/img/icon-clock.svg HTTP/1.1" 200 677
+INFO 2025-11-27 14:21:03,287 django.server basehttp "GET /static/admin/img/icon-calendar.svg HTTP/1.1" 200 1086
+INFO 2025-11-27 14:21:22,611 django.server basehttp "POST /admin/store/product/1/change/ HTTP/1.1" 302 0
+INFO 2025-11-27 14:21:22,774 django.server basehttp "GET /admin/store/product/ HTTP/1.1" 200 28106
+INFO 2025-11-27 14:21:22,835 django.server basehttp "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+INFO 2025-11-27 14:21:22,842 django.server basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-11-27 14:21:26,795 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 0, Featured Products: 0
+INFO 2025-11-27 14:21:26,910 django.server basehttp "GET / HTTP/1.1" 200 93066
+INFO 2025-11-27 14:21:26,999 django.server basehttp "GET /static/assets/js/countdown.min.js HTTP/1.1" 304 0
+INFO 2025-11-27 14:21:48,159 django.server basehttp "GET /admin/store/product/1/change/ HTTP/1.1" 200 41722
+INFO 2025-11-27 14:21:48,217 django.server basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-11-27 14:21:55,839 django.server basehttp "GET /static/admin/img/calendar-icons.svg HTTP/1.1" 200 2455
+INFO 2025-11-27 14:22:03,242 django.server basehttp "POST /admin/store/product/1/change/ HTTP/1.1" 302 0
+INFO 2025-11-27 14:22:03,343 django.server basehttp "GET /admin/store/product/ HTTP/1.1" 200 28106
+INFO 2025-11-27 14:22:03,406 django.server basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-11-27 14:22:07,375 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 1, Featured Products: 0
+INFO 2025-11-27 14:22:07,747 django.server basehttp "GET / HTTP/1.1" 200 96036
+INFO 2025-11-27 14:23:37,340 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 1, Featured Products: 0
+INFO 2025-11-27 14:23:37,486 django.server basehttp "GET / HTTP/1.1" 200 96028
+INFO 2025-11-27 14:24:47,162 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 1, Featured Products: 0
+INFO 2025-11-27 14:24:47,291 django.server basehttp "GET / HTTP/1.1" 200 96090
+INFO 2025-11-27 14:25:44,132 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 1, Featured Products: 0
+INFO 2025-11-27 14:25:44,258 django.server basehttp "GET / HTTP/1.1" 200 96090
+INFO 2025-11-27 14:26:29,245 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 1, Featured Products: 0
+ERROR 2025-11-27 14:26:30,748 django.request log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py", line 65, in get
+    return render(request, 'store/home.html', context)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 962, in do_if
+    nodelist = parser.parse(("elif", "else", "endif"))
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 489, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 487, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 705, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 615, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'titile'
+ERROR 2025-11-27 14:26:30,791 django.server basehttp "GET / HTTP/1.1" 500 317453
+INFO 2025-11-27 14:27:03,361 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 1, Featured Products: 0
+INFO 2025-11-27 14:27:03,478 django.server basehttp "GET / HTTP/1.1" 200 96115
+INFO 2025-11-27 14:29:42,597 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 1, Featured Products: 0
+INFO 2025-11-27 14:29:42,976 django.server basehttp "GET / HTTP/1.1" 200 96313
+INFO 2025-11-27 14:31:03,074 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 1, Featured Products: 0
+INFO 2025-11-27 14:31:03,225 django.server basehttp "GET / HTTP/1.1" 200 96398
+INFO 2025-11-27 14:31:30,742 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 1, Featured Products: 0
+INFO 2025-11-27 14:31:31,625 django.server basehttp "GET / HTTP/1.1" 200 96413
+INFO 2025-11-27 14:31:45,064 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 1, Featured Products: 0
+INFO 2025-11-27 14:31:45,174 django.server basehttp "GET / HTTP/1.1" 200 96418
+INFO 2025-11-27 14:34:13,492 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 1, Featured Products: 0
+ERROR 2025-11-27 14:34:15,746 django.request log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\smartif.py", line 180, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: 'i|int'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py", line 65, in get
+    return render(request, 'store/home.html', context)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 962, in do_if
+    nodelist = parser.parse(("elif", "else", "endif"))
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 862, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 961, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 894, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\smartif.py", line 171, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\smartif.py", line 182, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\defaulttags.py", line 897, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 705, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Omar Faruk\Desktop\dukamaeket\env\Lib\site-packages\django\template\base.py", line 615, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'int'
+ERROR 2025-11-27 14:34:15,807 django.server basehttp "GET / HTTP/1.1" 500 387661
+INFO 2025-11-27 14:35:17,162 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 1, Featured Products: 0
+INFO 2025-11-27 14:35:17,404 django.server basehttp "GET / HTTP/1.1" 200 96401
+INFO 2025-11-27 14:37:02,588 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 1, Featured Products: 0
+INFO 2025-11-27 14:37:02,714 django.server basehttp "GET / HTTP/1.1" 200 97322
+INFO 2025-11-27 14:37:02,777 django.server basehttp "GET /static/assets/js/countdown.min.js HTTP/1.1" 304 0
+INFO 2025-11-27 14:38:23,857 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 1, Featured Products: 0
+INFO 2025-11-27 14:38:24,246 django.server basehttp "GET / HTTP/1.1" 200 97310
+INFO 2025-11-27 14:38:59,213 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 1, Featured Products: 0
+INFO 2025-11-27 14:38:59,389 django.server basehttp "GET / HTTP/1.1" 200 97315
+INFO 2025-11-27 14:45:25,275 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 1, Featured Products: 0
+INFO 2025-11-27 14:45:25,447 django.server basehttp "GET / HTTP/1.1" 200 97501
+INFO 2025-11-27 14:45:25,542 django.server basehttp "GET /media/sliders/2025/11/27/burkha_1.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:45:25,544 django.server basehttp "GET /media/sliders/2025/11/27/l-b_2.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:45:25,558 django.server basehttp "GET /media/sliders/2025/11/27/l-b_1.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:45:25,559 django.server basehttp "GET /media/acceptance_payments/2025/11/27/truck.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:45:25,579 django.server basehttp "GET /media/acceptance_payments/2025/11/27/money-check-dollar.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:45:25,595 django.server basehttp "GET /media/acceptance_payments/2025/11/27/messages.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:45:25,609 django.server basehttp "GET /media/acceptance_payments/2025/11/27/download.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:50:01,256 django.server basehttp "GET /admin/store/product/2/change/ HTTP/1.1" 200 41689
+INFO 2025-11-27 14:50:01,339 django.server basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-11-27 14:50:57,390 django.server basehttp "POST /admin/store/product/2/change/ HTTP/1.1" 302 0
+INFO 2025-11-27 14:50:57,499 django.server basehttp "GET /admin/store/product/ HTTP/1.1" 200 28116
+INFO 2025-11-27 14:50:57,574 django.server basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-11-27 14:50:57,580 django.server basehttp "GET /media/products/2025/11/27/Lehenga-p_1.png HTTP/1.1" 200 294799
+INFO 2025-11-27 14:51:01,624 django.server basehttp "GET /admin/store/product/1/change/ HTTP/1.1" 200 41758
+INFO 2025-11-27 14:51:01,695 django.server basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-11-27 14:51:24,731 django.server basehttp "POST /admin/store/product/1/change/ HTTP/1.1" 302 0
+INFO 2025-11-27 14:51:24,916 django.server basehttp "GET /admin/store/product/ HTTP/1.1" 200 28136
+INFO 2025-11-27 14:51:24,992 django.server basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-11-27 14:51:24,997 django.server basehttp "GET /media/products/2025/11/27/Lehenga-p_3.jpg HTTP/1.1" 200 71702
+INFO 2025-11-27 14:51:25,004 django.server basehttp "GET /media/products/2025/11/27/Lehenga-p_1.png HTTP/1.1" 304 0
+INFO 2025-11-27 14:51:26,790 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 2, Featured Products: 0
+INFO 2025-11-27 14:51:26,932 django.server basehttp "GET / HTTP/1.1" 200 102606
+INFO 2025-11-27 14:51:27,018 django.server basehttp "GET /media/sliders/2025/11/27/feature_8.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:51:27,022 django.server basehttp "GET /media/categories/2025/11/27/lehega.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:51:27,032 django.server basehttp "GET /media/categories/2025/11/27/feature_7.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:51:27,042 django.server basehttp "GET /media/categories/2025/11/27/burkha.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:51:27,057 django.server basehttp "GET /media/products/2025/11/27/Lehenga-p_3.jpg HTTP/1.1" 304 0
+INFO 2025-11-27 14:51:27,333 django.server basehttp "GET /media/sliders/2025/11/27/l.png HTTP/1.1" 304 0
+INFO 2025-11-27 14:51:27,337 django.server basehttp "GET /media/sliders/2025/11/27/kameez.png HTTP/1.1" 304 0

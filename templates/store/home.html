@@ -80,16 +80,21 @@
                     </div>
                     <div class="offer-time">
                         <span class="offer-title d-none d-sm-block">Hurry Up! Offer ends in:</span>
-                        <div class="countdown">
-                            <div class="countdown-inner b-radius" data-countdown="" data-date="Mar 02 2022 20:20:22">
-                                <ul class="text-center">
-                                    <li><span data-days="">36</span> Days</li>
-                                    <li><span data-hours="">8</span> Hours</li>
-                                    <li><span data-minutes="">16</span> Mins</li>
-                                    <li><span data-seconds="">54</span> Secs</li>
-                                </ul>
-                            </div>
-                        </div>
+                        {% for top_deal in top_deals %}
+                            {% if top_deal.deadline %}
+                                <div class="countdown">
+                                    <div class="countdown-inner b-radius" data-countdown="" data-date="{{ top_deal.deadline|date:'M d Y H:i:s' }}">
+                                        <ul class="text-center">
+                                            <li><span data-days="">0</span> Days</li>
+                                            <li><span data-hours="">0</span> Hours</li>
+                                            <li><span data-minutes="">0</span> Mins</li>
+                                            <li><span data-seconds="">0</span> Secs</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+
                     </div>
                 </div>
             </div>
@@ -100,17 +105,18 @@
             <div class="product-bs-slider">
                 <div class="product-slider swiper-container">
                     <div class="swiper-wrapper">
-
+                        {% if top_deals %}
+                        {% for top_deal in top_deals %}
                         <!-- product-1 -->
                         <div class="product__item swiper-slide">
                             <div class="product__thumb fix">
                                 <div class="product-image w-img">
                                     <a href="product-details.html">
-                                        <img src="{% static 'assets/img/product/tp-1.jpg' %}" alt="">
+                                        <img src="{{top_deal.image.url}}" alt="{{top_deal.title|title}}">
                                     </a>
                                 </div>
                                 <div class="product__offer">
-                                    <span class="discount">-15%</span>
+                                    <span class="discount">-{{top_deal.discount_percent}}%</span>
                                 </div>
                                 <div class="product-action">
                                     <a href="#" class="icon-box icon-box-1" data-bs-toggle="modal" data-bs-target="#productModalId">
@@ -125,29 +131,45 @@
                                 </div>
                             </div>
                             <div class="product__content">
-                                <h6><a href="product-details.html">Epple iPad Pro 10.5-inch Cellular 64G</a></h6>
+                                <h6><a href="product-details.html">{{top_deal.title|title}}</a></h6>
                                 <div class="rating mb-5">
                                     <ul>
-                                        <li><i class="fal fa-star"></i></li>
-                                        <li><i class="fal fa-star"></i></li>
-                                        <li><i class="fal fa-star"></i></li>
-                                        <li><i class="fal fa-star"></i></li>
-                                        <li><i class="fal fa-star"></i></li>
+                                        {% with top_deal.avg_rate|default:0|floatformat:0 as rating %}
+                                            {% for i in "12345"|make_list %}
+                                                {% if forloop.counter <= rating %}
+                                                    <li><i class="fas fa-star"></i></li>
+                                                {% else %}
+                                                    <li><i class="fal fa-star"></i></li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endwith %}
+
                                     </ul>
-                                    <span>(01 review)</span>
+                                    <span>({{ top_deal.reviews.count }} review{{ top_deal.reviews.count|pluralize }})</span>
+
                                 </div>
-                                <div class="price mb-10"><span>$105-$110</span></div>
+                                <div class="price mb-10"><span>
+                                    {{top_deal.sale_price}}
+                                    <del class="text-danger">
+                                    {% if top_deal.old_price %}
+                                        {{top_deal.old_price}}
+                                    {% endif %}
+                                    </del>
+                                </span></div>
                                 <div class="progress mb-5">
                                     <div class="progress-bar bg-danger" style="width:10%"></div>
                                 </div>
-                                <div class="progress-rate"><span>Sold:312/1225</span></div>
+                                <div class="progress-rate"><span>Sold {{top_deal.sold}}</span></div>
                             </div>
                             <div class="product__add-cart text-center">
                                 <button class="cart-btn w-100">Add to Cart</button>
                             </div>
                         </div>
                         <!-- product-1 end -->
-
+                         {% endfor %}
+                         {% else %}
+                         <p> No products found </p>
+                        {% endif %}
                     </div>
                 </div>
 
