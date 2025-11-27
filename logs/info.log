@@ -164,3 +164,13 @@ INFO 2025-11-27 11:32:02,035 django.server basehttp "GET /static/assets/img/paym
 INFO 2025-11-27 11:32:04,148 django.server basehttp "GET /media/sliders/2025/11/27/kameez.png HTTP/1.1" 200 2320832
 INFO 2025-11-27 11:32:04,149 django.server basehttp "GET /media/sliders/2025/11/27/l.png HTTP/1.1" 200 2502237
 INFO 2025-11-27 11:32:04,475 django.server basehttp "GET /static/assets/img/favicon.png HTTP/1.1" 200 887
+INFO 2025-11-27 11:40:51,974 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\config\settings.py changed, reloading.
+INFO 2025-11-27 11:40:53,597 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 11:41:00,167 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\config\settings.py changed, reloading.
+INFO 2025-11-27 11:41:01,568 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 11:41:06,713 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\config\settings.py changed, reloading.
+INFO 2025-11-27 11:41:08,964 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 11:41:14,444 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\config\settings.py changed, reloading.
+INFO 2025-11-27 11:41:15,780 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 11:41:23,410 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\config\settings.py changed, reloading.
+INFO 2025-11-27 11:41:24,528 django.utils.autoreload autoreload Watching for file changes with StatReloader

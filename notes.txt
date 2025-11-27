@@ -1,0 +1,35 @@
+Explicit AppConfig ব্যবহার করার সুবিধা ('account.apps.AccountConfig')
+
+Custom Behavior Support
+
+যদি apps.py-এ কাস্টম কোড থাকে (যেমন signals attach করা, ready() method এ কিছু কাজ করা), explicit path দিলে সেটা নিশ্চিতভাবে চালু হবে।
+
+উদাহরণ:
+
+class AccountConfig(AppConfig):
+    name = 'account'
+    def ready(self):
+        import account.signals  # এখানে signal load হবে
+
+
+Avoid Ambiguity
+
+কোনো সময় যদি project-এ একই নামের module থাকে (যেমন multiple “account”), explicit path দেওয়া নিশ্চিত করে Django ঠিক সেই app load করবে।
+
+Future Proof
+
+বড় project বা reusable apps-এ explicit AppConfig ব্যবহার করলে পরে conflicts বা errors কম হয়।
+
+Module name use করার সুবিধা ('store')
+
+Short & Simple
+
+কোড ছোট হয়, সহজে পড়া যায়।
+
+ছোট personal projects-এ module name দেওয়াই যথেষ্ট।
+
+Automatic AppConfig Loading
+
+Django নিজেই apps.py থেকে AppConfig খুঁজে নেবে।
+
+যদি কোনো custom behavior না থাকে, এটি একেবারে ঠিক কাজ করে।

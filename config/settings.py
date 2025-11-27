@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # this way Custom Behavior Supported
     'account.apps.AccountConfig',
     'store.apps.StoreConfig',
+    
 ]
 
 MIDDLEWARE = [
