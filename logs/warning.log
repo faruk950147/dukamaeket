@@ -981,3 +981,38 @@ Traceback (most recent call last):
     raise TypeError("Cannot reorder a query once a slice has been taken.")
 TypeError: Cannot reorder a query once a slice has been taken.
 ERROR 2025-11-27 20:52:13,290 django.server basehttp "GET / HTTP/1.1" 500 114285
+WARNING 2025-11-27 21:03:08,359 django.server basehttp "GET /static/assets/js/bootstrap.bundle.min.js.map HTTP/1.1" 404 2038
+WARNING 2025-11-27 21:03:08,382 django.request log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-27 21:03:08,394 django.server basehttp "GET /static/assets/js/swiper-bundle.min.js.map HTTP/1.1" 404 2029
+WARNING 2025-11-27 21:03:08,400 django.server basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3576
+WARNING 2025-11-27 21:03:08,460 django.server basehttp "GET /static/assets/css/style.css.map HTTP/1.1" 404 1999
+WARNING 2025-11-27 21:03:08,482 django.server basehttp "GET /static/assets/flaticon/flaticon.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 21:03:08,483 django.server basehttp "GET /static/assets/css/bootstrap.min.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 21:06:55,486 django.request log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-27 21:06:55,488 django.server basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3576
+WARNING 2025-11-27 21:06:55,616 django.server basehttp "GET /static/assets/css/style.css.map HTTP/1.1" 404 1999
+WARNING 2025-11-27 21:06:55,617 django.server basehttp "GET /static/assets/flaticon/flaticon.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 21:06:55,624 django.server basehttp "GET /static/assets/css/bootstrap.min.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 21:06:55,727 django.server basehttp "GET /static/assets/js/bootstrap.bundle.min.js.map HTTP/1.1" 404 2038
+WARNING 2025-11-27 21:06:55,736 django.server basehttp "GET /static/assets/js/swiper-bundle.min.js.map HTTP/1.1" 404 2029
+WARNING 2025-11-27 21:07:43,284 django.request log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-27 21:07:43,309 django.server basehttp "GET /static/assets/flaticon/flaticon.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 21:07:43,312 django.server basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3576
+WARNING 2025-11-27 21:07:43,369 django.server basehttp "GET /static/assets/css/bootstrap.min.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 21:07:43,382 django.server basehttp "GET /static/assets/css/style.css.map HTTP/1.1" 404 1999
+WARNING 2025-11-27 21:07:44,365 django.server basehttp "GET /static/assets/js/bootstrap.bundle.min.js.map HTTP/1.1" 404 2038
+WARNING 2025-11-27 21:07:44,399 django.server basehttp "GET /static/assets/js/swiper-bundle.min.js.map HTTP/1.1" 404 2029
+WARNING 2025-11-27 21:09:33,507 django.request log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-27 21:09:33,509 django.server basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3576
+WARNING 2025-11-27 21:09:33,689 django.server basehttp "GET /static/assets/css/bootstrap.min.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 21:09:33,689 django.server basehttp "GET /static/assets/css/style.css.map HTTP/1.1" 404 1999
+WARNING 2025-11-27 21:09:33,716 django.server basehttp "GET /static/assets/flaticon/flaticon.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 21:09:33,741 django.server basehttp "GET /static/assets/js/bootstrap.bundle.min.js.map HTTP/1.1" 404 2038
+WARNING 2025-11-27 21:09:33,857 django.server basehttp "GET /static/assets/js/swiper-bundle.min.js.map HTTP/1.1" 404 2029
+WARNING 2025-11-27 21:10:44,003 django.server basehttp "GET /static/assets/js/bootstrap.bundle.min.js.map HTTP/1.1" 404 2038
+WARNING 2025-11-27 21:10:44,036 django.request log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-27 21:10:44,059 django.server basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3576
+WARNING 2025-11-27 21:10:44,057 django.server basehttp "GET /static/assets/js/swiper-bundle.min.js.map HTTP/1.1" 404 2029
+WARNING 2025-11-27 21:10:44,138 django.server basehttp "GET /static/assets/css/bootstrap.min.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 21:10:44,160 django.server basehttp "GET /static/assets/css/style.css.map HTTP/1.1" 404 1999
+WARNING 2025-11-27 21:10:44,257 django.server basehttp "GET /static/assets/flaticon/flaticon.css.map HTTP/1.1" 404 2023

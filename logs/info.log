@@ -1299,3 +1299,59 @@ INFO 2025-11-27 20:56:19,890 project views User admin visited Home page. Sliders
 INFO 2025-11-27 20:56:20,038 django.server basehttp "GET / HTTP/1.1" 200 102750
 INFO 2025-11-27 20:57:05,477 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
 INFO 2025-11-27 20:57:09,529 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 20:59:19,365 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 2, Featured Products: 0
+INFO 2025-11-27 20:59:19,523 django.server basehttp "GET / HTTP/1.1" 200 103613
+INFO 2025-11-27 21:00:31,037 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 2, Featured Products: 0
+INFO 2025-11-27 21:00:31,127 django.server basehttp "GET / HTTP/1.1" 200 103613
+INFO 2025-11-27 21:01:01,500 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 2, Featured Products: 0
+INFO 2025-11-27 21:01:01,580 django.server basehttp "GET / HTTP/1.1" 200 103613
+INFO 2025-11-27 21:01:49,353 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 2, Featured Products: 0
+INFO 2025-11-27 21:01:49,710 django.server basehttp "GET / HTTP/1.1" 200 103613
+WARNING 2025-11-27 21:03:08,359 django.server basehttp "GET /static/assets/js/bootstrap.bundle.min.js.map HTTP/1.1" 404 2038
+WARNING 2025-11-27 21:03:08,382 django.request log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-27 21:03:08,394 django.server basehttp "GET /static/assets/js/swiper-bundle.min.js.map HTTP/1.1" 404 2029
+WARNING 2025-11-27 21:03:08,400 django.server basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3576
+WARNING 2025-11-27 21:03:08,460 django.server basehttp "GET /static/assets/css/style.css.map HTTP/1.1" 404 1999
+WARNING 2025-11-27 21:03:08,482 django.server basehttp "GET /static/assets/flaticon/flaticon.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 21:03:08,483 django.server basehttp "GET /static/assets/css/bootstrap.min.css.map HTTP/1.1" 404 2023
+INFO 2025-11-27 21:06:55,075 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 2, Featured Products: 0
+INFO 2025-11-27 21:06:55,193 django.server basehttp "GET / HTTP/1.1" 200 103085
+WARNING 2025-11-27 21:06:55,486 django.request log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-27 21:06:55,488 django.server basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3576
+WARNING 2025-11-27 21:06:55,616 django.server basehttp "GET /static/assets/css/style.css.map HTTP/1.1" 404 1999
+WARNING 2025-11-27 21:06:55,617 django.server basehttp "GET /static/assets/flaticon/flaticon.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 21:06:55,624 django.server basehttp "GET /static/assets/css/bootstrap.min.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 21:06:55,727 django.server basehttp "GET /static/assets/js/bootstrap.bundle.min.js.map HTTP/1.1" 404 2038
+WARNING 2025-11-27 21:06:55,736 django.server basehttp "GET /static/assets/js/swiper-bundle.min.js.map HTTP/1.1" 404 2029
+INFO 2025-11-27 21:07:42,735 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 2, Featured Products: 0
+INFO 2025-11-27 21:07:42,822 django.server basehttp "GET / HTTP/1.1" 200 103085
+WARNING 2025-11-27 21:07:43,284 django.request log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-27 21:07:43,309 django.server basehttp "GET /static/assets/flaticon/flaticon.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 21:07:43,312 django.server basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3576
+WARNING 2025-11-27 21:07:43,369 django.server basehttp "GET /static/assets/css/bootstrap.min.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 21:07:43,382 django.server basehttp "GET /static/assets/css/style.css.map HTTP/1.1" 404 1999
+WARNING 2025-11-27 21:07:44,365 django.server basehttp "GET /static/assets/js/bootstrap.bundle.min.js.map HTTP/1.1" 404 2038
+WARNING 2025-11-27 21:07:44,399 django.server basehttp "GET /static/assets/js/swiper-bundle.min.js.map HTTP/1.1" 404 2029
+INFO 2025-11-27 21:09:33,284 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 2, Featured Products: 0
+INFO 2025-11-27 21:09:33,359 django.server basehttp "GET / HTTP/1.1" 200 103021
+WARNING 2025-11-27 21:09:33,507 django.request log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-27 21:09:33,509 django.server basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3576
+WARNING 2025-11-27 21:09:33,689 django.server basehttp "GET /static/assets/css/bootstrap.min.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 21:09:33,689 django.server basehttp "GET /static/assets/css/style.css.map HTTP/1.1" 404 1999
+WARNING 2025-11-27 21:09:33,716 django.server basehttp "GET /static/assets/flaticon/flaticon.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 21:09:33,741 django.server basehttp "GET /static/assets/js/bootstrap.bundle.min.js.map HTTP/1.1" 404 2038
+WARNING 2025-11-27 21:09:33,857 django.server basehttp "GET /static/assets/js/swiper-bundle.min.js.map HTTP/1.1" 404 2029
+WARNING 2025-11-27 21:10:44,003 django.server basehttp "GET /static/assets/js/bootstrap.bundle.min.js.map HTTP/1.1" 404 2038
+WARNING 2025-11-27 21:10:44,036 django.request log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-27 21:10:44,059 django.server basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3576
+WARNING 2025-11-27 21:10:44,057 django.server basehttp "GET /static/assets/js/swiper-bundle.min.js.map HTTP/1.1" 404 2029
+WARNING 2025-11-27 21:10:44,138 django.server basehttp "GET /static/assets/css/bootstrap.min.css.map HTTP/1.1" 404 2023
+WARNING 2025-11-27 21:10:44,160 django.server basehttp "GET /static/assets/css/style.css.map HTTP/1.1" 404 1999
+WARNING 2025-11-27 21:10:44,257 django.server basehttp "GET /static/assets/flaticon/flaticon.css.map HTTP/1.1" 404 2023
+INFO 2025-11-27 21:22:49,284 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 2, Featured Products: 0
+INFO 2025-11-27 21:22:49,392 django.server basehttp "GET / HTTP/1.1" 200 103781
+INFO 2025-11-27 21:22:58,967 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 2, Featured Products: 0
+INFO 2025-11-27 21:22:59,011 django.server basehttp "GET / HTTP/1.1" 200 103781
+INFO 2025-11-27 21:23:32,372 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, AcceptancePayments: 4, Categories: 3, Top Deals: 2, Featured Products: 0
+INFO 2025-11-27 21:23:32,426 django.server basehttp "GET / HTTP/1.1" 200 103781
+INFO 2025-11-27 21:25:43,562 django.utils.autoreload autoreload Watching for file changes with StatReloader
