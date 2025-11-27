@@ -44,7 +44,7 @@ class HomeView(generic.View):
         featured_products = Product.objects.filter(
             status='active',
             is_featured=True
-        ).annotate(avg_rate=Avg('reviews__rate'))[:5]
+        ).annotate(avg_rate=Avg('reviews__rate'))[:5] # related new field add this method
 
         # Logging
         logger.info(

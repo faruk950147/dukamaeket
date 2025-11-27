@@ -1065,3 +1065,9 @@ INFO 2025-11-27 14:51:27,042 django.server basehttp "GET /media/categories/2025/
 INFO 2025-11-27 14:51:27,057 django.server basehttp "GET /media/products/2025/11/27/Lehenga-p_3.jpg HTTP/1.1" 304 0
 INFO 2025-11-27 14:51:27,333 django.server basehttp "GET /media/sliders/2025/11/27/l.png HTTP/1.1" 304 0
 INFO 2025-11-27 14:51:27,337 django.server basehttp "GET /media/sliders/2025/11/27/kameez.png HTTP/1.1" 304 0
+INFO 2025-11-27 15:07:11,630 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 15:07:13,834 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 15:08:21,440 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 15:08:24,658 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 15:08:48,588 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 15:08:52,534 django.utils.autoreload autoreload Watching for file changes with StatReloader
