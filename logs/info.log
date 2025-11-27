@@ -1071,3 +1071,10 @@ INFO 2025-11-27 15:08:21,440 django.utils.autoreload autoreload C:\Users\Omar Fa
 INFO 2025-11-27 15:08:24,658 django.utils.autoreload autoreload Watching for file changes with StatReloader
 INFO 2025-11-27 15:08:48,588 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
 INFO 2025-11-27 15:08:52,534 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 19:45:44,995 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 19:46:35,188 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\store\views.py changed, reloading.
+INFO 2025-11-27 19:46:37,253 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 19:47:24,088 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 19:52:25,982 django.utils.autoreload autoreload C:\Users\Omar Faruk\Desktop\dukamaeket\config\settings.py changed, reloading.
+INFO 2025-11-27 19:52:27,195 django.utils.autoreload autoreload Watching for file changes with StatReloader
+INFO 2025-11-27 19:52:55,491 django.utils.autoreload autoreload Watching for file changes with StatReloader
