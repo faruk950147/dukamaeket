@@ -219,37 +219,26 @@
 <section class="banner__area banner__area-d pb-10">
     <div class="container">
         <div class="row">
-
-            <div class="col-xl-6 col-lg-6 col-md-12">
-                <div class="banner__item p-relative w-img mb-30">
-                    <div class="banner__img">
-                        <a href="product-details.html">
-                            <img src="{% static 'assets/img/banner/banner-4.jpg' %}" alt="">
-                        </a>
-                    </div>
-                    <div class="banner__content">
-                        <span>Bestseller Products</span>
-                        <h6><a href="product-details.html">PC & Docking Station</a></h6>
-                        <p>Discount 20% Off, Top Quality Products</p>
-                    </div>
-                </div>
-            </div>
-
+        {% if add_sliders %}
+        {% for add_slider in add_sliders %}
             <div class="col-xl-6 col-lg-6 col-md-12">
                 <div class="banner__item p-relative mb-30 w-img">
                     <div class="banner__img">
                         <a href="product-details.html">
-                            <img src="{% static 'assets/img/banner/banner-5.jpg' %}" alt="">
+                            <img src="{{add_slider.image.url}}" alt="{{add_slider.product.title|title}}">
                         </a>
                     </div>
                     <div class="banner__content">
-                        <span>Featured Products</span>
-                        <h6><a href="product-details.html">Accessories iPhone</a></h6>
-                        <p>Free Shipping All Order Over $99</p>
+                        <span>{{add_slider.title|title|truncatewords:5}}</span>
+                        <h6><a href="product-details.html">{{add_slider.product.title|title|truncatewords:5}}</a></h6>
+                        <p>{{add_slider.sub_title|title}} {{add_slider.product.discount_percent}} % </br> <span>{{add_slider.product.sale_price}}</span> <del>{{add_slider.product.old_price}}</del></p>
                     </div>
                 </div>
             </div>
-
+        {% endfor %}
+        {% else %}
+        <p>No add sliders found</p>
+        {% endif %}
         </div>
     </div>
 </section>
@@ -576,60 +565,6 @@
 <section class="banner__area pt-60 pb-25">
     <div class="container">
         <div class="row">
-            <div class="col-xl-4 col-lg-6 col-md-12">
-                <div class="banner__item p-relative w-img mb-30">
-                    <div class="banner__img">
-                        <a href="product-details.html">
-                            <img src="{% static 'assets/img/banner/banner-6.jpg'%}" alt="Top Computer Case Gaming Sale">
-                        </a>
-                    </div>
-                    <div class="banner__content banner__content-sd text-center">
-                        <div class="banner-button mb-20">
-                            <a href="product-details.html" class="st-btn">HOT DEALS</a>
-                        </div>
-                        <h6>
-                            <a href="product-details.html">Sale 30% Off <br> Top Computer Case Gaming</a>
-                        </h6>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-4 col-lg-6 col-md-12">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="banner__item p-relative mb-30 w-img">
-                            <div class="banner__img">
-                                <a href="product-details.html">
-                                    <img src="{% static 'assets/img/banner/banner-7.jpg'%}" alt="Electronic Deals">
-                                </a>
-                            </div>
-                            <div class="banner__content banner__content-sd text-center">
-                                <h6><a href="product-details.html">Electronic Deals</a></h6>
-                                <p>Laptop, Computer, Smartphone, Gamepad</p>
-                                <div class="banner-button mt-20 d-none d-sm-block">
-                                    <a href="product-details.html" class="st-btn-3 b-radius">Shop Deals</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="banner__item p-relative w-img mb-30">
-                            <div class="banner__img">
-                                <a href="product-details.html">
-                                    <img src="{% static 'assets/img/banner/banner-8.jpg'%}" alt="Hot Laptop Products">
-                                </a>
-                            </div>
-                            <div class="banner__content text-center">
-                                <h6>
-                                    <a href="product-details.html">Hot Products <br> Laptop Ultra 4K 16”</a>
-                                </h6>
-                                <p>Discount 20% On Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="col-xl-4 col-lg-6 col-md-12">
                 <div class="banner__item p-relative mb-30 w-img">
@@ -646,6 +581,7 @@
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
 </section>
