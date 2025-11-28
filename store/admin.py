@@ -29,34 +29,47 @@ class BrandAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 # =========================================================
-# 03. IMAGE GALLERY INLINE
+# 03. IMAGE GALLERY INLINE (Sortable)
 # =========================================================
 class ImageGalleryInline(admin.TabularInline):
     model = ImageGallery
     extra = 1
     readonly_fields = ('image_tag', 'created_date', 'updated_date')
     fields = ('image', 'image_tag', 'created_date', 'updated_date')
+    sortable_field_name = "id"
 
 # =========================================================
-# 04. PRODUCT VARIANT INLINE
+# 04. PRODUCT VARIANT INLINE (Sortable)
 # =========================================================
 class ProductVariantInline(admin.TabularInline):
     model = ProductVariant
     extra = 1
     readonly_fields = ('image_tag', 'created_date', 'updated_date')
     fields = ('color', 'size', 'variant_price', 'available_stock', 'status', 'image_tag', 'created_date', 'updated_date')
+    sortable_field_name = "id"
 
 # =========================================================
 # 05. PRODUCT ADMIN
 # =========================================================
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'slug', 'category', 'brand', 'old_price', 'sale_price', 'discount_percent', 'available_stock', 'is_deadline', 'is_featured', 'status', 'created_date', 'updated_date', 'image_tag')
+    list_display = (
+        'id', 'title', 'slug', 'category', 'brand',
+        'old_price', 'sale_price', 'discount_percent',
+        'available_stock', 'is_deadline', 'is_featured',
+        'status', 'created_date', 'updated_date', 'image_tag'
+    )
     list_filter = ('status', 'category', 'brand', 'is_deadline', 'is_featured')
     search_fields = ('title', 'slug', 'keyword', 'description')
     readonly_fields = ('id', 'image_tag', 'created_date', 'updated_date')
     inlines = [ImageGalleryInline, ProductVariantInline]
-    fields = ('category', 'brand', 'title', 'slug', 'old_price', 'sale_price', 'discount_percent', 'available_stock', 'keyword', 'description', 'image', 'image_tag', 'deadline', 'is_deadline', 'is_featured', 'status')
+    fields = (
+        'category', 'brand', 'title', 'slug',
+        'old_price', 'sale_price', 'discount_percent',
+        'available_stock', 'keyword', 'description',
+        'image', 'image_tag', 'deadline', 'is_deadline',
+        'is_featured', 'status'
+    )
     prepopulated_fields = {'slug': ('title',)}
 
 # =========================================================
@@ -89,7 +102,6 @@ class SliderAdmin(admin.ModelAdmin):
     search_fields = ('title',)
     readonly_fields = ('id', 'image_tag', 'created_date', 'updated_date')
     fields = ('product', 'title', 'sub_title', 'image', 'image_tag', 'status', 'slider_type')
-
 
 # =========================================================
 # 09. REVIEW ADMIN

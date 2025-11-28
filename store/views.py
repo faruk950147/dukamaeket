@@ -26,29 +26,25 @@ class HomeView(generic.View):
         feature_sliders = Slider.objects.filter(status='active', slider_type='feature')[:4]
         acceptance_payments = AcceptancePayment.objects.filter(status='active')[:4]
 
-        # Featured Categories
         cates = Category.objects.filter(
             status='active',
             children__isnull=True,
             is_featured=True
         ).distinct()[:3]
 
-        # Top Deals
         top_deals = Product.objects.filter(
             status='active',
             is_deadline=True,
             deadline__gte=timezone.now()
-        ).annotate(avg_rate=Avg('reviews__rate')).order_by('deadline')[:5]
+        ).select_related('category', 'brand').annotate(avg_rate=Avg('reviews__rate')).order_by('deadline')[:5]
 
         first_top_deal = top_deals.first()
 
-        # Featured Products
         featured_products = Product.objects.filter(
             status='active',
             is_featured=True
-        ).annotate(avg_rate=Avg('reviews__rate'))[:5] # related new field add this method
+        ).select_related('category', 'brand').annotate(avg_rate=Avg('reviews__rate'))[:5]
 
-        # Logging
         logger.info(
             f"User {request.user if request.user.is_authenticated else 'Anonymous'} visited Home page. "
             f"Sliders: {sliders.count()}, Feature Sliders: {feature_sliders.count()}, "
@@ -58,7 +54,7 @@ class HomeView(generic.View):
 
         context = {
             'sliders': sliders,
-            'features_sliders': feature_sliders,
+            'feature_sliders': feature_sliders,
             'acceptance_payments': acceptance_payments,
             'cates': cates,
             'top_deals': top_deals,
@@ -66,6 +62,7 @@ class HomeView(generic.View):
             'first_top_deal': first_top_deal,
         }
         return render(request, 'store/home.html', context)
+
     
 @method_decorator(never_cache, name='dispatch')
 class ProductDetailView(generic.View):
