@@ -80,11 +80,11 @@
                     </div>
                     <div class="offer-time">
                         <span class="offer-title d-none d-sm-block">Hurry Up! Offer ends in:</span>
-                        {% if first_product and first_product.deadline %}
+                        {% if first_top_deal and first_top_deal.deadline %}
                             <div class="countdown">
                                 <div class="countdown-inner b-radius"
                                     data-countdown=""
-                                    data-date="{{ first_product.deadline|date:'c' }}">
+                                    data-date="{{ first_top_deal.deadline|date:'c' }}">
                                     <ul class="text-center">
                                         <li><span data-days="">0</span> Days</li>
                                         <li><span data-hours="">0</span> Hours</li>
