@@ -167,74 +167,67 @@ LOGGING = {
             'formatter': 'simple',
         },
 
+        # Only DEBUG logs
         'file_debug': {
             'class': 'logging.handlers.RotatingFileHandler',
             'level': 'DEBUG',
             'filename': os.path.join(BASE_DIR, 'logs/debug.log'),
-            'maxBytes': 5 * 1024 * 1024,
+            'maxBytes': 5*1024*1024,
             'backupCount': 3,
             'formatter': 'verbose',
             'delay': True,
-            'encoding': 'utf-8',
         },
 
+        # Only INFO logs
         'file_info': {
             'class': 'logging.handlers.RotatingFileHandler',
             'level': 'INFO',
             'filename': os.path.join(BASE_DIR, 'logs/info.log'),
-            'maxBytes': 5 * 1024 * 1024,
+            'maxBytes': 5*1024*1024,
             'backupCount': 3,
             'formatter': 'verbose',
             'delay': True,
-            'encoding': 'utf-8',
         },
 
+        # Only WARNING logs
         'file_warning': {
             'class': 'logging.handlers.RotatingFileHandler',
             'level': 'WARNING',
             'filename': os.path.join(BASE_DIR, 'logs/warning.log'),
-            'maxBytes': 5 * 1024 * 1024,
+            'maxBytes': 5*1024*1024,
             'backupCount': 3,
             'formatter': 'verbose',
             'delay': True,
-            'encoding': 'utf-8',
         },
 
+        # Only ERROR logs
         'file_error': {
             'class': 'logging.handlers.RotatingFileHandler',
             'level': 'ERROR',
             'filename': os.path.join(BASE_DIR, 'logs/error.log'),
-            'maxBytes': 5 * 1024 * 1024,
+            'maxBytes': 5*1024*1024,
             'backupCount': 3,
             'formatter': 'verbose',
             'delay': True,
-            'encoding': 'utf-8',
         },
 
+        # Only CRITICAL logs
         'file_critical': {
             'class': 'logging.handlers.RotatingFileHandler',
             'level': 'CRITICAL',
             'filename': os.path.join(BASE_DIR, 'logs/critical.log'),
-            'maxBytes': 5 * 1024 * 1024,
+            'maxBytes': 5*1024*1024,
             'backupCount': 3,
             'formatter': 'verbose',
             'delay': True,
-            'encoding': 'utf-8',
         },
     },
 
     'loggers': {
         'django': {
-            'handlers': [
-                'console',
-                'file_debug',
-                'file_info',
-                'file_warning',
-                'file_error',
-                'file_critical',
-            ],
-            'level': 'DEBUG',
-            'propagate': True,
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
         },
 
         'project': {
