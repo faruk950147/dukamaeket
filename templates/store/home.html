@@ -72,58 +72,54 @@
 <section class="topsell__area-1 pt-15">
     <div class="container">
 
-        <!-- Section Header -->
         <div class="row">
             <div class="col-xl-12">
                 <div class="section__head d-flex justify-content-between mb-10">
                     <div class="section__title">
                         <h5 class="st-titile-d">Top Deals Of The Day</h5>
                     </div>
-                    {% if first_top_deal and first_top_deal.deadline %}
                     <div class="offer-time">
                         <span class="offer-title d-none d-sm-block">Hurry Up! Offer ends in:</span>
-                        <div class="countdown">
-                            <div class="countdown-inner b-radius"
-                                 data-countdown=""
-                                 data-date="{{ first_top_deal.deadline|date:'c' }}">
-                                <ul class="text-center">
-                                    <li><span data-days="">0</span> Days</li>
-                                    <li><span data-hours="">0</span> Hours</li>
-                                    <li><span data-minutes="">0</span> Mins</li>
-                                    <li><span data-seconds="">0</span> Secs</li>
-                                </ul>
+                        {% if first_top_deal and first_top_deal.deadline %}
+                            <div class="countdown">
+                                <div class="countdown-inner b-radius"
+                                    data-countdown=""
+                                    data-date="{{ first_top_deal.deadline|date:'c' }}">
+                                    <ul class="text-center">
+                                        <li><span data-days="">0</span> Days</li>
+                                        <li><span data-hours="">0</span> Hours</li>
+                                        <li><span data-minutes="">0</span> Mins</li>
+                                        <li><span data-seconds="">0</span> Secs</li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
+                        {% endif %}
+
                     </div>
-                    {% endif %}
                 </div>
             </div>
         </div>
 
-        <!-- Products Slider -->
+        <!-- STATIC PRODUCTS (same as your original code) -->
         <div class="row">
             <div class="product-bs-slider">
                 <div class="product-slider swiper-container">
                     <div class="swiper-wrapper">
-
                         {% if top_deals %}
                         {% for product in top_deals %}
+                        <!-- product-1 -->
                         <div class="product__item swiper-slide">
-
-                            <!-- Product Image & Countdown -->
                             <div class="product__thumb fix">
                                 <div class="product-image w-img">
-                                    <a href="">
-                                        <img src="{{ product.image.url }}" alt="{{ product.title|title }}"
-                                             style="width:260px; height:300px;">
+                                    <a href="product-details.html">
+                                        <img src="{{product.image.url}}" alt="{{product.title|title}}" style="width: 260px; height: 300px;">
                                     </a>
                                 </div>
-
                                 {% if product.deadline %}
                                 <div class="countdown countdown-small mt-5">
                                     <div class="countdown-inner b-radius"
-                                         data-countdown=""
-                                         data-date="{{ product.deadline|date:'c' }}">
+                                        data-countdown=""
+                                        data-date="{{ product.deadline|date:'c' }}">
                                         <ul class="text-center" style="padding:0; list-style:none; display:flex; justify-content:center; gap:10px;">
                                             <li><span data-days="">0</span>d</li>
                                             <li><span data-hours="">0</span>h</li>
@@ -133,36 +129,26 @@
                                     </div>
                                 </div>
                                 {% endif %}
-
-                                <!-- Discount Badge -->
-                                {% if product.discount_percent > 0 %}
                                 <div class="product__offer">
-                                    <span class="discount">-{{ product.discount_percent }}%</span>
+                                    <span class="discount">-{{product.discount_percent}}%</span>
                                 </div>
-                                {% endif %}
-
-                                <!-- Product Action Buttons -->
                                 <div class="product-action">
                                     <a href="#" class="icon-box icon-box-1" data-bs-toggle="modal" data-bs-target="#productModalId">
-                                        <i class="fal fa-eye"></i>
+                                        <i class="fal fa-eye"></i><i class="fal fa-eye"></i>
                                     </a>
                                     <a href="#" class="icon-box icon-box-1">
-                                        <i class="fal fa-heart"></i>
+                                        <i class="fal fa-heart"></i><i class="fal fa-heart"></i>
                                     </a>
                                     <a href="#" class="icon-box icon-box-1">
-                                        <i class="fal fa-layer-group"></i>
+                                        <i class="fal fa-layer-group"></i><i class="fal fa-layer-group"></i>
                                     </a>
                                 </div>
                             </div>
-
-                            <!-- Product Content -->
                             <div class="product__content">
-                                <h6><a href="">{{ product.title|title|truncatewords:5 }}</a></h6>
-
-                                <!-- Star Rating -->
+                                <h6><a href="product-details.html">{{product.title|title|truncatewords:5}}</a></h6>
                                 <div class="rating mb-5">
                                     <ul>
-                                        {% with product.average_review|floatformat:0 as rating %}
+                                        {% with product.avg_rate|default:0|floatformat:0 as rating %}
                                             {% for i in "12345"|make_list %}
                                                 {% if forloop.counter <= rating %}
                                                     <li><i class="fas fa-star"></i></li>
@@ -171,45 +157,41 @@
                                                 {% endif %}
                                             {% endfor %}
                                         {% endwith %}
+
                                     </ul>
-                                    <span>({{ product.count_review }} review{{ product.count_review|pluralize }})</span>
-                                </div>
+                                    <span>({{ product.reviews.count }} review{{ product.reviews.count|pluralize }})</span>
 
-                                <!-- Price -->
-                                <div class="price mb-10">
-                                    <span>
-                                        {{ product.sale_price }}
-                                        {% if product.sale_price < product.old_price %}
-                                        <del class="text-danger">{{ product.old_price }}</del>
-                                        {% endif %}
-                                    </span>
                                 </div>
-
-                                <!-- Sold Progress -->
+                                <div class="price mb-10"><span>
+                                    {{product.sale_price}}
+                                    <del class="text-danger">
+                                    {% if product.old_price %}
+                                        {{product.old_price}}
+                                    {% endif %}
+                                    </del>
+                                </span></div>
                                 <div class="progress mb-5">
-                                    <div class="progress-bar bg-danger" style="width:{{ product.sold_percentage }}%"></div>
+                                    <div class="progress-bar bg-danger" style="width:10%"></div>
                                 </div>
-                                <div class="progress-rate"><span>Sold {{ product.sold }}</span></div>
+                                <div class="progress-rate"><span>Sold {{product.sold}}</span></div>
                             </div>
-
-                            <!-- Add to Cart (AJAX-ready) -->
                             <div class="product__add-cart text-center">
-                                <button class="cart-btn w-100" data-product-id="{{ product.id }}">Add to Cart</button>
+                                <button class="cart-btn w-100">Add to Cart</button>
                             </div>
                         </div>
-                        {% endfor %}
-                        {% else %}
-                        <p>No products found</p>
+                        <!-- product-1 end -->
+                         {% endfor %}
+                         {% else %}
+                         <p> No products found </p>
                         {% endif %}
-
                     </div>
                 </div>
 
-                <!-- Swiper Navigation -->
                 <div class="bs-button bs-button-prev"><i class="fal fa-chevron-left"></i></div>
                 <div class="bs-button bs-button-next"><i class="fal fa-chevron-right"></i></div>
             </div>
         </div>
+
     </div>
 </section>
 <!-- topsell__area-end -->
@@ -219,26 +201,37 @@
 <section class="banner__area banner__area-d pb-10">
     <div class="container">
         <div class="row">
-        {% if add_sliders %}
-        {% for add_slider in add_sliders %}
+
+            <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="banner__item p-relative w-img mb-30">
+                    <div class="banner__img">
+                        <a href="product-details.html">
+                            <img src="{% static 'assets/img/banner/banner-4.jpg' %}" alt="">
+                        </a>
+                    </div>
+                    <div class="banner__content">
+                        <span>Bestseller Products</span>
+                        <h6><a href="product-details.html">PC & Docking Station</a></h6>
+                        <p>Discount 20% Off, Top Quality Products</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-xl-6 col-lg-6 col-md-12">
                 <div class="banner__item p-relative mb-30 w-img">
                     <div class="banner__img">
                         <a href="product-details.html">
-                            <img src="{{add_slider.image.url}}" alt="{{add_slider.product.title|title}}">
+                            <img src="{% static 'assets/img/banner/banner-5.jpg' %}" alt="">
                         </a>
                     </div>
                     <div class="banner__content">
-                        <span>{{add_slider.title|title|truncatewords:5}}</span>
-                        <h6><a href="product-details.html">{{add_slider.product.title|title|truncatewords:5}}</a></h6>
-                        <p>{{add_slider.sub_title|title}} {{add_slider.product.discount_percent}} % </br> <span>{{add_slider.product.sale_price}}</span> <del>{{add_slider.product.old_price}}</del></p>
+                        <span>Featured Products</span>
+                        <h6><a href="product-details.html">Accessories iPhone</a></h6>
+                        <p>Free Shipping All Order Over $99</p>
                     </div>
                 </div>
             </div>
-        {% endfor %}
-        {% else %}
-        <p>No add sliders found</p>
-        {% endif %}
+
         </div>
     </div>
 </section>
@@ -433,26 +426,20 @@
                 </div>
             </div>
         </div>
-        {% if featured_products %}
         <div class="row">
             <div class="col-xl-6 col-lg-12">
-                {% with featured_products.0 as product %}
                 <div class="single-features-item single-features-item-d b-radius mb-20">
                     <div class="row g-0 align-items-center">
                         <div class="col-md-6">
                             <div class="features-thum">
                                 <div class="features-product-image w-img">
                                     <a href="product-details.html">
-                                        <img src="{{ product.image.url }}" alt="{{ product.title|title }}"
-                                             style="width:300px; height:350px;">
+                                        <img src="{% static 'assets/img/features-product/fpb-1.jpg' %}" alt="">
                                     </a>
                                 </div>
-                                <!-- Discount Badge -->
-                                {% if product.discount_percent > 0 %}
                                 <div class="product__offer">
-                                    <span class="discount">-{{ product.discount_percent }}%</span>
+                                    <span class="discount">-15%</span>
                                 </div>
-                                {% endif %}
                                 <div class="product-action">
                                     <a href="#" class="icon-box icon-box-1" data-bs-toggle="modal" data-bs-target="#productModalId">
                                         <i class="fal fa-eye"></i>
@@ -472,22 +459,17 @@
                         <div class="col-md-6">
                             <div class="product__content product__content-d">
                                 <h6>
-                                    <a href="product-details.html">{{product.title|title|truncatewords:5}}</a>
+                                    <a href="product-details.html">Samsang Galaxy A70 128GB Dual-SIM</a>
                                 </h6>
-                                <!-- Star Rating -->
                                 <div class="rating mb-5">
-                                    <ul>
-                                        {% with product.average_review|floatformat:0 as rating %}
-                                            {% for i in "12345"|make_list %}
-                                                {% if forloop.counter <= rating %}
-                                                    <li><i class="fas fa-star"></i></li>
-                                                {% else %}
-                                                    <li><i class="fal fa-star"></i></li>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endwith %}
+                                    <ul class="rating-d">
+                                        <li><a href="#"><i class="fal fa-star"></i></a></li>
+                                        <li><a href="#"><i class="fal fa-star"></i></a></li>
+                                        <li><a href="#"><i class="fal fa-star"></i></a></li>
+                                        <li><a href="#"><i class="fal fa-star"></i></a></li>
+                                        <li><a href="#"><i class="fal fa-star"></i></a></li>
                                     </ul>
-                                    <span>({{ product.count_review }} review{{ product.count_review|pluralize }})</span>
+                                    <span>(01 review)</span>
                                 </div>
                                 <div class="price d-price mb-10">
                                     <span>$307.00 <del>$110</del></span>
@@ -508,7 +490,6 @@
                         </div>
                     </div>
                 </div>
-                {% endwith %}
             </div>
 
             <!-- Right side smaller featured products -->
@@ -553,7 +534,6 @@
                     
             </div>
         </div>
-        {% endif %}
     </div>
 </section>
 <!-- featured-end -->
@@ -578,6 +558,60 @@
 <section class="banner__area pt-60 pb-25">
     <div class="container">
         <div class="row">
+            <div class="col-xl-4 col-lg-6 col-md-12">
+                <div class="banner__item p-relative w-img mb-30">
+                    <div class="banner__img">
+                        <a href="product-details.html">
+                            <img src="{% static 'assets/img/banner/banner-6.jpg'%}" alt="Top Computer Case Gaming Sale">
+                        </a>
+                    </div>
+                    <div class="banner__content banner__content-sd text-center">
+                        <div class="banner-button mb-20">
+                            <a href="product-details.html" class="st-btn">HOT DEALS</a>
+                        </div>
+                        <h6>
+                            <a href="product-details.html">Sale 30% Off <br> Top Computer Case Gaming</a>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 col-lg-6 col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="banner__item p-relative mb-30 w-img">
+                            <div class="banner__img">
+                                <a href="product-details.html">
+                                    <img src="{% static 'assets/img/banner/banner-7.jpg'%}" alt="Electronic Deals">
+                                </a>
+                            </div>
+                            <div class="banner__content banner__content-sd text-center">
+                                <h6><a href="product-details.html">Electronic Deals</a></h6>
+                                <p>Laptop, Computer, Smartphone, Gamepad</p>
+                                <div class="banner-button mt-20 d-none d-sm-block">
+                                    <a href="product-details.html" class="st-btn-3 b-radius">Shop Deals</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="banner__item p-relative w-img mb-30">
+                            <div class="banner__img">
+                                <a href="product-details.html">
+                                    <img src="{% static 'assets/img/banner/banner-8.jpg'%}" alt="Hot Laptop Products">
+                                </a>
+                            </div>
+                            <div class="banner__content text-center">
+                                <h6>
+                                    <a href="product-details.html">Hot Products <br> Laptop Ultra 4K 16”</a>
+                                </h6>
+                                <p>Discount 20% On Products</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="col-xl-4 col-lg-6 col-md-12">
                 <div class="banner__item p-relative mb-30 w-img">
@@ -594,7 +628,6 @@
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
 </section>
