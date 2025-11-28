@@ -72,54 +72,58 @@
 <section class="topsell__area-1 pt-15">
     <div class="container">
 
+        <!-- Section Header -->
         <div class="row">
             <div class="col-xl-12">
                 <div class="section__head d-flex justify-content-between mb-10">
                     <div class="section__title">
                         <h5 class="st-titile-d">Top Deals Of The Day</h5>
                     </div>
+                    {% if first_top_deal and first_top_deal.deadline %}
                     <div class="offer-time">
                         <span class="offer-title d-none d-sm-block">Hurry Up! Offer ends in:</span>
-                        {% if first_top_deal and first_top_deal.deadline %}
-                            <div class="countdown">
-                                <div class="countdown-inner b-radius"
-                                    data-countdown=""
-                                    data-date="{{ first_top_deal.deadline|date:'c' }}">
-                                    <ul class="text-center">
-                                        <li><span data-days="">0</span> Days</li>
-                                        <li><span data-hours="">0</span> Hours</li>
-                                        <li><span data-minutes="">0</span> Mins</li>
-                                        <li><span data-seconds="">0</span> Secs</li>
-                                    </ul>
-                                </div>
+                        <div class="countdown">
+                            <div class="countdown-inner b-radius"
+                                 data-countdown=""
+                                 data-date="{{ first_top_deal.deadline|date:'c' }}">
+                                <ul class="text-center">
+                                    <li><span data-days="">0</span> Days</li>
+                                    <li><span data-hours="">0</span> Hours</li>
+                                    <li><span data-minutes="">0</span> Mins</li>
+                                    <li><span data-seconds="">0</span> Secs</li>
+                                </ul>
                             </div>
-                        {% endif %}
-
+                        </div>
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
 
-        <!-- STATIC PRODUCTS (same as your original code) -->
+        <!-- Products Slider -->
         <div class="row">
             <div class="product-bs-slider">
                 <div class="product-slider swiper-container">
                     <div class="swiper-wrapper">
+
                         {% if top_deals %}
                         {% for product in top_deals %}
-                        <!-- product-1 -->
                         <div class="product__item swiper-slide">
+
+                            <!-- Product Image & Countdown -->
                             <div class="product__thumb fix">
                                 <div class="product-image w-img">
-                                    <a href="product-details.html">
-                                        <img src="{{product.image.url}}" alt="{{product.title|title}}" style="width: 260px; height: 300px;">
+                                    <a href="">
+                                        <img src="{{ product.image.url }}" alt="{{ product.title|title }}"
+                                             style="width:260px; height:300px;">
                                     </a>
                                 </div>
+
                                 {% if product.deadline %}
                                 <div class="countdown countdown-small mt-5">
                                     <div class="countdown-inner b-radius"
-                                        data-countdown=""
-                                        data-date="{{ product.deadline|date:'c' }}">
+                                         data-countdown=""
+                                         data-date="{{ product.deadline|date:'c' }}">
                                         <ul class="text-center" style="padding:0; list-style:none; display:flex; justify-content:center; gap:10px;">
                                             <li><span data-days="">0</span>d</li>
                                             <li><span data-hours="">0</span>h</li>
@@ -129,26 +133,36 @@
                                     </div>
                                 </div>
                                 {% endif %}
+
+                                <!-- Discount Badge -->
+                                {% if product.discount_percent > 0 %}
                                 <div class="product__offer">
-                                    <span class="discount">-{{product.discount_percent}}%</span>
+                                    <span class="discount">-{{ product.discount_percent }}%</span>
                                 </div>
+                                {% endif %}
+
+                                <!-- Product Action Buttons -->
                                 <div class="product-action">
                                     <a href="#" class="icon-box icon-box-1" data-bs-toggle="modal" data-bs-target="#productModalId">
-                                        <i class="fal fa-eye"></i><i class="fal fa-eye"></i>
+                                        <i class="fal fa-eye"></i>
                                     </a>
                                     <a href="#" class="icon-box icon-box-1">
-                                        <i class="fal fa-heart"></i><i class="fal fa-heart"></i>
+                                        <i class="fal fa-heart"></i>
                                     </a>
                                     <a href="#" class="icon-box icon-box-1">
-                                        <i class="fal fa-layer-group"></i><i class="fal fa-layer-group"></i>
+                                        <i class="fal fa-layer-group"></i>
                                     </a>
                                 </div>
                             </div>
+
+                            <!-- Product Content -->
                             <div class="product__content">
-                                <h6><a href="product-details.html">{{product.title|title|truncatewords:5}}</a></h6>
+                                <h6><a href="">{{ product.title|title|truncatewords:5 }}</a></h6>
+
+                                <!-- Star Rating -->
                                 <div class="rating mb-5">
                                     <ul>
-                                        {% with product.avg_rate|default:0|floatformat:0 as rating %}
+                                        {% with product.average_review|floatformat:0 as rating %}
                                             {% for i in "12345"|make_list %}
                                                 {% if forloop.counter <= rating %}
                                                     <li><i class="fas fa-star"></i></li>
@@ -157,41 +171,45 @@
                                                 {% endif %}
                                             {% endfor %}
                                         {% endwith %}
-
                                     </ul>
-                                    <span>({{ product.reviews.count }} review{{ product.reviews.count|pluralize }})</span>
+                                    <span>({{ product.count_review }} review{{ product.count_review|pluralize }})</span>
+                                </div>
 
+                                <!-- Price -->
+                                <div class="price mb-10">
+                                    <span>
+                                        {{ product.sale_price }}
+                                        {% if product.sale_price < product.old_price %}
+                                        <del class="text-danger">{{ product.old_price }}</del>
+                                        {% endif %}
+                                    </span>
                                 </div>
-                                <div class="price mb-10"><span>
-                                    {{product.sale_price}}
-                                    <del class="text-danger">
-                                    {% if product.old_price %}
-                                        {{product.old_price}}
-                                    {% endif %}
-                                    </del>
-                                </span></div>
+
+                                <!-- Sold Progress -->
                                 <div class="progress mb-5">
-                                    <div class="progress-bar bg-danger" style="width:10%"></div>
+                                    <div class="progress-bar bg-danger" style="width:{{ product.sold_percentage }}%"></div>
                                 </div>
-                                <div class="progress-rate"><span>Sold {{product.sold}}</span></div>
+                                <div class="progress-rate"><span>Sold {{ product.sold }}</span></div>
                             </div>
+
+                            <!-- Add to Cart (AJAX-ready) -->
                             <div class="product__add-cart text-center">
-                                <button class="cart-btn w-100">Add to Cart</button>
+                                <button class="cart-btn w-100" data-product-id="{{ product.id }}">Add to Cart</button>
                             </div>
                         </div>
-                        <!-- product-1 end -->
-                         {% endfor %}
-                         {% else %}
-                         <p> No products found </p>
+                        {% endfor %}
+                        {% else %}
+                        <p>No products found</p>
                         {% endif %}
+
                     </div>
                 </div>
 
+                <!-- Swiper Navigation -->
                 <div class="bs-button bs-button-prev"><i class="fal fa-chevron-left"></i></div>
                 <div class="bs-button bs-button-next"><i class="fal fa-chevron-right"></i></div>
             </div>
         </div>
-
     </div>
 </section>
 <!-- topsell__area-end -->

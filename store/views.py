@@ -22,45 +22,59 @@ logger = logging.getLogger('project')
 @method_decorator(never_cache, name='dispatch')
 class HomeView(generic.View):
     def get(self, request):
-        sliders = Slider.objects.filter(status='active')[:4]
-        feature_sliders = Slider.objects.filter(status='active', slider_type='feature')[:4]
+        # Main Sliders
+        sliders = Slider.objects.filter(status='active', slider_type='slider')[:4]
+
+        # Feature Sliders
+        features_sliders = Slider.objects.filter(status='active', slider_type='feature')[:4]
+
+        # Add Sliders
+        add_sliders = Slider.objects.filter(status='active', slider_type='add')[:4]
+
+        # Acceptance Payments
         acceptance_payments = AcceptancePayment.objects.filter(status='active')[:4]
 
+        # Featured Categories (leaf nodes only)
         cates = Category.objects.filter(
             status='active',
             children__isnull=True,
             is_featured=True
         ).distinct()[:3]
 
+        # Top Deals (deadline active)
         top_deals = Product.objects.filter(
             status='active',
             is_deadline=True,
             deadline__gte=timezone.now()
         ).select_related('category', 'brand').annotate(avg_rate=Avg('reviews__rate')).order_by('deadline')[:5]
-
         first_top_deal = top_deals.first()
 
+        # Featured Products
         featured_products = Product.objects.filter(
             status='active',
             is_featured=True
         ).select_related('category', 'brand').annotate(avg_rate=Avg('reviews__rate'))[:5]
 
+        # Logging
         logger.info(
             f"User {request.user if request.user.is_authenticated else 'Anonymous'} visited Home page. "
-            f"Sliders: {sliders.count()}, Feature Sliders: {feature_sliders.count()}, "
-            f"AcceptancePayments: {acceptance_payments.count()}, Categories: {cates.count()}, "
-            f"Top Deals: {top_deals.count()}, Featured Products: {featured_products.count()}"
+            f"Sliders: {sliders.count()}, Feature Sliders: {features_sliders.count()}, "
+            f"Add Sliders: {add_sliders.count()}, AcceptancePayments: {acceptance_payments.count()}, "
+            f"Categories: {cates.count()}, Top Deals: {top_deals.count()}, Featured Products: {featured_products.count()}"
         )
 
+        # Context
         context = {
             'sliders': sliders,
-            'feature_sliders': feature_sliders,
+            'features_sliders': features_sliders,
+            'add_sliders': add_sliders,
             'acceptance_payments': acceptance_payments,
             'cates': cates,
             'top_deals': top_deals,
-            'featured_products': featured_products,
             'first_top_deal': first_top_deal,
+            'featured_products': featured_products,
         }
+
         return render(request, 'store/home.html', context)
 
     
