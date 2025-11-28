@@ -433,20 +433,26 @@
                 </div>
             </div>
         </div>
+        {% if featured_products %}
         <div class="row">
             <div class="col-xl-6 col-lg-12">
+                {% with featured_products.0 as product %}
                 <div class="single-features-item single-features-item-d b-radius mb-20">
                     <div class="row g-0 align-items-center">
                         <div class="col-md-6">
                             <div class="features-thum">
                                 <div class="features-product-image w-img">
                                     <a href="product-details.html">
-                                        <img src="{% static 'assets/img/features-product/fpb-1.jpg' %}" alt="">
+                                        <img src="{{ product.image.url }}" alt="{{ product.title|title }}"
+                                             style="width:300px; height:350px;">
                                     </a>
                                 </div>
+                                <!-- Discount Badge -->
+                                {% if product.discount_percent > 0 %}
                                 <div class="product__offer">
-                                    <span class="discount">-15%</span>
+                                    <span class="discount">-{{ product.discount_percent }}%</span>
                                 </div>
+                                {% endif %}
                                 <div class="product-action">
                                     <a href="#" class="icon-box icon-box-1" data-bs-toggle="modal" data-bs-target="#productModalId">
                                         <i class="fal fa-eye"></i>
@@ -466,17 +472,22 @@
                         <div class="col-md-6">
                             <div class="product__content product__content-d">
                                 <h6>
-                                    <a href="product-details.html">Samsang Galaxy A70 128GB Dual-SIM</a>
+                                    <a href="product-details.html">{{product.title|title|truncatewords:5}}</a>
                                 </h6>
+                                <!-- Star Rating -->
                                 <div class="rating mb-5">
-                                    <ul class="rating-d">
-                                        <li><a href="#"><i class="fal fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fal fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fal fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fal fa-star"></i></a></li>
-                                        <li><a href="#"><i class="fal fa-star"></i></a></li>
+                                    <ul>
+                                        {% with product.average_review|floatformat:0 as rating %}
+                                            {% for i in "12345"|make_list %}
+                                                {% if forloop.counter <= rating %}
+                                                    <li><i class="fas fa-star"></i></li>
+                                                {% else %}
+                                                    <li><i class="fal fa-star"></i></li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endwith %}
                                     </ul>
-                                    <span>(01 review)</span>
+                                    <span>({{ product.count_review }} review{{ product.count_review|pluralize }})</span>
                                 </div>
                                 <div class="price d-price mb-10">
                                     <span>$307.00 <del>$110</del></span>
@@ -497,6 +508,7 @@
                         </div>
                     </div>
                 </div>
+                {% endwith %}
             </div>
 
             <!-- Right side smaller featured products -->
@@ -541,6 +553,7 @@
                     
             </div>
         </div>
+        {% endif %}
     </div>
 </section>
 <!-- featured-end -->
