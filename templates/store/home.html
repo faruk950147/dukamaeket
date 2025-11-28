@@ -201,37 +201,26 @@
 <section class="banner__area banner__area-d pb-10">
     <div class="container">
         <div class="row">
-
-            <div class="col-xl-6 col-lg-6 col-md-12">
+            {% if add_sliders %}
+            {% for add_slider in add_sliders %}
+                <div class="col-xl-6 col-lg-6 col-md-12">
                 <div class="banner__item p-relative w-img mb-30">
                     <div class="banner__img">
                         <a href="product-details.html">
-                            <img src="{% static 'assets/img/banner/banner-4.jpg' %}" alt="">
+                            <img src="{{add_slider.image.url}}" alt="{{add_slider.product.title|title}}">
                         </a>
                     </div>
                     <div class="banner__content">
-                        <span>Bestseller Products</span>
-                        <h6><a href="product-details.html">PC & Docking Station</a></h6>
-                        <p>Discount 20% Off, Top Quality Products</p>
+                        <span>{{add_slider.title|title}}</span>
+                        <h6><a href="product-details.html">{{add_slider.product.title|title|truncatewords:5}}</a></h6>
+                         <P> {{add_slider.product.discount_percent}}% {{add_slider.sub_title|title|truncatewords:5}}</p>
                     </div>
                 </div>
             </div>
-
-            <div class="col-xl-6 col-lg-6 col-md-12">
-                <div class="banner__item p-relative mb-30 w-img">
-                    <div class="banner__img">
-                        <a href="product-details.html">
-                            <img src="{% static 'assets/img/banner/banner-5.jpg' %}" alt="">
-                        </a>
-                    </div>
-                    <div class="banner__content">
-                        <span>Featured Products</span>
-                        <h6><a href="product-details.html">Accessories iPhone</a></h6>
-                        <p>Free Shipping All Order Over $99</p>
-                    </div>
-                </div>
-            </div>
-
+            {% endfor %}
+            {% else %}
+            <p> No Add Found </p>
+            {% endif %}
         </div>
     </div>
 </section>

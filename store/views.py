@@ -24,6 +24,7 @@ class HomeView(generic.View):
     def get(self, request):
         sliders = Slider.objects.filter(status='active')[:4]
         feature_sliders = Slider.objects.filter(status='active', slider_type='feature')[:4]
+        add_sliders = Slider.objects.filter(status='active', slider_type='add')[:4]
         acceptance_payments = AcceptancePayment.objects.filter(status='active')[:4]
 
         # Featured Categories
@@ -51,7 +52,7 @@ class HomeView(generic.View):
         # Logging
         logger.info(
             f"User {request.user if request.user.is_authenticated else 'Anonymous'} visited Home page. "
-            f"Sliders: {sliders.count()}, Feature Sliders: {feature_sliders.count()}, "
+            f"Sliders: {sliders.count()}, Feature Sliders: {feature_sliders.count()}, Add Sliders: {add_sliders.count()}, "
             f"AcceptancePayments: {acceptance_payments.count()}, Categories: {cates.count()}, "
             f"Top Deals: {top_deals.count()}, Featured Products: {featured_products.count()}"
         )
@@ -59,6 +60,7 @@ class HomeView(generic.View):
         context = {
             'sliders': sliders,
             'features_sliders': feature_sliders,
+            'add_sliders': add_sliders,
             'acceptance_payments': acceptance_payments,
             'cates': cates,
             'top_deals': top_deals,
