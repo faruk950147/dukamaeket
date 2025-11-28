@@ -1,61 +1,93 @@
-from django.shortcuts import render, get_object_or_404
-from django.views import generic
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
+from django.views import generic
+from django.db.models import Avg, Value, FloatField
+from django.db.models.functions import Coalesce
 from django.utils import timezone
-from django.db.models import Avg
+from django.shortcuts import render
+
 from store.models import (
     Category,
-    Brand,
     Product,
     Slider,
     AcceptancePayment,
-    ProductVariant
 )
 import logging
-
 logger = logging.getLogger('project')
 
-# =========================================================
-# HOME PAGE
-# =========================================================
 @method_decorator(never_cache, name='dispatch')
 class HomeView(generic.View):
     def get(self, request):
-        # Main Sliders
-        sliders = Slider.objects.filter(status='active', slider_type='slider')[:4]
 
-        # Feature Sliders
-        features_sliders = Slider.objects.filter(status='active', slider_type='feature')[:4]
+        # --- Main Sliders ---
+        sliders = Slider.objects.filter(
+            status='active',
+            slider_type='slider'
+        )[:4]
 
-        # Add Sliders
-        add_sliders = Slider.objects.filter(status='active', slider_type='add')[:4]
+        # --- Feature Sliders ---
+        features_sliders = Slider.objects.filter(
+            status='active',
+            slider_type='feature'
+        )[:4]
 
-        # Acceptance Payments
-        acceptance_payments = AcceptancePayment.objects.filter(status='active')[:4]
+        # --- Add Sliders ---
+        add_sliders = Slider.objects.filter(
+            status='active',
+            slider_type='add'
+        )[:4]
 
-        # Featured Categories (leaf nodes only)
+        # --- Acceptance Payments ---
+        acceptance_payments = AcceptancePayment.objects.filter(
+            status='active'
+        )[:4]
+
+        # --- Featured Categories (leaf nodes only) ---
         cates = Category.objects.filter(
             status='active',
             children__isnull=True,
             is_featured=True
         ).distinct()[:3]
 
-        # Top Deals (deadline active)
-        top_deals = Product.objects.filter(
-            status='active',
-            is_deadline=True,
-            deadline__gte=timezone.now()
-        ).select_related('category', 'brand').annotate(avg_rate=Avg('reviews__rate')).order_by('deadline')[:5]
+        # --- Top Deals ---
+        top_deals = (
+            Product.objects.filter(
+                status='active',
+                is_deadline=True,
+                deadline__gte=timezone.now()
+            )
+            .select_related('category', 'brand')     # FK optimize
+            .prefetch_related('images')             # ImageGallery reverse FK
+            .annotate(
+                avg_rate=Coalesce(
+                    Avg('reviews__rate'),
+                    Value(0.0),
+                    output_field=FloatField()
+                )
+            )
+            .order_by('deadline')[:5]
+        )
+
         first_top_deal = top_deals.first()
 
-        # Featured Products
-        featured_products = Product.objects.filter(
-            status='active',
-            is_featured=True
-        ).select_related('category', 'brand').annotate(avg_rate=Avg('reviews__rate'))[:5]
+        # --- Featured Products ---
+        featured_products = (
+            Product.objects.filter(
+                status='active',
+                is_featured=True
+            )
+            .select_related('category', 'brand')
+            .prefetch_related('images')
+            .annotate(
+                avg_rate=Coalesce(
+                    Avg('reviews__rate'),
+                    Value(0.0),
+                    output_field=FloatField()
+                )
+            )
+        )[:5]
 
-        # Logging
+        # --- Logging ---
         logger.info(
             f"User {request.user if request.user.is_authenticated else 'Anonymous'} visited Home page. "
             f"Sliders: {sliders.count()}, Feature Sliders: {features_sliders.count()}, "
@@ -63,7 +95,7 @@ class HomeView(generic.View):
             f"Categories: {cates.count()}, Top Deals: {top_deals.count()}, Featured Products: {featured_products.count()}"
         )
 
-        # Context
+        # --- Context ---
         context = {
             'sliders': sliders,
             'features_sliders': features_sliders,
