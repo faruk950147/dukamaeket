@@ -48,9 +48,7 @@ class ImageTagMixin(models.Model):
     def image_tag(self):
         img = getattr(self, 'image', None)
         if img and hasattr(img, 'url'):
-            return mark_safe(
-                f'<img src="{img.url}" style="max-width:50px; max-height:50px;" />'
-            )
+            return mark_safe(f'<img src="{img.url}" style="max-width:50px; max-height:50px;" />')
         return mark_safe('<span>No Image</span>')
 
 # =========================================================
@@ -61,15 +59,15 @@ class Category(ImageTagMixin):
         'self', related_name='children', on_delete=models.CASCADE,
         null=True, blank=True
     )
-    title = models.CharField(max_length=150, unique=True)
-    slug = models.SlugField(max_length=150, unique=True, blank=True)
-    
+    title = models.CharField(max_length=150)  # unique removed
+    slug = models.SlugField(max_length=150, unique=True, db_index=True, blank=True, null=True)
+
     keyword = models.CharField(max_length=150, default='N/A')
     description = models.CharField(max_length=150, default='N/A')
-    
+
     image = models.ImageField(upload_to='categories/%Y/%m/%d/', default='defaults/default.jpg')
-    
-    status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
+
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
     is_featured = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
@@ -91,15 +89,15 @@ class Category(ImageTagMixin):
 # 05. BRAND MODEL
 # =========================================================
 class Brand(ImageTagMixin):
-    title = models.CharField(max_length=150, unique=True)
-    slug = models.SlugField(max_length=150, unique=True, blank=True)
-    
+    title = models.CharField(max_length=150)  # unique removed
+    slug = models.SlugField(max_length=150, unique=True, db_index=True, blank=True, null=True)
+
     keyword = models.CharField(max_length=150, default='N/A')
     description = models.CharField(max_length=150, default='N/A')
-    
+
     image = models.ImageField(upload_to='brands/%Y/%m/%d/', default='defaults/default.jpg')
-    
-    status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
+
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
     is_featured = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
@@ -124,13 +122,13 @@ class Product(ImageTagMixin):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand, related_name='products', on_delete=models.CASCADE)
     title = models.CharField(max_length=150, unique=True)
-    slug = models.SlugField(max_length=150, unique=True, blank=True)
-    
-    old_price = models.DecimalField(max_digits=150, decimal_places=2, default=Decimal('1000.00'))
-    sale_price = models.DecimalField(max_digits=150, decimal_places=2, default=Decimal('1000.00'))
+    slug = models.SlugField(max_length=150, unique=True, db_index=True, blank=True, null=True)
 
-    available_stock = models.PositiveIntegerField(validators=[MaxValueValidator(10000)], default=0)
-    discount_percent = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], default=0)
+    old_price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('500000.00'))
+    sale_price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('400000.00'))
+
+    available_stock = models.PositiveIntegerField(validators=[MaxValueValidator(10000)], default=1)
+    discount_percent = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], default=20)
 
     keyword = models.TextField(default='N/A')
     description = models.TextField(default='N/A')
@@ -141,8 +139,7 @@ class Product(ImageTagMixin):
     is_featured = models.BooleanField(default=False)
     sold = models.PositiveIntegerField(default=0)
 
-
-    status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -151,44 +148,44 @@ class Product(ImageTagMixin):
         verbose_name_plural = '03. Products'
 
     def save(self, *args, **kwargs):
-        if self.discount_percent > 0:
-            self.sale_price = (self.old_price * (Decimal(100) - Decimal(self.discount_percent)) / Decimal(100)).quantize(Decimal('0.01'))
-        else:
-            self.sale_price = self.old_price.quantize(Decimal('0.01'))
+        # auto discount calculation
+        self.sale_price = (
+            (self.old_price * (Decimal(100) - Decimal(self.discount_percent)) / Decimal(100))
+            .quantize(Decimal('0.01'))
+        )
 
         self.full_clean()
         if not self.slug:
             self.slug = generate_unique_slug(Product, self.title)
+
         super().save(*args, **kwargs)
 
     def clean(self):
-        if self.sale_price > self.old_price:
-            raise ValidationError("Sale price cannot be greater than old price.")
         if self.deadline and self.deadline < timezone.now():
             raise ValidationError("Deadline cannot be in the past.")
 
     @property
     def remaining_seconds(self):
         if self.deadline and self.is_deadline:
-            remaining = self.deadline - timezone.now()
+            now = timezone.now()
+            remaining = self.deadline - now
             return max(0, int(remaining.total_seconds()))
         return 0
 
     @property
     def average_review(self):
-        return float(self.reviews.filter(status='active').aggregate(Avg('rate'))['rate__avg'] or 0)
+        return float(self.reviews.filter(status='active').aggregate(Avg('rating'))['rating__avg'] or 0)
 
     @property
     def count_review(self):
         return self.reviews.filter(status='active').count()
-    
+
     @property
     def sold_percentage(self):
-        if self.available_stock:
-            return round((self.sold / self.available_stock) * 100, 2)
+        total = self.sold + self.available_stock
+        if total > 0:
+            return round((self.sold / total) * 100, 2)
         return 0
-
-        
 
     def __str__(self):
         return f"{self.title} ({self.get_status_display()})"
@@ -199,7 +196,7 @@ class Product(ImageTagMixin):
 class ImageGallery(ImageTagMixin):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/%Y/%m/%d/', default='defaults/default.jpg')
-    
+
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -216,9 +213,7 @@ class ImageGallery(ImageTagMixin):
 class Color(ImageTagMixin):
     title = models.CharField(max_length=20, unique=True)
     code = models.CharField(max_length=20, unique=True)
-    
-    image = models.ImageField(upload_to='colors/%Y/%m/%d/', default='defaults/default.jpg')
-    
+
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -243,7 +238,7 @@ class Color(ImageTagMixin):
 class Size(models.Model):
     title = models.CharField(max_length=20, unique=True)
     code = models.CharField(max_length=10, unique=True)
-    
+
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -257,21 +252,27 @@ class Size(models.Model):
 # =========================================================
 # 10. PRODUCT VARIANT MODEL
 # =========================================================
-class ProductVariant(ImageTagMixin):
+class ProductVariant(models.Model):
     product = models.ForeignKey(Product, related_name='variants', on_delete=models.CASCADE)
     color = models.ForeignKey(Color, blank=True, null=True, on_delete=models.SET_NULL)
     size = models.ForeignKey(Size, blank=True, null=True, on_delete=models.SET_NULL)
-    
-    variant_price = models.DecimalField(max_digits=150, decimal_places=2)
+    image = models.ImageField(upload_to='colors/%Y/%m/%d/', default='defaults/default.jpg')
+    variant_price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     available_stock = models.PositiveIntegerField(default=0)
-    
-    status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
+
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = ('product', 'color', 'size')
         verbose_name_plural = '07. Product Variants'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['product', 'color', 'size'],
+                name='unique_variant'
+            )
+        ]
+
 
     def __str__(self):
         return f"{self.product.title} - {self.size or 'No Size'} - {self.color or 'No Color'}"
@@ -281,13 +282,13 @@ class ProductVariant(ImageTagMixin):
 # =========================================================
 class Slider(ImageTagMixin):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    title = models.CharField(max_length=150, unique=True)
-    sub_title = models.CharField(max_length=150, blank=True, null=True) 
-    
-    image = models.ImageField(upload_to='sliders/%Y/%m/%d/', default='defaults/default.jpg')
-    
-    status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
     slider_type = models.CharField(max_length=10, choices=SLIDER_TYPE_CHOICES, default='none')
+    title = models.CharField(max_length=150, unique=True)
+    sub_title = models.CharField(max_length=150, blank=True, null=True)
+    paragraph = models.CharField(max_length=150, blank=True, null=True)
+    image = models.ImageField(upload_to='sliders/%Y/%m/%d/', default='defaults/default.jpg')
+
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -304,13 +305,13 @@ class Slider(ImageTagMixin):
 class Review(models.Model):
     product = models.ForeignKey(Product, related_name='reviews', on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+
     subject = models.CharField(max_length=50)
-    comment = models.TextField(max_length=500)
-    rate = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)])
-    
-    status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
-    
+    comment = models.CharField(max_length=500)  # TextField changed → max_length enforced
+    rating = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)])
+
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
+
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -319,7 +320,7 @@ class Review(models.Model):
         verbose_name_plural = '09. Reviews'
 
     def __str__(self):
-        return self.subject if self.subject else f"Review by {self.user.username}"
+        return self.subject or f"Review by {self.user.username}"
 
 # =========================================================
 # 13. ACCEPTANCE PAYMENT MODEL
@@ -327,18 +328,18 @@ class Review(models.Model):
 class AcceptancePayment(ImageTagMixin):
     title = models.CharField(max_length=150, unique=True)
     sub_title = models.CharField(max_length=150)
-    
+
     image = models.ImageField(upload_to='acceptance_payments/%Y/%m/%d/', default='defaults/default.jpg')
     help_time = models.PositiveIntegerField(default=100)
-    
-    status = models.CharField(max_length=8, choices=STATUS_CHOICES, default='active')
+
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
     is_featured = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['id']
-        verbose_name_plural = '11. Acceptance Payments'
+        verbose_name_plural = '10. Acceptance Payments'
 
     def __str__(self):
         return f"{self.title} ({self.get_status_display()})"
