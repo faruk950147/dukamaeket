@@ -83,8 +83,8 @@ class HomeView(generic.View):
     
 @method_decorator(never_cache, name='dispatch')
 class ProductDetailView(generic.View):
-    def get(self, request, slug, id):
-        product = get_object_or_404(Product, slug=slug, id=id)
+    def get(self, request, id):
+        product = get_object_or_404(Product, id=id)
         context = {
             'product': product
         }

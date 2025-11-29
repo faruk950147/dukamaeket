@@ -12,14 +12,20 @@
               <div class="single-slider swiper-slide b-radius-2 slider-height-2 d-flex align-items-center" data-background="{{slider.image.url}}">
                 <div class="slider-content slider-content-2">
                   <h2 data-animation="fadeInLeft" data-delay="1.7s" class="pt-15 slider-title pb-5">
-                    {{slider.title|title|truncatewords:5}}
+                    <a href="{% url 'product-detail' slider.product.id %}">
+                      {{ slider.title|title|truncatewords:5 }}
+                  </a>
                   </h2>
                   <p class="pr-20 slider_text">
-                    {{slider.sub_title|title|truncatewords:5}}
+                    <a href="{% url 'product-detail' slider.product.id %}">{{slider.sub_title|title|truncatewords:5}}</a>
                     {% if slider.product.discount_percent %}
                     <span data-animation="fadeInLeft" data-delay="1.9s">
                       {{slider.product.discount_percent}} %
                     </span>
+                  </br>
+                    <a href="{% url 'product-detail' slider.product.id %}" class="pr-20 slider_text" data-animation="fadeInLeft" data-delay="1.9s">
+                      {{slider.product.title|title|truncatewords:5}}
+                    </a>
                     {% else %}
                     <span>No Off Product</span>
                     {% endif %}
@@ -49,16 +55,16 @@
               </div>
               <div class="banner__content banner__content-2">
                 <h6>
-                  <a href="product-details.html">{{features_slider.title|title|truncatewords:5}}</a>
+                  <a href="{% url 'product-detail' features_slider.product.id %}">{{features_slider.title|title|truncatewords:5}}</a>
                 </h6>
                 <p>
-                  {{features_slider.sub_title|title|truncatewords:5}}
+                  <a href="{% url 'product-detail' features_slider.product.id %}">{{features_slider.sub_title|title|truncatewords:5}}</a>
                   {% if features_slider.product.discount_percent %}
-                  {{features_slider.product.discount_percent}} %
+                  <span>{{features_slider.product.discount_percent}} %</span>
                   {% endif %}
                 </p>
                 <p class="mt-2">
-                  {{features_slider.product.title|title|truncatewords:5}}
+                  <a href="{% url 'product-detail' features_slider.product.id %}">{{features_slider.product.title|title|truncatewords:5}}</a>
                 </p>
               </div>
             </div>
