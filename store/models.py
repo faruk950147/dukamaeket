@@ -29,11 +29,11 @@ SLIDER_TYPE_CHOICES = (
 # =========================================================
 # 02. SLUG GENERATOR
 # =========================================================
-def generate_unique_slug(model_class, title: str) -> str:
+def generate_unique_slug(cls, title: str) -> str:
     base_slug = slugify(title)
     slug = base_slug
     counter = 1
-    while model_class.objects.filter(slug=slug).exists():
+    while cls.objects.filter(slug=slug).exists():
         slug = f"{base_slug}-{counter}"
         counter += 1
     return slug
