@@ -85,7 +85,7 @@ class HomeView(generic.View):
 class ProductDetailView(generic.View):
     def get(self, request, id):
 
-        # Product + Reviews prefetch (optimized)
+        # Product
         product = get_object_or_404(Product, id=id, status='active')
 
         # Related Products + Reviews prefetch
