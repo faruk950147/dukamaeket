@@ -1,6 +1,6 @@
-from itertools import product
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
+from django.http import Http404
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.utils import timezone
@@ -84,11 +84,24 @@ class HomeView(generic.View):
 @method_decorator(never_cache, name='dispatch')
 class ProductDetailView(generic.View):
     def get(self, request, id):
-        product = get_object_or_404(Product, id=id)
+
+        # Product + Reviews prefetch (optimized)
+        product = get_object_or_404(Product, id=id, status='active')
+
+        # Related Products + Reviews prefetch
+        related_products = Product.objects.filter(
+            category=product.category,
+            status='active'
+        ).prefetch_related('reviews').annotate(
+            avg_rate=Avg('reviews__rating')
+        ).exclude(id=product.id)[:4]
+
         context = {
-            'product': product
+            'product': product,
+            'related_products': related_products
         }
         return render(request, 'store/product-detail.html', context)
+
  
 @method_decorator(never_cache, name='dispatch')
 class ShopView(generic.View):
