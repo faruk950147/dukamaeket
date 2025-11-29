@@ -1,4 +1,4 @@
-from store.models import Category
+from store.models import Brand, Category
 
 def store_context(request):
     # Root categories + prefetch all children for efficiency
@@ -9,4 +9,5 @@ def store_context(request):
     # distinct used ForeignKey for unique cates
     # cats =  Category.objects.filter(status='active', children__isnull=True).distinct()
     cats =  Category.objects.filter(status='active')
+    
     return {'categories': categories, 'cats': cats}
