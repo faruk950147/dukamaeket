@@ -119,7 +119,7 @@ class Brand(ImageTagMixin):
 # =========================================================
 # 06. PRODUCT MODEL
 # =========================================================
-class Product(ImageTagMixin):
+class Product(models.Model):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand, related_name='products', on_delete=models.CASCADE)
     title = models.CharField(max_length=150, unique=True)
@@ -133,7 +133,6 @@ class Product(ImageTagMixin):
 
     keyword = models.TextField(default='N/A')
     description = models.TextField(default='N/A')
-    image = models.ImageField(upload_to='products/%Y/%m/%d/', default='defaults/default.jpg')
 
     deadline = models.DateTimeField(blank=True, null=True)
     is_deadline = models.BooleanField(default=False)

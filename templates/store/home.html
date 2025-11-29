@@ -112,7 +112,7 @@
                             <div class="product__thumb fix">
                                 <div class="product-image w-img">
                                     <a href="{% url 'product-detail' product.id %}">
-                                        <img src="{{product.image.url}}" alt="{{product.title|title}}" style="width: 260px; height: 300px;">
+                                        <img src="{{product.images.first.image.url}}" alt="{{product.title|title}}" style="width: 260px; height: 300px;">
                                     </a>
                                 </div>
                                 {% if product.deadline %}
@@ -381,7 +381,7 @@
                             <div class="features-thum">
                                 <div class="features-product-image w-img">
                                     <a href="{% url 'product-detail' product.id %}">
-                                        <img src="{{ product.image.url }}" alt="{{ product.title|title }}"
+                                        <img src="{{ product.images.first.image.url }}" alt="{{ product.title|title }}"
                                              style="width:300px; height:350px;">
                                     </a>
                                 </div>
@@ -464,7 +464,7 @@
                                     <div class="features-thum">
                                         <div class="features-product-image w-img">
                                             <a href="{% url 'product-detail' product.id %}">
-                                                <img src="{{ product.image.url }}" alt="{{ product.title|title }}" style="width:130px; height: 200px;">
+                                                <img src="{{ product.images.first.image.url }}" alt="{{ product.title|title }}" style="width:130px; height: 200px;">
                                             </a>
                                         </div>
                                         {% if product.discount_percent > 0 %}

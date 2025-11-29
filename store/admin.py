@@ -64,11 +64,11 @@ class ProductAdmin(ImagePreviewMixin, admin.ModelAdmin):
     list_display = ('id', 'title', 'slug', 'category', 'brand', 'old_price', 'sale_price',
                     'available_stock', 'discount_percent', 'keyword', 'description',
                     'deadline', 'is_deadline', 'is_featured', 'sold', 'status',
-                    'created_date', 'updated_date', 'sold_percentage', 'average_review', 'count_review', 'remaining_seconds', 'image_tag')
+                    'created_date', 'updated_date', 'sold_percentage', 'average_review', 'count_review', 'remaining_seconds')
     list_filter = ('status', 'is_featured', 'category', 'brand')
     search_fields = ('title', 'keyword', 'description')
     prepopulated_fields = {'slug': ('title',)}
-    readonly_fields = ('created_date', 'updated_date', 'sold_percentage', 'average_review', 'count_review', 'remaining_seconds', 'image_tag')
+    readonly_fields = ('created_date', 'updated_date', 'sold_percentage', 'average_review', 'count_review', 'remaining_seconds')
     inlines = [ImageGalleryInline, ProductVariantInline]
     ordering = ('id',)
 
