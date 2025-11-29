@@ -43,6 +43,7 @@ def generate_unique_slug(model_class, title: str) -> str:
 # =========================================================
 class ImageTagMixin(models.Model):
     class Meta:
+        # abstract model not created table 
         abstract = True
 
     def image_tag(self):
