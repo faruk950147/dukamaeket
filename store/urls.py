@@ -6,6 +6,6 @@ from store.views import(
 )
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
-    path('product-detail', ProductDetailView.as_view(), name='product-detail'),
+    path('product-detail/<int:id>', ProductDetailView.as_view(), name='product-detail'),
     path('shop/', ShopView.as_view(), name='shop'),
 ]

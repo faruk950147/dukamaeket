@@ -1,3 +1,4 @@
+from itertools import product
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.utils.decorators import method_decorator
@@ -82,10 +83,18 @@ class HomeView(generic.View):
     
 @method_decorator(never_cache, name='dispatch')
 class ProductDetailView(generic.View):
-    def get(self, request):
-        return render(request, 'store/product-detail.html')
+    def get(self, request, id):
+        product = get_object_or_404(Product, id=id)
+        context = {
+            'product': product
+        }
+        return render(request, 'store/product-detail.html', context)
  
 @method_decorator(never_cache, name='dispatch')
 class ShopView(generic.View):
     def get(self, request):
-        return render(request, 'store/shop.html')
+        products = Product.objects.filter(status='active')
+        context = {
+            'products': products
+        }
+        return render(request, 'store/shop.html', context)
