@@ -62,7 +62,7 @@ class ProductVariantInline(ImagePreviewMixin, admin.TabularInline):
 # =========================================================
 class ProductAdmin(ImagePreviewMixin, admin.ModelAdmin):
     list_display = ('id', 'title', 'slug', 'category', 'brand', 'old_price', 'sale_price',
-                    'available_stock', 'discount_percent', 'keyword', 'description',
+                    'available_stock', 'discount_percent', 'prev_des', 'add_des', 'short_des', 'long_des', 'keyword', 'description',
                     'deadline', 'is_deadline', 'is_featured', 'sold', 'status',
                     'created_date', 'updated_date', 'sold_percentage', 'average_review', 'count_review', 'remaining_seconds')
     list_filter = ('status', 'is_featured', 'category', 'brand')

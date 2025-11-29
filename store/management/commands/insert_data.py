@@ -1,3 +1,4 @@
+import keyword
 from django.core.management.base import BaseCommand
 from faker import Faker
 from decimal import Decimal
@@ -197,9 +198,13 @@ def seed_products():
             sale_price=Decimal(item["sale_price"]),
             discount_percent=item["discount_percent"],
             available_stock=item["available_stock"],
+            prev_des="N/A",
+            add_des="N/A",
+            short_des="N/A",
+            long_des="N/A",
             keyword="N/A",
             description="N/A",
-            image="defaults/default.jpg",
+            
             deadline=None,
             is_deadline=False,
             is_featured=False,

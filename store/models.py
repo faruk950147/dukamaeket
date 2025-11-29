@@ -60,7 +60,7 @@ class Category(ImageTagMixin):
         'self', related_name='children', on_delete=models.CASCADE,
         null=True, blank=True
     )
-    title = models.CharField(max_length=150)  # unique removed
+    title = models.CharField(max_length=150, unique=True) 
     slug = models.SlugField(max_length=150, unique=True, db_index=True, blank=True, null=True)
 
     keyword = models.CharField(max_length=150, default='N/A')
@@ -90,7 +90,7 @@ class Category(ImageTagMixin):
 # 05. BRAND MODEL
 # =========================================================
 class Brand(ImageTagMixin):
-    title = models.CharField(max_length=150)  # unique removed
+    title = models.CharField(max_length=150, unique=True)  
     slug = models.SlugField(max_length=150, unique=True, db_index=True, blank=True, null=True)
 
     keyword = models.CharField(max_length=150, default='N/A')
@@ -130,7 +130,10 @@ class Product(models.Model):
 
     available_stock = models.PositiveIntegerField(validators=[MaxValueValidator(10000)], default=1)
     discount_percent = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], default=20)
-
+    prev_des = models.TextField(default='N/A')
+    add_des = models.TextField(default='N/A')
+    short_des = models.TextField(default='N/A')
+    long_des = models.TextField(default='N/A')
     keyword = models.TextField(default='N/A')
     description = models.TextField(default='N/A')
 
@@ -195,7 +198,7 @@ class Product(models.Model):
 # =========================================================
 class ImageGallery(ImageTagMixin):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='images/%Y/%m/%d/', default='defaults/default.jpg')
+    image = models.ImageField(upload_to='galleries/%Y/%m/%d/', default='defaults/default.jpg')
 
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
