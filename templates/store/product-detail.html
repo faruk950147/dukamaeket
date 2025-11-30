@@ -346,7 +346,7 @@
                             <div class="product__thumb fix">
                                 <div class="product-image w-img">
                                     <a href="{% url 'product-detail' product.id %}">
-                                        <img src="{{product.images.first.image.url}}" alt="{{product.title|title}}" style="width: 260px; height: 300px;">
+                                        <img src="{{product.images.first.image.url}}" alt="{{product.title|title}}" style="width: 260px; height: 300px; object-fit: cover">
                                     </a>
                                 </div>
                                 {% if product.deadline %}

@@ -382,7 +382,7 @@
                                 <div class="features-product-image w-img">
                                     <a href="{% url 'product-detail' product.id %}">
                                         <img src="{{ product.images.first.image.url }}" alt="{{ product.title|title }}"
-                                             style="width:300px; height:350px;">
+                                        style="width:300px; height:350px; object-fit: cover;">
                                     </a>
                                 </div>
                                 <!-- Discount Badge -->
@@ -464,7 +464,7 @@
                                     <div class="features-thum">
                                         <div class="features-product-image w-img">
                                             <a href="{% url 'product-detail' product.id %}">
-                                                <img src="{{ product.images.first.image.url }}" alt="{{ product.title|title }}" style="width:130px; height: 200px;">
+                                                <img src="{{ product.images.first.image.url }}" alt="{{ product.title|title }}" style="width:130px; height: 200px; object-fit: cover;">
                                             </a>
                                         </div>
                                         {% if product.discount_percent > 0 %}
