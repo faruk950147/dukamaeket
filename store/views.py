@@ -30,33 +30,35 @@ class HomeView(generic.View):
         feature_sliders = Slider.objects.filter(status='active', slider_type='feature')[:4]
         add_sliders = Slider.objects.filter(status='active', slider_type='add')[:2]
         promo_sliders = Slider.objects.filter(status='active', slider_type='promotion')[:3]
-
         # Acceptance Payments
         acceptance_payments = AcceptancePayment.objects.filter(status='active')[:4]
-
-        # Featured Brands
+        # Featured Brands & cates
         brands = Brand.objects.filter(status='active', is_featured=True)
-
-        # Featured Categories
         cates = Category.objects.filter(status='active', children__isnull=True, is_featured=True).distinct()[:3]
-
-        # Top Deals
+        # Top Deals Query
         top_deals_qs = Product.objects.filter(
             status='active',
+            discount_percent__gt=0,
             is_deadline=True,
             deadline__gte=timezone.now()
         ).select_related('category', 'brand').prefetch_related('reviews') \
-         .annotate(avg_rate=Avg('reviews__rating')).order_by('deadline')[:6]
+        .annotate(avg_rate=Avg('reviews__rating')).order_by('-discount_percent', 'deadline')[:6]
         top_deals = list(top_deals_qs)
         first_top_deal = top_deals[0] if top_deals else None
-
         # Featured Products
         featured_products_qs = Product.objects.filter(
             status='active',
             is_featured=True
         ).select_related('category', 'brand').prefetch_related('reviews') \
-         .annotate(avg_rate=Avg('reviews__rating'))[:5]
+        .annotate(avg_rate=Avg('reviews__rating'))[:5]
         featured_products = list(featured_products_qs)
+        # Recommended Products
+        recommended_qs = Product.objects.filter(
+            status='active'
+        ).select_related('category', 'brand').prefetch_related('reviews') \
+        .annotate(avg_rate=Avg('reviews__rating'))[:8]
+        recommended_products = list(recommended_qs)
+
 
         user = request.user.username if request.user.is_authenticated else 'Anonymous'
         logger.debug(
@@ -65,6 +67,7 @@ class HomeView(generic.View):
             f"Add Sliders: {add_sliders.count()}, Promo Sliders: {promo_sliders.count()}, "
             f"AcceptancePayments: {acceptance_payments.count()}, Categories: {cates.count()}, "
             f"Brands: {brands.count()}, Top Deals: {len(top_deals)}, Featured Products: {len(featured_products)}"
+            f"Recommended Products: {len(recommended_products)}"
         )
 
         context = {
@@ -75,9 +78,10 @@ class HomeView(generic.View):
             'acceptance_payments': acceptance_payments,
             'cates': cates,
             'top_deals': top_deals,
-            'featured_products': featured_products,
             'first_top_deal': first_top_deal,
-            'brands': brands
+            'featured_products': featured_products,
+            'brands': brands,
+            'recommended_products': recommended_products
         }
         return render(request, 'store/home.html', context)
 
