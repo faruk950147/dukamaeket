@@ -188,7 +188,10 @@
                         <div class="product_info">
                             <span class="sku_wrapper">
                                 <span class="title">SKU:</span>
-                                <span class="sku">{{product.sku}}</span>
+                                {% if product.variants %}
+                                    <span class="sku">{{product.variants.color.title}}</span>
+                                    <span class="sku">{{product.variants.size.title}}</span>
+                                {% endif %}
                             </span>
 
                             <span class="tagged_as">
