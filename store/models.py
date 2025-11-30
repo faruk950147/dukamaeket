@@ -136,6 +136,8 @@ class Product(models.Model):
     long_des = models.TextField(default='N/A')
     keyword = models.TextField(default='N/A')
     description = models.TextField(default='N/A')
+    sku = models.CharField(max_length=150, default='N/A')
+    tag = models.CharField(max_length=150, default='N/A')
 
     deadline = models.DateTimeField(blank=True, null=True)
     is_deadline = models.BooleanField(default=False)
