@@ -26,7 +26,7 @@ class HomeView(generic.View):
         # Sliders
         sliders = Slider.objects.filter(status='active')[:4]
         feature_sliders = Slider.objects.filter(status='active', slider_type='feature')[:4]
-        add_sliders = Slider.objects.filter(status='active', slider_type='add')[:4]
+        add_sliders = Slider.objects.filter(status='active', slider_type='add')[:2]
         promo_sliders = Slider.objects.filter(status='active', slider_type='promotion')[:3]
 
         # Acceptance Payments

@@ -21,7 +21,7 @@
             <div class="col">
                 <div class="features__item d-flex white-bg">
                     <div class="features__icon mr-20">
-                        <img src="{{ acceptance_payment.image.url }}" alt="{{ acceptance_payment.title|title }}">
+                        <img src="{{ acceptance_payment.image.url }}" alt="{{ acceptance_payment.title|title }}" style="width: 50px; height: 40px; object-fit: cover;">
                     </div>
                     <div class="features__content">
                         <h6>{{ acceptance_payment.title|title|truncatewords:5 }}</h6>
@@ -49,7 +49,7 @@
                 <div class="banner__item p-relative w-img mb-30">
                     <div class="banner__img">
                         <a href="product-details.html">
-                            <img src="{{ cat.image.url }}" alt="{{ cat.title|title }}" style="width: 500px; height: 250px;">
+                            <img src="{{ cat.image.url }}" alt="{{ cat.title|title }}" style="width: 500px; height: 250px; object-fit: cover;">
                         </a>
                     </div>
                     <div class="banner__content">
@@ -112,7 +112,7 @@
                             <div class="product__thumb fix">
                                 <div class="product-image w-img">
                                     <a href="{% url 'product-detail' product.id %}">
-                                        <img src="{{product.images.first.image.url}}" alt="{{product.title|title}}" style="width: 260px; height: 300px;">
+                                        <img src="{{product.images.first.image.url}}" alt="{{product.title|title}}" style="width: 260px; height: 300px; object-fit: cover">
                                     </a>
                                 </div>
                                 {% if product.deadline %}
@@ -210,7 +210,7 @@
                 <div class="banner__item p-relative w-img mb-30">
                     <div class="banner__img">
                         <a href="{% url 'product-detail' add_slider.product.id %}">
-                            <img src="{{add_slider.image.url}}" alt="{{add_slider.product.title|title}}">
+                            <img src="{{add_slider.image.url}}" alt="{{add_slider.product.title|title}}" style="width: 700px; height: 250px; object-fit: cover">
                         </a>
                     </div>
                     <div class="banner__content">
@@ -544,7 +544,7 @@
                 <div class="banner__item p-relative w-img mb-30">
                     <div class="banner__img">
                         <a href="{% url 'product-detail' promo_slider.product.id %}">
-                            <img src="{{promo_slider.image.url}}" alt="{{promo_slider.product.title|title}}">
+                            <img src="{{promo_slider.image.url}}" alt="{{promo_slider.product.title|title}}" style="width: 500px; height: 300px; object-fit: cover">
                         </a>
                     </div>
                     <div class="banner__content banner__content-sd text-center">

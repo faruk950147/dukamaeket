@@ -199,7 +199,7 @@ class Product(models.Model):
 class ImageGallery(ImageTagMixin):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='galleries/%Y/%m/%d/', default='defaults/default.jpg')
-
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -216,7 +216,7 @@ class ImageGallery(ImageTagMixin):
 class Color(ImageTagMixin):
     title = models.CharField(max_length=20, unique=True)
     code = models.CharField(max_length=20, unique=True)
-
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -241,7 +241,7 @@ class Color(ImageTagMixin):
 class Size(models.Model):
     title = models.CharField(max_length=20, unique=True)
     code = models.CharField(max_length=10, unique=True)
-
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 

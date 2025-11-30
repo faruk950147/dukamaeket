@@ -21,6 +21,7 @@ class CategoryAdmin(ImagePreviewMixin, admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     readonly_fields = ('created_date', 'updated_date', 'image_tag')
     ordering = ('id',)
+    list_editable = ('status', 'is_featured')
 
 admin.site.register(Category, CategoryAdmin)
 
@@ -28,13 +29,13 @@ admin.site.register(Category, CategoryAdmin)
 # 03. BRAND ADMIN
 # =========================================================
 class BrandAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id', 'title', 'slug', 'keyword', 'description',
-                    'status', 'is_featured', 'created_date', 'updated_date', 'image_tag')
+    list_display = ('id', 'title', 'slug', 'keyword', 'description', 'status', 'is_featured', 'created_date', 'updated_date', 'image_tag')
     list_filter = ('status', 'is_featured')
     search_fields = ('title', 'keyword', 'description')
     prepopulated_fields = {'slug': ('title',)}
     readonly_fields = ('created_date', 'updated_date', 'image_tag')
     ordering = ('id',)
+    list_editable = ('status', 'is_featured')
 
 admin.site.register(Brand, BrandAdmin)
 
@@ -54,7 +55,7 @@ class ProductVariantInline(ImagePreviewMixin, admin.TabularInline):
     model = ProductVariant
     extra = 1
     fields = ('id', 'product', 'color', 'size', 'image', 'variant_price', 'available_stock', 
-              'status', 'created_date', 'updated_date', 'image_tag')
+              'status', 'created_date', 'updated_date')
     readonly_fields = ('created_date', 'updated_date')
 
 # =========================================================
@@ -71,31 +72,58 @@ class ProductAdmin(ImagePreviewMixin, admin.ModelAdmin):
     readonly_fields = ('created_date', 'updated_date', 'sold_percentage', 'average_review', 'count_review', 'remaining_seconds')
     inlines = [ImageGalleryInline, ProductVariantInline]
     ordering = ('id',)
+    list_editable = ('status', 'is_deadline', 'is_featured')
 
 admin.site.register(Product, ProductAdmin)
 
 # =========================================================
-# 07. COLOR ADMIN
+# 07. IMAGES GALLERIES ADMIN
+# =========================================================
+class ImagesGalleriesAdmin(admin.ModelAdmin):
+    list_display = ('id', 'product', 'image', 'status', 'created_date', 'updated_date')
+    readonly_fields = ('created_date', 'updated_date')
+    list_filter = ('id', 'product', 'image', 'created_date', 'updated_date')
+    search_fields = ('id', 'product')
+    ordering = ('id',)
+    list_editable = ('status',)
+admin.site.register(ImageGallery, ImagesGalleriesAdmin)
+
+# =========================================================
+# 08. COLOR ADMIN
 # =========================================================
 class ColorAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id', 'title', 'code', 'created_date', 'updated_date', 'color_tag')
+    list_display = ('id', 'title', 'code', 'status', 'created_date', 'updated_date', 'color_tag')
     search_fields = ('title', 'code')
     readonly_fields = ('created_date', 'updated_date', 'color_tag')
+    list_editable = ('title', 'code', 'status')
 
 admin.site.register(Color, ColorAdmin)
 
 # =========================================================
-# 08. SIZE ADMIN
+# 09. SIZE ADMIN
 # =========================================================
 class SizeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'code', 'created_date', 'updated_date')
+    list_display = ('id', 'title', 'code', 'status', 'created_date', 'updated_date')
     search_fields = ('title', 'code')
     readonly_fields = ('created_date', 'updated_date')
+    list_editable = ('title', 'code', 'status')
 
 admin.site.register(Size, SizeAdmin)
 
 # =========================================================
-# 09. SLIDER ADMIN
+# 10. PRODUCT VARIANT ADMIN
+# =========================================================
+class ProductVariantAdmin(admin.ModelAdmin):
+    list_display = ('id', 'product', 'color', 'size', 'image', 'variant_price', 'available_stock', 'status', 'created_date', 'updated_date')
+    list_filter = ('product', 'color', 'size', 'status')
+    search_fields = ('product__title', 'color__title', 'size__title')
+    readonly_fields = ('created_date', 'updated_date', 'image')
+    list_editable = ('status', 'product', 'color', 'size', 'variant_price', 'available_stock')
+
+admin.site.register(ProductVariant, ProductVariantAdmin)
+
+# =========================================================
+# 11. SLIDER ADMIN
 # =========================================================
 class SliderAdmin(ImagePreviewMixin, admin.ModelAdmin):
     list_display = ('id', 'title', 'slider_type', 'product', 'sub_title', 'paragraph', 'status', 'created_date', 'updated_date', 'image_tag')
@@ -103,27 +131,29 @@ class SliderAdmin(ImagePreviewMixin, admin.ModelAdmin):
     search_fields = ('title', 'sub_title', 'paragraph')
     readonly_fields = ('created_date', 'updated_date', 'image_tag')
     prepopulated_fields = {'title': ('title',)}
+    list_editable = ('status', 'slider_type', 'product', 'sub_title', 'paragraph')
 
 admin.site.register(Slider, SliderAdmin)
 
 # =========================================================
-# 10. REVIEW ADMIN
+# 12. REVIEW ADMIN
 # =========================================================
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('id', 'product', 'user', 'subject', 'comment', 'rating', 'status', 'created_date', 'updated_date')
     list_filter = ('status', 'rating')
     search_fields = ('product__title', 'user__username', 'subject', 'comment')
     readonly_fields = ('created_date', 'updated_date')
-
+    list_editable = ('status', 'product', 'user', 'subject', 'comment', 'rating')
 admin.site.register(Review, ReviewAdmin)
 
 # =========================================================
-# 11. ACCEPTANCE PAYMENT ADMIN
+# 13. ACCEPTANCE PAYMENT ADMIN
 # =========================================================
 class AcceptancePaymentAdmin(ImagePreviewMixin, admin.ModelAdmin):
     list_display = ('id', 'title', 'sub_title', 'status', 'is_featured', 'help_time', 'created_date', 'updated_date', 'image_tag')
     list_filter = ('status', 'is_featured')
     search_fields = ('title', 'sub_title')
     readonly_fields = ('created_date', 'updated_date', 'image_tag')
+    list_editable = ('status', 'title', 'sub_title', 'is_featured', 'help_time')
 
 admin.site.register(AcceptancePayment, AcceptancePaymentAdmin)
