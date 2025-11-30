@@ -55,7 +55,7 @@ class HomeView(generic.View):
             status='active',
             is_featured=True
         ).select_related('category', 'brand').prefetch_related('reviews') \
-         .annotate(avg_rate=Avg('reviews__rating'))[:6]
+         .annotate(avg_rate=Avg('reviews__rating'))[:5]
         featured_products = list(featured_products_qs)
 
         user = request.user.username if request.user.is_authenticated else 'Anonymous'
