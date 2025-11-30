@@ -1,0 +1,46 @@
+1 ER Diagram (Relationships)
+Category (1) ──< Product >── (1) Brand
+      │
+      └──< children (self-relation) 
+
+Product (1) ──< ProductVariant >── Color
+                     │
+                     └── Size
+
+Product (1) ──< ImageGallery
+
+Product (1) ──< Review >── User
+
+Product (1) ──< Slider
+
+AcceptancePayment (independent)
+
+
+Explanation:
+
+Category: parent-child relationship possible।
+
+Product: linked to Category & Brand.
+
+ProductVariant: linked to Product, optional Color & Size. Unique constraint ensures no duplicate (product, color, size).
+
+ImageGallery: multiple images per Product।
+
+Review: multiple reviews per Product, linked to User।
+
+Slider: linked to Product, with types like slider, feature, etc।
+
+AcceptancePayment: independent, like payment methods.
+
+2 Admin Structure Summary
+Model	Display in Admin	Useful Properties/Methods
+Category	title, slug, status, is_featured	image_tag() shows image
+Brand	title, slug, status, is_featured	image_tag()
+Product	title, category, brand, sale_price, available_stock, status	sold_percentage, average_review, count_review, remaining_seconds
+ProductVariant	product, color, size, variant_price, available_stock, status	image_tag()
+ImageGallery	product, status	image_tag()
+Color	title, code, status	color_tag() shows color block
+Size	title, code, status	-
+Slider	title, product, slider_type, status	image_tag()
+Review	product, user, rating, status	-
+AcceptancePayment	title, sub_title, status, is_featured	image_tag()
