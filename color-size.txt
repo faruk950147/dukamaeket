@@ -11,35 +11,110 @@ from django.views.decorators.cache import never_cache
 from django.shortcuts import render
 from .models import Product
 
+# =========================================================
+# HOME PAGE
+# =========================================================
 @method_decorator(never_cache, name='dispatch')
 class HomeView(generic.View):
     def get(self, request):
-        # Top Deals
-        top_deals = Product.objects.filter(
-            status='active',
-            discount_percent__gt=0,
-            is_timeline='active',
-            deadline__gt=timezone.now()
-        ).order_by('-discount_percent')[:10]
+        # Sliders
+        sliders = Slider.objects.filter(status='active')[:4]
+        feature_sliders = Slider.objects.filter(status='active', slider_type='feature')[:4]
+        add_sliders = Slider.objects.filter(status='active', slider_type='add')[:2]
+        promo_sliders = Slider.objects.filter(status='active', slider_type='promotion')[:3]
 
-        # Top Selling
-        top_selling = Product.objects.filter(
-            status='active'
-        ).annotate(
-            total_sold=Sum('sold_items__quantity')
-        ).order_by('-total_sold')[:10]
+        # Acceptance Payments
+        acceptance_payments = AcceptancePayment.objects.filter(status='active')[:4]
+
+        # Featured Brands
+        brands = Brand.objects.filter(status='active', is_featured=True)
+
+        # Featured Categories
+        cates = Category.objects.filter(status='active', children__isnull=True, is_featured=True).distinct()[:3]
+
+        # Top Deals
+        top_deals_qs = Product.objects.filter(
+            status='active',
+            is_deadline=True,
+            deadline__gte=timezone.now()
+        ).select_related('category', 'brand').prefetch_related('reviews') \
+         .annotate(avg_rate=Avg('reviews__rating')).order_by('deadline')[:6]
+        top_deals = list(top_deals_qs)
+        first_top_deal = top_deals[0] if top_deals else None
 
         # Featured Products
-        featured_products = Product.objects.filter(
-            advancements__advancement_type='feature',
-            advancements__status='active',
-            status='active'
-        ).distinct()[:10]
+        featured_products_qs = Product.objects.filter(
+            status='active',
+            is_featured=True
+        ).select_related('category', 'brand').prefetch_related('reviews') \
+         .annotate(avg_rate=Avg('reviews__rating'))[:5]
+        featured_products = list(featured_products_qs)
+
+        user = request.user.username if request.user.is_authenticated else 'Anonymous'
+        logger.debug(
+            f"User {user} visited Home page. "
+            f"Sliders: {sliders.count()}, Feature Sliders: {feature_sliders.count()}, "
+            f"Add Sliders: {add_sliders.count()}, Promo Sliders: {promo_sliders.count()}, "
+            f"AcceptancePayments: {acceptance_payments.count()}, Categories: {cates.count()}, "
+            f"Brands: {brands.count()}, Top Deals: {len(top_deals)}, Featured Products: {len(featured_products)}"
+        )
 
         context = {
+            'sliders': sliders,
+            'feature_sliders': feature_sliders,
+            'add_sliders': add_sliders,
+            'promo_sliders': promo_sliders,
+            'acceptance_payments': acceptance_payments,
+            'cates': cates,
             'top_deals': top_deals,
-            'top_selling': top_selling,
             'featured_products': featured_products,
+            'first_top_deal': first_top_deal,
+            'brands': brands
         }
+        return render(request, 'store/home.html', context)
 
-        return render(request, 'home.html', context)
+
+# =========================================================
+# PRODUCT DETAIL VIEW
+# =========================================================
+@method_decorator(never_cache, name='dispatch')
+class ProductDetailView(generic.View):
+    def get(self, request, id):
+        product = get_object_or_404(
+            Product.objects.select_related('category', 'brand')
+                   .prefetch_related('reviews', 'variants__color', 'variants__size', 'images'),
+            id=id,
+            status='active'
+        )
+
+        related_products_qs = Product.objects.filter(
+            category=product.category,
+            status='active'
+        ).exclude(id=product.id).select_related('category', 'brand') \
+         .prefetch_related('reviews').annotate(avg_rate=Avg('reviews__rating'))[:4]
+        related_products = list(related_products_qs)
+
+        context = {
+            'product': product,
+            'related_products': related_products
+        }
+        return render(request, 'store/product-detail.html', context)
+
+
+# =========================================================
+# SHOP VIEW WITH PAGINATION
+# =========================================================
+@method_decorator(never_cache, name='dispatch')
+class ShopView(generic.View):
+    def get(self, request):
+        products_qs = Product.objects.filter(status='active').select_related('category', 'brand') \
+                         .prefetch_related('reviews')
+        paginator = Paginator(products_qs, 12)  # 12 products per page
+        page_number = request.GET.get('page', 1)
+        page_obj = paginator.get_page(page_number)
+
+        context = {
+            'products': page_obj.object_list,
+            'page_obj': page_obj
+        }
+        return render(request, 'store/shop.html', context)
