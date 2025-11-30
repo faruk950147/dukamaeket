@@ -118,7 +118,7 @@ class Brand(ImageTagMixin):
 # =========================================================
 # 06. PRODUCT MODEL
 # =========================================================
-class Product(models.Model):
+class Product(ImageTagMixin):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand, related_name='products', on_delete=models.CASCADE)
     title = models.CharField(max_length=150, unique=True)
@@ -238,7 +238,7 @@ class Color(ImageTagMixin):
 # =========================================================
 # 09. SIZE MODEL
 # =========================================================
-class Size(models.Model):
+class Size(ImageTagMixin):
     title = models.CharField(max_length=20, unique=True)
     code = models.CharField(max_length=10, unique=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
@@ -255,7 +255,7 @@ class Size(models.Model):
 # =========================================================
 # 10. PRODUCT VARIANT MODEL
 # =========================================================
-class ProductVariant(models.Model):
+class ProductVariant(ImageTagMixin):
     product = models.ForeignKey(Product, related_name='variants', on_delete=models.CASCADE)
     color = models.ForeignKey(Color, blank=True, null=True, on_delete=models.SET_NULL)
     size = models.ForeignKey(Size, blank=True, null=True, on_delete=models.SET_NULL)
@@ -304,7 +304,7 @@ class Slider(ImageTagMixin):
 # =========================================================
 # 12. REVIEW MODEL
 # =========================================================
-class Review(models.Model):
+class Review(ImageTagMixin):
     product = models.ForeignKey(Product, related_name='reviews', on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
