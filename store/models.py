@@ -43,7 +43,6 @@ def generate_unique_slug(cls, title: str) -> str:
 # =========================================================
 class ImageTagMixin(models.Model):
     class Meta:
-        # abstract model not created table 
         abstract = True
 
     def image_tag(self):
@@ -60,7 +59,7 @@ class Category(ImageTagMixin):
         'self', related_name='children', on_delete=models.CASCADE,
         null=True, blank=True
     )
-    title = models.CharField(max_length=150, unique=True) 
+    title = models.CharField(max_length=150, unique=True)
     slug = models.SlugField(max_length=150, unique=True, db_index=True, blank=True, null=True)
 
     keyword = models.CharField(max_length=150, default='N/A')
@@ -90,7 +89,7 @@ class Category(ImageTagMixin):
 # 05. BRAND MODEL
 # =========================================================
 class Brand(ImageTagMixin):
-    title = models.CharField(max_length=150, unique=True)  
+    title = models.CharField(max_length=150, unique=True)
     slug = models.SlugField(max_length=150, unique=True, db_index=True, blank=True, null=True)
 
     keyword = models.CharField(max_length=150, default='N/A')
@@ -130,6 +129,7 @@ class Product(models.Model):
 
     available_stock = models.PositiveIntegerField(validators=[MaxValueValidator(10000)], default=1)
     discount_percent = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], default=20)
+
     prev_des = models.TextField(default='N/A')
     add_des = models.TextField(default='N/A')
     short_des = models.TextField(default='N/A')
@@ -152,7 +152,6 @@ class Product(models.Model):
         verbose_name_plural = '03. Products'
 
     def save(self, *args, **kwargs):
-        # auto discount calculation
         self.sale_price = (
             (self.old_price * (Decimal(100) - Decimal(self.discount_percent)) / Decimal(100))
             .quantize(Decimal('0.01'))
@@ -277,7 +276,6 @@ class ProductVariant(models.Model):
             )
         ]
 
-
     def __str__(self):
         return f"{self.product.title} - {self.size or 'No Size'} - {self.color or 'No Color'}"
 
@@ -311,7 +309,7 @@ class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     subject = models.CharField(max_length=50)
-    comment = models.CharField(max_length=500)  # TextField changed → max_length enforced
+    comment = models.CharField(max_length=500)
     rating = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)])
 
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.utils import timezone
@@ -81,6 +81,10 @@ class HomeView(generic.View):
         }
         return render(request, 'store/home.html', context)
     
+    
+# ========================================================
+# PRODUCT DETAIL VIEW
+# ========================================================
 @method_decorator(never_cache, name='dispatch')
 class ProductDetailView(generic.View):
     def get(self, request, id):
@@ -103,6 +107,9 @@ class ProductDetailView(generic.View):
         return render(request, 'store/product-detail.html', context)
 
  
+# ========================================================
+# SHOP VIEW
+# ========================================================
 @method_decorator(never_cache, name='dispatch')
 class ShopView(generic.View):
     def get(self, request):
@@ -111,3 +118,14 @@ class ShopView(generic.View):
             'products': products
         }
         return render(request, 'store/shop.html', context)
+    
+    
+# ========================================================
+# GET COLOR PRICE
+# ========================================================
+class GetVariantsView(generic.View):
+    def post(self, request):
+        color_id = request.POST.get('color_id')
+        product_id = request.POST.get('product_id')
+        color = ProductVariant.objects.get(id=color_id)
+        return JsonResponse({'new_price': color.price})

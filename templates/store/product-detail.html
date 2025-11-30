@@ -84,14 +84,16 @@
                     </div>
 
                     <!-- Price -->
-                    <div class="price mb-10"><span>
-                       $ {{product.sale_price}}
-                       <del class="text-danger">
-                            {% if product.old_price %}
-                               $ {{product.old_price}}
-                            {% endif %}
-                       </del>
-                    </span></div>
+                    <div class="price mb-10">
+                        <span>
+                        $ <span id="product-price">{{product.sale_price}}</span>
+                        <del class="text-danger">
+                                {% if product.old_price %}
+                                $ {{product.old_price}}
+                                {% endif %}
+                        </del>
+                        </span>
+                    </div>
 
                     <!-- Features -->
                     <div class="features-des mb-20 mt-10">
@@ -109,49 +111,42 @@
 
                     <!-- Color Options -->
                     <div class="details-meta colors">
-                        <label for="color">Colors: </label>
-                        <div class="color">
-                            <label class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" name="select_color" value="" class="custom-control-input">
-                                <span class="custom-control-label">Red<img src="" alt=""></span>
-                            </label>
+                        {% if product.variants.exists %}
+                        <div class="nav nav-tabs d-flex flex-row gap-2 mb-2" id="productThumbTab" role="tablist">
+
+                            {% for img in product.variants.all %}
+                            <button class="nav-link color-btn p-0 border-0 {% if forloop.first %}active{% endif %}"
+                                id="thumb{{ img.id }}-tab"
+                                data-color-id="{{ img.id }}"
+                                data-bs-toggle="tab"
+                                data-bs-target="#thumb{{ img.id }}"
+                                type="button">
+
+                                <img src="{{ img.image.url }}"
+                                    alt="{{ product.title|title }}"
+                                    class="img-fluid rounded"
+                                    style="width:45px; height:45px; object-fit:cover;">
+                            </button>
+                            {% endfor %}
                         </div>
-                        <div class="color">
-                            <label class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" name="select_color" value="" class="custom-control-input">
-                                <span class="custom-control-label">Blue<img src="" alt=""></span>
-                            </label>
-                        </div>
-                        <div class="color">
-                            <label class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" name="select_color" value="" class="custom-control-input">
-                                <span class="custom-control-label">Black<img src="" alt=""></span>
-                            </label>
-                        </div>
-                        <a href="#" class="size-guide"><i class="fal fa-list"></i> If you select colors extra price</a>
+                        {% endif %}
+
+                        <a href="#" class="size-guide d-inline-flex align-items-center" style="font-size:14px;">
+                            <i class="fal fa-list me-1"></i> If you select colors extra price
+                        </a>
                     </div>
 
                     <!-- Size Options -->
                     <div class="details-meta sizes">
                         <label for="size">Sizes: </label>
+                        
                         <div class="size">
                             <label class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" name="select_size" value="" class="custom-control-input">
                                 <span class="custom-control-label">S</span>
                             </label>
                         </div>
-                        <div class="size">
-                            <label class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" name="select_size" value="" class="custom-control-input">
-                                <span class="custom-control-label">M</span>
-                            </label>
-                        </div>
-                        <div class="size">
-                            <label class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" name="select_size" value="" class="custom-control-input">
-                                <span class="custom-control-label">L</span>
-                            </label>
-                        </div>
+
                         <a href="#" class="size-guide"><i class="fal fa-list"></i> If you select sizes extra price</a>
                     </div>
 
@@ -446,4 +441,43 @@
 <!-- shop modal start -->
 {% include 'store/product-modals.html' %}
 <!-- shop modal end -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const buttons = document.querySelectorAll(".color-btn");
+    const priceBox = document.getElementById("product-price");
+
+    buttons.forEach(btn => {
+        btn.addEventListener("click", function () {
+
+            const colorID = this.dataset.colorId;
+
+            // Active button update
+            buttons.forEach(b => b.classList.remove("active"));
+            this.classList.add("active");
+
+            // AJAX Request
+            fetch("{% url 'get-variants' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({
+                    "color_id": colorID,
+                    "product_id": "{{ product.id }}"
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                priceBox.innerText = data.new_price;
+            });
+
+        });
+    });
+
+});
+</script>
+
 {% endblock main_content %}

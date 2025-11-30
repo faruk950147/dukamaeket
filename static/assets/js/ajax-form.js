@@ -1,48 +1,35 @@
-$(function() {
+document.addEventListener("DOMContentLoaded", function () {
 
-	// Get the form.
-	var form = $('#contact-form');
+    const buttons = document.querySelectorAll(".color-btn");
+    const priceBox = document.getElementById("product-price");
 
-	// Get the messages div.
-	var formMessages = $('.ajax-response');
+    buttons.forEach(btn => {
+        btn.addEventListener("click", function () {
 
-	// Set up an event listener for the contact form.
-	$(form).submit(function(e) {
-		// Stop the browser from submitting the form.
-		e.preventDefault();
+            const colorID = this.dataset.colorId;
 
-		// Serialize the form data.
-		var formData = $(form).serialize();
+            // Active button update
+            buttons.forEach(b => b.classList.remove("active"));
+            this.classList.add("active");
 
-		// Submit the form using AJAX.
-		$.ajax({
-			type: 'POST',
-			url: $(form).attr('action'),
-			data: formData
-		})
-		.done(function(response) {
-			// Make sure that the formMessages div has the 'success' class.
-			$(formMessages).removeClass('error');
-			$(formMessages).addClass('success');
+            // AJAX Request
+            fetch("", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({
+                    "color_id": colorID,
+                    "product_id": "{{ product.id }}"
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                priceBox.innerText = data.new_price;
+            });
 
-			// Set the message text.
-			$(formMessages).text(response);
-
-			// Clear the form.
-			$('#contact-form input,#contact-form textarea').val('');
-		})
-		.fail(function(data) {
-			// Make sure that the formMessages div has the 'error' class.
-			$(formMessages).removeClass('success');
-			$(formMessages).addClass('error');
-
-			// Set the message text.
-			if (data.responseText !== '') {
-				$(formMessages).text(data.responseText);
-			} else {
-				$(formMessages).text('Oops! An error occured and your message could not be sent.');
-			}
-		});
-	});
+        });
+    });
 
 });
