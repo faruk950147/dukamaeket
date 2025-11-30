@@ -659,7 +659,7 @@
                 {% if brands %}
                     {% for brand in brands %}
                         <div class="brand-item w-img swiper-slide">
-                            <a href="#"><img src="{{brand.image.url}}" alt="{{brand.title|title}}" style="width: 200px; height: 70px;"></a>
+                            <a href="#"><img src="{{brand.image.url}}" alt="{{brand.title|title}}" style="width: 200px; height: 70px; object-fit: cover;"></a>
                         </div>
                     {% endfor %}
                 {% else %}
