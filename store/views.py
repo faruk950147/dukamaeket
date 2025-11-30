@@ -46,7 +46,7 @@ class HomeView(generic.View):
             is_deadline=True,
             deadline__gte=timezone.now()
         ).select_related('category', 'brand').prefetch_related('reviews') \
-         .annotate(avg_rate=Avg('reviews__rating')).order_by('deadline')[:5]
+         .annotate(avg_rate=Avg('reviews__rating')).order_by('deadline')[:6]
         top_deals = list(top_deals_qs)
         first_top_deal = top_deals[0] if top_deals else None
 
@@ -55,7 +55,7 @@ class HomeView(generic.View):
             status='active',
             is_featured=True
         ).select_related('category', 'brand').prefetch_related('reviews') \
-         .annotate(avg_rate=Avg('reviews__rating'))[:5]
+         .annotate(avg_rate=Avg('reviews__rating'))[:6]
         featured_products = list(featured_products_qs)
 
         user = request.user.username if request.user.is_authenticated else 'Anonymous'
