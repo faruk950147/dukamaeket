@@ -25,46 +25,33 @@ logger = logging.getLogger('project')
 @method_decorator(never_cache, name='dispatch')
 class HomeView(generic.View):
     def get(self, request):
-        # Sliders
-        sliders = Slider.objects.filter(status='active')[:4]
-        feature_sliders = Slider.objects.filter(status='active', slider_type='feature')[:4]
-        add_sliders = Slider.objects.filter(status='active', slider_type='add')[:2]
-        promo_sliders = Slider.objects.filter(status='active', slider_type='promotion')[:3]
+        # Active sliders all fetch
+        active_sliders = Slider.objects.filter(status='active')
+        sliders = active_sliders[:4]
+        feature_sliders = active_sliders.filter(slider_type='feature')[:4]
+        add_sliders = active_sliders.filter(slider_type='add')[:2]
+        promo_sliders = active_sliders.filter(slider_type='promotion')[:3]
 
-        # Acceptance Payments
         acceptance_payments = AcceptancePayment.objects.filter(status='active')[:4]
-
-        # Featured Brands
         brands = Brand.objects.filter(status='active', is_featured=True)
+        cates = Category.objects.filter(status='active', children__isnull=True, is_featured=True)[:3]
 
-        # Featured Categories (leaf categories)
-        cates = Category.objects.filter(status='active', children__isnull=True, is_featured=True).distinct()[:3]
-
-        # Top Deals
-        top_deals_qs = Product.objects.filter(
-            status='active',
-            discount_percent__gt=0,
-            is_deadline=True,
-            deadline__gte=timezone.now()
+        top_deals = list(Product.objects.filter(
+            status='active', discount_percent__gt=0, is_deadline=True, deadline__gte=timezone.now()
         ).select_related('category', 'brand').prefetch_related('reviews') \
          .annotate(avg_rate=Avg('reviews__rating')).order_by('-discount_percent', 'deadline')[:6]
-        top_deals = list(top_deals_qs)
+        )
         first_top_deal = top_deals[0] if top_deals else None
 
-        # Featured Products
-        featured_products_qs = Product.objects.filter(
-            status='active',
-            is_featured=True
+        featured_products = Product.objects.filter(
+            status='active', is_featured=True
         ).select_related('category', 'brand').prefetch_related('reviews') \
          .annotate(avg_rate=Avg('reviews__rating'))[:5]
-        featured_products = list(featured_products_qs)
 
-        # Recommended For You
-        recommended_qs = Product.objects.filter(
+        recommended_products = Product.objects.filter(
             status='active'
         ).select_related('category', 'brand').prefetch_related('reviews') \
-        .annotate(avg_rate=Avg('reviews__rating'))[:8]
-        recommended_products = list(recommended_qs)
+         .annotate(avg_rate=Avg('reviews__rating'))[:8]
 
         context = {
             'sliders': sliders,
@@ -89,17 +76,17 @@ class ProductDetailView(generic.View):
     def get(self, request, id):
         product = get_object_or_404(
             Product.objects.select_related('category', 'brand')
-                   .prefetch_related('reviews', 'variants__color', 'variants__size', 'images'),
+                   .prefetch_related('reviews', 'variants__color', 'variants__size', 'images')
+                   .annotate(avg_rate=Avg('reviews__rating')),
             id=id,
             status='active'
         )
 
-        related_products_qs = Product.objects.filter(
+        related_products = Product.objects.filter(
             category=product.category,
             status='active'
         ).exclude(id=product.id).select_related('category', 'brand') \
          .prefetch_related('reviews').annotate(avg_rate=Avg('reviews__rating'))[:4]
-        related_products = list(related_products_qs)
 
         context = {
             'product': product,
@@ -114,13 +101,13 @@ class ProductDetailView(generic.View):
 class ShopView(generic.View):
     def get(self, request):
         products_qs = Product.objects.filter(status='active').select_related('category', 'brand') \
-                         .prefetch_related('reviews')
+                         .prefetch_related('reviews').annotate(avg_rate=Avg('reviews__rating'))
+        
         paginator = Paginator(products_qs, 12)  # 12 products per page
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
 
         context = {
-            'products': page_obj.object_list,
             'page_obj': page_obj
         }
         return render(request, 'store/shop.html', context)

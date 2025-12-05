@@ -151,20 +151,16 @@
                                 <h6><a href="{% url 'product-detail' product.id %}">{{product.title|title|truncatewords:5}}</a></h6>
                                 <div class="rating mb-5">
                                     <ul>
-                                        {% with product.avg_rate|default:0|floatformat:0 as rating %}
-                                            {% for i in "12345"|make_list %}
-                                                {% if forloop.counter <= rating %}
-                                                    <span><i class=" fa-solid fa-star"></i></span>
-                                                {% else %}
-                                                    <span><i class=" fa-solid fa-star"></i></span>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endwith %}
-
+                                        <i class="fa {% if product.avg_rate >= 1 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                        <i class="fa {% if product.avg_rate >= 2 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                        <i class="fa {% if product.avg_rate >= 3 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                        <i class="fa {% if product.avg_rate >= 4 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                        <i class="fa {% if product.avg_rate >= 5 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
                                     </ul>
                                     <span>({{ product.reviews.count }} review{{ product.reviews.count|pluralize }})</span>
-
                                 </div>
+
+
                                 <div class="price mb-10"><span>
                                    $ {{product.sale_price}}
                                     <del class="text-danger">
@@ -312,13 +308,13 @@
 
                                             <div class="rating mb-5">
                                                 <ul>
-                                                    <span><i class=" fa-solid fa-star"></i></span>
-                                                    <span><i class=" fa-solid fa-star"></i></span>
-                                                    <span><i class=" fa-solid fa-star"></i></span>
-                                                    <span><i class=" fa-solid fa-star"></i></span>
-                                                    <span><i class=" fa-solid fa-star"></i></span>
+                                                    <i class="fa {% if product.avg_rate >= 1 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                                    <i class="fa {% if product.avg_rate >= 2 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                                    <i class="fa {% if product.avg_rate >= 3 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                                    <i class="fa {% if product.avg_rate >= 4 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                                    <i class="fa {% if product.avg_rate >= 5 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
                                                 </ul>
-                                                <span>(01 review)</span>
+                                                <span>({{ product.reviews.count }} review{{ product.reviews.count|pluralize }})</span>
                                             </div>
 
                                             <div class="price">
@@ -415,18 +411,15 @@
                                 <!-- Star Rating -->
                                 <div class="rating mb-5">
                                     <ul>
-                                        {% with product.avg_rate|default:0|floatformat:0 as rating %}
-                                            {% for i in "12345"|make_list %}
-                                                {% if forloop.counter <= rating %}
-                                                    <span><i class=" fa-solid fa-star"></i></span>
-                                                {% else %}
-                                                    <span><i class=" fa-solid fa-star"></i></span>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endwith %}
+                                        <i class="fa {% if product.avg_rate >= 1 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                        <i class="fa {% if product.avg_rate >= 2 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                        <i class="fa {% if product.avg_rate >= 3 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                        <i class="fa {% if product.avg_rate >= 4 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                        <i class="fa {% if product.avg_rate >= 5 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
                                     </ul>
-                                    <span>({{ product.count_review }} review{{ product.count_review|pluralize }})</span>
+                                    <span>({{ product.reviews.count }} review{{ product.reviews.count|pluralize }})</span>
                                 </div>
+
                                 <div class="price mb-10"><span>
                                     {{product.sale_price}}
                                     <del class="text-danger">
@@ -479,18 +472,14 @@
                                         <h6><a href="{% url 'product-detail' product.id %}">{{ product.title|title|truncatewords:5 }}</a></h6>
                                         <div class="rating mb-5">
                                             <ul>
-                                                {% with product.avg_rate|default:0|floatformat:0 as rating %}
-                                                    {% for i in "12345"|make_list %}
-                                                        {% if forloop.counter <= rating %}
-                                                            <span><i class=" fa-solid fa-star"></i></span>
-                                                        {% else %}
-                                                            <span><i class=" fa-solid fa-star"></i></span>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                {% endwith %}
+                                                <i class="fa {% if product.avg_rate >= 1 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                                <i class="fa {% if product.avg_rate >= 2 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                                <i class="fa {% if product.avg_rate >= 3 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                                <i class="fa {% if product.avg_rate >= 4 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                                <i class="fa {% if product.avg_rate >= 5 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
                                             </ul>
                                         </div>
-                                         <span>({{ product.count_review }} review{{ product.count_review|pluralize }})</span>
+                                        <span>({{ product.reviews.count }} review{{ product.reviews.count|pluralize }})</span>
                                         <div class="price d-price">
                                             <span> 
                                                 $ {{ product.sale_price }} 
@@ -620,13 +609,13 @@
                                 <h6><a href="product-details.html">Epple iPad Pro 10.5-inch Cellular 64G</a></h6>
                                 <div class="rating mb-5">
                                     <ul>
-                                        <span><i class=" fa-solid fa-star"></i></span>
-                                        <span><i class=" fa-solid fa-star"></i></span>
-                                        <span><i class=" fa-solid fa-star"></i></span>
-                                        <span><i class=" fa-solid fa-star"></i></span>
-                                        <span><i class=" fa-solid fa-star"></i></span>
+                                        <i class="fa {% if product.avg_rate >= 1 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                        <i class="fa {% if product.avg_rate >= 2 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                        <i class="fa {% if product.avg_rate >= 3 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                        <i class="fa {% if product.avg_rate >= 4 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                        <i class="fa {% if product.avg_rate >= 5 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
                                     </ul>
-                                    <span>(01 review)</span>
+                                    <span>({{ product.reviews.count }} review{{ product.reviews.count|pluralize }})</span>
                                 </div>
                                 <div class="price">
                                     <span>$105-$110</span>
