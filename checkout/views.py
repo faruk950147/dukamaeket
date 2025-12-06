@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 from django.db.models import Sum, F
 from checkout.models import Checkout
 from cart.models import Cart
-from accounts.models import Profile
+from account.models import Profile
 User = get_user_model()
 logger = logging.getLogger('project')
 
