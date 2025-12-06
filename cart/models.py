@@ -28,7 +28,7 @@ class Coupon(models.Model):
 
     class Meta:
         ordering = ['id']
-        verbose_name_plural = 'Coupons'
+        verbose_name_plural = '01. Coupons'
 
     def clean(self):
         if self.expiry_date and self.expiry_date < timezone.now():
@@ -62,7 +62,7 @@ class Cart(models.Model):
 
     class Meta:
         ordering = ['id']
-        verbose_name_plural = 'Carts'
+        verbose_name_plural = '02. Carts'
         unique_together = ('user', 'product', 'variant')
 
     # ---- UNIT PRICE ----
@@ -125,7 +125,7 @@ class Wishlist(models.Model):
 
     class Meta:
         ordering = ['id']
-        verbose_name_plural = 'Wishlists'
+        verbose_name_plural = '03. Wishlists'
         unique_together = ('user', 'product', 'variant')
 
     def __str__(self):
