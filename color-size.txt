@@ -64,12 +64,14 @@ class HomeView(generic.View):
          .annotate(avg_rate=Avg('reviews__rating'))[:5]
         featured_products = list(featured_products_qs)
 
-        # Recommended For You
-        recommended_qs = Product.objects.filter(
-            status='active'
-        ).select_related('category', 'brand').prefetch_related('reviews') \
-        .annotate(avg_rate=Avg('reviews__rating'))[:8]
-        recommended_products = list(recommended_qs)
+        order_items = OrderItem.objects.filter(order__user=request.user)
+        product_ids = order_items.values_list('product_id', flat=True)
+
+        recommended_products = Product.objects.filter(
+            orderitem__order__orderitem__product_id__in=product_ids
+        ).exclude(id__in=product_ids).annotate(
+            count=Count('orderitem')
+        ).order_by('-count')[:5]
 
         context = {
             'sliders': sliders,
@@ -159,3 +161,11 @@ class GetVariantsView(generic.View):
         return JsonResponse(data)
 
 
+Advanced: Use Recommendation Engine / Package
+
+যদি তুমি সামনের ধাপে যেতে চাও — machine‑learning / similarity / collaborative‑filtering ব্যবহার — তাহলে external package/engine বা নিজে logic লিখতে পারো। উদাহরণ: django-oscar-easyrec প্যাকেজ। এটি দিয়ে:
+
+“users also viewed”, “users also bought”, “related products” ইত্যাদি template tag পাওয়া যায়। 
+django-oscar-easyrec.readthedocs.io
+
+খুব কম কোডে recommendation engine পাওয়া যায়।
