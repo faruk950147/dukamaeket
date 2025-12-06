@@ -114,10 +114,10 @@ admin.site.register(Size, SizeAdmin)
 # 10. PRODUCT VARIANT ADMIN
 # =========================================================
 class ProductVariantAdmin(admin.ModelAdmin):
-    list_display = ('id', 'product', 'color', 'size', 'image', 'variant_price', 'available_stock', 'status', 'created_date', 'updated_date')
+    list_display = ('id', 'product', 'color', 'size', 'image_tag', 'variant_price', 'available_stock', 'status', 'created_date', 'updated_date')
     list_filter = ('product', 'color', 'size', 'status')
     search_fields = ('product__title', 'color__title', 'size__title')
-    readonly_fields = ('created_date', 'updated_date', 'image')
+    readonly_fields = ('created_date', 'updated_date', 'image_tag')
     list_editable = ('status', 'product', 'color', 'size', 'variant_price', 'available_stock')
 
 admin.site.register(ProductVariant, ProductVariantAdmin)

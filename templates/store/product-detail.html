@@ -109,16 +109,16 @@
                     <div class="details-meta colors">
                         {% if product.variants.exists %}
                         <div class="nav nav-tabs d-flex flex-row gap-2 mb-2" id="productThumbTab" role="tablist">
-
-                            {% for img in product.variants.all %}
+                            <label for="colors">Colors: </label>
+                            {% for color in product.variants.all %}
                             <button class="nav-link color-btn p-0 border-0 {% if forloop.first %}active{% endif %}"
-                                id="thumb{{ img.id }}-tab"
-                                data-color-id="{{ img.id }}"
+                                id="thumb{{ color.id }}-tab"
+                                data-color-id="{{ color.id }}"
                                 data-bs-toggle="tab"
-                                data-bs-target="#thumb{{ img.id }}"
+                                data-bs-target="#thumb{{ color.id }}"
                                 type="button">
 
-                                <img src="{{ img.image.url }}"
+                                <img src="{{ color.image.url }}"
                                     alt="{{ product.title|title }}"
                                     class="img-fluid rounded"
                                     style="width:45px; height:45px; object-fit:cover;">
@@ -134,14 +134,18 @@
 
                     <!-- Size Options -->
                     <div class="details-meta sizes">
+                        {% if product.variants.exists %}
                         <label for="size">Sizes: </label>
                         
                         <div class="size">
+                            {% for size in product.variants.all %}
                             <label class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" name="select_size" value="" class="custom-control-input">
-                                <span class="custom-control-label">S</span>
+                                <span class="custom-control-label">{{product.variants.size}}</span>
                             </label>
+                            {% endfor %}
                         </div>
+                        {% endif %}
 
                         <a href="#" class="size-guide"><i class="fal fa-list"></i> If you select sizes extra price</a>
                     </div>
