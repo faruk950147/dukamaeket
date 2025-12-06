@@ -48,10 +48,6 @@ class HomeView(generic.View):
         ).select_related('category', 'brand').prefetch_related('reviews') \
          .annotate(avg_rate=Avg('reviews__rating'))[:5]
 
-        recommended_products = Product.objects.filter(
-            status='active'
-        ).select_related('category', 'brand').prefetch_related('reviews') \
-         .annotate(avg_rate=Avg('reviews__rating'))[:8]
 
         context = {
             'sliders': sliders,
@@ -64,7 +60,6 @@ class HomeView(generic.View):
             'top_deals': top_deals,
             'first_top_deal': first_top_deal,
             'featured_products': featured_products,
-            'recommended_products': recommended_products,
         }
         return render(request, 'store/home.html', context)
 
@@ -100,10 +95,10 @@ class ProductDetailView(generic.View):
 @method_decorator(never_cache, name='dispatch')
 class ShopView(generic.View):
     def get(self, request):
-        products_qs = Product.objects.filter(status='active').select_related('category', 'brand') \
+        products = Product.objects.filter(status='active').select_related('category', 'brand') \
                          .prefetch_related('reviews').annotate(avg_rate=Avg('reviews__rating'))
         
-        paginator = Paginator(products_qs, 12)  # 12 products per page
+        paginator = Paginator(products, 12)  # 12 products per page
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
 

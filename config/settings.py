@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     # this way Custom Behavior Supported
     'account.apps.AccountConfig',
     'store.apps.StoreConfig',
-    
+    'cart.apps.CartConfig',
 ]
 
 MIDDLEWARE = [
