@@ -1,46 +1,34 @@
 from django.contrib import admin
-from .models import Cart, Wishlist, Coupon
+from store.models import Product, ProductVariant
+from .models import Coupon, Cart, Wishlist
 
 # =========================================================
-# 01. COUPON ADMIN
+# COUPON ADMIN
 # =========================================================
 @admin.register(Coupon)
 class CouponAdmin(admin.ModelAdmin):
-    list_display = (
-        'id', 'code', 'discount_type', 'discount_value', 'active',
-        'min_purchase', 'expiry_date', 'created_at', 'updated_at'
-    )
-    list_filter = ('active', 'discount_type')
+    list_display = ('id', 'code', 'discount_type', 'discount_value', 'active', 'min_purchase', 'expiry_date', 'created_at')
+    list_filter = ('discount_type', 'active')
     search_fields = ('code',)
-    ordering = ('id',)
+    readonly_fields = ('created_at', 'updated_at')
 
 
 # =========================================================
-# 02. CART ADMIN
+# CART ADMIN
 # =========================================================
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
-    list_display = (
-        'id', 'user', 'product', 'variant', 'quantity', 'unit_price',
-        'subtotal', 'coupon', 'discount_amount', 'total_price', 'paid',
-        'created_at', 'updated_at'
-    )
+    list_display = ('id', 'user', 'product', 'variant', 'quantity', 'unit_price', 'subtotal', 'discount_amount', 'total_price', 'paid', 'created_at')
     list_filter = ('paid',)
-    search_fields = ('user__username', 'product__title')
-    readonly_fields = (
-        'unit_price', 'subtotal', 'discount_amount', 'total_price',
-        'created_at', 'updated_at'
-    )
-    autocomplete_fields = ('user', 'product', 'variant', 'coupon')
-    ordering = ('id',)
+    search_fields = ('user__username', 'product__title', 'variant__id')
+    readonly_fields = ('unit_price', 'subtotal', 'discount_amount', 'total_price', 'created_at', 'updated_at')
 
 
 # =========================================================
-# 03. WISHLIST ADMIN
+# WISHLIST ADMIN
 # =========================================================
 @admin.register(Wishlist)
 class WishlistAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'product', 'variant', 'created_at')
-    search_fields = ('user__username', 'product__title')
-    autocomplete_fields = ('user', 'product', 'variant')
-    ordering = ('id',)
+    search_fields = ('user__username', 'product__title', 'variant__id')
+    readonly_fields = ('created_at',)
