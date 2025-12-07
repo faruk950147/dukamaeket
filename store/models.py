@@ -52,7 +52,7 @@ class ImageTagMixin(models.Model):
         return mark_safe('<span>No Image</span>')
 
 # =========================================================
-# CATEGORY MODEL
+# 01. CATEGORY MODEL
 # =========================================================
 class Category(ImageTagMixin):
     parent = models.ForeignKey('self', related_name='children', on_delete=models.CASCADE,
@@ -81,7 +81,7 @@ class Category(ImageTagMixin):
         return f"{self.title} ({self.get_status_display()})"
 
 # =========================================================
-# BRAND MODEL
+# 02. BRAND MODEL
 # =========================================================
 class Brand(ImageTagMixin):
     title = models.CharField(max_length=150, unique=True)
@@ -108,7 +108,7 @@ class Brand(ImageTagMixin):
         return f"{self.title} ({self.get_status_display()})"
 
 # =========================================================
-# COLOR MODEL
+# 03 COLOR MODEL
 # =========================================================
 class Color(ImageTagMixin):
     title = models.CharField(max_length=20, unique=True)
@@ -133,7 +133,7 @@ class Color(ImageTagMixin):
         return ""
 
 # =========================================================
-# SIZE MODEL
+# 04 SIZE MODEL
 # =========================================================
 class Size(ImageTagMixin):
     title = models.CharField(max_length=20, unique=True)
@@ -150,7 +150,7 @@ class Size(ImageTagMixin):
         return f"{self.title} ({self.code})"
 
 # =========================================================
-# PRODUCT MODEL
+# 05 PRODUCT MODEL
 # =========================================================
 class Product(ImageTagMixin):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
@@ -231,7 +231,7 @@ class Product(ImageTagMixin):
         return f"{self.title} ({self.get_status_display()})"
 
 # =========================================================
-# PRODUCT VARIANT MODEL
+# 06 PRODUCT VARIANT MODEL
 # =========================================================
 class ProductVariant(ImageTagMixin):
     product = models.ForeignKey(Product, related_name='variants', on_delete=models.CASCADE)
@@ -264,7 +264,7 @@ class ProductVariant(ImageTagMixin):
         return self.available_stock > 0 and self.status == 'active'
 
 # =========================================================
-# IMAGE GALLERY MODEL
+# 07 IMAGE GALLERY MODEL
 # =========================================================
 class ImageGallery(ImageTagMixin):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
@@ -281,7 +281,7 @@ class ImageGallery(ImageTagMixin):
         return f"{self.product.title} Image"
 
 # =========================================================
-# SLIDER MODEL
+# 08 SLIDER MODEL
 # =========================================================
 class Slider(ImageTagMixin):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -302,7 +302,7 @@ class Slider(ImageTagMixin):
         return f"{self.title} ({self.get_status_display()})"
 
 # =========================================================
-# REVIEW MODEL
+# 09 REVIEW MODEL
 # =========================================================
 class Review(ImageTagMixin):
     product = models.ForeignKey(Product, related_name='reviews', on_delete=models.CASCADE)
@@ -322,7 +322,7 @@ class Review(ImageTagMixin):
         return self.subject or f"Review by {self.user.username}"
 
 # =========================================================
-# ACCEPTANCE PAYMENT MODEL
+# 10 ACCEPTANCE PAYMENT MODEL
 # =========================================================
 class AcceptancePayment(ImageTagMixin):
     title = models.CharField(max_length=150, unique=True)
