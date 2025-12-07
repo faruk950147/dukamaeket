@@ -21,7 +21,7 @@ class Coupon(models.Model):
     discount_type = models.CharField(max_length=10, choices=DISCOUNT_TYPE_CHOICES)
     discount_value = models.DecimalField(max_digits=10, decimal_places=2)
     active = models.BooleanField(default=True)
-    min_purchase = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    min_purchase = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     expiry_date = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -35,7 +35,8 @@ class Coupon(models.Model):
             raise ValidationError("Coupon has expired.")
 
     @property
-    def is_valid(self):
+    def is_valid(self) -> bool:
+        """Check if coupon is active and not expired."""
         if not self.active:
             return False
         if self.expiry_date and self.expiry_date < timezone.now():
@@ -63,46 +64,50 @@ class Cart(models.Model):
     class Meta:
         ordering = ['id']
         verbose_name_plural = '02. Carts'
-        unique_together = ('user', 'product', 'variant')
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'product', 'variant'], name='unique_cart_item')
+        ]
 
     # ---- UNIT PRICE ----
     @property
-    def unit_price(self):
-        if self.variant and self.variant.variant_price > 0:
+    def unit_price(self) -> Decimal:
+        if self.variant and self.variant.variant_price > Decimal('0.00'):
             return self.variant.variant_price
         return self.product.sale_price
 
     # ---- SUBTOTAL BEFORE DISCOUNT ----
     @property
-    def subtotal(self):
-        return round(self.unit_price * self.quantity, 2)
+    def subtotal(self) -> Decimal:
+        return (self.unit_price * self.quantity).quantize(Decimal('0.01'))
 
     # ---- DISCOUNT AMOUNT ----
     @property
-    def discount_amount(self):
+    def discount_amount(self) -> Decimal:
         if self.coupon and self.coupon.is_valid and self.subtotal >= self.coupon.min_purchase:
             if self.coupon.discount_type == 'percent':
-                return round(self.subtotal * self.coupon.discount_value / Decimal('100'), 2)
+                return (self.subtotal * self.coupon.discount_value / Decimal('100')).quantize(Decimal('0.01'))
             elif self.coupon.discount_type == 'fixed':
                 return min(self.subtotal, self.coupon.discount_value)
         return Decimal('0.00')
 
     # ---- TOTAL AFTER DISCOUNT ----
     @property
-    def total_price(self):
-        return round(self.subtotal - self.discount_amount, 2)
+    def total_price(self) -> Decimal:
+        total = self.subtotal - self.discount_amount
+        return total if total >= Decimal('0.00') else Decimal('0.00')
 
     # ---- STOCK VALIDATION ----
     def clean(self):
+        """Ensure quantity does not exceed available stock."""
         if self.variant:
             if self.quantity > self.variant.available_stock:
                 raise ValidationError(
-                    f"Only {self.variant.available_stock} units available for this variant."
+                    f"Only {self.variant.available_stock} unit(s) available for this variant."
                 )
         else:
             if self.quantity > self.product.available_stock:
                 raise ValidationError(
-                    f"Cannot add more than {self.product.available_stock} units of {self.product.title}."
+                    f"Cannot add more than {self.product.available_stock} unit(s) of {self.product.title}."
                 )
 
     def save(self, *args, **kwargs):
@@ -126,7 +131,9 @@ class Wishlist(models.Model):
     class Meta:
         ordering = ['id']
         verbose_name_plural = '03. Wishlists'
-        unique_together = ('user', 'product', 'variant')
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'product', 'variant'], name='unique_wishlist_item')
+        ]
 
     def __str__(self):
         variant_str = f" - {self.variant}" if self.variant else ""
