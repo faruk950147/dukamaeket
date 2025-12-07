@@ -100,6 +100,31 @@ class ProductAdmin(ImagePreviewMixin, admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 
+
+# =========================================================
+# ProductVariant ADMIN
+# =========================================================
+@admin.register(ProductVariant)
+class ProductVariantAdmin(ImagePreviewMixin, admin.ModelAdmin):
+    list_display = ('id', 'product', 'color', 'size', 'final_price', 'available_stock', 'status', 'image_tag')
+    list_filter = ('status', 'color', 'size')
+    search_fields = ('product__title', 'color__title', 'size__title')
+    readonly_fields = ('image_tag',)
+
+
+
+# =========================================================
+# ImageGallery ADMIN
+# =========================================================
+@admin.register(ImageGallery)
+class ImageGalleryAdmin(ImagePreviewMixin, admin.ModelAdmin):
+    list_display = ('id', 'product', 'image_tag', 'status')
+    list_filter = ('status',)
+    search_fields = ('product__title',)
+    readonly_fields = ('image_tag',)
+
+
+
 # =========================================================
 # SLIDER ADMIN
 # =========================================================
