@@ -451,7 +451,8 @@
 <!-- shop modal end -->
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function (e) {
+    e.preventDefault()
 
     const buttons = document.querySelectorAll(".color-btn");
     const priceBox = document.getElementById("product-price");
