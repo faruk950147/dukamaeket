@@ -4,7 +4,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
-from django.db.models import Avg
+from django.db.models import Avg, Q
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from store.models import (
@@ -31,22 +31,24 @@ class HomeView(generic.View):
         feature_sliders = active_sliders.filter(slider_type='feature')[:4]
         add_sliders = active_sliders.filter(slider_type='add')[:2]
         promo_sliders = active_sliders.filter(slider_type='promotion')[:3]
-
+        
         acceptance_payments = AcceptancePayment.objects.filter(status='active')[:4]
+        # featured brands
         brands = Brand.objects.filter(status='active', is_featured=True)
+        # featured categories
         cates = Category.objects.filter(status='active', children__isnull=True, is_featured=True)[:3]
-
+        # top deals products
         top_deals = list(Product.objects.filter(
             status='active', discount_percent__gt=0, is_deadline=True, deadline__gte=timezone.now()
         ).select_related('category', 'brand').prefetch_related('reviews') \
-         .annotate(avg_rate=Avg('reviews__rating')).order_by('-discount_percent', 'deadline')[:6]
+         .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active'))).order_by('-discount_percent', 'deadline')[:6]
         )
         first_top_deal = top_deals[0] if top_deals else None
-
+        # featured products
         featured_products = Product.objects.filter(
             status='active', is_featured=True
         ).select_related('category', 'brand').prefetch_related('reviews') \
-         .annotate(avg_rate=Avg('reviews__rating'))[:5]
+         .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))[:5]
 
 
         context = {
@@ -69,22 +71,28 @@ class HomeView(generic.View):
 @method_decorator(never_cache, name='dispatch')
 class ProductDetailView(generic.View):
     def get(self, request, id):
+        # Main product fetch
         product = get_object_or_404(
             Product.objects.select_related('category', 'brand')
-                   .prefetch_related('reviews', 'variants__color', 'variants__size', 'images')
-                   .annotate(avg_rate=Avg('reviews__rating')),
+                .prefetch_related('reviews', 'variants__color', 'variants__size', 'images')
+                .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active'))),
             id=id,
             status='active'
         )
 
+        # Default variant (first one) fetch
+        variant = product.variants.first()  # if multiple variants first default 
+
+        # Related products
         related_products = Product.objects.filter(
             category=product.category,
             status='active'
         ).exclude(id=product.id).select_related('category', 'brand') \
-         .prefetch_related('reviews').annotate(avg_rate=Avg('reviews__rating'))[:4]
+         .prefetch_related('reviews').annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))[:4]
 
         context = {
             'product': product,
+            'variant': variant,   
             'related_products': related_products
         }
         return render(request, 'store/product-detail.html', context)
@@ -96,7 +104,7 @@ class ProductDetailView(generic.View):
 class ShopView(generic.View):
     def get(self, request):
         products = Product.objects.filter(status='active').select_related('category', 'brand') \
-                         .prefetch_related('reviews').annotate(avg_rate=Avg('reviews__rating'))
+                         .prefetch_related('reviews').annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
         
         paginator = Paginator(products, 12)  # 12 products per page
         page_number = request.GET.get('page', 1)

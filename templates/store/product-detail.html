@@ -109,23 +109,25 @@
                     <div class="details-meta colors">
                         {% if product.variants.exists %}
                         <div class="nav nav-tabs d-flex flex-row gap-2 mb-2" id="productThumbTab" role="tablist">
-                            <label for="colors">Colors: </label>
-                            {% for color in product.variants.all %}
+                            <label>Colors:</label>
+
+                            {% for variant in product.variants.all %}
+                            {% if variant.color %}
                             <button class="nav-link color-btn p-0 border-0 {% if forloop.first %}active{% endif %}"
-                                id="thumb{{ color.id }}-tab"
-                                data-color-id="{{ color.id }}"
-                                data-bs-toggle="tab"
-                                data-bs-target="#thumb{{ color.id }}"
+                                id="color{{ variant.id }}-tab"
+                                data-color-id="{{ variant.color.id }}"
                                 type="button">
 
-                                <img src="{{ color.image.url }}"
-                                    alt="{{ product.title|title }}"
+                                <img src="{{ variant.image.url }}"
+                                    alt="{{ variant.product.title }}"
                                     class="img-fluid rounded"
                                     style="width:45px; height:45px; object-fit:cover;">
                             </button>
+                            {% endif %}
                             {% endfor %}
                         </div>
                         {% endif %}
+
 
                         <a href="#" class="size-guide d-inline-flex align-items-center" style="font-size:14px;">
                             <i class="fal fa-list me-1"></i> If you select colors extra price
@@ -135,18 +137,24 @@
                     <!-- Size Options -->
                     <div class="details-meta sizes">
                         {% if product.variants.exists %}
-                        <label for="size">Sizes: </label>
-                        
+                        <label>Sizes:</label>
                         <div class="size">
-                            {% for size in product.variants.all %}
+                            {% for variant in product.variants.all %}
+                            {% if variant.size %}
                             <label class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" name="select_size" value="" class="custom-control-input">
-                                <span class="custom-control-label">{{product.variants.size}}</span>
+                                <input type="radio"
+                                    name="select_size"
+                                    value="{{ variant.size.id }}"
+                                    class="custom-control-input">
+
+                                <span class="custom-control-label">
+                                    {{ variant.size.title }}
+                                </span>
                             </label>
+                            {% endif %}
                             {% endfor %}
                         </div>
                         {% endif %}
-
                         <a href="#" class="size-guide"><i class="fal fa-list"></i> If you select sizes extra price</a>
                     </div>
 
@@ -183,11 +191,16 @@
                         <div class="product_info">
                             <span class="sku_wrapper">
                                 <span class="title">SKU:</span>
-                                {% if product.variants %}
-                                    <span class="sku">{{product.variants.color.title}}</span>
-                                    <span class="sku">{{product.variants.size.title}}</span>
-                                {% endif %}
+                            {% if variant %}
+                                <span class="sku">
+                                    {% if variant.color %}{{ variant.color.title }}{% endif %}
+                                    {% if variant.color and variant.size %} - {% endif %}
+                                    {% if variant.size %}{{ variant.size.title }}{% endif %}
+                                </span>
+                            {% endif %}
+
                             </span>
+
 
                             <span class="tagged_as">
                                 <span class="title">Tags:</span>
