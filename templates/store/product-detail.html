@@ -104,72 +104,74 @@
                     <div class="product-stock mb-20">
                         <h5>Availability: <span>{{product.available_stock}}</span></h5>
                     </div>
+                    <!-- Add To Cart Form -->
+                    <form method="POST" action="" id="form">
+                        {% csrf_token %}
+                        <!-- Color Options -->
+                        <div class="details-meta colors">
+                            {% if product.variants.exists %}
+                            <div class="nav nav-tabs d-flex flex-row gap-2 mb-2" id="productThumbTab" role="tablist">
+                                <label>Colors:</label>
 
-                    <!-- Color Options -->
-                    <div class="details-meta colors">
-                        {% if product.variants.exists %}
-                        <div class="nav nav-tabs d-flex flex-row gap-2 mb-2" id="productThumbTab" role="tablist">
-                            <label>Colors:</label>
+                                {% for variant in product.variants.all %}
+                                {% if variant.color %}
+                                <button class="nav-link color-btn p-0 border-0 {% if forloop.first %}active{% endif %}"
+                                    id="color{{ variant.id }}-tab"
+                                    data-color-id="{{ variant.color.id }}"
+                                    type="button">
 
-                            {% for variant in product.variants.all %}
-                            {% if variant.color %}
-                            <button class="nav-link color-btn p-0 border-0 {% if forloop.first %}active{% endif %}"
-                                id="color{{ variant.id }}-tab"
-                                data-color-id="{{ variant.color.id }}"
-                                type="button">
-
-                                <img src="{{ variant.image.url }}"
-                                    alt="{{ variant.product.title }}"
-                                    class="img-fluid rounded"
-                                    style="width:45px; height:45px; object-fit:cover;">
-                            </button>
-                            {% endif %}
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-
-
-                        <a href="#" class="size-guide d-inline-flex align-items-center" style="font-size:14px;">
-                            <i class="fal fa-list me-1"></i> If you select colors extra price
-                        </a>
-                    </div>
-
-                    <!-- Size Options -->
-                    <div class="details-meta sizes">
-                        {% if product.variants.exists %}
-                        <label>Sizes:</label>
-                        <div class="size">
-                            {% for variant in product.variants.all %}
-                            {% if variant.size %}
-                            <label class="custom-control custom-radio custom-control-inline">
-                                <input type="radio"
-                                    name="select_size"
-                                    value="{{ variant.size.id }}"
-                                    class="custom-control-input">
-
-                                <span class="custom-control-label">
-                                    {{ variant.size.title }}
-                                </span>
-                            </label>
-                            {% endif %}
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-                        <a href="#" class="size-guide"><i class="fal fa-list"></i> If you select sizes extra price</a>
-                    </div>
-
-                    <!-- Cart & Wishlist -->
-                    <div class="cart-option mb-15">
-                        <div class="product-quantity mr-20">
-                            <div class="cart-plus-minus p-relative">
-                                <input type="text" value="1">
-                                <div class="dec qtybutton">-</div>
-                                <div class="inc qtybutton">+</div>
+                                    <img src="{{ variant.image.url }}"
+                                        alt="{{ variant.product.title }}"
+                                        class="img-fluid rounded"
+                                        style="width:45px; height:45px; object-fit:cover;">
+                                </button>
+                                {% endif %}
+                                {% endfor %}
                             </div>
-                        </div>
-                        <a href="cart.html" class="cart-btn">Add to Cart</a>
-                    </div>
+                            {% endif %}
 
+
+                            <a href="#" class="size-guide d-inline-flex align-items-center" style="font-size:14px;">
+                                <i class="fal fa-list me-1"></i> If you select colors extra price
+                            </a>
+                        </div>
+                        <!-- Size Options -->
+                        <div class="details-meta sizes">
+                            {% if product.variants.exists %}
+                            <label>Sizes:</label>
+                            <div class="size">
+                                {% for variant in product.variants.all %}
+                                {% if variant.size %}
+                                <label class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio"
+                                        name="select_size"
+                                        value="{{ variant.size.id }}"
+                                        class="custom-control-input">
+
+                                    <span class="custom-control-label">
+                                        {{ variant.size.title }}
+                                    </span>
+                                </label>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <a href="#" class="size-guide"><i class="fal fa-list"></i> If you select sizes extra price</a>
+                        </div>
+                        <!-- Add To Cart -->
+                        <div class="cart-option mb-15">
+                            <div class="product-quantity mr-20">
+                                <div class="cart-plus-minus p-relative">
+                                    <input type="text" value="1">
+                                    <div class="dec qtybutton">-</div>
+                                    <div class="inc qtybutton">+</div>
+                                </div>
+                            </div>
+                            <a href="cart.html" class="cart-btn">Add to Cart</a>
+                        </div>
+                    </form>
+
+                    <!-- Wishlist -->
                     <div class="details-meta">
                         <div class="d-meta-left">
                             <div class="dm-item mr-20">
@@ -208,7 +210,6 @@
                             </span>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
