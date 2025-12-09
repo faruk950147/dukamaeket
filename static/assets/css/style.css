@@ -44,11 +44,11 @@
 }
 
 .star.highlighted {
-    color: #fbc02d; /* hover color */
+    color: #ffff00; /* hover color */
 }
 
 .star.selected {
-    color: #ffa000; /* clicked color */
+    color: #ffff00; /* clicked color */
 }
 /* rating end */
 

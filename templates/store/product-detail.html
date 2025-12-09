@@ -231,7 +231,7 @@
                             <button class="nav-link" id="aditional-tab" data-bs-toggle="tab" data-bs-target="#aditional" type="button" role="tab" aria-controls="aditional" aria-selected="false">Additional information</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="false">Reviews (1)</button>
+                            <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="false">Reviews ({{product.reviews.count}})</button>
                         </li>
                     </ul>
                 </div>
@@ -274,30 +274,38 @@
                     <div class="row">
                         <div class="col-xl-4">
                             <div class="review-des-infod">
-                                <h6>1 review for "<span>Wireless Bluetooth Over-Ear Headphones</span>"</h6>
+                                <h6>{{ product.reviews.count }} review{% if product.reviews.count != 1 %}s{% endif %} for "<span>{{ product.title|title }}</span>"</h6>
+                                {% for review in product.reviews.all %}
                                 <div class="review-details-des">
                                     <div class="author-image mr-15">
-                                        <a href="#"><img src="{% static "assets/img/author/author-sm-1.jpg" %}" alt=""></a>
+                                        <img src="{{ review.user.profile.image.url }}" alt="{{ review.user.username }}" style="width: 50px; height: 50px">
                                     </div>
                                     <div class="review-details-content">
                                         <h5>5.00</h5>
                                         <div class="str-info">
                                             <div class="review-star mr-15">
-                                                <i class="fa {% if product.avg_rate >= 1 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
-                                                <i class="fa {% if product.avg_rate >= 2 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
-                                                <i class="fa {% if product.avg_rate >= 3 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
-                                                <i class="fa {% if product.avg_rate >= 4 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
-                                                <i class="fa {% if product.avg_rate >= 5 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                                                <i class="text-warning fa {% if product.avg_rate >= 1 %}fa-star{% else %}fa-star-o{% endif %}"></i>
+                                                <i class="text-warning fa {% if product.avg_rate >= 2 %}fa-star{% else %}fa-star-o{% endif %}"></i>
+                                                <i class="text-warning fa {% if product.avg_rate >= 3 %}fa-star{% else %}fa-star-o{% endif %}"></i>
+                                                <i class="text-warning fa {% if product.avg_rate >= 4 %}fa-star{% else %}fa-star-o{% endif %}"></i>
+                                                <i class="text-warning fa {% if product.avg_rate >= 5 %}fa-star{% else %}fa-star-o{% endif %}"></i>
                                             </div>
                                         </div>
                                         <div class="name-date mb-30">
-                                            <h6> admin – <span> May 27, 2021</span></h6>
+                                            <h6> {{ review.user.username }} – <span> {{review.created_date}}</span></h6>
                                         </div>
                                         <p>
-                                            A light chair, easy to move around the dining table and about the room. Duis aute irure dolor in reprehenderit in <br> voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                           {{review.subject|title}}
                                         </p>
+                                        <p>
+                                           {{review.comment|title}}
+                                        </p>
+                                        
                                     </div>
                                 </div>
+                                {% empty %}
+                                    <p>No reviews yet.</p>
+                                {% endfor %}
                             </div>
                         </div>
                         <div class="col-xl-8">
@@ -319,16 +327,12 @@
                                 <div class="comment-input-box">
                                     <form action="#">
                                         <div class="row g-3">
-                                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 comment-input">
-                                                <input type="text" id="comment-name" class="form-control" placeholder="Your Name">
-                                            </div>
-
-                                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 comment-input">
-                                                <input type="email" id="comment-email" class="form-control" placeholder="Your Email">
+                                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 comment-input">
+                                                <input type="text" id="subject" class="form-control" placeholder="Your subject">
                                             </div>
 
                                             <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 comment-input">
-                                                <textarea id="comment-message" class="form-control" rows="5" placeholder="Your Review"></textarea>
+                                                <textarea id="comment" class="form-control" rows="5" placeholder="Your Review"></textarea>
                                             </div>
                                             <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 comment-submit">
                                                 <button type="submit" class="cart-btn form-control">Submit</button>
@@ -449,10 +453,10 @@
 <!-- shop modal start -->
 {% include 'store/product-modals.html' %}
 <!-- shop modal end -->
-<script>
+{% comment %} <script>
    $(document).ready(function(){
         console.log("JQUERY WORKING");
     });
     
-</script>
+</script> {% endcomment %}
 {% endblock main_content %}
