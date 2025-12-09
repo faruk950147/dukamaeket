@@ -241,6 +241,7 @@ class ProductVariant(ImageTagMixin):
     variant_price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     available_stock = models.PositiveIntegerField(default=0)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
+    is_default = models.BooleanField(default=False)  
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -263,6 +264,7 @@ class ProductVariant(ImageTagMixin):
     @property
     def is_available(self):
         return self.available_stock > 0 and self.status == 'active'
+
 
 # =========================================================
 # 07 IMAGE GALLERY MODEL
