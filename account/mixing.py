@@ -11,7 +11,7 @@ class LogoutRequiredMixin:
         return super().dispatch(request, *args, **kwargs)
     
 class LoginRequiredMixin:
-    login_url = reverse_lazy('account:login')
+    login_url = reverse_lazy('account:sign-in')
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
