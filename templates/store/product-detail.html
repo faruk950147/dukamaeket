@@ -450,43 +450,11 @@
 {% include 'store/product-modals.html' %}
 <!-- shop modal end -->
 
+
+
 <script>
-document.addEventListener("DOMContentLoaded", function (e) {
-    e.preventDefault()
-
-    const buttons = document.querySelectorAll(".color-btn");
-    const priceBox = document.getElementById("product-price");
-
-    buttons.forEach(btn => {
-        btn.addEventListener("click", function () {
-
-            const colorID = this.dataset.colorId;
-
-            // Active button update
-            buttons.forEach(b => b.classList.remove("active"));
-            this.classList.add("active");
-
-            // AJAX Request
-            fetch("{% url 'get-variants' %}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": "{{ csrf_token }}"
-                },
-                body: JSON.stringify({
-                    "color_id": colorID,
-                    "product_id": "{{ product.id }}"
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                priceBox.innerText = data.new_price;
-            });
-
-        });
-    });
-
+$(document).ready(function() {
+    console.log("Page Loaded!");
 });
 </script>
-
 {% endblock main_content %}

@@ -245,6 +245,7 @@ class ProductVariant(ImageTagMixin):
     updated_date = models.DateTimeField(auto_now=True)
 
     class Meta:
+        ordering = ['id']
         verbose_name_plural = '06. Product Variants'
         constraints = [
             models.UniqueConstraint(fields=['product', 'color', 'size'], name='unique_variant')
