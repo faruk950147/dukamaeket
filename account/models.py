@@ -1,12 +1,39 @@
+# account/models.py
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.utils.html import mark_safe
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
-# Custom user manager
-from account.managers import UserManager
+
+# ---------------- USER MANAGER ----------------
+class UserManager(BaseUserManager):
+    def create_user(self, username, email, password=None, **extra_fields):
+        if not username:
+            raise ValueError("Username must be set")
+        if not email:
+            raise ValueError("Email must be set")
+
+        email = self.normalize_email(email)
+        user = self.model(username=username, email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, username, email, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_active", True)
+
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError("Superuser must have is_staff=True.")
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError("Superuser must have is_superuser=True.")
+
+        return self.create_user(username, email, password, **extra_fields)
 
 
 # ---------------- USER ----------------
@@ -16,13 +43,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         unique=True,
         validators=[UnicodeUsernameValidator()],
     )
-    email = models.EmailField(
-        max_length=150,
-        unique=True
-    )
+    email = models.EmailField(max_length=150, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
     joined_date = models.DateTimeField(auto_now_add=True)
 
     objects = UserManager()
@@ -41,7 +64,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 # ---------------- PROFILE ----------------
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    image = models.FileField(upload_to='profiles', default='defaults/default.jpg')
+    image = models.ImageField(upload_to='profiles', default='defaults/default.jpg')
     country = models.CharField(max_length=150, null=True, blank=True)
     city = models.CharField(max_length=150, null=True, blank=True)
     home_city = models.CharField(max_length=150, null=True, blank=True)
@@ -69,8 +92,4 @@ class Profile(models.Model):
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
-        # Create a profile automatically when a new user is created
         Profile.objects.create(user=instance)
-    else:
-        # Save profile when user is updated
-        instance.profile.save()
