@@ -453,10 +453,12 @@
 <!-- shop modal start -->
 {% include 'store/product-modals.html' %}
 <!-- shop modal end -->
-{% comment %} <script>
+
+<script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
+<script>
    $(document).ready(function(){
         console.log("JQUERY WORKING");
     });
     
-</script> {% endcomment %}
+</script> 
 {% endblock main_content %}
