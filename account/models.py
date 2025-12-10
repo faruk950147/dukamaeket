@@ -55,7 +55,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         ordering = ['id']
-        verbose_name_plural = 'Users'
+        verbose_name_plural = '01. Users'
 
     def __str__(self):
         return self.username
@@ -76,7 +76,7 @@ class Profile(models.Model):
 
     class Meta:
         ordering = ['id']
-        verbose_name_plural = 'Profiles'
+        verbose_name_plural = '02. Profiles'
 
     @property
     def image_tag(self):
