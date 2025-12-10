@@ -17,23 +17,22 @@ class ImagePreviewMixin:
 # =========================================================
 @admin.register(Category)
 class CategoryAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id', 'title', 'parent', 'status', 'is_featured', 'image_tag', 'created_date')
+    list_display = ('id', 'parent', 'title', 'slug', 'keyword', 'description', 'status', 'is_featured', 'image_tag', 'created_date', 'updated_date')
     list_filter = ('status', 'is_featured')
     search_fields = ('title', 'keyword', 'description')
-    readonly_fields = ('slug', 'image_tag')
-    prepopulated_fields = {'slug': ('title',)}
-
+    list_editable = ('parent', 'status', 'is_featured')
+    readonly_fields = ('image_tag',)  
 
 # =========================================================
 # BRAND ADMIN
 # =========================================================
 @admin.register(Brand)
 class BrandAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id', 'title', 'status', 'is_featured', 'image_tag', 'created_date')
+    list_display = ('id',  'title', 'slug', 'keyword', 'description', 'status', 'is_featured', 'image_tag', 'created_date', 'updated_date')
     list_filter = ('status', 'is_featured')
     search_fields = ('title', 'keyword', 'description')
-    readonly_fields = ('slug', 'image_tag')
-    prepopulated_fields = {'slug': ('title',)}
+    list_editable = ('status', 'is_featured')
+    readonly_fields = ('image_tag',) 
 
 
 # =========================================================
@@ -41,9 +40,10 @@ class BrandAdmin(ImagePreviewMixin, admin.ModelAdmin):
 # =========================================================
 @admin.register(Color)
 class ColorAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id', 'title', 'code', 'color_tag', 'status', 'created_date')
+    list_display = ('id', 'title', 'code', 'color_tag', 'status', 'created_date', 'updated_date')
     list_filter = ('status',)
     search_fields = ('title', 'code')
+    list_editable = ('status',)
     readonly_fields = ('color_tag',)
 
 
@@ -52,7 +52,7 @@ class ColorAdmin(ImagePreviewMixin, admin.ModelAdmin):
 # =========================================================
 @admin.register(Size)
 class SizeAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id', 'title', 'code', 'status', 'created_date')
+    list_display = ('id', 'title', 'code', 'status', 'created_date', 'updated_date')
     list_filter = ('status',)
     search_fields = ('title', 'code')
 
@@ -92,12 +92,12 @@ class ReviewInline(admin.TabularInline):
 @admin.register(Product)
 class ProductAdmin(ImagePreviewMixin, admin.ModelAdmin):
     list_display = ('id', 'title', 'category', 'brand', 'sale_price', 'available_stock',
-                    'sold', 'sold_percentage', 'average_review', 'status', 'is_featured', 'image_tag')
+                    'sold', 'sold_percentage', 'average_review', 'status', 'is_featured', 'is_deadline', 'image_tag')
     list_filter = ('status', 'is_featured', 'category', 'brand')
     search_fields = ('title', 'keyword', 'description', 'tag')
     readonly_fields = ('slug', 'image_tag', 'sold_percentage', 'average_review', 'total_available_stock')
     inlines = [ProductVariantInline, ImageGalleryInline, ReviewInline]
-    prepopulated_fields = {'slug': ('title',)}
+    list_editable = ('status', 'is_featured', 'is_deadline')
 
 
 
