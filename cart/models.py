@@ -56,6 +56,8 @@ class Cart(models.Model):
     variant = models.ForeignKey(ProductVariant, on_delete=models.SET_NULL, null=True, blank=True)
     quantity = models.PositiveIntegerField(default=1)
     coupon = models.ForeignKey(Coupon, on_delete=models.SET_NULL, null=True, blank=True)
+    
+    unit_price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     paid = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True)

@@ -185,9 +185,21 @@ class Product(ImageTagMixin):
         verbose_name_plural = '05. Products'
 
     def save(self, *args, **kwargs):
-        # Calculate sale_price only if old_price or discount_percent changed
-        if not self.pk or Product.objects.filter(pk=self.pk, old_price=self.old_price, discount_percent=self.discount_percent).exists() == False:
-            self.sale_price = (self.old_price * (100 - self.discount_percent) / 100).quantize(Decimal('0.01'))
+        # get old values
+        old = None
+        if self.pk:
+            old = Product.objects.filter(pk=self.pk).values(
+                'old_price', 'discount_percent'
+            ).first()
+
+        # recalc sale_price if price or discount changed
+        if not old or (
+            old['old_price'] != self.old_price or
+            old['discount_percent'] != self.discount_percent
+        ):
+            self.sale_price = (
+                self.old_price * (100 - self.discount_percent) / 100
+            ).quantize(Decimal('0.01'))
 
         self.full_clean()
         if not self.slug:
@@ -200,7 +212,6 @@ class Product(ImageTagMixin):
 
     @property
     def remaining_seconds(self):
-        # If used in templates, JS countdown is better for performance
         if self.deadline and self.is_deadline:
             delta = self.deadline - timezone.now()
             return max(0, int(delta.total_seconds()))
@@ -208,7 +219,6 @@ class Product(ImageTagMixin):
 
     @property
     def total_available_stock(self):
-        # Use annotate/prefetch in queryset for optimization in loops
         variant_stock = self.variants.aggregate(Sum('available_stock'))['available_stock__sum'] or 0
         return self.available_stock + variant_stock
 
