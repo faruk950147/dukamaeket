@@ -152,7 +152,7 @@ class ReviewAdmin(ImagePreviewMixin, admin.ModelAdmin):
 # =========================================================
 @admin.register(AcceptancePayment)
 class AcceptancePaymentAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id', 'title', 'sub_title', 'status', 'is_featured', 'image_tag')
+    list_display = ('id', 'title', 'sub_title', 'help_time', 'shop_amount', 'status', 'is_featured', 'image_tag')
     list_filter = ('status', 'is_featured')
     search_fields = ('title', 'sub_title')
     readonly_fields = ('image_tag',)
