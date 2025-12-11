@@ -110,30 +110,27 @@
                         <!-- Color Options -->
                         <div class="details-meta colors">
                             {% if product.variants.exists %}
-                            <div class="nav nav-tabs d-flex flex-row gap-2 mb-2" id="productThumbTab" role="tablist">
-                                <label>Colors:</label>
-
+                            <label>Colors:</label>
+                            <div class="color">
                                 {% for variant in product.variants.all %}
                                 {% if variant.color %}
-                                <button class="nav-link color-btn p-0 border-0 {% if forloop.first %}active{% endif %}"
-                                    id="color{{ variant.id }}-tab"
-                                    data-color-id="{{ variant.color.id }}"
-                                    type="button">
+                                <label class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio"
+                                        name="select_color"
+                                        value="{{ variant.color.id }}"
+                                        class="custom-control-input">
 
-                                    <img src="{{ variant.image.url }}"
-                                        alt="{{ variant.product.title }}"
-                                        class="img-fluid rounded"
-                                        style="width:45px; height:45px; object-fit:cover;">
-                                </button>
+                                    <span class="custom-control-label">
+                                        {{ variant.color.title }}
+                                        </br>
+                                        <img src="{{variant.image.url}}" alt="{{variant.product.title|title}}" style="width: 50px; height: 50px;"/>
+                                    </span>
+                                </label>
                                 {% endif %}
                                 {% endfor %}
                             </div>
                             {% endif %}
-
-
-                            <a href="#" class="size-guide d-inline-flex align-items-center" style="font-size:14px;">
-                                <i class="fal fa-list me-1"></i> If you select colors extra price
-                            </a>
+                            <a href="#" class="size-guide"><i class="fal fa-list"></i> If you select sizes extra price</a>
                         </div>
                         <!-- Size Options -->
                         <div class="details-meta sizes">
