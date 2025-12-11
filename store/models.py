@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.contrib.auth import get_user_model
 from django.db.models import Avg, Sum
 from decimal import Decimal
+from store.validators import validate_image_size
 
 User = get_user_model()
 
@@ -61,7 +62,9 @@ class Category(ImageTagMixin):
     slug = models.SlugField(max_length=150, unique=True, blank=True, null=True)
     keyword = models.CharField(max_length=150, default='N/A')
     description = models.CharField(max_length=150, default='N/A')
-    image = models.ImageField(upload_to='categories/%Y/%m/%d/', default='defaults/default.jpg')
+    image = models.ImageField(upload_to='categories/%Y/%m/%d/',
+                              default='defaults/default.jpg',
+                              validators=[validate_image_size])
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
     is_featured = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -88,7 +91,9 @@ class Brand(ImageTagMixin):
     slug = models.SlugField(max_length=150, unique=True, blank=True, null=True)
     keyword = models.CharField(max_length=150, default='N/A')
     description = models.CharField(max_length=150, default='N/A')
-    image = models.ImageField(upload_to='brands/%Y/%m/%d/', default='defaults/default.jpg')
+    image = models.ImageField(upload_to='brands/%Y/%m/%d/',
+                              default='defaults/default.jpg',
+                              validators=[validate_image_size])
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
     is_featured = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -185,22 +190,11 @@ class Product(ImageTagMixin):
         verbose_name_plural = '05. Products'
 
     def save(self, *args, **kwargs):
-        # get old values
         old = None
         if self.pk:
-            old = Product.objects.filter(pk=self.pk).values(
-                'old_price', 'discount_percent'
-            ).first()
-
-        # recalc sale_price if price or discount changed
-        if not old or (
-            old['old_price'] != self.old_price or
-            old['discount_percent'] != self.discount_percent
-        ):
-            self.sale_price = (
-                self.old_price * (100 - self.discount_percent) / 100
-            ).quantize(Decimal('0.01'))
-
+            old = Product.objects.filter(pk=self.pk).values('old_price', 'discount_percent').first()
+        if not old or (old['old_price'] != self.old_price or old['discount_percent'] != self.discount_percent):
+            self.sale_price = (self.old_price * (100 - self.discount_percent) / 100).quantize(Decimal('0.01'))
         self.full_clean()
         if not self.slug:
             self.slug = generate_unique_slug(Product, self.title)
@@ -245,9 +239,11 @@ class Product(ImageTagMixin):
 # =========================================================
 class ProductVariant(ImageTagMixin):
     product = models.ForeignKey(Product, related_name='variants', on_delete=models.CASCADE)
-    color = models.ForeignKey(Color, blank=True, null=True, on_delete=models.SET_NULL)
-    size = models.ForeignKey(Size, blank=True, null=True, on_delete=models.SET_NULL)
-    image = models.ImageField(upload_to='variants/%Y/%m/%d/', default='defaults/default.jpg')
+    color = models.ForeignKey('Color', blank=True, null=True, on_delete=models.SET_NULL)
+    size = models.ForeignKey('Size', blank=True, null=True, on_delete=models.SET_NULL)
+    image = models.ImageField(upload_to='variants/%Y/%m/%d/',
+                              default='defaults/default.jpg',
+                              validators=[validate_image_size])
     variant_price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     available_stock = models.PositiveIntegerField(default=0)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
@@ -275,13 +271,14 @@ class ProductVariant(ImageTagMixin):
     def is_available(self):
         return self.available_stock > 0 and self.status == 'active'
 
-
 # =========================================================
 # 07 IMAGE GALLERY MODEL
 # =========================================================
 class ImageGallery(ImageTagMixin):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='galleries/%Y/%m/%d/', default='defaults/default.jpg')
+    image = models.ImageField(upload_to='galleries/%Y/%m/%d/',
+                              default='defaults/default.jpg',
+                              validators=[validate_image_size])
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
@@ -302,7 +299,9 @@ class Slider(ImageTagMixin):
     title = models.CharField(max_length=150, unique=True)
     sub_title = models.CharField(max_length=150, blank=True, null=True)
     paragraph = models.CharField(max_length=150, blank=True, null=True)
-    image = models.ImageField(upload_to='sliders/%Y/%m/%d/', default='defaults/default.jpg')
+    image = models.ImageField(upload_to='sliders/%Y/%m/%d/',
+                              default='defaults/default.jpg',
+                              validators=[validate_image_size])
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
@@ -340,7 +339,9 @@ class Review(ImageTagMixin):
 class AcceptancePayment(ImageTagMixin):
     title = models.CharField(max_length=150, unique=True)
     sub_title = models.CharField(max_length=150)
-    image = models.ImageField(upload_to='acceptance_payments/%Y/%m/%d/', default='defaults/default.jpg')
+    image = models.ImageField(upload_to='acceptance_payments/%Y/%m/%d/',
+                              default='defaults/default.jpg',
+                              validators=[validate_image_size])
     help_time = models.CharField(max_length=150, default=100)  
     shop_amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
