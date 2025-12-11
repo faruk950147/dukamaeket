@@ -74,12 +74,13 @@ class HomeView(generic.View):
 # =========================================================
 @method_decorator(never_cache, name='dispatch')
 class ProductDetailView(generic.View):
-    def get(self, request, id):
+    def get(self, request, slug, id):
         # Main product fetch
         product = get_object_or_404(
             Product.objects.select_related('category', 'brand')
                 .prefetch_related('reviews', 'variants__color', 'variants__size', 'images')
                 .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active'))),
+            slug=slug,
             id=id,
             status='active'
         )

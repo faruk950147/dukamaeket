@@ -367,7 +367,7 @@
                         <div class="product__item swiper-slide">
                             <div class="product__thumb fix">
                                 <div class="product-image w-img">
-                                    <a href="{% url 'product-detail' product.id %}">
+                                    <a href="{% url 'product-detail' product.slug product.id %}">
                                         <img src="{{product.images.first.image.url}}" alt="{{product.title|title}}" style="width: 260px; height: 300px; object-fit: cover">
                                     </a>
                                 </div>
@@ -404,7 +404,7 @@
                                 </div>
                             </div>
                             <div class="product__content">
-                                <h6><a href="{% url 'product-detail' product.id %}">{{product.title|title|truncatewords:5}}</a></h6>
+                                <h6><a href="{% url 'product-detail' product.slug product.id %}">{{product.title|title|truncatewords:5}}</a></h6>
                                 <div class="rating mb-5">
                                     <ul>
                                         <i class="fa {% if product.avg_rate >= 1 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>

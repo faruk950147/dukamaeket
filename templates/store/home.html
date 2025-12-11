@@ -48,7 +48,7 @@
             <div class="col-xl-4 col-lg-4 col-md-6">
                 <div class="banner__item p-relative w-img mb-30">
                     <div class="banner__img">
-                        <a href="product-details.html">
+                        <a href="">
                             <img src="{{ cat.image.url }}" alt="{{ cat.title|title }}" style="width: 500px; height: 250px; object-fit: cover;">
                         </a>
                     </div>
@@ -111,7 +111,7 @@
                         <div class="product__item swiper-slide">
                             <div class="product__thumb fix">
                                 <div class="product-image w-img">
-                                    <a href="{% url 'product-detail' product.id %}">
+                                    <a href="{% url 'product-detail' product.slug product.id %}">
                                         <img src="{{product.images.first.image.url}}" alt="{{product.title|title}}" style="width: 260px; height: 300px; object-fit: cover">
                                     </a>
                                 </div>
@@ -148,7 +148,7 @@
                                 </div>
                             </div>
                             <div class="product__content">
-                                <h6><a href="{% url 'product-detail' product.id %}">{{product.title|title|truncatewords:5}}</a></h6>
+                                <h6><a href="{% url 'product-detail' product.slug product.id %}">{{product.title|title|truncatewords:5}}</a></h6>
                                 <div class="rating mb-5">
                                     <ul>
                                         <i class="fa {% if product.avg_rate >= 1 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
@@ -205,13 +205,13 @@
                 <div class="col-xl-6 col-lg-6 col-md-12">
                 <div class="banner__item p-relative w-img mb-30">
                     <div class="banner__img">
-                        <a href="{% url 'product-detail' add_slider.product.id %}">
+                        <a href="{% url 'product-detail' add_slider.product.slug product.id %}">
                             <img src="{{add_slider.image.url}}" alt="{{add_slider.product.title|title}}" style="width: 700px; height: 250px; object-fit: cover">
                         </a>
                     </div>
                     <div class="banner__content">
                         <span>{{add_slider.title|title}}</span>
-                        <h6><a href="{% url 'product-detail' add_slider.product.id %}">{{add_slider.product.title|title|truncatewords:5}}</a></h6>
+                        <h6><a href="{% url 'product-detail' add_slider.product.slug product.id %}">{{add_slider.product.title|title|truncatewords:5}}</a></h6>
                          <P> {{add_slider.product.discount_percent}}% {{add_slider.sub_title|title|truncatewords:5}}</p>
                     </div>
                 </div>
@@ -376,7 +376,7 @@
                         <div class="col-md-6">
                             <div class="features-thum">
                                 <div class="features-product-image w-img">
-                                    <a href="{% url 'product-detail' product.id %}">
+                                    <a href="{% url 'product-detail' product.slug product.id %}">
                                         <img src="{{ product.images.first.image.url }}" alt="{{ product.title|title }}"
                                         style="width:300px; height:350px; object-fit: cover;">
                                     </a>
@@ -406,7 +406,7 @@
                         <div class="col-md-6">
                             <div class="product__content product__content-d">
                                 <h6>
-                                    <a href="{% url 'product-detail' product.id %}">{{product.title|title|truncatewords:5}}</a>
+                                    <a href="{% url 'product-detail' product.slug product.id %}">{{product.title|title|truncatewords:5}}</a>
                                 </h6>
                                 <!-- Star Rating -->
                                 <div class="rating mb-5">
@@ -456,7 +456,7 @@
                                 <div class="col-6">
                                     <div class="features-thum">
                                         <div class="features-product-image w-img">
-                                            <a href="{% url 'product-detail' product.id %}">
+                                            <a href="{% url 'product-detail' product.slug product.id %}">
                                                 <img src="{{ product.images.first.image.url }}" alt="{{ product.title|title }}" style="width:130px; height: 200px; object-fit: cover;">
                                             </a>
                                         </div>
@@ -469,7 +469,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="product__content product__content-d">
-                                        <h6><a href="{% url 'product-detail' product.id %}">{{ product.title|title|truncatewords:5 }}</a></h6>
+                                        <h6><a href="{% url 'product-detail' product.slug product.id %}">{{ product.title|title|truncatewords:5 }}</a></h6>
                                         <div class="rating mb-5">
                                             <ul>
                                                 <i class="fa {% if product.avg_rate >= 1 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
@@ -532,19 +532,19 @@
             <div class="col-xl-4 col-lg-6 col-md-12">
                 <div class="banner__item p-relative w-img mb-30">
                     <div class="banner__img">
-                        <a href="{% url 'product-detail' promo_slider.product.id %}">
+                        <a href="{% url 'product-detail' promo_slider.product.slug product.id %}">
                             <img src="{{promo_slider.image.url}}" alt="{{promo_slider.product.title|title}}" style="width: 500px; height: 300px; object-fit: cover">
                         </a>
                     </div>
                     <div class="banner__content banner__content-sd text-center">
                         <div class="banner-button mb-20">
-                            <a href="{% url 'product-detail' promo_slider.product.id %}" class="st-btn">{{promo_slider.title|title|truncatewords:5}}</a>
+                            <a href="{% url 'product-detail' promo_slider.product.slug product.id %}" class="st-btn">{{promo_slider.title|title|truncatewords:5}}</a>
                         </div>
                         <p>
-                            <a href="{% url 'product-detail' promo_slider.product.id %}">{{promo_slider.product.discount_percent}} % {{promo_slider.title|title}}</a>
+                            <a href="{% url 'product-detail' promo_slider.product.slug product.id %}">{{promo_slider.product.discount_percent}} % {{promo_slider.title|title}}</a>
                         </p>
                         <p>
-                            <a href="{% url 'product-detail' promo_slider.product.id %}">{{promo_slider.product.title|title|truncatewords:5}}</a>
+                            <a href="{% url 'product-detail' promo_slider.product.slug product.id %}">{{promo_slider.product.title|title|truncatewords:5}}</a>
                         </p>
                     </div>
                 </div>
