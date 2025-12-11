@@ -27,10 +27,14 @@ class HomeView(generic.View):
     def get(self, request):
         # Active sliders all fetch
         active_sliders = Slider.objects.filter(status='active')
-        sliders = active_sliders[:4]
-        feature_sliders = active_sliders.filter(slider_type='feature')[:4]
-        add_sliders = active_sliders.filter(slider_type='add')[:2]
-        promo_sliders = active_sliders.filter(slider_type='promotion')[:3]
+        sliders = active_sliders.filter(
+            Q(slider_type='slider') |
+            Q(slider_type='feature')
+        )
+
+        feature_sliders = sliders.filter(slider_type='feature')[:4]
+        add_sliders = sliders.filter(slider_type='add')[:2]
+        promo_sliders = sliders.filter(slider_type='promotion')[:3]
         
         acceptance_payments = AcceptancePayment.objects.filter(status='active')[:4]
         # featured brands
