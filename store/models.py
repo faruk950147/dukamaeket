@@ -341,7 +341,7 @@ class AcceptancePayment(ImageTagMixin):
     title = models.CharField(max_length=150, unique=True)
     sub_title = models.CharField(max_length=150)
     image = models.ImageField(upload_to='acceptance_payments/%Y/%m/%d/', default='defaults/default.jpg')
-    help_time = models.PositiveIntegerField(default=100)  # clarify unit if needed
+    help_time = models.CharField(max_length=150, default=100)  
     shop_amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
     is_featured = models.BooleanField(default=False)

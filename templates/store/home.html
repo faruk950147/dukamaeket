@@ -25,7 +25,7 @@
                     </div>
                     <div class="features__content">
                         <h6>{{ acceptance_payment.title|title|truncatewords:5 }}</h6>
-                        <p> {{acceptance_payment.help_time}}  {{ acceptance_payment.sub_title|title|truncatewords:5 }}</p>
+                        <p> {% if acceptance_payment.help_time %}{{acceptance_payment.help_time}}{% endif %}  {{ acceptance_payment.sub_title|title|truncatewords:5 }} {% if acceptance_payment.shop_amount %}{{acceptance_payment.shop_amount}}{% endif %} </p>
                     </div>
                 </div>
             </div>
