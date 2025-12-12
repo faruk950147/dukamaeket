@@ -34,20 +34,6 @@
 /*----------------------------------------*/
 /*  01. THEME DEFAULT CSS START
 /*----------------------------------------*/
-
-
-/* rating start */
-.rating_submit .star {
-    cursor: pointer;
-    color: #ccc;
-    font-size: 20px;
-}
-
-.rating_submit .star.checked {
-    color: #FFD700;
-}
-/* rating end */
-
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&amp;display=swap");
 * {
   margin: 0;

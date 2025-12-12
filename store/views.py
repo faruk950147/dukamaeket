@@ -7,15 +7,13 @@ from django.utils import timezone
 from django.db.models import Avg, Q
 from django.core.paginator import Paginator
 from django.http import JsonResponse
-from account.mixing import LoginRequiredMixin, LogoutRequiredMixin
 from store.models import (
     Category,
     Brand,
     Product,
     Slider,
     AcceptancePayment,
-    ProductVariant,
-    Review
+    ProductVariant
 )
 import logging
 
@@ -121,33 +119,6 @@ class ShopView(generic.View):
             'page_obj': page_obj
         }
         return render(request, 'store/shop.html', context)
-
-# =========================================================
-# PRODUCT REVIEW VIEW
-# =========================================================
-@method_decorator(never_cache, name='dispatch')
-class ReviewSubmitView(LoginRequiredMixin, generic.View):
-    def post(self, request):
-        product_id = request.POST.get("product_id")
-        subject = request.POST.get("subject")
-        comment = request.POST.get("comment")
-        rating = request.POST.get("rating")
-
-        if not all([product_id, subject, comment, rating]):
-            return JsonResponse({"status": "error", "message": "All fields are required!"})
-
-        try:
-            product = Product.objects.get(id=product_id)
-            Review.objects.create(
-                user=request.user,
-                product=product,
-                subject=subject,
-                comment=comment,
-                rating=rating
-            )
-            return JsonResponse({"status": "success", "message": "Review submitted successfully!"})
-        except Product.DoesNotExist:
-            return JsonResponse({"status": "error", "message": "Product not found!"})
 
 # =========================================================
 # AJAX: GET PRODUCT VARIANT PRICE / STOCK / IMAGE
