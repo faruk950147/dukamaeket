@@ -459,30 +459,24 @@
 <script>
 $(document).ready(function(){
 
-    $('#form').submit(function(e){
+    $("#form").on("submit", function(e) {
         e.preventDefault();
 
-        const formData = $(this).serialize();
+        let formData = new FormData(this);
 
         $.ajax({
-            url: "{% url 'review-submit' product.id %}",
-            method: "POST",
+            url: "{% url 'review-submit' %}",
+            type: "POST",
             data: formData,
-            success: function(data){
-                const msg = $('#form-message');
-                if(data.success){
-                    msg.css('color', 'green').text('Review submitted successfully!');
-                    $('#review-form')[0].reset();
-                    $('.star').removeClass('selected highlighted');
-                    $('#rating').val(0);
-                } else {
-                    msg.css('color', 'red').text(data.error || 'Something went wrong!');
-                }
+            processData: false,
+            contentType: false,
+            headers: {
+                "X-CSRFToken": formData.get("csrfmiddlewaretoken")
             },
-            error: function(err){
-                console.error(err);
-            }
-        });
+
+            success: function(data) {
+
+
 
     });
 
