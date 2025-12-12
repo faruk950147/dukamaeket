@@ -311,27 +311,30 @@
                                     <h3>Add a review</h3>
                                     <p>Your email address will not be published. Required fields are marked *</p>
                                 </div>
-                                <div class="comment-rating mb-20">
-                                    <ul class="rating_submit">
-                                        <span><i class="star fa-solid fa-star"></i></span>
-                                        <span><i class="star fa-solid fa-star"></i></span>
-                                        <span><i class="star fa-solid fa-star"></i></span>
-                                        <span><i class="star fa-solid fa-star"></i></span>
-                                        <span><i class="star fa-solid fa-star"></i></span>
-                                    </ul>
-                                </div>
+
 
                                 <div class="comment-input-box">
-                                    <form action="#">
+                                    <form id="form" method="POST">
+                                        <input type="hidden" name="product_id" value="{{product.id}}">
+                                        {% csrf_token %}
                                         <div class="row g-3">
-                                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 comment-input">
-                                                <input type="text" id="subject" class="form-control" placeholder="Your subject">
+                                            <div class="col-12 comment-input">
+                                                <input type="text" id="subject" name="subject" class="form-control" placeholder="Your subject" required>
+                                            </div>
+                                            <div class="col-12 comment-input">
+                                                <textarea id="comment" name="comment" class="form-control" rows="5" placeholder="Your Review" required></textarea>
                                             </div>
 
-                                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 comment-input">
-                                                <textarea id="comment" class="form-control" rows="5" placeholder="Your Review"></textarea>
+                                            <div class="comment-rating mb-20">
+                                                <ul class="rating_submit">
+                                                    <span><i class="star fa-solid fa-star"></i></span>
+                                                    <span><i class="star fa-solid fa-star"></i></span>
+                                                    <span><i class="star fa-solid fa-star"></i></span>
+                                                    <span><i class="star fa-solid fa-star"></i></span>
+                                                    <span><i class="star fa-solid fa-star"></i></span>
+                                                </ul>
                                             </div>
-                                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 comment-submit">
+                                            <div class="col-12 comment-submit">
                                                 <button type="submit" class="cart-btn form-control">Submit</button>
                                             </div>
                                         </div>
@@ -453,9 +456,36 @@
 
 <script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
 <script>
-   $(document).ready(function(){
-        console.log("JQUERY WORKING");
+$(document).ready(function(){
+
+    $('#form').submit(function(e){
+        e.preventDefault();
+
+        const formData = $(this).serialize();
+
+        $.ajax({
+            url: "{% url 'review-submit' product.id %}",
+            method: "POST",
+            data: formData,
+            success: function(data){
+                const msg = $('#form-message');
+                if(data.success){
+                    msg.css('color', 'green').text('Review submitted successfully!');
+                    $('#review-form')[0].reset();
+                    $('.star').removeClass('selected highlighted');
+                    $('#rating').val(0);
+                } else {
+                    msg.css('color', 'red').text(data.error || 'Something went wrong!');
+                }
+            },
+            error: function(err){
+                console.error(err);
+            }
+        });
+
     });
-    
+
+});
+
 </script> 
 {% endblock main_content %}

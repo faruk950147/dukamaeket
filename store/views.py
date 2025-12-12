@@ -121,6 +121,14 @@ class ShopView(generic.View):
         return render(request, 'store/shop.html', context)
 
 # =========================================================
+# PRODUCT REVIEW VIEW
+# =========================================================
+class ReviewSubmitView(generic.View):
+    def post(self, request):
+        return JsonResponse('D')
+
+
+# =========================================================
 # AJAX: GET PRODUCT VARIANT PRICE / STOCK / IMAGE
 # =========================================================
 @method_decorator(csrf_exempt, name='dispatch')

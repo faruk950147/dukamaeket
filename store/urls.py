@@ -4,11 +4,13 @@ from store.views import(
     HomeView,
     ProductDetailView,
     ShopView,
+    ReviewSubmitView,
     GetVariantsView,
 )
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('product-detail/<str:slug>/<int:id>/', ProductDetailView.as_view(), name='product-detail'),
     path('shop/', ShopView.as_view(), name='shop'),
+    path('review-submit/<int:id>/', ReviewSubmitView.as_view(), name='review-submit'),
     path('get-variants/', csrf_exempt(GetVariantsView.as_view()), name='get-variants'),
 ]
