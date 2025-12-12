@@ -107,6 +107,7 @@
                     <!-- Add To Cart Form using -->
                     <form method="POST" action="" id="form">
                         {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{product.id}}">
                         <!-- Color Options -->
                         <div class="details-meta colors">
                             {% if product.variants.exists %}
