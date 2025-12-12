@@ -37,18 +37,14 @@
 
 
 /* rating start */
-.star {
-    font-size: 24px;
-    color: #ccc;
+.rating_submit .star {
     cursor: pointer;
+    color: #ccc;
+    font-size: 20px;
 }
 
-.star.highlighted {
-    color: #ffff00; /* hover color */
-}
-
-.star.selected {
-    color: #ffff00; /* clicked color */
+.rating_submit .star.checked {
+    color: #FFD700;
 }
 /* rating end */
 
