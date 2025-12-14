@@ -273,10 +273,6 @@
                     <div class="row">
                         <div class="col-xl-4">
                         <div class="review-des-infod" id="reviews-list">
-                            <h6>
-                                <span id="reviews-count">{{ product.reviews.count }}</span> review{% if product.reviews.count != 1 %}s{% endif %} for "<span>{{ product.title|title }}</span>"
-                            </h6>
-
                             <div id="reviews-items">
                                 {% for review in product.reviews.all %}
                                 <div class="review-details-des">
