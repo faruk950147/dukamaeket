@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.db.models import Avg, Q
 from django.core.paginator import Paginator
 from django.http import JsonResponse
+
 from store.models import (
     Category,
     Brand,
@@ -16,46 +17,48 @@ from store.models import (
     ProductVariant,
     Review
 )
-import logging
 
-logger = logging.getLogger('project')
 from account.mixing import LogoutRequiredMixin, LoginRequiredMixin
 
 # =========================================================
-# HOME PAGE
+# HOME PAGE VIEW
 # =========================================================
 @method_decorator(never_cache, name='dispatch')
 class HomeView(generic.View):
     def get(self, request):
-        # Active sliders all fetch
+        # Fetch all active sliders
         active_sliders = Slider.objects.filter(status='active')
-        sliders = active_sliders.filter(
-            Q(slider_type='slider') |
-            Q(slider_type='feature')
-        )
+        sliders = active_sliders.filter(Q(slider_type='slider') | Q(slider_type='feature'))
 
+        # Filter sliders by type
         feature_sliders = active_sliders.filter(Q(slider_type='feature'))[:4]
         add_sliders = active_sliders.filter(Q(slider_type='add'))[:2]
         promo_sliders = active_sliders.filter(Q(slider_type='promotion'))[:3]
-        
+
+        # Fetch acceptance payments
         acceptance_payments = AcceptancePayment.objects.filter(status='active')[:4]
-        # featured brands
+
+        # Fetch featured brands
         brands = Brand.objects.filter(status='active', is_featured=True)
-        # featured categories
+
+        # Fetch featured categories (leaf categories only)
         cates = Category.objects.filter(status='active', children__isnull=True, is_featured=True)[:3]
-        # top deals products
+
+        # Fetch top deals products (discounted & active deadline)
         top_deals = list(Product.objects.filter(
             status='active', discount_percent__gt=0, is_deadline=True, deadline__gte=timezone.now()
-        ).select_related('category', 'brand').prefetch_related('reviews') \
-         .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active'))).order_by('-discount_percent', 'deadline')[:6]
-        )
+        ).select_related('category', 'brand')
+         .prefetch_related('reviews')
+         .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
+         .order_by('-discount_percent', 'deadline')[:6])
+
         first_top_deal = top_deals[0] if top_deals else None
-        # featured products
+
+        # Fetch featured products
         featured_products = Product.objects.filter(
             status='active', is_featured=True
         ).select_related('category', 'brand').prefetch_related('reviews') \
          .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))[:5]
-
 
         context = {
             'sliders': sliders,
@@ -69,7 +72,9 @@ class HomeView(generic.View):
             'first_top_deal': first_top_deal,
             'featured_products': featured_products,
         }
+
         return render(request, 'store/home.html', context)
+
 
 # =========================================================
 # PRODUCT DETAIL VIEW
@@ -77,7 +82,7 @@ class HomeView(generic.View):
 @method_decorator(never_cache, name='dispatch')
 class ProductDetailView(generic.View):
     def get(self, request, slug, id):
-        # Main product fetch
+        # Fetch the main product with related data
         product = get_object_or_404(
             Product.objects.select_related('category', 'brand')
                 .prefetch_related('reviews', 'variants__color', 'variants__size', 'images')
@@ -87,10 +92,12 @@ class ProductDetailView(generic.View):
             status='active'
         )
 
-        # Default variant (first one) fetch
-        variant = product.variants.first()  # if multiple variants first default 
+        # Fetch default variant (fallback to first if none)
+        variant = product.variants.filter(is_default=True).first()
+        if not variant:
+            variant = product.variants.first()
 
-        # Related products
+        # Fetch related products (same category, exclude current)
         related_products = Product.objects.filter(
             category=product.category,
             status='active'
@@ -99,13 +106,15 @@ class ProductDetailView(generic.View):
 
         context = {
             'product': product,
-            'variant': variant,   
+            'variant': variant,
             'related_products': related_products
         }
+
         return render(request, 'store/product-detail.html', context)
 
+
 # =========================================================
-# PRODUCT REVIEW VIEW
+# PRODUCT REVIEW VIEW (AJAX)
 # =========================================================
 @method_decorator(never_cache, name='dispatch')
 class ProductReviewView(LoginRequiredMixin, generic.View):
@@ -116,14 +125,25 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
         subject = request.POST.get('subject')
         comment = request.POST.get('comment')
 
+        # Validation: Check all fields
         if not rating or not subject or not comment:
             return JsonResponse({'status': 'error', 'message': 'All fields are required'}, status=400)
 
+        # Convert rating to integer and validate
+        try:
+            rating = int(rating)
+            if rating < 1 or rating > 5:
+                raise ValueError
+        except ValueError:
+            return JsonResponse({'status': 'error', 'message': 'Rating must be an integer between 1 and 5'}, status=400)
+
+        # Fetch product
         try:
             product = Product.objects.get(id=product_id)
         except Product.DoesNotExist:
             return JsonResponse({'status': 'error', 'message': 'Product not found'}, status=404)
 
+        # Create review
         review = Review.objects.create(
             user=user,
             product=product,
@@ -131,53 +151,60 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
             subject=subject,
             comment=comment
         )
-
+        # Total review count for the product
+        review_count = product.reviews.filter(status='active').count()
+        
+        # Generate HTML for review
         review_html = f"""
-        <div class="review-details-des">
-            <div class="author-image mr-15">
-                <img src="{review.user.profile.image.url}" alt="{review.user.username}" style="width: 50px; height: 50px">
-            </div>
-            <div class="review-details-content">
-                <h5>5.00</h5>
-                <div class="str-info">
-                    <div class="review-star mr-15">
-                        {"".join(['<i class="text-warning fa fa-star"></i>' if i <= review.rating else '<i class="text-warning fa fa-star-o"></i>' for i in range(1, 6)])}
+            <div class="review-details-des">
+                <div class="author-image mr-15">
+                    <img src="{review.user.profile.image.url}" alt="{review.user.username}" style="width: 50px; height: 50px">
+                </div>
+                <div class="review-details-content">
+                    <h5>{review.rating:.2f}</h5>
+                    <div class="str-info">
+                        <div class="review-star mr-15">
+                            {"".join(['<i class="text-warning fa fa-star"></i>' if i <= review.rating else '<i class="text-warning fa fa-star-o"></i>' for i in range(1, 6)])}
+                        </div>
                     </div>
+                    <div class="name-date mb-30">
+                        <h6>{review.user.username} – <span>{review.created_date.strftime('%Y-%m-%d %H:%M')}</span></h6>
+                    </div>
+                    <p>{review.subject}</p>
+                    <p>{review.comment}</p>
                 </div>
-                <div class="name-date mb-30">
-                    <h6>{review.user.username} – <span>{review.created_at.strftime('%Y-%m-%d %H:%M')}</span></h6>
-                </div>
-                <p>{review.subject.title()}</p>
-                <p>{review.comment.title()}</p>
             </div>
-        </div>
         """
-
 
         return JsonResponse({
             'status': 'success',
             'message': 'Review submitted successfully',
+            'review_count':review_count,
             'review_html': review_html
         })
-        
-        
+
+
 # =========================================================
 # SHOP VIEW WITH PAGINATION
 # =========================================================
 @method_decorator(never_cache, name='dispatch')
 class ShopView(generic.View):
     def get(self, request):
+        # Fetch all active products with related data
         products = Product.objects.filter(status='active').select_related('category', 'brand') \
                          .prefetch_related('reviews').annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
-        
-        paginator = Paginator(products, 12)  # 12 products per page
+
+        # Pagination: 12 products per page
+        paginator = Paginator(products, 12)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
 
         context = {
             'page_obj': page_obj
         }
+
         return render(request, 'store/shop.html', context)
+
 
 # =========================================================
 # AJAX: GET PRODUCT VARIANT PRICE / STOCK / IMAGE

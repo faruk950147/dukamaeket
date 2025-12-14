@@ -259,23 +259,30 @@ class ProductVariant(ImageTagMixin):
         ]
 
     def save(self, *args, **kwargs):
-        # if is_default variants
+        # If no default variant exists for this product, make this one default
+        if not ProductVariant.objects.filter(product=self.product, is_default=True).exists():
+            self.is_default = True
+
+        # If this variant is default, make all other variants of the product not default
         if self.is_default:
-            # same product another variants is_default=False 
             ProductVariant.objects.filter(product=self.product, is_default=True).exclude(id=self.id).update(is_default=False)
+
         super().save(*args, **kwargs)
 
     def __str__(self):
+        # Return a readable string showing product, size, and color
         size = self.size.title if self.size else "No Size"
         color = self.color.title if self.color else "No Color"
         return f"{self.product.title} - {size} - {color}"
     
     @property
     def final_price(self):
+        # Return the variant price if set, otherwise the product's sale price
         return self.variant_price if self.variant_price > 0 else self.product.sale_price
 
     @property
     def is_available(self):
+        # Check if the variant is in stock and active
         return self.available_stock > 0 and self.status == 'active'
 
 # =========================================================
