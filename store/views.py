@@ -13,11 +13,13 @@ from store.models import (
     Product,
     Slider,
     AcceptancePayment,
-    ProductVariant
+    ProductVariant,
+    Review
 )
 import logging
 
 logger = logging.getLogger('project')
+from account.mixing import LogoutRequiredMixin, LoginRequiredMixin
 
 # =========================================================
 # HOME PAGE
@@ -102,6 +104,63 @@ class ProductDetailView(generic.View):
         }
         return render(request, 'store/product-detail.html', context)
 
+# =========================================================
+# PRODUCT REVIEW VIEW
+# =========================================================
+@method_decorator(never_cache, name='dispatch')
+class ProductReviewView(LoginRequiredMixin, generic.View):
+    def post(self, request):
+        user = request.user
+        product_id = request.POST.get('product_id')
+        rating = request.POST.get('rating')
+        subject = request.POST.get('subject')
+        comment = request.POST.get('comment')
+
+        if not rating or not subject or not comment:
+            return JsonResponse({'status': 'error', 'message': 'All fields are required'}, status=400)
+
+        try:
+            product = Product.objects.get(id=product_id)
+        except Product.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Product not found'}, status=404)
+
+        review = Review.objects.create(
+            user=user,
+            product=product,
+            rating=rating,
+            subject=subject,
+            comment=comment
+        )
+
+        review_html = f"""
+        <div class="review-details-des">
+            <div class="author-image mr-15">
+                <img src="{review.user.profile.image.url}" alt="{review.user.username}" style="width: 50px; height: 50px">
+            </div>
+            <div class="review-details-content">
+                <h5>5.00</h5>
+                <div class="str-info">
+                    <div class="review-star mr-15">
+                        {"".join(['<i class="text-warning fa fa-star"></i>' if i <= review.rating else '<i class="text-warning fa fa-star-o"></i>' for i in range(1, 6)])}
+                    </div>
+                </div>
+                <div class="name-date mb-30">
+                    <h6>{review.user.username} – <span>{review.created_at.strftime('%Y-%m-%d %H:%M')}</span></h6>
+                </div>
+                <p>{review.subject.title()}</p>
+                <p>{review.comment.title()}</p>
+            </div>
+        </div>
+        """
+
+
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Review submitted successfully',
+            'review_html': review_html
+        })
+        
+        
 # =========================================================
 # SHOP VIEW WITH PAGINATION
 # =========================================================

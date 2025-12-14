@@ -474,29 +474,26 @@ $('#review-form').on('submit', function (e) {
     e.preventDefault();
     let data = new FormData(this);
 
-    // Rating Check
     if (!$('input[name="rating"]:checked').length) {
         alertify.error("Please select a rating");
         return;
     }
 
-    // Subject Comment Check
     if (!$('#subject').val() || !$('#comment').val()) {
         alertify.error("Please fill in subject and comment");
         return;
     }
 
-    console.log("Clicked");
-
     $.ajax({
-        url: '',  
+        url: '{% url "product-review" %}',  
         method: 'POST',
+        headers: {'X-CSRFToken': '{{ csrf_token }}'},
         data: data,
         processData: false,
         contentType: false,
         success: function (res) {
-            alertify.success();
-            $('#review-form')[0].reset(); 
+            alertify.success("Review submitted successfully");
+            $('#review-form')[0].reset();
         },
         error: function (xhr, status, error) {
             alertify.error("Something went wrong.");
@@ -504,6 +501,7 @@ $('#review-form').on('submit', function (e) {
         }
     });
 });
+
 
     });
     

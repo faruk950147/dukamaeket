@@ -191,8 +191,8 @@ class Product(ImageTagMixin):
 
     def save(self, *args, **kwargs):
         old = None
-        if self.pk:
-            old = Product.objects.filter(pk=self.pk).values('old_price', 'discount_percent').first()
+        if self.id:
+            old = Product.objects.filter(id=self.id).values('old_price', 'discount_percent').first()
         if not old or (old['old_price'] != self.old_price or old['discount_percent'] != self.discount_percent):
             self.sale_price = (self.old_price * (100 - self.discount_percent) / 100).quantize(Decimal('0.01'))
         self.full_clean()
@@ -258,11 +258,18 @@ class ProductVariant(ImageTagMixin):
             models.UniqueConstraint(fields=['product', 'color', 'size'], name='unique_variant')
         ]
 
+    def save(self, *args, **kwargs):
+        # if is_default variants
+        if self.is_default:
+            # same product another variants is_default=False 
+            ProductVariant.objects.filter(product=self.product, is_default=True).exclude(id=self.id).update(is_default=False)
+        super().save(*args, **kwargs)
+
     def __str__(self):
         size = self.size.title if self.size else "No Size"
         color = self.color.title if self.color else "No Color"
         return f"{self.product.title} - {size} - {color}"
-
+    
     @property
     def final_price(self):
         return self.variant_price if self.variant_price > 0 else self.product.sale_price
