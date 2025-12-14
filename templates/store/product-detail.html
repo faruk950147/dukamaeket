@@ -230,7 +230,7 @@
                             <button class="nav-link" id="aditional-tab" data-bs-toggle="tab" data-bs-target="#aditional" type="button" role="tab" aria-controls="aditional" aria-selected="false">Additional information</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="false">Reviews ({{product.reviews.count}})</button>
+                            <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="false">Reviews <span id="review_count">({{product.reviews.count}})</span></button>
                         </li>
                     </ul>
                 </div>
@@ -272,37 +272,36 @@
                 <div class="product__details-review">
                     <div class="row">
                         <div class="col-xl-4">
-                        <div class="review-des-infod" id="reviews-list">
-                            <div id="reviews-items">
-                                {% for review in product.reviews.all %}
-                                <div class="review-details-des">
-                                    <div class="author-image mr-15">
-                                        <img src="{{ review.user.profile.image.url }}" alt="{{ review.user.username }}" style="width: 50px; height: 50px">
-                                    </div>
-                                    <div class="review-details-content">
-                                        <h5>{{ review.rating|floatformat:2 }}</h5>
-                                        <div class="str-info">
-                                            <div class="review-star mr-15">
-                                                <i class="text-warning fa {% if review.rating >= 1 %}fa-star{% else %}fa-star-o{% endif %}"></i>
-                                                <i class="text-warning fa {% if review.rating >= 2 %}fa-star{% else %}fa-star-o{% endif %}"></i>
-                                                <i class="text-warning fa {% if review.rating >= 3 %}fa-star{% else %}fa-star-o{% endif %}"></i>
-                                                <i class="text-warning fa {% if review.rating >= 4 %}fa-star{% else %}fa-star-o{% endif %}"></i>
-                                                <i class="text-warning fa {% if review.rating >= 5 %}fa-star{% else %}fa-star-o{% endif %}"></i>
+                            <div class="review-des-infod" id="reviews-list">
+                                <div id="reviews-items">
+                                    {% for review in product.reviews.all %}
+                                    <div class="review-details-des">
+                                        <div class="author-image mr-15">
+                                            <img src="{{ review.user.profile.image.url }}" alt="{{ review.user.username }}" style="width: 50px; height: 50px">
+                                        </div>
+                                        <div class="review-details-content">
+                                            <h5>{{ review.rating|floatformat:2 }}</h5>
+                                            <div class="str-info">
+                                                <div class="review-star mr-15">
+                                                    <i class="text-warning fa {% if review.rating >= 1 %}fa-star{% else %}fa-star-o{% endif %}"></i>
+                                                    <i class="text-warning fa {% if review.rating >= 2 %}fa-star{% else %}fa-star-o{% endif %}"></i>
+                                                    <i class="text-warning fa {% if review.rating >= 3 %}fa-star{% else %}fa-star-o{% endif %}"></i>
+                                                    <i class="text-warning fa {% if review.rating >= 4 %}fa-star{% else %}fa-star-o{% endif %}"></i>
+                                                    <i class="text-warning fa {% if review.rating >= 5 %}fa-star{% else %}fa-star-o{% endif %}"></i>
+                                                </div>
                                             </div>
+                                            <div class="name-date mb-30">
+                                                <h6>{{ review.user.username }} – <span>{{ review.created_date|date:"Y-m-d H:i" }}</span></h6>
+                                            </div>
+                                            <p>{{ review.subject }}</p>
+                                            <p>{{ review.comment }}</p>
                                         </div>
-                                        <div class="name-date mb-30">
-                                            <h6>{{ review.user.username }} – <span>{{ review.created_date|date:"Y-m-d H:i" }}</span></h6>
-                                        </div>
-                                        <p>{{ review.subject }}</p>
-                                        <p>{{ review.comment }}</p>
                                     </div>
+                                    {% empty %}
+                                        <p>No reviews yet.</p>
+                                    {% endfor %}
                                 </div>
-                                {% empty %}
-                                    <p>No reviews yet.</p>
-                                {% endfor %}
                             </div>
-                        </div>
-
                         </div>
                         <div class="col-xl-8">
                             <div class="product__details-comment">
@@ -467,56 +466,55 @@
 <script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
 <script>
    $(document).ready(function(){
-    // Review form submission via AJAX
-    $('#review-form').on('submit', function (e) {
-        e.preventDefault();
+        // Review form submission via AJAX
+        $('#review-form').on('submit', function (e) {
+            e.preventDefault();
 
-        let form = $(this);
-        let data = new FormData(this);
+            let form = $(this);
+            let data = new FormData(this);
 
-        // Validation: Check rating
-        if (!$('input[name="rating"]:checked').length) {
-            alertify.error("Please select a rating");
-            return;
-        }
-
-        // Validation: Check subject and comment
-        if (!$('#subject').val().trim() || !$('#comment').val().trim()) {
-            alertify.error("Please fill in subject and comment");
-            return;
-        }
-
-        $.ajax({
-            url: '{% url "product-review" %}',  // Django URL for review submission
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}'  // CSRF token
-            },
-            data: data,
-            processData: false,
-            contentType: false,
-            success: function (res) {
-                if (res.status === 'success') {
-                    alertify.success(res.message);
-
-                    // Reset form
-                    form[0].reset();
-
-                    // Append new review HTML to the reviews list
-                    $('#reviews-list').prepend(res.review_html);
-                } else {
-                    alertify.error(res.message);
-                }
-            },
-            error: function (xhr, status, error) {
-                alertify.error("Something went wrong.");
-                console.log(error);
+            // Validation: Check rating
+            if (!$('input[name="rating"]:checked').length) {
+                alertify.error("Please select a rating");
+                return;
             }
+
+            // Validation: Check subject and comment
+            if (!$('#subject').val().trim() || !$('#comment').val().trim()) {
+                alertify.error("Please fill in subject and comment");
+                return;
+            }
+
+            $.ajax({
+                url: '{% url "product-review" %}',  // Django URL for review submission
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'  // CSRF token
+                },
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    if (res.status === 'success') {
+                        alertify.success(res.message);
+
+                        // Reset form
+                        form[0].reset();
+                        // review_count
+                        $('#review_count').text('Reviews (' + res.review_count + ')');
+
+                        // Append new review HTML to the reviews list
+                        $('#reviews-list').prepend(res.review_html);
+                    } else {
+                        alertify.error(res.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alertify.error("Something went wrong.");
+                    console.log(error);
+                }
+            });
         });
-    });
-
-
-
     });
     
 </script> 
