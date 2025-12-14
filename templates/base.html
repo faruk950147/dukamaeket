@@ -7,6 +7,10 @@
     <title> {% block title %}Duka Market | {% endblock title %} </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/alertify.min.css"/>
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/default.min.css"/>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <!-- Place favicon.ico in the root directory -->
@@ -294,7 +298,7 @@
     {% endblock off-canvas %}
 
     {% block main_content %}
-    
+
     {% endblock main_content %}
 
     <!-- footer-start -->
@@ -456,5 +460,8 @@
     <script src="{% static 'assets/js/imagesloaded-pkgd.js' %}"></script>
     <script src="{% static 'assets/js/ajax-form.js' %}"></script>
     <script src="{% static 'assets/js/main.js' %}"></script>
+    <!-- JavaScript -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
+    {% include "alert.html" %}
 </body>
 </html>

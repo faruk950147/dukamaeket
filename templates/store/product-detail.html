@@ -105,7 +105,9 @@
                         <h5>Availability: <span>{{product.available_stock}}</span></h5>
                     </div>
                     <!-- Add To Cart Form using -->
-                    <form method="POST" action="" id="form">
+                    <form method="POST" action="" id="add-to-cart-form">
+                        <input type="hidden" name="product-id" id="product-id" value="{{product.id}}">
+                        <input type="hidden" name="product-slug" id="product-slug" value="{{product.slug}}">
                         {% csrf_token %}
                         <!-- Color Options -->
                         <div class="details-meta colors">
@@ -312,7 +314,10 @@
                                 </div>
 
                                 <div class="comment-input-box">
-                                    <form action="#">
+                                    <form action="#" id="review-form" novalidate>
+                                        {% csrf_token %}
+                                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                                        <input type="hidden" name="product_slug" value="{{ product.slug }}">
                                         <div class="comment-rating mb-20">
                                             <label>Your Review Ratings</label>
                                             <ul class="rating">
@@ -335,11 +340,11 @@
 
                                         <div class="row g-3">
                                             <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 comment-input">
-                                                <input type="text" id="subject" class="form-control" placeholder="Your subject">
+                                                <input type="text" name="subject" id="subject" class="form-control" placeholder="Your subject" required>
                                             </div>
 
                                             <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 comment-input">
-                                                <textarea id="comment" class="form-control" rows="5" placeholder="Your Review"></textarea>
+                                                <textarea name="comment" id="comment" class="form-control" rows="5" placeholder="Your comment" required></textarea>
                                             </div>
 
                                             <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 comment-submit">
@@ -465,7 +470,41 @@
 <script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
 <script>
    $(document).ready(function(){
-        console.log("JQUERY WORKING");
+$('#review-form').on('submit', function (e) {
+    e.preventDefault();
+    let data = new FormData(this);
+
+    // Rating Check
+    if (!$('input[name="rating"]:checked').length) {
+        alertify.error("Please select a rating");
+        return;
+    }
+
+    // Subject Comment Check
+    if (!$('#subject').val() || !$('#comment').val()) {
+        alertify.error("Please fill in subject and comment");
+        return;
+    }
+
+    console.log("Clicked");
+
+    $.ajax({
+        url: '',  
+        method: 'POST',
+        data: data,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            alertify.success();
+            $('#review-form')[0].reset(); 
+        },
+        error: function (xhr, status, error) {
+            alertify.error("Something went wrong.");
+            console.log(error);
+        }
+    });
+});
+
     });
     
 </script> 
