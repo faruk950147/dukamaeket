@@ -125,25 +125,15 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
         subject = request.POST.get('subject')
         comment = request.POST.get('comment')
 
-        # Validation: Check all fields
-        if not rating or not subject or not comment:
-            return JsonResponse({'status': 'error', 'message': 'All fields are required'}, status=400)
+        if not rating or not rating.isdigit() or not subject or not comment:
+            return JsonResponse({'status': 'error', 'message': 'All fields are required and rating must be a number'}, status=400)
 
-        # Convert rating to integer and validate
-        try:
-            rating = int(rating)
-            if rating < 1 or rating > 5:
-                raise ValueError
-        except ValueError:
-            return JsonResponse({'status': 'error', 'message': 'Rating must be an integer between 1 and 5'}, status=400)
+        rating = int(rating)
+        if rating < 1 or rating > 5:
+            return JsonResponse({'status': 'error', 'message': 'Rating must be between 1 and 5'}, status=400)
 
-        # Fetch product
-        try:
-            product = Product.objects.get(id=product_id)
-        except Product.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'Product not found'}, status=404)
+        product = get_object_or_404(Product, id=product_id, status='active')
 
-        # Create review
         review = Review.objects.create(
             user=user,
             product=product,
@@ -151,35 +141,37 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
             subject=subject,
             comment=comment
         )
-        # Total review count for the product
+
         review_count = product.reviews.filter(status='active').count()
-        
-        # Generate HTML for review
+
+        image_url = getattr(user.profile, 'image', None)
+        image_url = image_url.url if image_url else '/media/defaults/default.jpg'
+
         review_html = f"""
-            <div class="review-details-des">
-                <div class="author-image mr-15">
-                    <img src="{review.user.profile.image.url}" alt="{review.user.username}" style="width: 50px; height: 50px">
-                </div>
-                <div class="review-details-content">
-                    <h5>{review.rating:.2f}</h5>
-                    <div class="str-info">
-                        <div class="review-star mr-15">
-                            {"".join(['<i class="text-warning fa fa-star"></i>' if i <= review.rating else '<i class="text-warning fa fa-star-o"></i>' for i in range(1, 6)])}
-                        </div>
-                    </div>
-                    <div class="name-date mb-30">
-                        <h6>{review.user.username} – <span>{review.created_date.strftime('%Y-%m-%d %H:%M')}</span></h6>
-                    </div>
-                    <p>{review.subject}</p>
-                    <p>{review.comment}</p>
-                </div>
+        <div class="review-details-des">
+            <div class="author-image mr-15">
+                <img src="{image_url}" alt="{user.username}" style="width: 50px; height: 50px">
             </div>
+            <div class="review-details-content">
+                <h5>{review.rating:.2f}</h5>
+                <div class="str-info">
+                    <div class="review-star mr-15">
+                        {"".join(['<i class="text-warning fa fa-star"></i>' if i <= review.rating else '<i class="text-warning fa fa-star-o"></i>' for i in range(1, 6)])}
+                    </div>
+                </div>
+                <div class="name-date mb-30">
+                    <h6>{user.username} – <span>{review.created_date.strftime('%Y-%m-%d %H:%M')}</span></h6>
+                </div>
+                <p>{review.subject}</p>
+                <p>{review.comment}</p>
+            </div>
+        </div>
         """
 
         return JsonResponse({
             'status': 'success',
             'message': 'Review submitted successfully',
-            'review_count':review_count,
+            'review_count': review_count,
             'review_html': review_html
         })
 
