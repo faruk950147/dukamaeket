@@ -214,14 +214,18 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
 @method_decorator(never_cache, name='dispatch')
 class ShopView(generic.View):
     def get(self, request):
-        per_page = int(request.GET.get('per_page', 4))
-        sort_option = request.GET.get('sort', 'latest')
-        page_number = request.GET.get('page', 1)
+        per_page_options = [4, 8, 12, 16]
+        sort_options = ['latest', 'new', 'upcoming']
 
         products = Product.objects.filter(status='active') \
             .select_related('category', 'brand') \
             .prefetch_related('reviews') \
             .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
+
+        # GET params
+        per_page = int(request.GET.get('per_page', 4))
+        sort_by = request.GET.get('sort', 'latest')
+        page_number = int(request.GET.get('page', 1))
 
         # Sorting
         sort_dict = {
@@ -230,29 +234,38 @@ class ShopView(generic.View):
             'upcoming': 'deadline'
         }
 
-        if sort_option == 'upcoming':
-            products = products.filter(deadline__gt=timezone.now()).order_by(sort_dict.get(sort_option, '-created_date'))
+        if sort_by == 'upcoming':
+            products = products.filter(deadline__gt=timezone.now()).order_by(sort_dict[sort_by])
         else:
-            products = products.order_by(sort_dict.get(sort_option, '-created_date'))
+            products = products.order_by(sort_dict.get(sort_by, '-created_date'))
 
+        # Pagination
         paginator = Paginator(products, per_page)
         page_obj = paginator.get_page(page_number)
+
+        # Track visited pages in session
+        visited_pages = request.session.get('visited_pages', [])
+        if page_number not in visited_pages:
+            visited_pages.append(page_number)
+        request.session['visited_pages'] = visited_pages
 
         context = {
             'products': page_obj,
             'page_obj': page_obj,
-            'per_page': per_page,
-            'sort_option': sort_option,
+            'per_page_options': per_page_options,
+            'sort_options': sort_options,
+            'selected_per_page': per_page,
+            'selected_sort': sort_by,
+            'visited_pages': visited_pages,
         }
 
-        # AJAX request
+        # AJAX response
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             html = render_to_string('store/grid.html', context, request=request)
-            return JsonResponse({'html': html})
+            pagination_html = render_to_string('store/pagination.html', context, request=request)
+            return JsonResponse({'html': html, 'pagination_html': pagination_html})
 
-        # Normal request
         return render(request, 'store/shop.html', context)
-
 
 # =========================================================
 # AJAX: GET PRODUCT VARIANT PRICE / STOCK / IMAGE

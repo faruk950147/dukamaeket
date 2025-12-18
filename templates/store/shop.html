@@ -58,33 +58,37 @@
                 <div class="product-lists-top">
                     <div class="product__filter-wrap">
                         <div class="row align-items-center">
-                            
+
                             <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
                                 <div class="product__filter d-sm-flex align-items-center">
                                     <div class="product__col">
-                                        <i class="fal fa-th"></i>                                       
-                                        {% with products=products %}
-                                            <span>Per page products: {{ products|length }}</span>
-                                        {% endwith %}
+                                        <i class="fal fa-th"></i>
+                                        <span>Total products: {{ page_obj.paginator.count }}</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
                                 <div class="product__filter-right d-flex align-items-center justify-content-md-end">
+                                    <!-- Per Page Select -->
                                     <div class="product__sorting product__show-no">
                                         <select name="per_page" id="per_page">
-                                            <option>4</option>
-                                            <option>8</option>
-                                            <option>12</option>
-                                            <option>16</option>
+                                            {% for page in per_page_options %}
+                                                <option value="{{ page }}" {% if page|stringformat:"s" == selected_per_page|stringformat:"s" %}selected{% endif %}>
+                                                    {{ page|title }}
+                                                </option>
+                                            {% endfor %}
                                         </select>
                                     </div>
+
+                                    <!-- Sort Select -->
                                     <div class="product__sorting product__show-position ml-20">
-                                        <select>
-                                            <option>Latest</option>
-                                            <option>New</option>
-                                            <option>Upcoming</option>
+                                        <select name="sort" id="sort">
+                                            {% for sort in sort_options %}
+                                                <option value="{{ sort }}" {% if sort == selected_sort %}selected{% endif %}>
+                                                    {{ sort|title }}
+                                                </option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                 </div>
@@ -113,33 +117,7 @@
                         <div class="col-xl-12">
                             <div class="basic-pagination pt-30 pb-30">
                                 <nav>
-                                    <ul class="pagination justify-content-center">
-                                        {% if page_obj.has_previous %}
-                                        <li>
-                                            <a href="?page={{ page_obj.previous_page_number }}{% if sort_option %}&sort={{ sort_option }}{% endif %}{% if per_page %}&per_page={{ per_page }}{% endif %}" class="page-link">&laquo;</a>
-                                        </li>
-                                        {% else %}
-                                        <li class="disabled"><span>&laquo;</span></li>
-                                        {% endif %}
-
-                                        {% for num in page_obj.paginator.page_range %}
-                                            {% if page_obj.number == num %}
-                                                <li class="active"><span>{{ num }}</span></li>
-                                            {% else %}
-                                                <li>
-                                                    <a href="?page={{ num }}{% if sort_option %}&sort={{ sort_option }}{% endif %}{% if per_page %}&per_page={{ per_page }}{% endif %}" class="page-link">{{ num }}</a>
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
-
-                                        {% if page_obj.has_next %}
-                                        <li>
-                                            <a href="?page={{ page_obj.next_page_number }}{% if sort_option %}&sort={{ sort_option }}{% endif %}{% if per_page %}&per_page={{ per_page }}{% endif %}" class="page-link">&raquo;</a>
-                                        </li>
-                                        {% else %}
-                                        <li class="disabled"><span>&raquo;</span></li>
-                                        {% endif %}
-                                    </ul>
+                                    {% include 'store/pagination.html' %}
                                 </nav>
                             </div>
                         </div>
@@ -158,4 +136,56 @@
 <!-- shop modal start -->
 {% include 'store/product-modals.html' %}
 <!-- shop modal end -->
+
+<!-- jQuery load -->
+
+<script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
+<script>
+$(document).ready(function() {
+
+    let visited_pages = {{ visited_pages|safe }};
+
+    function loadProducts(params={}) {
+        $.ajax({
+            url: "{% url 'shop' %}",
+            type: "GET",
+            data: params,
+            headers: {'X-Requested-With': 'XMLHttpRequest'},
+            success: function(response) {
+                $('#product-grid').html(response.html);
+                $('#pagination_grid').html(response.pagination_html);
+
+                // Update visited pages for front-end
+                visited_pages = Array.from(new Set([...visited_pages, params.page || 1]));
+
+                // Highlight all visited pages
+                $('#pagination_grid .pagination li').each(function(){
+                    const li_page = $(this).find('a').attr('href')?.split('page=')[1];
+                    if(li_page && visited_pages.includes(parseInt(li_page))){
+                        $(this).addClass('active');
+                    }
+                });
+            }
+        });
+    }
+
+    // Per page or sort change
+    $('#per_page, #sort').change(function() {
+        const per_page = $('#per_page').val();
+        const sort = $('#sort').val();
+        loadProducts({per_page: per_page, sort: sort, page: 1});
+    });
+
+    // Pagination click
+    $(document).on('click', '#pagination_grid .pagination a', function(e){
+        e.preventDefault();
+        const urlParams = new URLSearchParams($(this).attr('href').split('?')[1]);
+        const page = parseInt(urlParams.get('page'));
+        const per_page = $('#per_page').val();
+        const sort = $('#sort').val();
+        loadProducts({page: page, per_page: per_page, sort: sort});
+    });
+
+});
+</script>
 {% endblock main_content %}
