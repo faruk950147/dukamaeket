@@ -1,9 +1,9 @@
-{% extends 'base.html' %} 
-{% load static %} 
-{% block title %}Shop{% endblock title %} 
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Shop{% endblock title %}
 
 {% block main_content %}
-<!-- breadcrumb__area-start -->
+<!-- breadcrumb area -->
 <section class="breadcrumb__area box-plr-75">
     <div class="container">
         <div class="row">
@@ -11,7 +11,7 @@
                 <div class="breadcrumb__wrapper">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Shop</li>
                         </ol>
                     </nav>
@@ -20,133 +20,22 @@
         </div>
     </div>
 </section>
-<!-- breadcrumb__area-end -->
 
-<!-- shop-area-start -->
+<!-- shop area -->
 <div class="shop-area mb-20">
     <div class="container">
         <div class="row">
-            
+
             <!-- left sidebar -->
-            <div class="col-xl-3 col-lg-4">
-
-                <!-- Product Categories -->
+            <div class="col-xl-3 col-lg-3">
                 <div class="product-widget mb-30">
-                    <h5 class="pt-title">Product categories</h5>
-                    <div class="widget-category-list mt-20">
-                        <form action="#">
-                            <div class="single-widget-category">
-                                <input type="checkbox" id="cat-item-1" name="cat-item">
-                                <label for="cat-item-1">
-                                    Clothing & Apparel <span>(12)</span>
-                                </label>
-                            </div>
-                        </form>
+                    <h5 class="pt-title">Choose Category</h5>
+                    <div class="product__category mt-20">
+
                     </div>
                 </div>
-
-                <!-- Price Filter -->
-                <div class="product-widget mb-30">
-                    <h5 class="pt-title">Filter By Price</h5>
-                    <div class="price__slider mt-30">
-                        <div id="slider-range" class="ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content">
-                            <div class="ui-slider-range ui-corner-all ui-widget-header" style="left: 0%; width: 100%;"></div>
-                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 0%;"></span>
-                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 100%;"></span>
-                        </div>
-                        <div>
-                            <form action="#" class="s-form mt-20">
-                                <input type="text" id="amount" readonly="">
-                                <button type="submit" class="tp-btn-square-lg">Filter</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Choose Color -->
-                <div class="product-widget mb-30">
-                    <h5 class="pt-title">Choose Color</h5>
-                    <div class="product__color mt-20">
-                        <ul>
-                            <li><a href="#" class="black"></a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Rating Filter -->
-                <div class="product-widget mb-30">
-                    <h5 class="pt-title">Choose Rating</h5>
-                    <div class="widget-category-list mt-20">
-                        <form action="#">
-                            <div class="single-widget-rating">
-                                <input type="checkbox" id="star-item-1" name="star-item">
-                                <label for="star-item-1">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span>(54)</span>
-                                </label>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Size Filter -->
-                <div class="product-widget mb-30">
-                    <h5 class="pt-title">Choose Size</h5>
-                    <div class="widget-category-list mt-20">
-                        <form action="#">
-                            <div class="single-widget-category">
-                                <input type="checkbox" id="choose-item-1" name="choose-item">
-                                <label for="choose-item-1">S <span>(12)</span></label>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Brand Filter -->
-                <div class="product-widget mb-30">
-                    <h5 class="pt-title">Choose Brand</h5>
-                    <div class="widget-category-list mt-20">
-                        <form action="#">
-                            <div class="single-widget-category">
-                                <input type="checkbox" id="brand-item-1" name="brand-item">
-                                <label for="brand-item-1">
-                                    CarRentals <span>(12)</span>
-                                </label>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Special Offers -->
-                <div class="product-widget mb-30">
-                    <h5 class="pt-title">Special Offers</h5>
-                    <div class="product__sm mt-20">
-                        <ul>
-                            <li class="product__sm-item d-flex align-items-center">
-                                <div class="product__sm-thumb mr-20">
-                                    <a href="product-details.html">
-                                        <img src="{% static 'assets/img/product/sm-1.jpg' %}" alt="">
-                                    </a>
-                                </div>
-                                <div class="product__sm-content">
-                                    <h5 class="product__sm-title">
-                                        <a href="product-details.html">Classic Leather Backpack Daypack 2022</a>
-                                    </h5>
-                                    <div class="product__sm-price">
-                                        <span class="price">$300.00</span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-            <!-- left sidebar end -->
+            </div>  
+             <!-- left sidebar end -->
 
             <!-- right side: product list area -->
             <div class="col-xl-9 col-lg-8">
@@ -173,18 +62,10 @@
                             <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
                                 <div class="product__filter d-sm-flex align-items-center">
                                     <div class="product__col">
-                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link active" id="FourCol-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#FourCol" type="button" role="tab" aria-controls="FourCol"
-                                                    aria-selected="true">
-                                                    <i class="fal fa-th"></i>
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="product__result pl-60">
-                                        <p>Showing 1-20 of 29 results</p>
+                                        <i class="fal fa-th"></i>                                       
+                                        {% with products=products %}
+                                            <span>Per page products: {{ products|length }}</span>
+                                        {% endwith %}
                                     </div>
                                 </div>
                             </div>
@@ -192,11 +73,11 @@
                             <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
                                 <div class="product__filter-right d-flex align-items-center justify-content-md-end">
                                     <div class="product__sorting product__show-no">
-                                        <select>
-                                            <option>10</option>
-                                            <option>20</option>
-                                            <option>30</option>
-                                            <option>40</option>
+                                        <select name="per_page" id="per_page">
+                                            <option>4</option>
+                                            <option>8</option>
+                                            <option>12</option>
+                                            <option>16</option>
                                         </select>
                                     </div>
                                     <div class="product__sorting product__show-position ml-20">
@@ -217,67 +98,9 @@
                 <div class="tab-content" id="productGridTabContent">
                     <div class="tab-pane fade show active" id="FourCol" role="tabpanel" aria-labelledby="FourCol-tab">
                         <div class="tp-wrapper">
-                            <div class="row g-0">
+                            <div class="row g-0" id="product-grid">
 
-                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                                    <div class="product__item product__item-d">
-
-                                        <div class="product__thumb fix">
-                                            <div class="product-image w-img">
-                                                <a href="product-details.html">
-                                                    <img src="{% static 'assets/img/product/tp-1.jpg' %}" alt="Epple iPad Pro 10.5-inch">
-                                                </a>
-                                            </div>
-
-                                            <div class="product__offer">
-                                                <span class="discount">-15%</span>
-                                            </div>
-
-                                            <div class="product-action">
-                                                <a href="#" class="icon-box icon-box-1" data-bs-toggle="modal" data-bs-target="#productModalId">
-                                                    <i class="fal fa-eye"></i>
-                                                    <i class="fal fa-eye"></i>
-                                                </a>
-                                                <a href="#" class="icon-box icon-box-1">
-                                                    <i class="fal fa-heart"></i>
-                                                    <i class="fal fa-heart"></i>
-                                                </a>
-                                                <a href="#" class="icon-box icon-box-1">
-                                                    <i class="fal fa-layer-group"></i>
-                                                    <i class="fal fa-layer-group"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                        <div class="product__content">
-                                            <h6>
-                                                <a href="product-details.html">Epple iPad Pro 10.5-inch Cellular 64G</a>
-                                            </h6>
-
-                                            <div class="rating mb-5">
-                                                <ul>
-                                                    <i class="fa {% if product.avg_rate >= 1 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
-                                                    <i class="fa {% if product.avg_rate >= 2 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
-                                                    <i class="fa {% if product.avg_rate >= 3 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
-                                                    <i class="fa {% if product.avg_rate >= 4 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
-                                                    <i class="fa {% if product.avg_rate >= 5 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
-                                                </ul>
-                                                <span>({{ product.reviews.count }} review{{ product.reviews.count|pluralize }})</span>
-                                            </div>
-
-                                            <div class="price">
-                                                <span>$105 - $110</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="product__add-cart text-center">
-                                            <button type="button" class="cart-btn product-modal-sidebar-open-btn d-flex align-items-center justify-content-center w-100">
-                                                Add to Cart
-                                            </button>
-                                        </div>
-
-                                    </div>
-                                </div>
+                                {% include 'store/grid.html' %}
 
                             </div>
                         </div>
@@ -285,28 +108,44 @@
                 </div>
 
                 <!-- Pagination -->
-                <div class="tp-pagination text-center">
+                <div class="tp-pagination text-center" id="pagination_grid">
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="basic-pagination pt-30 pb-30">
                                 <nav>
-                                    <ul>
-                                        <li><a href="shop.html" class="active">1</a></li>
-                                        <li><a href="shop.html">2</a></li>
-                                        <li><a href="shop.html">3</a></li>
-                                        <li><a href="shop.html">5</a></li>
-                                        <li><a href="shop.html">6</a></li>
+                                    <ul class="pagination justify-content-center">
+                                        {% if page_obj.has_previous %}
                                         <li>
-                                            <a href="shop.html">
-                                                <i class="fal fa-angle-double-right"></i>
-                                            </a>
+                                            <a href="?page={{ page_obj.previous_page_number }}{% if sort_option %}&sort={{ sort_option }}{% endif %}{% if per_page %}&per_page={{ per_page }}{% endif %}" class="page-link">&laquo;</a>
                                         </li>
+                                        {% else %}
+                                        <li class="disabled"><span>&laquo;</span></li>
+                                        {% endif %}
+
+                                        {% for num in page_obj.paginator.page_range %}
+                                            {% if page_obj.number == num %}
+                                                <li class="active"><span>{{ num }}</span></li>
+                                            {% else %}
+                                                <li>
+                                                    <a href="?page={{ num }}{% if sort_option %}&sort={{ sort_option }}{% endif %}{% if per_page %}&per_page={{ per_page }}{% endif %}" class="page-link">{{ num }}</a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {% if page_obj.has_next %}
+                                        <li>
+                                            <a href="?page={{ page_obj.next_page_number }}{% if sort_option %}&sort={{ sort_option }}{% endif %}{% if per_page %}&per_page={{ per_page }}{% endif %}" class="page-link">&raquo;</a>
+                                        </li>
+                                        {% else %}
+                                        <li class="disabled"><span>&raquo;</span></li>
+                                        {% endif %}
                                     </ul>
                                 </nav>
                             </div>
                         </div>
                     </div>
                 </div>
+
 
             </div>
             <!-- right side end -->

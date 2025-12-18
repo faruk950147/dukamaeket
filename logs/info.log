@@ -162,3 +162,45 @@ INFO 2025-11-30 10:30:03,688 project views User admin visited Home page. Sliders
 INFO 2025-11-30 11:41:38,393 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, Add Sliders: 2, Promotion Sliders: 3, AcceptancePayments: 4, Categories: 3, Brands: 6, Top Deals: 5, Featured Products: 5
 INFO 2025-11-30 12:33:04,596 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, Add Sliders: 2, Promotion Sliders: 3, AcceptancePayments: 4, Categories: 3, Brands: 6, Top Deals: 5, Featured Products: 5
 INFO 2025-11-30 12:33:05,673 project views User admin visited Home page. Sliders: 4, Feature Sliders: 4, Add Sliders: 2, Promotion Sliders: 3, AcceptancePayments: 4, Categories: 3, Brands: 6, Top Deals: 5, Featured Products: 5
+INFO 2025-12-18 16:32:36,016 project views User Anonymous visited ProductDetail page. Product: Exclusive Design Readymade Georgette Embroidered Party Dress02 (ID: 1), Variant: 1, Related Products: 3
+INFO 2025-12-18 16:32:40,177 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Brands: 5, Categories: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-18 16:32:46,620 project views User Anonymous visited ProductDetail page. Product: Exclusive Design Readymade Georgette Embroidered Party Dress02 (ID: 1), Variant: 1, Related Products: 3
+INFO 2025-12-18 16:33:18,274 project views User Anonymous visited ProductDetail page. Product: Exclusive Desighn Indian Handmade new designer embroidery (ID: 2), Variant: 4, Related Products: 3
+INFO 2025-12-18 16:33:48,652 project views User admin visited ProductDetail page. Product: Exclusive Desighn Indian Handmade new designer embroidery (ID: 2), Variant: 4, Related Products: 3
+INFO 2025-12-18 16:33:52,020 project views User admin added Product 2 - Exclusive Desighn Indian Handmade new designer embroidery to cart, quantity: 1.
+INFO 2025-12-18 16:35:24,621 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 16:39:35,900 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 16:41:49,828 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 16:43:02,112 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 16:47:11,996 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 16:48:07,135 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 16:50:24,591 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 16:51:39,209 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 16:54:29,407 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Brands: 5, Categories: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-18 16:54:53,735 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Brands: 5, Categories: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-18 16:59:31,163 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Brands: 5, Categories: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-18 16:59:33,633 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 17:02:24,651 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 17:03:29,297 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 17:06:19,713 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 17:11:26,449 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 17:15:56,678 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 17:16:06,250 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Brands: 5, Categories: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-18 17:16:42,376 project views User admin visited ProductDetail page. Product: Most Demanding 2-Pices Dress AC cotton TWO Piece Stitched (ID: 5), Variant: 13, Related Products: 0
+INFO 2025-12-18 17:16:50,802 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Brands: 5, Categories: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-18 17:16:52,907 project views User admin visited ProductDetail page. Product: Exclusive Design Readymade Georgette Embroidered Party Dress02 (ID: 1), Variant: 1, Related Products: 3
+INFO 2025-12-18 17:19:42,059 project views User admin visited ProductDetail page. Product: Exclusive Design Readymade Georgette Embroidered Party Dress02 (ID: 1), Variant: 1, Related Products: 3
+INFO 2025-12-18 17:19:47,925 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 17:21:03,366 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 17:21:28,396 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 17:24:00,109 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 17:25:57,530 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 17:27:19,326 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 17:27:52,593 project views User admin visited Shop page. Page: 1, Products on page: 8
+INFO 2025-12-18 17:41:42,710 project views User admin visited Shop page. Page: 1, Products on page: 8, Sorting: latest
+INFO 2025-12-18 17:42:11,966 project views User admin visited Shop page. Page: 1, Products on page: 8, Sorting: new
+INFO 2025-12-18 17:42:24,509 project views User admin visited Shop page. Page: 1, Products on page: 8, Sorting: upcoming
+INFO 2025-12-18 17:48:10,890 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Brands: 5, Categories: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-18 19:17:43,348 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Brands: 5, Categories: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-18 19:18:34,292 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Brands: 5, Categories: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-18 19:18:39,273 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Brands: 5, Categories: 3, Top Deals: 6, Featured Products: 5

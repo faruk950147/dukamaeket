@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.db.models import Avg, Q
 from django.core.paginator import Paginator
 from django.http import JsonResponse
+from django.template.loader import render_to_string
 from account.mixing import LogoutRequiredMixin, LoginRequiredMixin
 from store.models import (
     Category,
@@ -127,7 +128,7 @@ class ProductDetailView(generic.View):
         # ===== LOGGER =====
         logger.info(
             f"User {request.user if request.user.is_authenticated else 'Anonymous'} "
-            f"visited ProductDetail page. Product: {product.name} (ID: {product.id}), "
+            f"visited ProductDetail page. Product: {product.title} (ID: {product.id}), "
             f"Variant: {variant.id if variant else 'None'}, "
             f"Related Products: {related_products.count()}"
         )
@@ -213,29 +214,48 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
 @method_decorator(never_cache, name='dispatch')
 class ShopView(generic.View):
     def get(self, request):
-        # Fetch all active products with related data
-        products = Product.objects.filter(status='active').select_related('category', 'brand') \
-                         .prefetch_related('reviews') \
-                         .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
-
-        # Pagination: 12 products per page
-        paginator = Paginator(products, 12)
+        per_page = int(request.GET.get('per_page', 4))
+        sort_option = request.GET.get('sort', 'latest')
         page_number = request.GET.get('page', 1)
-        page_obj = paginator.get_page(page_number)
 
-        # ===== LOGGER =====
-        logger.info(
-            f"User {request.user if request.user.is_authenticated else 'Anonymous'} "
-            f"visited Shop page. Page: {page_number}, Products on page: {len(page_obj)}"
-        )
+        products = Product.objects.filter(status='active') \
+            .select_related('category', 'brand') \
+            .prefetch_related('reviews') \
+            .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
 
-        context = {
-            'page_obj': page_obj
+        # Sorting
+        sort_dict = {
+            'latest': '-created_date',
+            'new': 'created_date',
+            'upcoming': 'deadline'
         }
 
+        if sort_option == 'upcoming':
+            products = products.filter(deadline__gt=timezone.now()).order_by(sort_dict.get(sort_option, '-created_date'))
+        else:
+            products = products.order_by(sort_dict.get(sort_option, '-created_date'))
+
+        paginator = Paginator(products, per_page)
+        page_obj = paginator.get_page(page_number)
+
+        context = {
+            'products': page_obj,
+            'page_obj': page_obj,
+            'per_page': per_page,
+            'sort_option': sort_option,
+        }
+
+        # AJAX request
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            html = render_to_string('store/grid.html', context, request=request)
+            return JsonResponse({'html': html})
+
+        # Normal request
         return render(request, 'store/shop.html', context)
+
 
 # =========================================================
 # AJAX: GET PRODUCT VARIANT PRICE / STOCK / IMAGE
 # =========================================================
+
 
