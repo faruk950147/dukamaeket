@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.db.models import Avg, Q
 from django.core.paginator import Paginator
 from django.http import JsonResponse
-
+from account.mixing import LogoutRequiredMixin, LoginRequiredMixin
 from store.models import (
     Category,
     Brand,
@@ -17,8 +17,9 @@ from store.models import (
     ProductVariant,
     Review
 )
+import logging
 
-from account.mixing import LogoutRequiredMixin, LoginRequiredMixin
+logger = logging.getLogger('project')
 
 # =========================================================
 # HOME PAGE VIEW
@@ -59,7 +60,19 @@ class HomeView(generic.View):
             status='active', is_featured=True
         ).select_related('category', 'brand').prefetch_related('reviews') \
          .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))[:5]
-
+         
+        # ======= LOGGER =======
+        logger.info(
+            f"User {request.user if request.user.is_authenticated else 'Anonymous'} visited Home page. "
+            f"Sliders: {sliders.count()}, "
+            f"Feature Sliders: {feature_sliders.count()}, "
+            f"Add Sliders: {add_sliders.count()}, "
+            f"Promo Sliders: {promo_sliders.count()}, "
+            f"Brands: {brands.count()}, "
+            f"Categories: {cates.count()}, "
+            f"Top Deals: {len(top_deals)}, "
+            f"Featured Products: {featured_products.count()}"
+        )
         context = {
             'sliders': sliders,
             'feature_sliders': feature_sliders,
@@ -93,9 +106,16 @@ class ProductDetailView(generic.View):
         )
 
         # Fetch default variant (fallback to first if none)
-        variant = product.variants.filter(is_default=True).first()
-        if not variant:
-            variant = product.variants.first()
+        default_variants = product.variants.filter(is_default=True)
+
+        if default_variants.exists():
+            variant = default_variants[0] 
+        else:
+            all_variants = product.variants.all()
+            if all_variants.exists():
+                variant = all_variants[0]  
+            else:
+                variant = None  
 
         # Fetch related products (same category, exclude current)
         related_products = Product.objects.filter(
@@ -103,7 +123,14 @@ class ProductDetailView(generic.View):
             status='active'
         ).exclude(id=product.id).select_related('category', 'brand') \
          .prefetch_related('reviews').annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))[:4]
-
+       
+        # ===== LOGGER =====
+        logger.info(
+            f"User {request.user if request.user.is_authenticated else 'Anonymous'} "
+            f"visited ProductDetail page. Product: {product.name} (ID: {product.id}), "
+            f"Variant: {variant.id if variant else 'None'}, "
+            f"Related Products: {related_products.count()}"
+        )
         context = {
             'product': product,
             'variant': variant,
@@ -167,7 +194,11 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
             </div>
         </div>
         """
-
+        # ===== LOGGER =====
+        logger.info(
+            f"User {user.username} (ID: {user.id}) submitted a review for Product: {product.name} (ID: {product.id}), "
+            f"Rating: {rating}, Subject: {subject}"
+        )
         return JsonResponse({
             'status': 'success',
             'message': 'Review submitted successfully',
@@ -184,12 +215,19 @@ class ShopView(generic.View):
     def get(self, request):
         # Fetch all active products with related data
         products = Product.objects.filter(status='active').select_related('category', 'brand') \
-                         .prefetch_related('reviews').annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
+                         .prefetch_related('reviews') \
+                         .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
 
         # Pagination: 12 products per page
         paginator = Paginator(products, 12)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
+
+        # ===== LOGGER =====
+        logger.info(
+            f"User {request.user if request.user.is_authenticated else 'Anonymous'} "
+            f"visited Shop page. Page: {page_number}, Products on page: {len(page_obj)}"
+        )
 
         context = {
             'page_obj': page_obj
@@ -197,33 +235,7 @@ class ShopView(generic.View):
 
         return render(request, 'store/shop.html', context)
 
-
 # =========================================================
 # AJAX: GET PRODUCT VARIANT PRICE / STOCK / IMAGE
 # =========================================================
-@method_decorator(csrf_exempt, name='dispatch')
-class GetVariantsView(generic.View):
-    def post(self, request):
-        product_id = request.POST.get('product_id')
-        color_id = request.POST.get('color_id')
-        size_id = request.POST.get('size_id')
-
-        variant = ProductVariant.objects.filter(
-            product_id=product_id,
-            color_id=color_id or None,
-            size_id=size_id or None,
-            status='active'
-        ).first()
-
-        if variant:
-            data = {
-                'variant_price': float(variant.variant_price),
-                'available_stock': variant.available_stock,
-                'image_url': variant.image.url if variant.image else ''
-            }
-        else:
-            data = {'variant_price': None, 'available_stock': 0, 'image_url': ''}
-
-        return JsonResponse(data)
-
 

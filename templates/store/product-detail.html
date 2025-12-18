@@ -105,7 +105,7 @@
                         <h5>Availability: <span>{{product.available_stock}}</span></h5>
                     </div>
                     <!-- Add To Cart Form using -->
-                    <form method="POST" action="" id="add-to-cart-form">
+                    <form method="POST" action="{% url 'add-to-cart' %}" id="cart-form">
                         <input type="hidden" name="product-id" id="product-id" value="{{product.id}}">
                         <input type="hidden" name="product-slug" id="product-slug" value="{{product.slug}}">
                         {% csrf_token %}
@@ -160,13 +160,11 @@
                         <!-- Add To Cart -->
                         <div class="cart-option mb-15">
                             <div class="product-quantity mr-20">
-                                <div class="cart-plus-minus p-relative">
-                                    <input type="text" value="1">
-                                    <div class="dec qtybutton">-</div>
-                                    <div class="inc qtybutton">+</div>
+                                <div class="cart">
+                                    <input type="number" value="1" min="1" max="{{product.available_stock}}" name="quantity" id="quantity">
                                 </div>
                             </div>
-                            <a href="cart.html" class="cart-btn">Add to Cart</a>
+                            <button type="submit" class="cart-btn">Add to Cart</button>
                         </div>
                     </form>
 
@@ -515,6 +513,52 @@
                 }
             });
         });
+        $("#cart-form").on("submit", function(e){
+            e.preventDefault();
+            let formData = new FormData(this);
+
+            $.ajax({
+                url: "{% url 'add-to-cart' %}",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    "X-CSRFToken": formData.get("csrfmiddlewaretoken")
+                },
+
+                success: function(data) {
+
+                    if (data.status === "success") {
+
+                        alert(data.message);
+
+                        // Update Cart Count
+                        if ($("#cart-count").length) {
+                            $("#cart-count").text(data.cart_count);
+                        }
+
+                        // Update Cart Total Price (if exists)
+                        if ($("#cart-total-price").length) {
+                            $("#cart-total-price").text(
+                                parseFloat(data.cart_total_price).toFixed(2)
+                            );
+                        }
+
+                        // Reset quantity
+                        $("#quantity").val(1);
+
+                    } else {
+                        alert(data.message);
+                    }
+                },
+
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", error);
+                    alert("Something went wrong. Please try again.");
+                }
+            });
+        })
     });
     
 </script> 
