@@ -73,6 +73,26 @@
             <!-- right side: product list area -->
             <div class="col-xl-9 col-lg-9">
 
+                <!-- Banner -->
+                <div class="shop-banner mb-30">
+                    {% if banners %}
+                    {% for banner in banners %}
+                    <div class="banner-image">  
+                        <img class="banner-l" src="{{ banner.image.url }}" alt="{{ banner.title|title }}" style="width:100%;height:50%;">
+                        <div class="banner-content text-center">
+                            <h6>{{ banner.title|title }}</h6>
+                            <p class="banner-text mb-30">
+                                {{ banner.sub_title|truncatewords:10 }}
+                            </p>
+                            <a href="{% url 'shop' %}" class="st-btn-d b-radius">Discover now</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <p>No banner found</p>
+                    {% endif %}
+                </div>
+
                 <!-- Product Filter Top -->
                 <div class="product-lists-top">
                     <div class="product__filter-wrap">

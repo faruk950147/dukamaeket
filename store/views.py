@@ -231,6 +231,7 @@ class ShopView(generic.View):
             .prefetch_related('reviews')
             .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
         )
+        banners = Slider.objects.filter(Q(slider_type='add') & Q(status='active'))[:1]
 
         # Pagination & Sorting
         per_page = request.GET.get('per_page')
@@ -265,10 +266,12 @@ class ShopView(generic.View):
             f"Per page: {per_page} | "
             f"Sort: {sort_by} | "
             f"Total products: {paginator.count}"
+            f"Banners: {banners.count}"
         )
 
         context = {
             'products': page_obj,
+            'banners': banners,
             'page_obj': page_obj,
             'per_page_options': per_page_options,
             'sort_options': sort_options,
@@ -322,9 +325,7 @@ class GetFilterProductsView(generic.View):
 
         return JsonResponse({'html': html})
     
-    
-    
-    
+
 # =========================================================
 # AJAX: GET PRODUCT VARIANT PRICE / STOCK / IMAGE
 # =========================================================
