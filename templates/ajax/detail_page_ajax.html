@@ -1,0 +1,104 @@
+{% load static %}
+<script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
+<script>
+   $(document).ready(function(){
+        // Review form submission via AJAX
+        $('#review-form').on('submit', function (e) {
+            e.preventDefault();
+
+            let form = $(this);
+            let data = new FormData(this);
+
+            // Validation: Check rating
+            if (!$('input[name="rating"]:checked').length) {
+                alertify.error("Please select a rating");
+                return;
+            }
+
+            // Validation: Check subject and comment
+            if (!$('#subject').val().trim() || !$('#comment').val().trim()) {
+                alertify.error("Please fill in subject and comment");
+                return;
+            }
+
+            $.ajax({
+                url: '{% url "product-review" %}',  // Django URL for review submission
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'  // CSRF token
+                },
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    if (res.status === 'success') {
+                        alertify.success(res.message);
+
+                        // Reset form
+                        form[0].reset();
+                        // review_count
+                        $('#review_count').text('Reviews (' + res.review_count + ')');
+
+                        // Append new review HTML to the reviews list
+                        $('#reviews-list').prepend(res.review_html);
+                    } else {
+                        alertify.error(res.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alertify.error("Something went wrong.");
+                    console.log(error);
+                }
+            });
+        });
+
+        
+        $("#cart-form").on("submit", function(e){
+            e.preventDefault();
+            let formData = new FormData(this);
+
+            $.ajax({
+                url: "{% url 'add-to-cart' %}",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    "X-CSRFToken": formData.get("csrfmiddlewaretoken")
+                },
+
+                success: function(data) {
+
+                    if (data.status === "success") {
+
+                        alert(data.message);
+
+                        // Update Cart Count
+                        if ($("#cart-count").length) {
+                            $("#cart-count").text(data.cart_count);
+                        }
+
+                        // Update Cart Total Price (if exists)
+                        if ($("#cart-total-price").length) {
+                            $("#cart-total-price").text(
+                                parseFloat(data.cart_total_price).toFixed(2)
+                            );
+                        }
+
+                        // Reset quantity
+                        $("#quantity").val(1);
+
+                    } else {
+                        alert(data.message);
+                    }
+                },
+
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", error);
+                    alert("Something went wrong. Please try again.");
+                }
+            });
+        })
+    });
+    
+</script> 

@@ -125,40 +125,5 @@
 {% include 'store/product-modals.html' %}
 <!-- shop modal end -->
 
-<!-- jQuery load -->
-<script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
-<script>
-$(document).ready(function(){
-    // Function to load products via AJAX
-    function ajax_call(url) {
-        $.ajax({
-            url: url,
-            type: 'GET',
-            success: function(res) {
-                $('#product-grid').html(res.html);
-                $('#pagination').html(res.pagination_html);
-            },
-            error: function() {
-                alert('Something went wrong!');
-            }
-        });
-    }
-
-    // AJAX for pagination links
-    $(document).on('click', '.page-link', function(e) {
-        e.preventDefault();
-        let url = $(this).attr('href');
-        ajax_call(url);
-    });
-
-    // AJAX for per_page and sort select
-    $('#per_page, #sort').on('change', function() {
-        let per_page = $('#per_page').val();
-        let sort = $('#sort').val();
-        let url = window.location.pathname + `?per_page=${per_page}&sort=${sort}`;
-        ajax_call(url);  
-    });
-});
-
-</script>
+{% include 'ajax/shop_page_ajax.html' %}
 {% endblock main_content %}
