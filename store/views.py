@@ -213,41 +213,50 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
 # =========================================================
 @method_decorator(never_cache, name='dispatch')
 class ShopView(generic.View):
+
     def get(self, request):
-        per_page_options = [4, 8, 12, 16]
+
+        per_page_options = [3, 6, 12]
         sort_options = ['latest', 'new', 'upcoming']
 
-        products = Product.objects.filter(status='active') \
-            .select_related('category', 'brand') \
-            .prefetch_related('reviews') \
-            .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
+        products = (
+            Product.objects
+            .filter(status='active')
+            .select_related('category', 'brand')
+            .prefetch_related('reviews')
+            .annotate(
+                avg_rate=Avg(
+                    'reviews__rating',
+                    filter=Q(reviews__status='active')
+                )
+            )
+        )
 
-        # GET params
-        per_page = int(request.GET.get('per_page', 4))
+        per_page = request.GET.get('per_page')
+        per_page = int(per_page) if per_page and per_page.isdigit() else 3
+
         sort_by = request.GET.get('sort', 'latest')
-        page_number = int(request.GET.get('page', 1))
 
-        # Sorting
-        sort_dict = {
+        page_number = request.GET.get('page')
+        page_number = int(page_number) if page_number and page_number.isdigit() else 1
+
+        sort_map = {
             'latest': '-created_date',
             'new': 'created_date',
             'upcoming': 'deadline'
         }
 
         if sort_by == 'upcoming':
-            products = products.filter(deadline__gt=timezone.now()).order_by(sort_dict[sort_by])
+            products = products.filter(
+                deadline__gt=timezone.now()
+            ).order_by('deadline')
         else:
-            products = products.order_by(sort_dict.get(sort_by, '-created_date'))
+            products = products.order_by(
+                sort_map.get(sort_by, '-created_date')
+            )
 
-        # Pagination
         paginator = Paginator(products, per_page)
         page_obj = paginator.get_page(page_number)
-
-        # Track visited pages in session
-        visited_pages = request.session.get('visited_pages', [])
-        if page_number not in visited_pages:
-            visited_pages.append(page_number)
-        request.session['visited_pages'] = visited_pages
 
         context = {
             'products': page_obj,
@@ -256,16 +265,16 @@ class ShopView(generic.View):
             'sort_options': sort_options,
             'selected_per_page': per_page,
             'selected_sort': sort_by,
-            'visited_pages': visited_pages,
         }
 
-        # AJAX response
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            html = render_to_string('store/grid.html', context, request=request)
-            pagination_html = render_to_string('store/pagination.html', context, request=request)
-            return JsonResponse({'html': html, 'pagination_html': pagination_html})
+            return JsonResponse({
+                'html': render_to_string('store/grid.html', context, request=request),
+                'pagination_html': render_to_string('store/pagination.html', context, request=request)
+            })
 
         return render(request, 'store/shop.html', context)
+
 
 # =========================================================
 # AJAX: GET PRODUCT VARIANT PRICE / STOCK / IMAGE
