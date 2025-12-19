@@ -170,10 +170,14 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
             comment=comment
         )
 
+
         review_count = product.reviews.filter(status='active').count()
 
-        image_url = getattr(user.profile, 'image', None)
-        image_url = image_url.url if image_url else '/media/defaults/default.jpg'
+        # -------- SAFE profile image --------
+        if hasattr(user, 'profile') and user.profile.image:
+            image_url = user.profile.image.url
+        else:
+            image_url = '/media/defaults/default.jpg'
 
         review_html = f"""
         <div class="review-details-des">
@@ -184,22 +188,30 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
                 <h5>{review.rating:.2f}</h5>
                 <div class="str-info">
                     <div class="review-star mr-15">
-                        {"".join(['<i class="text-warning fa fa-star"></i>' if i <= review.rating else '<i class="text-warning fa fa-star-o"></i>' for i in range(1, 6)])}
+                        {"".join(
+                            '<i class="text-warning fa fa-star"></i>' if i <= review.rating
+                            else '<i class="text-warning fa fa-star-o"></i>'
+                            for i in range(1, 6)
+                        )}
                     </div>
                 </div>
                 <div class="name-date mb-30">
-                    <h6>{user.username} – <span>{review.created_date.strftime('%Y-%m-%d %H:%M')}</span></h6>
+                    <h6>{user.username} –
+                        <span>{review.created_date.strftime('%Y-%m-%d %H:%M')}</span>
+                    </h6>
                 </div>
                 <p>{review.subject}</p>
                 <p>{review.comment}</p>
             </div>
         </div>
         """
-        # ===== LOGGER =====
+
         logger.info(
-            f"User {user.username} (ID: {user.id}) submitted a review for Product: {product.name} (ID: {product.id}), "
+            f"User {user.username} (ID: {user.id}) submitted a review for "
+            f"Product: {product.title} (ID: {product.id}), "
             f"Rating: {rating}, Subject: {subject}"
         )
+
         return JsonResponse({
             'status': 'success',
             'message': 'Review submitted successfully',
@@ -213,7 +225,6 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
 # =========================================================
 @method_decorator(never_cache, name='dispatch')
 class ShopView(generic.View):
-
     def get(self, request):
         per_page_options = [3, 6, 12]
         sort_options = ['latest', 'new', 'upcoming']
@@ -249,6 +260,16 @@ class ShopView(generic.View):
         paginator = Paginator(products, per_page)
         page_obj = paginator.get_page(page_number)
 
+        # ===== LOGGER =====
+        logger.info(
+            f"ShopView accessed | "
+            f"User: {request.user.username if request.user.is_authenticated else 'Anonymous'} | "
+            f"Page: {page_obj.number}/{paginator.num_pages} | "
+            f"Per page: {per_page} | "
+            f"Sort: {sort_by} | "
+            f"Total products: {paginator.count}"
+        )
+
         context = {
             'products': page_obj,
             'page_obj': page_obj,
@@ -260,6 +281,7 @@ class ShopView(generic.View):
 
         # AJAX response
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            logger.info("ShopView AJAX request detected")
             return JsonResponse({
                 'html': render_to_string('store/grid.html', context, request=request),
                 'pagination_html': render_to_string('store/pagination.html', context, request=request)
