@@ -316,3 +316,40 @@ INFO 2025-12-19 14:56:00,649 project views User admin visited ProductDetail page
 INFO 2025-12-19 15:02:18,671 project views User admin visited ProductDetail page. Product: Latest & Exclusive Luxury Stylish Glorious Design Silk saree with (ID: 4), Variant: 10, Related Products: 3
 INFO 2025-12-19 15:03:18,304 project views User admin (ID: 1) submitted a review for Product: Latest & Exclusive Luxury Stylish Glorious Design Silk saree with (ID: 4), Rating: 5, Subject: Beutyfull
 INFO 2025-12-19 15:03:36,501 project views User admin visited ProductDetail page. Product: Latest & Exclusive Luxury Stylish Glorious Design Silk saree with (ID: 4), Variant: 10, Related Products: 3
+INFO 2025-12-19 15:08:16,387 project views User admin visited ProductDetail page. Product: Latest & Exclusive Luxury Stylish Glorious Design Silk saree with (ID: 4), Variant: 10, Related Products: 3
+INFO 2025-12-19 15:10:47,547 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8Max price: 40000000 | Min price: 500
+INFO 2025-12-19 15:12:01,009 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8Max price: 40000000 | Min price: 500
+INFO 2025-12-19 15:12:16,765 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: new | Total products: 8Max price: 40000000 | Min price: 500
+INFO 2025-12-19 15:12:16,767 project views ShopView AJAX request detected
+INFO 2025-12-19 15:12:19,097 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8Max price: 40000000 | Min price: 500
+INFO 2025-12-19 15:12:19,098 project views ShopView AJAX request detected
+INFO 2025-12-19 15:12:21,256 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: upcoming | Total products: 8Max price: 40000000 | Min price: 500
+INFO 2025-12-19 15:12:21,256 project views ShopView AJAX request detected
+INFO 2025-12-19 15:12:31,249 project views ShopView accessed | User: admin | Page: 2/3 | Per page: 3 | Sort: upcoming | Total products: 8Max price: 40000000 | Min price: 500
+INFO 2025-12-19 15:12:31,249 project views ShopView AJAX request detected
+INFO 2025-12-19 15:12:32,919 project views ShopView accessed | User: admin | Page: 3/3 | Per page: 3 | Sort: upcoming | Total products: 8Max price: 40000000 | Min price: 500
+INFO 2025-12-19 15:12:32,920 project views ShopView AJAX request detected
+INFO 2025-12-19 15:12:34,200 project views ShopView accessed | User: admin | Page: 2/3 | Per page: 3 | Sort: upcoming | Total products: 8Max price: 40000000 | Min price: 500
+INFO 2025-12-19 15:12:34,201 project views ShopView AJAX request detected
+INFO 2025-12-19 15:12:35,306 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: upcoming | Total products: 8Max price: 40000000 | Min price: 500
+INFO 2025-12-19 15:12:35,307 project views ShopView AJAX request detected
+INFO 2025-12-19 15:12:37,327 project views ShopView accessed | User: admin | Page: 2/3 | Per page: 3 | Sort: upcoming | Total products: 8Max price: 40000000 | Min price: 500
+INFO 2025-12-19 15:12:37,332 project views ShopView AJAX request detected
+INFO 2025-12-19 15:12:38,398 project views ShopView accessed | User: admin | Page: 3/3 | Per page: 3 | Sort: upcoming | Total products: 8Max price: 40000000 | Min price: 500
+INFO 2025-12-19 15:12:38,398 project views ShopView AJAX request detected
+INFO 2025-12-19 15:15:43,728 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8Max price: 40000000 | Min price: 500
+INFO 2025-12-19 15:22:29,981 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8Max price: 40000000 | Min price: 500
+INFO 2025-12-19 15:27:50,186 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8Max price: 40000000 | Min price: 500
+INFO 2025-12-19 15:30:20,274 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8Max price: 40000000 | Min price: 500
+INFO 2025-12-19 15:40:04,216 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8Max price: 40000000 | Min price: 500
+INFO 2025-12-19 15:40:28,169 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8Max price: 40000000 | Min price: 500
+INFO 2025-12-19 15:40:30,951 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Brands: 5, Categories: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-19 15:41:11,617 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Brands: 5, Categories: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-19 15:44:21,489 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Brands: 5, Categories: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-19 15:46:35,916 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Brands: 5, Categories: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-19 15:50:22,052 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Brands: 5, Categories: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-19 15:53:00,353 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-19 15:53:37,045 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-19 15:53:47,755 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-19 15:55:40,889 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-19 15:59:30,561 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5

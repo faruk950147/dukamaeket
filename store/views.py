@@ -40,12 +40,6 @@ class HomeView(generic.View):
         # Fetch acceptance payments
         acceptance_payments = AcceptancePayment.objects.filter(status='active')[:4]
 
-        # Fetch featured brands
-        brands = Brand.objects.filter(status='active', is_featured=True)
-
-        # Fetch featured categories (leaf categories only)
-        cates = Category.objects.filter(status='active', children__isnull=True, is_featured=True)[:3]
-
         # Fetch top deals products (discounted & active deadline)
         top_deals = list(Product.objects.filter(
             status='active', discount_percent__gt=0, is_deadline=True, deadline__gte=timezone.now()
@@ -69,8 +63,6 @@ class HomeView(generic.View):
             f"Feature Sliders: {feature_sliders.count()}, "
             f"Add Sliders: {add_sliders.count()}, "
             f"Promo Sliders: {promo_sliders.count()}, "
-            f"Brands: {brands.count()}, "
-            f"Categories: {cates.count()}, "
             f"Top Deals: {len(top_deals)}, "
             f"Featured Products: {featured_products.count()}"
         )
@@ -80,8 +72,6 @@ class HomeView(generic.View):
             'add_sliders': add_sliders,
             'promo_sliders': promo_sliders,
             'acceptance_payments': acceptance_payments,
-            'brands': brands,
-            'cates': cates,
             'top_deals': top_deals,
             'first_top_deal': first_top_deal,
             'featured_products': featured_products,
@@ -265,8 +255,7 @@ class ShopView(generic.View):
         paginator = Paginator(products, per_page)
         page_obj = paginator.get_page(page_number)
         
-        max_price = products.aggregate(Max('sale_price'))['sale_price__max']
-        min_price = products.aggregate(Min('sale_price'))['sale_price__min']
+    
 
         # ===== LOGGER =====
         logger.info(
@@ -276,8 +265,6 @@ class ShopView(generic.View):
             f"Per page: {per_page} | "
             f"Sort: {sort_by} | "
             f"Total products: {paginator.count}"
-            f"Max price: {max_price} | "
-            f"Min price: {min_price}"
         )
 
         context = {
@@ -287,8 +274,6 @@ class ShopView(generic.View):
             'sort_options': sort_options,
             'selected_per_page': per_page,
             'selected_sort': sort_by,
-            'max_price': max_price,
-            'min_price': min_price
         }
 
         # AJAX response
