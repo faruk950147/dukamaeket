@@ -4,7 +4,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
-from django.db.models import Avg, Q
+from django.db.models import Avg, Q, Max, Min
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.template.loader import render_to_string
@@ -148,6 +148,7 @@ class ProductDetailView(generic.View):
 class ProductReviewView(LoginRequiredMixin, generic.View):
     def post(self, request):
         user = request.user
+        product_slug = request.POST.get('product_slug')
         product_id = request.POST.get('product_id')
         rating = request.POST.get('rating')
         subject = request.POST.get('subject')
@@ -160,16 +161,20 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
         if rating < 1 or rating > 5:
             return JsonResponse({'status': 'error', 'message': 'Rating must be between 1 and 5'}, status=400)
 
-        product = get_object_or_404(Product, id=product_id, status='active')
+        product = get_object_or_404(Product, slug=product_slug, id=product_id, status='active')
+
+        # ---------- duplicate check ----------
+        if Review.objects.filter(user=user, product=product).exists():
+            return JsonResponse({'status': 'error', 'message': 'Already reviewed'}, status=400)
 
         review = Review.objects.create(
             user=user,
             product=product,
             rating=rating,
             subject=subject,
-            comment=comment
+            comment=comment,
+            status='active'
         )
-
 
         review_count = product.reviews.filter(status='active').count()
 
@@ -182,7 +187,7 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
         review_html = f"""
         <div class="review-details-des">
             <div class="author-image mr-15">
-                <img src="{image_url}" alt="{user.username}" style="width: 50px; height: 50px">
+                <img src="{image_url}" alt="{user.username}" style="width:50px;height:50px">
             </div>
             <div class="review-details-content">
                 <h5>{review.rating:.2f}</h5>
@@ -200,8 +205,8 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
                         <span>{review.created_date.strftime('%Y-%m-%d %H:%M')}</span>
                     </h6>
                 </div>
-                <p>{review.subject}</p>
-                <p>{review.comment}</p>
+                <p>{subject}</p>
+                <p>{comment}</p>
             </div>
         </div>
         """
@@ -259,6 +264,9 @@ class ShopView(generic.View):
 
         paginator = Paginator(products, per_page)
         page_obj = paginator.get_page(page_number)
+        
+        max_price = products.aggregate(Max('sale_price'))['sale_price__max']
+        min_price = products.aggregate(Min('sale_price'))['sale_price__min']
 
         # ===== LOGGER =====
         logger.info(
@@ -268,6 +276,8 @@ class ShopView(generic.View):
             f"Per page: {per_page} | "
             f"Sort: {sort_by} | "
             f"Total products: {paginator.count}"
+            f"Max price: {max_price} | "
+            f"Min price: {min_price}"
         )
 
         context = {
@@ -277,6 +287,8 @@ class ShopView(generic.View):
             'sort_options': sort_options,
             'selected_per_page': per_page,
             'selected_sort': sort_by,
+            'max_price': max_price,
+            'min_price': min_price
         }
 
         # AJAX response
@@ -288,6 +300,32 @@ class ShopView(generic.View):
             })
 
         return render(request, 'store/shop.html', context)
+
+
+# =========================================================
+# AJAX: GET FILTERED PRODUCTS
+# =========================================================
+@method_decorator(never_cache, name='dispatch')
+class GetFilterProductsView(generic.View):
+    def post(self, request):
+        id = request.POST.get('id')
+        slug = request.POST.get('slug')
+        category = get_object_or_404(Category, id=id, slug=slug)
+
+        products = Product.objects.filter(category=category, status='ACTIVE')
+
+        brand_ids = request.POST.getlist('brand[]')
+        if brand_ids:
+            products = products.filter(brand_id__in=brand_ids)
+
+        max_price = request.POST.get('maxPrice')
+        if max_price:
+            products = products.filter(sale_price__lte=max_price)
+
+        logger.info(f"User {request.user if request.user.is_authenticated else 'Anonymous'} filtered Category {category.id} - {category.title}. Filtered products count: {products.count()}")
+
+        html = render_to_string('store/grid.html', {'products': products})
+        return JsonResponse({'html': html})
 
 
 # =========================================================

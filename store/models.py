@@ -343,6 +343,9 @@ class Review(ImageTagMixin):
     class Meta:
         ordering = ['id']
         verbose_name_plural = '09. Reviews'
+        constraints = [
+            models.UniqueConstraint(fields=['product', 'user'], name='unique_review')
+        ]
 
     def __str__(self):
         return self.subject or f"Review by {self.user.username}"

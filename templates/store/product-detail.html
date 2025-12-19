@@ -310,8 +310,8 @@
                                 <div class="comment-input-box">
                                     <form action="#" id="review-form" novalidate>
                                         {% csrf_token %}
-                                        <input type="hidden" name="product_id" value="{{ product.id }}">
                                         <input type="hidden" name="product_slug" value="{{ product.slug }}">
+                                        <input type="hidden" name="product_id" value="{{ product.id }}">
                                         <div class="comment-rating mb-20">
                                             <label>Your Review Ratings</label>
                                             <ul class="rating">
