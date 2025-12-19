@@ -31,11 +31,11 @@
                 <div class="product-widget mb-30">
                     <h5 class="pt-title">Choose Category</h5>
                     <div class="product__category mt-20">
-
+                        <!-- Category List (optional) -->
                     </div>
                 </div>
             </div>  
-             <!-- left sidebar end -->
+            <!-- left sidebar end -->
 
             <!-- right side: product list area -->
             <div class="col-xl-9 col-lg-8">
@@ -101,12 +101,9 @@
                 <!-- Product List -->
                 <div class="product__show-list">
                     <div class="row g-0" id="product-grid">
-
                         {% include 'store/grid.html' %}
-
                     </div>
                 </div>
-     
 
                 <!-- Pagination -->
                 <div class="row">
@@ -129,46 +126,36 @@
 <!-- shop modal end -->
 
 <!-- jQuery load -->
-
 <script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
 <script>
-    function loadProducts(page = 1) {
+    // AJAX for pagination links
+    $(document).on('click', '.page-link', function(e) {
+        e.preventDefault();
+        let url = $(this).attr('href');
+        loadShop(url);
+    });
+
+    // AJAX for per_page and sort select
+    $('#per_page, #sort').on('change', function() {
+        let per_page = $('#per_page').val();
+        let sort = $('#sort').val();
+        let url = window.location.pathname + `?per_page=${per_page}&sort=${sort}`;
+        loadShop(url);
+    });
+
+    // Function to load products via AJAX
+    function loadShop(url) {
         $.ajax({
-            url: '',
+            url: url,
             type: 'GET',
-            data: {
-                page: page,
-                per_page: $('#per_page').val(),
-                sort: $('#sort').val()
+            success: function(data) {
+                $('#product-grid').html(data.html);
+                $('#pagination').html(data.pagination_html);
             },
-            headers: { 'X-Requested-With': 'XMLHttpRequest' },
-            success: function(res) {
-                $('#product-grid').html(res.html);
-                $('#pagination').html(res.pagination_html);
+            error: function() {
+                alert('Something went wrong!');
             }
         });
     }
-
-    // When per_page changes
-    $('#per_page').on('change', function() {
-        loadProducts();
-    });
-
-    // When sort changes
-    $('#sort').on('change', function() {
-        loadProducts();
-    });
-
-    // Pagination links click
-    $(document).on('click', '.page-link', function(e) {
-        if ($(this).closest('.disabled').length) return; // Ignore disabled
-        e.preventDefault();
-        const url = new URL($(this).attr('href'), window.location.origin);
-        const page = url.searchParams.get('page');
-        loadProducts(page);
-    });
 </script>
-
-
-
 {% endblock main_content %}
