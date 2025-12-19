@@ -111,7 +111,7 @@
                 <!-- Pagination -->
                 <div class="row">
                     <div class="col-xl-12">
-                        <div class="basic-pagination pt-30 pb-30">
+                        <div class="basic-pagination pt-30 pb-30" id="pagination">
                             {% include 'store/pagination.html' %}
                         </div>
                     </div>
@@ -132,9 +132,7 @@
 
 <script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
 <script>
-$(document).ready(function () {
     function loadProducts(page = 1) {
-
         $.ajax({
             url: '',
             type: 'GET',
@@ -143,38 +141,34 @@ $(document).ready(function () {
                 per_page: $('#per_page').val(),
                 sort: $('#sort').val()
             },
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            success: function (res) {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            success: function(res) {
                 $('#product-grid').html(res.html);
                 $('#pagination').html(res.pagination_html);
             }
         });
     }
 
-    $('#per_page').on('change', function () {
+    // When per_page changes
+    $('#per_page').on('change', function() {
         loadProducts();
     });
 
-    $('#sort').on('change', function () {
+    // When sort changes
+    $('#sort').on('change', function() {
         loadProducts();
     });
 
-    $(document).on('click', '.page-link', function (e) {
-
-        if ($(this).closest('.disabled').length) return;
-
+    // Pagination links click
+    $(document).on('click', '.page-link', function(e) {
+        if ($(this).closest('.disabled').length) return; // Ignore disabled
         e.preventDefault();
-
         const url = new URL($(this).attr('href'), window.location.origin);
         const page = url.searchParams.get('page');
-
         loadProducts(page);
     });
-
-});
 </script>
+
 
 
 {% endblock main_content %}

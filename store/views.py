@@ -215,7 +215,6 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
 class ShopView(generic.View):
 
     def get(self, request):
-
         per_page_options = [3, 6, 12]
         sort_options = ['latest', 'new', 'upcoming']
 
@@ -224,14 +223,10 @@ class ShopView(generic.View):
             .filter(status='active')
             .select_related('category', 'brand')
             .prefetch_related('reviews')
-            .annotate(
-                avg_rate=Avg(
-                    'reviews__rating',
-                    filter=Q(reviews__status='active')
-                )
-            )
+            .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
         )
 
+        # Pagination & Sorting
         per_page = request.GET.get('per_page')
         per_page = int(per_page) if per_page and per_page.isdigit() else 3
 
@@ -247,13 +242,9 @@ class ShopView(generic.View):
         }
 
         if sort_by == 'upcoming':
-            products = products.filter(
-                deadline__gt=timezone.now()
-            ).order_by('deadline')
+            products = products.filter(deadline__gt=timezone.now()).order_by('deadline')
         else:
-            products = products.order_by(
-                sort_map.get(sort_by, '-created_date')
-            )
+            products = products.order_by(sort_map.get(sort_by, '-created_date'))
 
         paginator = Paginator(products, per_page)
         page_obj = paginator.get_page(page_number)
@@ -267,6 +258,7 @@ class ShopView(generic.View):
             'selected_sort': sort_by,
         }
 
+        # AJAX response
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse({
                 'html': render_to_string('store/grid.html', context, request=request),
