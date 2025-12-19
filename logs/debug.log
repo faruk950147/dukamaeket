@@ -353,3 +353,120 @@ INFO 2025-12-19 15:53:37,045 project views User admin visited Home page. Sliders
 INFO 2025-12-19 15:53:47,755 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
 INFO 2025-12-19 15:55:40,889 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
 INFO 2025-12-19 15:59:30,561 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-19 16:19:56,554 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-19 16:20:00,315 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:20:47,528 project views ShopView accessed | User: admin | Page: 1/2 | Per page: 6 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:20:47,529 project views ShopView AJAX request detected
+INFO 2025-12-19 16:20:54,168 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:20:54,168 project views ShopView AJAX request detected
+INFO 2025-12-19 16:20:57,720 project views ShopView accessed | User: admin | Page: 2/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:20:57,720 project views ShopView AJAX request detected
+INFO 2025-12-19 16:20:59,239 project views ShopView accessed | User: admin | Page: 3/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:20:59,240 project views ShopView AJAX request detected
+INFO 2025-12-19 16:21:00,890 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:21:00,891 project views ShopView AJAX request detected
+INFO 2025-12-19 16:22:51,676 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:24:53,797 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:25:13,127 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:38:53,467 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:40:38,265 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:40:46,856 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:40:52,255 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:41:23,641 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:43:00,921 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:46:26,240 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:47:05,155 project views ShopView accessed | User: admin | Page: 1/1 | Per page: 12 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:47:05,156 project views ShopView AJAX request detected
+INFO 2025-12-19 16:49:05,787 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:49:43,363 project views ShopView accessed | User: admin | Page: 2/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:49:43,364 project views ShopView AJAX request detected
+INFO 2025-12-19 16:49:44,958 project views ShopView accessed | User: admin | Page: 3/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:49:44,964 project views ShopView AJAX request detected
+INFO 2025-12-19 16:49:50,181 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:50:08,661 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:51:06,823 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:52:09,751 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-19 16:52:15,765 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:52:56,461 project views ShopView accessed | User: admin | Page: 2/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:52:56,462 project views ShopView AJAX request detected
+INFO 2025-12-19 16:52:59,299 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:52:59,300 project views ShopView AJAX request detected
+INFO 2025-12-19 16:53:00,545 project views ShopView accessed | User: admin | Page: 2/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 16:53:00,546 project views ShopView AJAX request detected
+INFO 2025-12-19 16:53:07,903 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: new | Total products: 8
+INFO 2025-12-19 16:53:07,918 project views ShopView AJAX request detected
+INFO 2025-12-19 16:53:11,094 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: new | Total products: 8
+INFO 2025-12-19 16:53:11,094 project views ShopView AJAX request detected
+INFO 2025-12-19 16:53:13,437 project views ShopView accessed | User: admin | Page: 1/2 | Per page: 6 | Sort: new | Total products: 8
+INFO 2025-12-19 16:53:13,454 project views ShopView AJAX request detected
+INFO 2025-12-19 16:56:41,484 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 17:01:47,357 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 17:05:00,800 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 17:07:27,983 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 17:09:19,533 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 17:09:31,002 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 17:09:48,900 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 17:15:56,645 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 17:55:25,766 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 18:00:27,187 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 18:01:05,070 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 18:01:30,451 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 18:01:48,899 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 18:06:47,439 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 18:07:12,668 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 18:07:36,373 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 18:09:32,605 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 18:10:03,246 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 18:18:14,980 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 18:18:24,698 project views User admin filtered products count: 0
+INFO 2025-12-19 18:18:24,707 project views User admin filtered products count: 0
+INFO 2025-12-19 18:18:42,227 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 18:18:46,508 project views User admin filtered products count: 0
+INFO 2025-12-19 18:19:08,588 project views User admin filtered products count: 0
+INFO 2025-12-19 18:19:13,183 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 18:19:46,349 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 18:19:52,445 project views User admin filtered products count: 0
+INFO 2025-12-19 18:20:02,059 project views User admin filtered products count: 0
+INFO 2025-12-19 18:20:06,689 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 18:20:17,687 project views User admin filtered products count: 0
+INFO 2025-12-19 18:20:25,884 project views User admin filtered products count: 0
+INFO 2025-12-19 18:38:29,140 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 18:38:41,570 project views User admin filtered products count: 0
+INFO 2025-12-19 18:38:41,570 project views User admin filtered products count: 0
+INFO 2025-12-19 18:39:22,821 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 18:39:26,912 project views User admin filtered products count: 0
+INFO 2025-12-19 18:39:26,916 project views User admin filtered products count: 0
+INFO 2025-12-19 18:40:44,377 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 18:40:52,449 project views User admin filtered products count: 0
+INFO 2025-12-19 18:45:22,203 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 18:45:26,487 project views User admin filtered products count: 0
+INFO 2025-12-19 18:45:36,238 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 19:16:30,270 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 19:16:35,754 project views User admin filtered products count: 0
+INFO 2025-12-19 19:19:59,591 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 19:20:06,583 project views User admin filtered products count: 0
+INFO 2025-12-19 19:31:34,375 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 19:31:38,090 project views User admin filtered products count: 0
+INFO 2025-12-19 19:31:38,093 project views User admin filtered products count: 0
+INFO 2025-12-19 19:31:56,812 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 19:32:57,076 project views User admin filtered products count: 0
+INFO 2025-12-19 19:33:06,229 project views User admin filtered products count: 0
+INFO 2025-12-19 19:33:09,652 project views User admin filtered products count: 0
+INFO 2025-12-19 19:33:10,558 project views User admin filtered products count: 0
+INFO 2025-12-19 19:34:25,941 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 19:34:29,124 project views User admin filtered products count: 0
+INFO 2025-12-19 20:21:06,420 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 20:21:11,671 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 20:23:28,123 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 20:24:08,988 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 20:24:56,381 project views ShopView accessed | User: admin | Page: 1/2 | Per page: 6 | Sort: latest | Total products: 8
+INFO 2025-12-19 20:24:56,383 project views ShopView AJAX request detected
+INFO 2025-12-19 20:25:04,659 project views ShopView accessed | User: admin | Page: 1/2 | Per page: 6 | Sort: new | Total products: 8
+INFO 2025-12-19 20:25:04,664 project views ShopView AJAX request detected
+INFO 2025-12-19 20:25:07,018 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-19 20:25:12,077 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-19 20:27:59,805 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-19 20:28:02,145 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 20:31:02,556 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 20:36:11,714 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8
+INFO 2025-12-19 20:37:23,161 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8

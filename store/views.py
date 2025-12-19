@@ -293,26 +293,38 @@ class ShopView(generic.View):
 @method_decorator(never_cache, name='dispatch')
 class GetFilterProductsView(generic.View):
     def post(self, request):
-        id = request.POST.get('id')
-        slug = request.POST.get('slug')
-        category = get_object_or_404(Category, id=id, slug=slug)
+        products = (
+            Product.objects
+            .filter(status='active')
+            .select_related('category', 'brand')
+            .prefetch_related('reviews')
+            .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
+        )
 
-        products = Product.objects.filter(category=category, status='ACTIVE')
+        # Category filter
+        category_ids = request.POST.getlist('category[]')
+        if category_ids:
+            products = products.filter(category_id__in=category_ids)
 
+        # Brand filter
         brand_ids = request.POST.getlist('brand[]')
         if brand_ids:
             products = products.filter(brand_id__in=brand_ids)
 
+        # Price filter
         max_price = request.POST.get('maxPrice')
         if max_price:
             products = products.filter(sale_price__lte=max_price)
 
-        logger.info(f"User {request.user if request.user.is_authenticated else 'Anonymous'} filtered Category {category.id} - {category.title}. Filtered products count: {products.count()}")
 
-        html = render_to_string('store/grid.html', {'products': products})
+        # Render HTML
+        html = render_to_string('store/grid.html', {'products': products}, request=request)
+
         return JsonResponse({'html': html})
-
-
+    
+    
+    
+    
 # =========================================================
 # AJAX: GET PRODUCT VARIANT PRICE / STOCK / IMAGE
 # =========================================================

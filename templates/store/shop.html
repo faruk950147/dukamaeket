@@ -25,13 +25,14 @@
 <div class="shop-area mb-20">
     <div class="container">
         <div class="row">
-
-            <!-- left sidebar -->
+        
+            <!-- Left Sidebar -->
             <div class="col-xl-3 col-lg-3">
+
                 <div class="product-widget mb-30">
                     <h5 class="pt-title">All Filter</h5>
                     <div class="product__all-filter mt-20">
-                        <input type="checkbox" id="all-filters" class="filter-checkbox me-2" data-filter="all" value="all">
+                        <input type="checkbox" id="all-filters" class="filter-checkbox me-2" data-filter="all">
                         <label for="all-filters">All Filters</label>
                     </div>
                 </div>
@@ -39,18 +40,35 @@
                 <div class="product-widget mb-30">
                     <h5 class="pt-title">Category</h5>
                     <div class="product__category mt-20">
-                        {% for category in categories %}
-                        <input type="checkbox"
-                        id="category-{{ category.id }}"
-                        class="filter-checkbox me-2"
-                        data-filter="category"
-                        value="{{ category.id }}">
-                        <label for="category-{{ category.id }}">{{ category.title|title }}</label>
+                        {% for cat in cats %}
+                        <div class="product__category-item">
+                            <input type="checkbox" class="filter-checkbox filter-category" data-filter="category" value="{{ cat.id }}">
+                            <label>{{ cat.title }}</label>
+                        </div>
                         {% endfor %}
                     </div>
                 </div>
-            </div>  
-            <!-- left sidebar end -->
+
+                <div class="product-widget mb-30">
+                    <h5 class="pt-title">Brand</h5>
+                    <div class="product__brand mt-20">
+                        {% for brand in brands %}
+                        <div class="product__brand-item">
+                            <input type="checkbox" class="filter-checkbox filter-brand" data-filter="brand" value="{{ brand.id }}">
+                            <label>{{ brand.title }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="product-widget mb-30">
+                    <h5 class="pt-title">Price Range</h5>
+                    <input type="range" id="maxPrice" min="{{ min_price }}" max="{{ max_price }}" value="{{ max_price }}" step="5">
+                    <span id="priceValue">Max: {{ max_price }}</span>
+                </div>
+
+            </div>
+            <!-- Left Sidebar End -->
 
             <!-- right side: product list area -->
             <div class="col-xl-9 col-lg-9">
@@ -127,4 +145,5 @@
 <!-- shop modal end -->
 
 {% include 'ajax/shop_page_ajax.html' %}
+{% include 'ajax/get_filter_ajax.html' %}
 {% endblock main_content %}

@@ -1,0 +1,43 @@
+{% load static %}
+<script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
+<script>
+$(document).ready(function() {
+    function filterProducts() {
+        let filter_object = {};
+
+        $('.filter-checkbox:checked').each(function () {
+            let key = $(this).data('filter');
+            let value = $(this).val();
+
+            if (!filter_object[key]) filter_object[key] = [];
+            filter_object[key].push(value);
+        });
+
+        filter_object['maxPrice'] = $('#maxPrice').val();
+        $('#priceValue').text('Max : ' + filter_object['maxPrice']);
+
+        $.ajax({
+            url: "{% url 'get-filter-products' %}",
+            type: "POST",
+            data: filter_object,
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            success: function(res) {
+                $('#product-grid').html(res.html);
+            }
+        });
+    }
+
+    // Checkbox or price change triggers filter
+    $('.filter-checkbox, #maxPrice').on('change', filterProducts);
+
+
+    // All Filters — Select/Unselect all
+    $("#all-filters").on('change', function() {
+        let is_checked = $(this).is(":checked");
+        $(".filter-checkbox").prop("checked", is_checked);
+        $("#maxPrice").trigger("change");
+    });
+});
+</script>
