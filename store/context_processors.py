@@ -1,5 +1,5 @@
 # store/context_processors.py
-from .models import Category, Product, Brand
+from store.models import Category, Product, Brand
 from django.db.models import Max, Min
 
 def store_context(request):
