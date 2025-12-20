@@ -1,0 +1,120 @@
+======================================= html ======================================
+<div class="product-widget mb-30">
+
+    <h5 class="pt-title">All Filter</h5>
+
+    <div class="product__all-filter mt-20">
+
+        <input type="checkbox" id="all-filters" class="filter-checkbox me-2" data-filter="all">
+
+        <label for="all-filters">All Filters</label>
+
+    </div>
+
+</div>
+
+
+<div class="product-widget mb-30">
+
+    <h5 class="pt-title">Category</h5>
+
+    <div class="product__category mt-20">
+
+        {% for cat in cats %}
+
+        <div class="product__category-item">
+
+            <input type="checkbox" class="filter-checkbox filter-category" data-filter="category" value="{{ cat.id }}">
+
+            <label>{{ cat.title }}</label>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+==================================== js =============================================
+{% load static %}
+<script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        // Checkbox or price change triggers filter
+        $('.filter-checkbox, #maxPrice').on('change', function(e) {
+            e.preventDefault();
+            let filter_object = {};
+            // Gather all selected filters
+            $('.filter-checkbox:checked').each(function () {
+                let key = $(this).data('filter');
+                let value = $(this).val();
+                // Initialize array if not present
+                if (!filter_object[key]) {
+                    filter_object[key] = [];
+                }
+                filter_object[key].push(value);
+            });
+
+            filter_object['maxPrice'] = $('#maxPrice').val();
+            $('#priceValue').text('Max : ' + filter_object['maxPrice']);
+
+            $.ajax({
+                url: "{% url 'get-filter-products' %}",
+                type: "POST",
+                data: filter_object,
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                success: function(res) {
+                    $('#product-grid').html(res.html);
+                }
+            });
+        });
+
+
+        // All Filters — Select/Unselect all
+        $("#all-filters").on('change', function() {
+            let is_checked = $(this).is(":checked");
+            $(".filter-checkbox").prop("checked", is_checked);
+            $("#maxPrice").trigger("change");
+        });
+    });
+</script>
+
+
+==================================== view ==============================================
+# =========================================================
+# AJAX: GET FILTERED PRODUCTS
+# =========================================================
+@method_decorator(never_cache, name='dispatch')
+class GetFilterProductsView(generic.View):
+    def post(self, request):
+        products = (
+            Product.objects
+            .filter(status='active')
+            .select_related('category', 'brand')
+            .prefetch_related('reviews')
+            .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
+        )
+
+        # Category filter
+        category_ids = request.POST.getlist('category[]')
+        if category_ids:
+            products = products.filter(category_id__in=category_ids)
+
+        # Brand filter
+        brand_ids = request.POST.getlist('brand[]')
+        if brand_ids:
+            products = products.filter(brand_id__in=brand_ids)
+
+        # Price filter
+        max_price = request.POST.get('maxPrice')
+        if max_price:
+            products = products.filter(sale_price__lte=max_price)
+
+
+        # Render HTML
+        html = render_to_string('store/grid.html', {'products': products}, request=request)
+
+        return JsonResponse({'html': html})

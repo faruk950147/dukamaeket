@@ -2,14 +2,18 @@
 <script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
 <script>
 $(document).ready(function() {
-    function filterProducts() {
+    // Checkbox or price change triggers filter
+    $('.filter-checkbox, #maxPrice').on('change', function(e) {
+        e.preventDefault();
         let filter_object = {};
-
+        // Gather all selected filters
         $('.filter-checkbox:checked').each(function () {
             let key = $(this).data('filter');
             let value = $(this).val();
-
-            if (!filter_object[key]) filter_object[key] = [];
+            // Initialize array if not present
+            if (!filter_object[key]) {
+                filter_object[key] = [];
+            }
             filter_object[key].push(value);
         });
 
@@ -27,10 +31,7 @@ $(document).ready(function() {
                 $('#product-grid').html(res.html);
             }
         });
-    }
-
-    // Checkbox or price change triggers filter
-    $('.filter-checkbox, #maxPrice').on('change', filterProducts);
+    });
 
 
     // All Filters — Select/Unselect all
