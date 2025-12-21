@@ -53,6 +53,7 @@
         });
 
         
+        // Add to Cart form submission via AJAX
         $("#cart-form").on("submit", function(e){
             e.preventDefault();
             let formData = new FormData(this);
@@ -67,22 +68,20 @@
                     "X-CSRFToken": formData.get("csrfmiddlewaretoken")
                 },
                 success: function(res) {
-                    if (res.status === "success") {
+                    if(res.status === "success"){
                         alert(res.message);
-                        // Reset quantity
-                        $("#quantity").val(1);
-
+                        $("#quantity").val(1); // Reset quantity after adding
                     } else {
                         alert(res.message);
                     }
                 },
-
-                error: function(xhr, status, error) {
+                error: function(xhr, status, error){
                     console.error("AJAX Error:", error);
                     alert("Something went wrong. Please try again.");
                 }
             });
-        })
+        });
+
     });
     
 </script> 

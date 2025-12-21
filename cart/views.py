@@ -14,26 +14,34 @@ from store.models import Product
 
 logger = logging.getLogger('project')
 
-# Create your views here.
+# ==================================
 # Add To Cart
+# ==================================
 @method_decorator(never_cache, name='dispatch')
 class AddToCartView(LoginRequiredMixin, generic.View):
     login_url = reverse_lazy('sign-in')
+    
     def post(self, request):
-        product_id = request.POST.get("product-id")
-        product_slug = request.POST.get("product-slug")
-        select_color = request.POST.get("select-color")
-        select_size = request.POST.get("select-size")
+        # Form data
+        product_id = request.POST.get("product_id")
+        product_slug = request.POST.get("product_slug")
+        select_color = request.POST.get("color")       # optional
+        select_size = request.POST.get("size")        # optional
         quantity = int(request.POST.get("quantity", 1))
 
-        print(f" ====================== Add to cart request: product_id={product_id}, \n product_slug={product_slug}, \n select_color={select_color}, \n select_size={select_size}, \n quantity={quantity}")
+        # Debug print
+        print(f"Add to cart: id={product_id}, slug={product_slug}, color={select_color}, size={select_size}, qty={quantity}")
+
+        # TODO: Add your cart logic here (e.g., Cart model save)
 
         return JsonResponse({
             "status": "success",
-            "message": "Product added to cart successfully.",
+            "message": "Product added to cart successfully."
         })
 
+# ================================
 # Cart Detail Page
+# ================================
 @method_decorator(never_cache, name='dispatch')
 class CartDetailView(LoginRequiredMixin, generic.View):
     login_url = reverse_lazy('sign-in')
@@ -41,7 +49,10 @@ class CartDetailView(LoginRequiredMixin, generic.View):
     def get(self, request):
         pass
 
+
+# ================================
 # Increase/Decrease Quantity
+# ================================
 @method_decorator(never_cache, name="dispatch")
 class QuantityIncDec(LoginRequiredMixin, generic.View):
     login_url = reverse_lazy('sign-in')
@@ -49,7 +60,10 @@ class QuantityIncDec(LoginRequiredMixin, generic.View):
     def post(self, request):
         pass
 
+
+# ================================
 # Remove From Cart
+# ================================
 @method_decorator(never_cache, name='dispatch')
 class CartRemoveView(LoginRequiredMixin, generic.View):
     login_url = reverse_lazy('sign-in')
