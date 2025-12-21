@@ -123,8 +123,7 @@
                                             name="color"
                                             id="color{{ variant.color.id }}"
                                             value="{{ variant.color.id }}"
-                                            class="custom-control-input"
-                                            required>
+                                            class="custom-control-input">
 
                                         <span class="custom-control-label">
                                             {{ variant.color.title }} <br>
@@ -152,8 +151,7 @@
                                             name="size"
                                             id="size{{ variant.size.id }}"
                                             value="{{ variant.size.id }}"
-                                            class="custom-control-input"
-                                            required>
+                                            class="custom-control-input">
 
                                         <span class="custom-control-label">
                                             {{ variant.size.title }}
@@ -171,6 +169,7 @@
                             <div class="product-quantity mr-20">
                                 <input type="number"
                                     name="quantity"
+                                    id="quantity"
                                     value="1"
                                     min="1"
                                     max="{{ product.available_stock }}">
