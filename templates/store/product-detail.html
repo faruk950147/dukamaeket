@@ -119,6 +119,7 @@
                                 <label class="custom-control custom-radio custom-control-inline">
                                     <input type="radio"
                                         name="select_color"
+                                        id="select_color{{ variant.color.id }}"
                                         value="{{ variant.color.id }}"
                                         class="custom-control-input">
 
@@ -144,6 +145,7 @@
                                 <label class="custom-control custom-radio custom-control-inline">
                                     <input type="radio"
                                         name="select_size"
+                                        id="select_size{{ variant.size.id }}"
                                         value="{{ variant.size.id }}"
                                         class="custom-control-input">
 
@@ -462,4 +464,5 @@
 <!-- shop modal end -->
 
 {% include 'ajax/detail_page_ajax.html' %}
+
 {% endblock main_content %}
