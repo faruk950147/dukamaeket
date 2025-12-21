@@ -22,9 +22,11 @@ class AddToCartView(LoginRequiredMixin, generic.View):
     def post(self, request):
         product_id = request.POST.get("product-id")
         product_slug = request.POST.get("product-slug")
+        select_color = request.POST.get("select-color")
+        select_size = request.POST.get("select-size")
         quantity = int(request.POST.get("quantity", 1))
-        print(f"Add to cart request: product_id={product_id}, product_slug={product_slug}, quantity={quantity}")
 
+        print(f" ====================== Add to cart request: product_id={product_id}, product_slug={product_slug}, select_color={select_color}, select_size={select_size}, quantity={quantity}")
 
         return JsonResponse({
             "status": "success",

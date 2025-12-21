@@ -66,30 +66,14 @@
                 headers: {
                     "X-CSRFToken": formData.get("csrfmiddlewaretoken")
                 },
-
-                success: function(data) {
-
-                    if (data.status === "success") {
-
-                        alert(data.message);
-
-                        // Update Cart Count
-                        if ($("#cart-count").length) {
-                            $("#cart-count").text(data.cart_count);
-                        }
-
-                        // Update Cart Total Price (if exists)
-                        if ($("#cart-total-price").length) {
-                            $("#cart-total-price").text(
-                                parseFloat(data.cart_total_price).toFixed(2)
-                            );
-                        }
-
+                success: function(res) {
+                    if (res.status === "success") {
+                        alert(res.message);
                         // Reset quantity
                         $("#quantity").val(1);
 
                     } else {
-                        alert(data.message);
+                        alert(res.message);
                     }
                 },
 

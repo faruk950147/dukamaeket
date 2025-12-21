@@ -529,3 +529,5 @@ INFO 2025-12-20 15:46:07,220 project views User admin visited Home page. Sliders
 INFO 2025-12-20 15:46:11,585 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8Banners: <bound method QuerySet.count of <QuerySet [<Slider: Solution (Active)>]>>
 INFO 2025-12-20 15:46:35,590 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
 INFO 2025-12-20 15:46:38,719 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8Banners: <bound method QuerySet.count of <QuerySet [<Slider: Solution (Active)>]>>
+INFO 2025-12-21 22:50:12,081 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2025-12-21 22:54:23,264 project views User admin visited ProductDetail page. Product: Exclusive Design Readymade Georgette Embroidered Party Dress02 (ID: 1), Variant: 1, Related Products: 3
