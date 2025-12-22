@@ -144,9 +144,8 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
         subject = request.POST.get('subject')
         comment = request.POST.get('comment')
 
-        # ---------- Validation ----------
-        if not rating or not subject or not comment:
-            return JsonResponse({'status': 'error', 'message': 'All fields are required'}, status=400)
+        if not rating or not rating.isdigit() or not subject or not comment:
+            return JsonResponse({'status': 'error', 'message': 'All fields are required and rating must be a number'}, status=400)
 
         rating = float(rating)
         if rating < 1 or rating > 5:
@@ -154,27 +153,58 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
 
         product = get_object_or_404(Product, slug=product_slug, id=product_id, status='active')
 
-        # ---------- Duplicate Check ----------
+        # ---------- duplicate check ----------
         if Review.objects.filter(user=user, product=product).exists():
-            return JsonResponse({'status': 'error', 'message': 'You have already reviewed this product'}, status=400)
+            return JsonResponse({'status': 'error', 'message': 'Already reviewed'}, status=400)
 
-        # ---------- Create Review ----------
         review = Review.objects.create(
             user=user,
             product=product,
             rating=rating,
             subject=subject,
             comment=comment,
-            status='active'
         )
+
         review_count = product.reviews.filter(status='active').count()
 
-        # ---------- Render Review HTML ----------
-        review_html = render(
-            request,
-            'store/review.html', 
-            {'review': review, 'user': user}
-        ).content.decode('utf-8')
+        # -------- SAFE profile image --------
+        if hasattr(user, 'profile') and user.profile.image:
+            image_url = user.profile.image.url
+        else:
+            image_url = '/media/defaults/default.jpg'
+
+        review_html = f"""
+        <div class="review-details-des">
+            <div class="author-image mr-15">
+                <img src="{image_url}" alt="{user.username}" style="width:50px;height:50px">
+            </div>
+            <div class="review-details-content">
+                <h5>{review.rating:.2f}</h5>
+                <div class="str-info">
+                    <div class="review-star mr-15">
+                        {"".join(
+                            '<i class="text-warning fa fa-star"></i>' if i <= review.rating
+                            else '<i class="text-warning fa fa-star-o"></i>'
+                            for i in range(1, 6)
+                        )}
+                    </div>
+                </div>
+                <div class="name-date mb-30">
+                    <h6>{user.username} –
+                        <span>{review.created_date.strftime('%Y-%m-%d %H:%M')}</span>
+                    </h6>
+                </div>
+                <p>{subject}</p>
+                <p>{comment}</p>
+            </div>
+        </div>
+        """
+
+        logger.info(
+            f"User {user.username} (ID: {user.id}) submitted a review for "
+            f"Product: {product.title} (ID: {product.id}), "
+            f"Rating: {rating}, Subject: {subject}"
+        )
 
         return JsonResponse({
             'status': 'success',

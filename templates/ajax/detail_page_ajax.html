@@ -33,13 +33,14 @@
                 success: function (res) {
                     if (res.status === 'success') {
                         alertify.success(res.message);
+
                         // Reset form
                         form[0].reset();
                         // review_count
                         $('#review_count').text('Reviews (' + res.review_count + ')');
 
                         // Append new review HTML to the reviews list
-                        $('#reviews-items').prepend(res.review_html);
+                        $('#reviews-list').prepend(res.review_html);
                     } else {
                         alertify.error(res.message);
                     }
