@@ -279,8 +279,9 @@
                 <div class="product__details-review">
                     <div class="row">
                         <div class="col-xl-4">
-                            <div class="review-des-infod" id="reviews-list">
+                            <div class="review-des-infod">
                                 <div id="reviews-items">
+                                    {% if product.reviews.all %}
                                     {% for review in product.reviews.all %}
                                     <div class="review-details-des">
                                         <div class="author-image mr-15">
@@ -304,9 +305,8 @@
                                             <p>{{ review.comment }}</p>
                                         </div>
                                     </div>
-                                    {% empty %}
-                                        <p>No reviews yet.</p>
                                     {% endfor %}
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
