@@ -335,7 +335,7 @@ class Review(ImageTagMixin):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     subject = models.CharField(max_length=50)
     comment = models.TextField(max_length=500)
-    rating = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)])
+    rating = models.FloatField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)])
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)

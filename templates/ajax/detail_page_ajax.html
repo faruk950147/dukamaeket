@@ -40,7 +40,7 @@
                         $('#review_count').text('Reviews (' + res.review_count + ')');
 
                         // Append new review HTML to the reviews list
-                        $('#reviews-list').prepend(res.review_html);
+                        $('#reviews-items').prepend(res.review_html);
                     } else {
                         alertify.error(res.message);
                     }
