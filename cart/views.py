@@ -75,7 +75,6 @@ class AddToCartView(LoginRequiredMixin, generic.View):
             "status": "success",
             "message": "Product can be added to cart.",
             "product_title": product.title,
-            "product_image": product.image.url if product.image else "",
             "available_stock": max_stock
         })
 
