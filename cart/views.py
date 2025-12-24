@@ -29,11 +29,6 @@ class AddToCartView(LoginRequiredMixin, generic.View):
         select_size = request.POST.get("size")        # optional
         quantity = int(request.POST.get("quantity", 1))
 
-        # Debug print
-        print(f"Add to cart: id={product_id}, slug={product_slug}, color={select_color}, size={select_size}, qty={quantity}")
-
-        # TODO: Add your cart logic here (e.g., Cart model save)
-
         return JsonResponse({
             "status": "success",
             "message": "Product added to cart successfully."
