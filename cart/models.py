@@ -67,8 +67,18 @@ class Cart(models.Model):
         ordering = ['id']
         verbose_name_plural = 'Carts'
         constraints = [
-            models.UniqueConstraint(fields=['user', 'product', 'variant'], name='unique_cart_item')
+            models.UniqueConstraint(
+                fields=['user', 'product', 'variant'],
+                condition=models.Q(variant__isnull=False),
+                name='unique_cart_variant_item'
+            ),
+            models.UniqueConstraint(
+                fields=['user', 'product'],
+                condition=models.Q(variant__isnull=True),
+                name='unique_cart_product_item'
+            ),
         ]
+
 
     # Dynamic latest price (display only)
     @property
