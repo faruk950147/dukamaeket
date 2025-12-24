@@ -23,11 +23,18 @@ class AddToCartView(LoginRequiredMixin, generic.View):
     
     def post(self, request):
         # Form data
-        product_id = request.POST.get("product_id")
-        product_slug = request.POST.get("product_slug")
+        product_slug = request.POST.get("product_slug") # required
+        product_id = request.POST.get("product_id") # required
         select_color = request.POST.get("color")       # optional
         select_size = request.POST.get("size")        # optional
-        quantity = int(request.POST.get("quantity", 1))
+        quantity = int(request.POST.get("quantity", 1)) # optional, default to 1
+        
+        if quantity < 1:
+            logger.warning(f"User {request.user.username} tried to add invalid quantity: {quantity}")
+            return JsonResponse({"status": "error", "message": "Quantity must be at least 1."})
+
+        product = get_object_or_404(Product, id=product_id)
+        product.refresh_from_db(fields=["available_stock"])
 
         return JsonResponse({
             "status": "success",
