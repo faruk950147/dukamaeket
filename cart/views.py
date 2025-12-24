@@ -25,7 +25,7 @@ class AddToCartView(LoginRequiredMixin, generic.View):
         product_id = request.POST.get("product_id")
         select_color = request.POST.get("color")
         select_size = request.POST.get("size")
-        quantity = request.POST.get("quantity", "1")
+        quantity = int(request.POST.get("quantity", "1"))
 
         if not product_slug or not product_id:
             return JsonResponse({"status": "error", "message": "Invalid product data."})
