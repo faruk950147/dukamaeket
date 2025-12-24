@@ -69,10 +69,10 @@
                 },
                 success: function(res) {
                     if(res.status === "success"){
-                        alert(res.message);
-                        $("#quantity").val(1); // Reset quantity after adding
+                        alertify.success(res.message);
+                        $("#quantity").val(1); 
                     } else {
-                        alert(res.message);
+                        alertify.error(res.message);
                     }
                 },
                 error: function(xhr, status, error){
