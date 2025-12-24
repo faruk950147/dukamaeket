@@ -97,7 +97,7 @@ class ProductAdmin(ImagePreviewMixin, admin.ModelAdmin):
     search_fields = ('title', 'keyword', 'description', 'tag')
     readonly_fields = ('slug', 'image_tag', 'sold_percentage', 'average_review', 'total_available_stock')
     inlines = [ProductVariantInline, ImageGalleryInline, ReviewInline]
-    list_editable = ('status', 'is_featured', 'is_deadline')
+    list_editable = ('status', 'is_featured', 'is_deadline', 'available_stock')
 
 
 
@@ -110,6 +110,7 @@ class ProductVariantAdmin(ImagePreviewMixin, admin.ModelAdmin):
     list_filter = ('status', 'color', 'size')
     search_fields = ('product__title', 'color__title', 'size__title')
     readonly_fields = ('image_tag',)
+    list_editable = ('status', 'available_stock')
 
 
 

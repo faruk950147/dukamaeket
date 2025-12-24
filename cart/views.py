@@ -36,24 +36,25 @@ class AddToCartView(LoginRequiredMixin, generic.View):
         # fetch data from POST request then validate
         product_slug = request.POST.get("product_slug")
         product_id = request.POST.get("product_id")
-        select_color = request.POST.get("color")  # optional
-        select_size = request.POST.get("size")    # optional
+        select_color = request.POST.get("color")       # optional
+        select_size = request.POST.get("size")         # optional
         quantity = int(request.POST.get("quantity", 1))
 
         if quantity < 1:
             return JsonResponse({"status": "error", "message": "Quantity must be at least 1."})
 
-        # Fetch product
+        # Fetch active product
         product = get_object_or_404(Product, slug=product_slug, id=product_id, status='active')
         product.refresh_from_db(fields=["available_stock"])
 
-        # Resolve variant safely 
+        # Resolve variant safely
         variant_qs = ProductVariant.objects.filter(product=product)
         if select_color:
             variant_qs = variant_qs.filter(color_id=select_color)
         if select_size:
             variant_qs = variant_qs.filter(size_id=select_size)
-
+            
+        # There should be at most one variant matching the criteria
         variant = None
         if variant_qs.count() > 0:
             variant = variant_qs[0]
@@ -61,12 +62,15 @@ class AddToCartView(LoginRequiredMixin, generic.View):
             return JsonResponse({"status": "error", "message": "Selected variant does not exist."})
 
         # Determine max stock
-        max_stock = variant.available_stock if variant else product.available_stock
-
-        if quantity > max_stock:
-            return JsonResponse({"status": "error", "message": f"Only {max_stock} units available."})
-
-        # Optional: Just return success message for now
+        if variant:
+            max_stock = variant.available_stock
+            if max_stock <= 0:
+                return JsonResponse({"status": "error", "message": "Selected variant is out of stock."})
+        else:
+            max_stock = product.available_stock
+            if max_stock <= 0:
+                return JsonResponse({"status": "error", "message": "Product is out of stock."})
+        
         return JsonResponse({
             "status": "success",
             "message": "Product can be added to cart.",

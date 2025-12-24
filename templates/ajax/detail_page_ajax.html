@@ -73,6 +73,7 @@
                         $("#quantity").val(1); 
                     } else {
                         alertify.error(res.message);
+                        console.log(res);
                     }
                 },
                 error: function(xhr, status, error){
