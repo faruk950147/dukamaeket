@@ -582,3 +582,9 @@ INFO 2025-12-24 10:37:45,323 project views User admin visited ProductDetail page
 INFO 2025-12-24 11:12:29,638 project views User admin visited ProductDetail page. Product: Latest & Exclusive Luxury Stylish Glorious Design Silk saree with (ID: 4), Variant: 10, Related Products: 3
 INFO 2025-12-24 11:12:32,337 project views User admin added Product 4 - Latest & Exclusive Luxury Stylish Glorious Design Silk saree with to cart, quantity: 1.
 INFO 2025-12-24 11:12:44,933 project views User admin updated Product 4 quantity to 2 in cart.
+INFO 2025-12-24 11:20:11,088 project views User admin visited ProductDetail page. Product: Latest & Exclusive Luxury Stylish Glorious Design Silk saree with (ID: 4), Variant: 10, Related Products: 3
+INFO 2025-12-24 11:20:17,532 project views User admin updated Product 4 quantity to 3 in cart.
+INFO 2025-12-24 11:20:58,306 project views User admin visited ProductDetail page. Product: Exclusive Design Readymade Georgette Embroidered Party Dress02 (ID: 1), Variant: 1, Related Products: 3
+INFO 2025-12-24 11:21:02,619 project views User admin added Product 1 - Exclusive Design Readymade Georgette Embroidered Party Dress02 to cart, quantity: 1.
+INFO 2025-12-24 11:34:25,879 project views User admin visited ProductDetail page. Product: Exclusive Design Readymade Georgette Embroidered Party Dress02 (ID: 1), Variant: 1, Related Products: 3
+INFO 2025-12-24 11:34:39,072 project views User admin added Product 1 - Exclusive Design Readymade Georgette Embroidered Party Dress02 to cart, quantity: 1.
