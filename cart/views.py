@@ -60,6 +60,7 @@ class AddToCartView(LoginRequiredMixin, generic.View):
                 }, status=400)
             return JsonResponse({"status": "success", "message": "Product added to cart."})
 
+
 # ================================
 # Cart Detail Page
 # ================================
