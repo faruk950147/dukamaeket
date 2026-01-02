@@ -1,3 +1,10 @@
 env
 .env
 __pycache__
+যদি user কিছু select না করে, variant null → “-” দেখাবে
+
+যদি user color select করে, size null → Red দেখাবে
+
+যদি user size select করে, color null → Large দেখাবে
+
+যদি দুইটাই select করে, → Large - Red দেখাবে

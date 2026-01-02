@@ -1,3 +1,4 @@
+from decimal import ROUND_HALF_UP, Decimal
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
@@ -15,12 +16,11 @@ logger = logging.getLogger('project')
 # ================================
 # Add to Cart View
 # ===============================
-@method_decorator(never_cache, name='dispatch')
 class AddToCartView(LoginRequiredMixin, generic.View):
     login_url = reverse_lazy('sign-in')
 
     def post(self, request):
-        # Fetch POST data safely
+        user = request.user
         product_slug = request.POST.get("product_slug")
         product_id = request.POST.get("product_id")
         select_color = request.POST.get("color")
@@ -31,59 +31,77 @@ class AddToCartView(LoginRequiredMixin, generic.View):
             return JsonResponse({"status": "error", "message": "Invalid product data."})
         if quantity < 1:
             return JsonResponse({"status": "error", "message": "Quantity must be at least 1."})
-        
+
         with transaction.atomic():
             # Fetch product
             product = get_object_or_404(Product, slug=product_slug, id=product_id, status='active')
             product.refresh_from_db(fields=["available_stock"])
 
-            # Fetch variant if applicable
+            # -------------------------------
+            # Fetch variant strictly based on selection
+            # -------------------------------
             variant_qs = ProductVariant.objects.filter(product=product)
-            if select_color:
-                variant_qs = variant_qs.filter(color_id=select_color)
-            if select_size:
-                variant_qs = variant_qs.filter(size_id=select_size)
 
-            variant = variant_qs[0] if variant_qs else None
+            if select_color and select_size:
+                variant_qs = variant_qs.filter(color_id=select_color, size_id=select_size)
+            elif select_color:
+                variant_qs = variant_qs.filter(color_id=select_color, size__isnull=True)
+            elif select_size:
+                variant_qs = variant_qs.filter(size_id=select_size, color__isnull=True)
+            else:
+                variant_qs = variant_qs.filter(is_default=True)
+
+            variant = variant_qs.first() if variant_qs.exists() else None
+
+            # Check if variant exists
             if (select_color or select_size) and not variant:
                 return JsonResponse({"status": "error", "message": "Selected variant does not exist."})
 
-            # Determine max stock
+            # Determine available stock
             max_stock = variant.available_stock if variant else product.available_stock
             if max_stock <= 0:
                 msg = "Selected variant is out of stock." if variant else "Product is out of stock."
                 return JsonResponse({"status": "error", "message": msg})
 
-            # Check existing cart
-            cart_qs = Cart.objects.filter(user=request.user, product=product, variant=variant, paid=False)
-            cart_list = list(cart_qs)
-            existing_cart_item = cart_list[0] if cart_list else None
+            # Check if item already in cart
+            cart_qs = Cart.objects.filter(user=user, product=product, variant=variant, paid=False)
+            cart_item = cart_qs.first() if cart_qs.exists() else None
 
-            if existing_cart_item:
-                new_quantity = existing_cart_item.quantity + quantity
+            if cart_item:
+                # Update quantity
+                new_quantity = cart_item.quantity + quantity
                 if new_quantity > max_stock:
                     return JsonResponse({"status": "error", "message": f"Cannot exceed available stock ({max_stock})."})
-                existing_cart_item.quantity = new_quantity
-                existing_cart_item.save()
+                cart_item.quantity = new_quantity
+                cart_item.save()
                 final_quantity = new_quantity
                 message = "Product quantity updated in cart successfully."
             else:
-                Cart.objects.create(user=request.user, product=product, variant=variant, quantity=quantity, paid=False)
+                # Create new cart item
+                Cart.objects.create(
+                    user=user,
+                    product=product,
+                    variant=variant,
+                    quantity=quantity,
+                    stored_unit_price=variant.variant_price if variant and variant.variant_price > 0 else product.sale_price,
+                    paid=False
+                )
                 final_quantity = quantity
                 message = "Product added to cart successfully."
 
             # Cart summary
-            cart_items = Cart.objects.filter(user=request.user, paid=False).select_related(
+            cart_items = Cart.objects.filter(user=user, paid=False).select_related(
                 "product", "variant", "variant__color", "variant__size"
             )
+
             cart_count = cart_items.count()
-            total_price = sum(item.quantity * item.product.sale_price for item in cart_items)
+            total_price = sum(item.subtotal for item in cart_items)
 
             # Image selection
             image_url = ""
             if variant and getattr(variant, "image", None):
                 image_url = variant.image.url
-            elif hasattr(product, 'images') and product.images.first():
+            elif product.images.exists():
                 image_url = product.images.first().image.url
             else:
                 image_url = '/media/defaults/default.jpg'
@@ -97,11 +115,9 @@ class AddToCartView(LoginRequiredMixin, generic.View):
                 "quantity": final_quantity,
                 "available_stock": max_stock,
                 "cart_count": cart_count,
-                "total_price": total_price,
+                "total_price": total_price.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP),
                 "image_url": image_url
             })
-
-
 # ================================
 # Cart Detail Page
 # ================================

@@ -270,10 +270,9 @@ class ProductVariant(ImageTagMixin):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        # Return a readable string showing product, size, and color
         size = self.size.title if self.size else "No Size"
         color = self.color.title if self.color else "No Color"
-        return f"{self.product.title} - {size} - {color}"
+        return f"{size} - {color}"
     
     @property
     def final_price(self):
