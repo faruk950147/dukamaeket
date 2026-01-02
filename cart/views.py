@@ -1,21 +1,14 @@
-from decimal import ROUND_HALF_UP, Decimal
+from decimal import Decimal, ROUND_HALF_UP
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from django.db import transaction
-from django.db.models import F, Sum
 from django.urls import reverse_lazy
+from django.db import transaction
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
+from django.contrib.auth.mixins import LoginRequiredMixin
 from store.models import Product, ProductVariant
-from cart.models import Coupon, Cart, Wishlist
-import logging
-
-logger = logging.getLogger('project')
-# ================================
-# Add to Cart View
-# ===============================
+from cart.models import Cart
 class AddToCartView(LoginRequiredMixin, generic.View):
     login_url = reverse_lazy('sign-in')
 
@@ -51,7 +44,7 @@ class AddToCartView(LoginRequiredMixin, generic.View):
             else:
                 variant_qs = variant_qs.filter(is_default=True)
 
-            variant = variant_qs.first() if variant_qs.exists() else None
+            variant = variant_qs.first()
 
             # Check if variant exists
             if (select_color or select_size) and not variant:
@@ -65,7 +58,7 @@ class AddToCartView(LoginRequiredMixin, generic.View):
 
             # Check if item already in cart
             cart_qs = Cart.objects.filter(user=user, product=product, variant=variant, paid=False)
-            cart_item = cart_qs.first() if cart_qs.exists() else None
+            cart_item = cart_qs.first()
 
             if cart_item:
                 # Update quantity
@@ -95,7 +88,7 @@ class AddToCartView(LoginRequiredMixin, generic.View):
             )
 
             cart_count = cart_items.count()
-            total_price = sum(item.subtotal for item in cart_items)
+            total_price = sum(item.subtotal for item in cart_items).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
 
             # Image selection
             image_url = ""
@@ -106,18 +99,29 @@ class AddToCartView(LoginRequiredMixin, generic.View):
             else:
                 image_url = '/media/defaults/default.jpg'
 
+            # Variant display logic
+            if not variant:
+                variant_display = "-"
+            else:
+                size = variant.size.title if variant.size else None
+                color = variant.color.title if variant.color else None
+                variant_display = f"{size} - {color}" if size and color else (size or color)
+
             return JsonResponse({
                 "status": "success",
                 "message": message,
                 "product_title": product.title,
+                "variant_display": variant_display,
                 "sale_price": str(product.sale_price),
                 "old_price": str(product.old_price),
                 "quantity": final_quantity,
                 "available_stock": max_stock,
                 "cart_count": cart_count,
-                "total_price": total_price.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP),
+                "total_price": total_price,
                 "image_url": image_url
             })
+
+
 # ================================
 # Cart Detail Page
 # ================================
