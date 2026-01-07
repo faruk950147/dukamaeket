@@ -204,6 +204,10 @@ class Product(ImageTagMixin):
     @property
     def count_review(self):
         return self.reviews.filter(status='active').count()
+    
+    @property
+    def get_default_variant(self):
+        return self.variants.filter(is_default=True).first() or self.variants.first()
 
     def __str__(self):
         return self.title
