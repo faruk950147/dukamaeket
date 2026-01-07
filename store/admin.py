@@ -4,156 +4,103 @@ from store.models import (
     Product, ProductVariant, ImageGallery,
     Slider, Review, AcceptancePayment
 )
-
-# =========================================================
-# IMAGE PREVIEW MIXIN
-# =========================================================
-class ImagePreviewMixin:
-    readonly_fields = ('image_tag',)
-
-
-# =========================================================
-# CATEGORY ADMIN
-# =========================================================
+# Registering Category model
 @admin.register(Category)
-class CategoryAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id', 'parent', 'title', 'slug', 'keyword', 'description', 'status', 'is_featured', 'image_tag', 'created_date', 'updated_date')
-    list_filter = ('status', 'is_featured')
-    search_fields = ('title', 'keyword', 'description')
-    list_editable = ('parent', 'status', 'is_featured')
-    readonly_fields = ('image_tag',)  
-
-# =========================================================
-# BRAND ADMIN
-# =========================================================
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['id', 'parent', 'title', 'image_tag', 'status', 
+                    'is_featured', 'created_at', 'updated_at']
+    list_editable = ['is_featured', 'status']
+    list_filter = ['status']
+    search_fields = ['title']
+    
+# Registering Brand model
 @admin.register(Brand)
-class BrandAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id',  'title', 'slug', 'keyword', 'description', 'status', 'is_featured', 'image_tag', 'created_date', 'updated_date')
-    list_filter = ('status', 'is_featured')
-    search_fields = ('title', 'keyword', 'description')
-    list_editable = ('status', 'is_featured')
-    readonly_fields = ('image_tag',) 
+class BrandAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'image_tag', 'status', 
+                    'is_featured', 'created_at', 'updated_at']
+    list_editable = ['is_featured', 'status']
+    list_filter = ['status']
+    search_fields = ['title']
 
-
-# =========================================================
-# COLOR ADMIN
-# =========================================================
+# Registering Color model
 @admin.register(Color)
-class ColorAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id', 'title', 'code', 'color_tag', 'status', 'created_date', 'updated_date')
-    list_filter = ('status',)
-    search_fields = ('title', 'code')
-    list_editable = ('status',)
-    readonly_fields = ('color_tag',)
-
-
-# =========================================================
-# SIZE ADMIN
-# =========================================================
+class ColorAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'code', 'color_tag']
+    search_fields = ['title']   
+    
+# Registering Size model
 @admin.register(Size)
-class SizeAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id', 'title', 'code', 'status', 'created_date', 'updated_date')
-    list_filter = ('status',)
-    search_fields = ('title', 'code')
+class SizeAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'code']
+    search_fields = ['title']
 
-
-# =========================================================
-# PRODUCT VARIANT INLINE
-# =========================================================
-class ProductVariantInline(admin.TabularInline):
+# Variant inline for displaying variants within product admin
+class VariantInline(admin.TabularInline):
     model = ProductVariant
     extra = 1
-    readonly_fields = ('image_tag',)
-    fields = ('color', 'size', 'variant_price', 'available_stock', 'status', 'image', 'image_tag')
+    fields = ['color', 'size', 'sku', 'variant_price', 'available_stock', 'is_default', 'image_tag']
+    readonly_fields = ['image_tag']
 
-
-# =========================================================
-# IMAGE GALLERY INLINE
-# =========================================================
-class ImageGalleryInline(admin.TabularInline):
+# Gallery inline for displaying image galleries within product admin
+class GalleryInline(admin.TabularInline):
     model = ImageGallery
-    extra = 1
-    readonly_fields = ('image_tag',)
-    fields = ('image', 'status', 'image_tag')
+    extra = 3
+    fields = ['variant', 'image']
 
-
-# =========================================================
-# REVIEW INLINE
-# =========================================================
-class ReviewInline(admin.TabularInline):
-    model = Review
-    extra = 1
-    readonly_fields = ('user', 'created_date', 'updated_date')
-
-
-# =========================================================
-# PRODUCT ADMIN
-# =========================================================
+# Product admin configuration
 @admin.register(Product)
-class ProductAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id', 'title', 'category', 'brand', 'sale_price', 'available_stock',
-                    'sold', 'sold_percentage', 'average_review', 'status', 'is_featured', 'is_deadline', 'image_tag')
-    list_filter = ('status', 'is_featured', 'category', 'brand')
-    search_fields = ('title', 'keyword', 'description', 'tag')
-    readonly_fields = ('slug', 'image_tag', 'sold_percentage', 'average_review', 'total_available_stock')
-    inlines = [ProductVariantInline, ImageGalleryInline, ReviewInline]
-    list_editable = ('status', 'is_featured', 'is_deadline', 'available_stock')
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ['id', 'category', 'brand', 'title', 'slug', 'old_price', 'sale_price', 
+                    'discount_percent', 'available_stock', 'sold', 'status', 'is_featured', 'created_at', 'updated_at']
+    list_filter = ['category', 'brand', 'status', 'is_featured']
+    search_fields = ['title', 'slug', 'variants__sku']
+    prepopulated_fields = {'slug': ('title',)}
+    inlines = [VariantInline, GalleryInline]
+    
+    fieldsets = (
+        ('Basic Info', {'fields': ('category', 'brand', 'title', 'slug', 'status', 'is_featured')}),
+        ('Pricing', {'fields': ('old_price', 'discount_percent', 'sale_price')}),
+        ('Stock & Sales', {'fields': ('available_stock', 'sold')}),
+        ('Description', {'fields': ('short_des', 'long_des', 'prev_des', 'add_des', 'tag')}),
+        ('SEO & Flash Sale', {'fields': ('keyword', 'description', 'deadline', 'is_deadline')}),
+    )
+    readonly_fields = ['sale_price']
 
-
-
-# =========================================================
-# ProductVariant ADMIN
-# =========================================================
+# Registering ProductVariant model
 @admin.register(ProductVariant)
-class ProductVariantAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id', 'product', 'color', 'size', 'final_price', 'available_stock', 'status', 'image_tag')
-    list_filter = ('status', 'color', 'size')
-    search_fields = ('product__title', 'color__title', 'size__title')
-    readonly_fields = ('image_tag',)
-    list_editable = ('status', 'available_stock')
-
-
-
-# =========================================================
-# ImageGallery ADMIN
-# =========================================================
+class ProductVariantAdmin(admin.ModelAdmin):
+    list_display = ['id', 'product', 'color', 'size', 'sku', 'variant_price', 'available_stock', 'is_default', 'image_tag', 'created_at', 'updated_at']
+    list_filter = ['product', 'color', 'size']
+    search_fields = ['sku', 'product__title']
+    
+# Registering ImageGallery model
 @admin.register(ImageGallery)
-class ImageGalleryAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id', 'product', 'image_tag', 'status')
-    list_filter = ('status',)
-    search_fields = ('product__title',)
-    readonly_fields = ('image_tag',)
-
-
-
-# =========================================================
-# SLIDER ADMIN
-# =========================================================
+class ImageGalleryAdmin(admin.ModelAdmin):
+    list_display = ['id', 'product', 'variant', 'image']
+    list_filter = ['product']
+    search_fields = ['product__title', 'variant__sku']
+    
+# Registering Slider model
 @admin.register(Slider)
-class SliderAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id', 'title', 'slider_type', 'product', 'status', 'image_tag')
-    list_filter = ('status', 'slider_type')
-    search_fields = ('title', 'sub_title', 'paragraph')
-    readonly_fields = ('image_tag',)
-
-
-# =========================================================
-# REVIEW ADMIN
-# =========================================================
+class SliderAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'image_tag', 'status', 'created_at', 'updated_at']
+    list_editable = ['status']
+    list_filter = ['status']
+    search_fields = ['title']
+    
+# Registering Review model
 @admin.register(Review)
-class ReviewAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id', 'product', 'user', 'subject', 'rating', 'status', 'created_date')
-    list_filter = ('status', 'rating')
-    search_fields = ('subject', 'comment', 'user__username', 'product__title')
-    readonly_fields = ('created_date', 'updated_date')
-
-
-# =========================================================
-# ACCEPTANCE PAYMENT ADMIN
-# =========================================================
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ['id', 'product', 'user', 'rating', 'status', 'created_at', 'updated_at']
+    list_editable = ['status']
+    list_filter = ['status', 'rating']
+    search_fields = ['product__title', 'user__username']
+    
+    
+# Registering AcceptancePayment model
 @admin.register(AcceptancePayment)
-class AcceptancePaymentAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id', 'title', 'sub_title', 'help_time', 'shop_amount', 'status', 'is_featured', 'image_tag')
-    list_filter = ('status', 'is_featured')
-    search_fields = ('title', 'sub_title')
-    readonly_fields = ('image_tag',)
+class AcceptancePaymentAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'sub_title', 'help_time', 'shop_amount', 'status', 'is_featured', 'image_tag', 'created_at', 'updated_at']
+    list_editable = ['status']
+    list_filter = ['status']
+    search_fields = ['method_name']
