@@ -105,9 +105,9 @@ class ProductAdmin(ImagePreviewMixin, admin.ModelAdmin):
 # =========================================================
 @admin.register(ProductVariant)
 class ProductVariantAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id', 'title', 'product', 'color', 'size', 'image_id', 'final_price', 'available_stock', 'status', 'image_tag')
-    list_filter = ('status', 'color', 'size')
-    search_fields = ('product__title', 'color__title', 'size__title')
+    list_display = ('id', 'title', 'product', 'color', 'size', 'image_id', 'sku', 'final_price', 'available_stock', 'status', 'image_tag')
+    list_filter = ('status', 'color', 'size', 'product', 'sku')
+    search_fields = ('product__title', 'color__title', 'size__title', 'sku')
     readonly_fields = ('image_tag',)
     list_editable = ('status', 'available_stock', 'image_id')
 
