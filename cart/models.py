@@ -23,8 +23,8 @@ class Coupon(models.Model):
     active = models.BooleanField(default=True)
     min_purchase = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     expiry_date = models.DateTimeField(null=True, blank=True)
-    created_date = models.DateTimeField(auto_now_add=True)
-    updated_date = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['id']
@@ -62,8 +62,8 @@ class Cart(models.Model):
     stored_unit_price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     paid = models.BooleanField(default=False)
 
-    created_date = models.DateTimeField(auto_now_add=True)
-    updated_date = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['id']
@@ -143,8 +143,8 @@ class Wishlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     variant = models.ForeignKey(ProductVariant, on_delete=models.SET_NULL, null=True, blank=True)
-    created_date = models.DateTimeField(auto_now_add=True)
-    updated_date = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['id']

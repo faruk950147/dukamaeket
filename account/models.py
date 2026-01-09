@@ -46,7 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=150, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    joined_date = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     objects = UserManager()
 
@@ -71,8 +71,8 @@ class Profile(models.Model):
     zip_code = models.CharField(max_length=15, null=True, blank=True)
     phone = models.CharField(max_length=16, null=True, blank=True)
     address = models.TextField(max_length=500, null=True, blank=True)
-    joined_date = models.DateTimeField(auto_now_add=True)
-    updated_date = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['id']
