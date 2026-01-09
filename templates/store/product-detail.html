@@ -111,7 +111,6 @@
                         <input type="hidden" name="product_id" id="product_id" value="{{ product.id }}">
 
                         <!-- Color Options -->
-                        <!-- Color Options -->
                         {% if colors %}
                         <div class="details-meta colors">
                             <label>Colors:</label>
@@ -194,13 +193,10 @@
                         <div class="product_info">
                             <span class="sku_wrapper">
                                 <span class="title">SKU:</span>
-                            {% if variant %}
+                            
                                 <span class="sku">
-                                    {% if variant.color %}{{ variant.color.title }}{% endif %}
-                                    {% if variant.color and variant.size %} - {% endif %}
-                                    {% if variant.size %}{{ variant.size.title }}{% endif %}
+                                    Red - L
                                 </span>
-                            {% endif %}
 
                             </span>
 

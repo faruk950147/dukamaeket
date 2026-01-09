@@ -88,7 +88,7 @@ class ProductDetailView(generic.View):
     def get(self, request, slug, id):
         product = get_object_or_404(
             Product.objects.select_related('category', 'brand')
-                .prefetch_related('reviews', 'variants__color', 'variants__size', 'images')
+                .prefetch_related('reviews', 'images')
                 .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active'))),
             slug=slug,
             id=id,
@@ -96,25 +96,7 @@ class ProductDetailView(generic.View):
         )
 
 
-        default_variants = product.variants.filter(is_default=True)
 
-        if default_variants.exists():
-            variant = default_variants[0]
-        else:
-            all_variants = product.variants.all()
-            if all_variants.exists():
-                variant = all_variants[0]
-            else:
-                variant = None
-
- 
-        colors_qs = product.variants.filter(color__isnull=False).values("color__id", "color__title").distinct()
-        sizes_qs = product.variants.filter(size__isnull=False).values("size__id", "size__title").distinct()
-
-        colors = [{"id": x["color__id"], "title": x["color__title"]} for x in colors_qs]
-        sizes = [{"id": x["size__id"], "title": x["size__title"]} for x in sizes_qs]
-
-       
         related_products = Product.objects.filter(
             category=product.category,
             status='active'
@@ -125,16 +107,13 @@ class ProductDetailView(generic.View):
         logger.info(
             f"User {request.user if request.user.is_authenticated else 'Anonymous'} "
             f"visited ProductDetail page. Product: {product.title} (ID: {product.id}), "
-            f"Variant: {variant.id if variant else 'None'}, "
+           
             f"Related Products: {related_products.count()}"
         )
 
         context = {
             'product': product,
-            'variant': variant,
-            'related_products': related_products,
-            'colors': colors,   
-            'sizes': sizes,     
+            'related_products': related_products,    
         }
 
         return render(request, 'store/product-detail.html', context)

@@ -617,3 +617,9 @@ INFO 2026-01-09 11:17:30,389 project views ShopView accessed | User: Anonymous |
 INFO 2026-01-09 11:17:30,389 project views ShopView AJAX request detected
 INFO 2026-01-09 11:17:33,807 project views ShopView accessed | User: Anonymous | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8Banners: <bound method QuerySet.count of <QuerySet [<Slider: Solution (Active)>]>>
 INFO 2026-01-09 11:17:37,104 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-09 14:02:49,658 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-09 15:36:12,893 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-09 15:40:50,452 project views User admin visited ProductDetail page. Product: Latest Designer Ready to Wear Lehenga Choli with Heavy Embroidery (ID: 3), Related Products: 3
+INFO 2026-01-09 15:41:31,074 project views User admin (ID: 1) submitted a review for Product: Latest Designer Ready to Wear Lehenga Choli with Heavy Embroidery (ID: 3), Rating: 5.0, Subject: gd
+INFO 2026-01-09 15:41:49,666 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-09 15:41:52,482 project views User admin visited ProductDetail page. Product: Exclusive Design Readymade Georgette Embroidered Party Dress02 (ID: 1), Related Products: 3
