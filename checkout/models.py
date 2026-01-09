@@ -76,7 +76,7 @@ class Checkout(models.Model):
     is_ordered = models.BooleanField(default=False)
     payment_method = models.CharField(max_length=50, choices=DELIVERY_METHODS, default='COD')
 
-    created_date = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     @property
     def total_cost(self):

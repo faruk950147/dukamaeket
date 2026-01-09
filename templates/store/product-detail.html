@@ -111,27 +111,23 @@
                         <input type="hidden" name="product_id" id="product_id" value="{{ product.id }}">
 
                         <!-- Color Options -->
-                        {% if product.variants.exists %}
+                        <!-- Color Options -->
+                        {% if colors %}
                         <div class="details-meta colors">
                             <label>Colors:</label>
                             <div class="color">
-                                {% for variant in product.variants.all %}
-                                    {% if variant.color %}
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio"
-                                            name="color"
-                                            id="color{{ variant.color.id }}"
-                                            value="{{ variant.color.id }}"
-                                            class="custom-control-input">
-
-                                        <span class="custom-control-label">
-                                            {{ variant.color.title }} <br>
-                                            <img src="{{ variant.image.url }}"
-                                                alt="{{ product.title }}"
-                                                style="width:50px;height:50px;">
-                                        </span>
-                                    </label>
-                                    {% endif %}
+                                {% for c in colors %}
+                                <label class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio"
+                                        name="color"
+                                        id="color{{ c.id }}"
+                                        value="{{ c.id }}"
+                                        class="custom-control-input"
+                                        required>
+                                    <span class="custom-control-label">
+                                        {{ c.title }}
+                                    </span>
+                                </label>
                                 {% endfor %}
                                 <a href="#" class="color-guide"><i class="fal fa-list"></i> If you select colors extra price</a>
                             </div>
@@ -139,29 +135,28 @@
                         {% endif %}
 
                         <!-- Size Options -->
-                        {% if product.variants.exists %}
+                        {% if sizes %}
                         <div class="details-meta sizes">
                             <label>Sizes:</label>
                             <div class="size">
-                                {% for variant in product.variants.all %}
-                                    {% if variant.size %}
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio"
-                                            name="size"
-                                            id="size{{ variant.size.id }}"
-                                            value="{{ variant.size.id }}"
-                                            class="custom-control-input">
-
-                                        <span class="custom-control-label">
-                                            {{ variant.size.title }}
-                                        </span>
-                                    </label>
-                                    {% endif %}
+                                {% for s in sizes %}
+                                <label class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio"
+                                        name="size"
+                                        id="size{{ s.id }}"
+                                        value="{{ s.id }}"
+                                        class="custom-control-input"
+                                        required>
+                                    <span class="custom-control-label">
+                                        {{ s.title }}
+                                    </span>
+                                </label>
                                 {% endfor %}
                                 <a href="#" class="size-guide"><i class="fal fa-list"></i> If you select sizes extra price</a>
                             </div>
                         </div>
                         {% endif %}
+
 
                         <!-- Quantity + Add To Cart -->
                         <div class="cart-option mb-15">

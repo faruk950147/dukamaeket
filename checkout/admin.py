@@ -29,8 +29,8 @@ admin.site.register(Checkout, CheckoutAdmin)
 
 
 """ class CheckoutAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'profile', 'product', 'variant', 'quantity', 'check_price', 'total_cost', 'status', 'is_ordered', 'payment_method', 'created_date')
-    list_filter = ('status', 'is_ordered', 'payment_method', 'created_date')
+    list_display = ('id', 'user', 'profile', 'product', 'variant', 'quantity', 'check_price', 'total_cost', 'status', 'is_ordered', 'payment_method', 'created_at')
+    list_filter = ('status', 'is_ordered', 'payment_method', 'created_at')
     search_fields = ('user__username', 'profile__user__username', 'product__title', 'id')
     readonly_fields = ('total_cost', 'check_price')
     actions = ['mark_selected_as_ordered']

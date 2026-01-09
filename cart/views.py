@@ -1,64 +1,128 @@
-from decimal import Decimal, ROUND_HALF_UP
-from email.mime import message
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy
 from django.db import transaction
+from django.db.models import F, Sum
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
-from django.contrib.auth.mixins import LoginRequiredMixin
-from store.models import Product, ProductVariant, Color, Size
-from cart.models import Cart
+from store.models import Product, ProductVariant
+from cart.models import Coupon, Cart, Wishlist
+import logging
 
+logger = logging.getLogger('project')
 # ================================
 # Add to Cart View
-# ================================
+# ===============================
 @method_decorator(never_cache, name='dispatch')
 class AddToCartView(LoginRequiredMixin, generic.View):
     login_url = reverse_lazy('sign-in')
 
     def post(self, request):
-        user = request.user
-        # Get POST data
+        # Fetch POST data safely
         product_slug = request.POST.get("product_slug")
         product_id = request.POST.get("product_id")
         select_color = request.POST.get("color")
         select_size = request.POST.get("size")
         quantity = int(request.POST.get("quantity", "1"))
-        
+
+        if not product_slug or not product_id:
+            return JsonResponse({"status": "error", "message": "Invalid product data."})
         if quantity < 1:
-            return JsonResponse({"status": "error", "message": "Invalid quantity."}, status=400)
+            return JsonResponse({"status": "error", "message": "Quantity must be at least 1."})
         
         with transaction.atomic():
-            # Fetch product object
-            product = get_object_or_404(
-                Product.objects.select_for_update(),
-                slug=product_slug,
-                id=product_id,
-            status='active'
-            )
-            # Fetch product variant object if applicable
-            variant = None
-            if select_color or select_size:
-                color = Color.objects.get(id=select_color) if select_color else None
-                size = Size.objects.get(id=select_size) if select_size else None
+            # Fetch product
+            product = get_object_or_404(Product, slug=product_slug, id=product_id, status='active')
+            product.refresh_from_db(fields=["available_stock"])
 
-                variant = get_object_or_404(
-                    ProductVariant.objects.select_for_update(),
-                    product=product,
-                    color=color,
-                    size=size
-                )
-                
-            # Check stock availability
-            available_stock = variant.available_stock if variant else product.available_stock
-            if quantity > available_stock:
-                return JsonResponse({
-                    "status": "error",
-                    "message": f"Only {available_stock} unit(s) available."
-                }, status=400)
-            return JsonResponse({"status": "success", "message": "Product added to cart."})
+            # Fetch variant if applicable
+            # variant_qs = ProductVariant.objects.filter(product=product)
+            # if select_color:
+            #     variant_qs = variant_qs.filter(color_id=select_color)
+            # if select_size:
+            #     variant_qs = variant_qs.filter(size_id=select_size)
+
+            # variant = variant_qs[0] if variant_qs else None
+            # if (select_color or select_size) and not variant:
+            #     return JsonResponse({"status": "error", "message": "Selected variant does not exist."})
+
+            variant_qs = ProductVariant.objects.filter(product=product, status='active')
+
+            has_color = variant_qs.filter(color__isnull=False).exists()
+            has_size = variant_qs.filter(size__isnull=False).exists()
+
+            if has_color and not select_color:
+                return JsonResponse({"status": "error", "message": "Please select a color."})
+            if has_size and not select_size:
+                return JsonResponse({"status": "error", "message": "Please select a size."})
+
+            if select_color:
+                variant_qs = variant_qs.filter(color_id=select_color)
+            if select_size:
+                variant_qs = variant_qs.filter(size_id=select_size)
+
+            variant = variant_qs.first()
+
+            if (select_color or select_size) and not variant:
+                return JsonResponse({"status": "error", "message": "Selected variant does not exist."})
+
+
+            # Determine max stock
+            max_stock = variant.available_stock if variant else product.available_stock
+            if max_stock <= 0:
+                msg = "Selected variant is out of stock." if variant else "Product is out of stock."
+                return JsonResponse({"status": "error", "message": msg})
+
+            # Check existing cart
+            cart_qs = Cart.objects.filter(user=request.user, product=product, variant=variant, paid=False)
+            cart_list = list(cart_qs)
+            existing_cart_item = cart_list[0] if cart_list else None
+
+            if existing_cart_item:
+                new_quantity = existing_cart_item.quantity + quantity
+                if new_quantity > max_stock:
+                    return JsonResponse({"status": "error", "message": f"Cannot exceed available stock ({max_stock})."})
+                existing_cart_item.quantity = new_quantity
+                existing_cart_item.save()
+                final_quantity = new_quantity
+                message = "Product quantity updated in cart successfully."
+            else:
+                Cart.objects.create(user=request.user, product=product, variant=variant, quantity=quantity, paid=False)
+                final_quantity = quantity
+                message = "Product added to cart successfully."
+
+            # Cart summary
+            cart_items = Cart.objects.filter(user=request.user, paid=False).select_related(
+                "product", "variant", "variant__color", "variant__size"
+            )
+            cart_count = cart_items.count()
+            # total_price = sum(item.quantity * item.product.sale_price for item in cart_items)
+            total_price = sum(item.quantity * item.unit_price for item in cart_items)
+
+
+            # Image selection
+            image_url = ""
+            if variant and getattr(variant, "image", None):
+                image_url = variant.image.url
+            elif hasattr(product, 'images') and product.images.first():
+                image_url = product.images.first().image.url
+            else:
+                image_url = '/media/defaults/default.jpg'
+
+            return JsonResponse({
+                "status": "success",
+                "message": message,
+                "product_title": product.title,
+                "sale_price": str(product.sale_price),
+                "old_price": str(product.old_price),
+                "quantity": final_quantity,
+                "available_stock": max_stock,
+                "cart_count": cart_count,
+                "total_price": total_price,
+                "image_url": image_url
+            })
 
 
 # ================================

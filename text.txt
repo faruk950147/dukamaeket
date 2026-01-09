@@ -1,9 +1,0 @@
-from cart.models import Cart
-Cart.objects.all().delete()
-
-| User selection | Behaviour                             |
-| -------------- | ------------------------------------- |
-| শুধু color     | ওই color-এর **যেকোনো active variant** |
-| শুধু size      | ওই size-এর **যেকোনো active variant**  |
-| দুটোই          | exact match                           |
-| কিছুই না       | default                               |

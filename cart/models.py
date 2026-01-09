@@ -49,8 +49,6 @@ class Coupon(models.Model):
 # ------------------------------
 # Cart Model
 # ------------------------------
-# The `Cart` class represents a model for storing user's shopping cart items with features like
-# product, variant, quantity, pricing, discounts, and stock validation.
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

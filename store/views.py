@@ -84,9 +84,54 @@ class HomeView(generic.View):
 # PRODUCT DETAIL VIEW
 # =========================================================
 @method_decorator(never_cache, name='dispatch')
+# class ProductDetailView(generic.View):
+#     def get(self, request, slug, id):
+#         # Fetch the main product with related data
+#         product = get_object_or_404(
+#             Product.objects.select_related('category', 'brand')
+#                 .prefetch_related('reviews', 'variants__color', 'variants__size', 'images')
+#                 .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active'))),
+#             slug=slug,
+#             id=id,
+#             status='active'
+#         )
+
+#         # Fetch default variant (fallback to first if none)
+#         default_variants = product.variants.filter(is_default=True)
+
+#         if default_variants.exists():
+#             variant = default_variants[0] 
+#         else:
+#             all_variants = product.variants.all()
+#             if all_variants.exists():
+#                 variant = all_variants[0]  
+#             else:
+#                 variant = None  
+
+#         # Fetch related products (same category, exclude current)
+#         related_products = Product.objects.filter(
+#             category=product.category,
+#             status='active'
+#         ).exclude(id=product.id).select_related('category', 'brand') \
+#          .prefetch_related('reviews').annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))[:4]
+       
+#         # ===== LOGGER =====
+#         logger.info(
+#             f"User {request.user if request.user.is_authenticated else 'Anonymous'} "
+#             f"visited ProductDetail page. Product: {product.title} (ID: {product.id}), "
+#             f"Variant: {variant.id if variant else 'None'}, "
+#             f"Related Products: {related_products.count()}"
+#         )
+#         context = {
+#             'product': product,
+#             'variant': variant,
+#             'related_products': related_products
+#         }
+
+#         return render(request, 'store/product-detail.html', context)
+
 class ProductDetailView(generic.View):
     def get(self, request, slug, id):
-        # Fetch the main product with related data
         product = get_object_or_404(
             Product.objects.select_related('category', 'brand')
                 .prefetch_related('reviews', 'variants__color', 'variants__size', 'images')
@@ -96,36 +141,46 @@ class ProductDetailView(generic.View):
             status='active'
         )
 
-        # Fetch default variant (fallback to first if none)
+
         default_variants = product.variants.filter(is_default=True)
 
         if default_variants.exists():
-            variant = default_variants[0] 
+            variant = default_variants[0]
         else:
             all_variants = product.variants.all()
             if all_variants.exists():
-                variant = all_variants[0]  
+                variant = all_variants[0]
             else:
-                variant = None  
+                variant = None
 
-        # Fetch related products (same category, exclude current)
+ 
+        colors_qs = product.variants.filter(color__isnull=False).values("color__id", "color__title").distinct()
+        sizes_qs = product.variants.filter(size__isnull=False).values("size__id", "size__title").distinct()
+
+        colors = [{"id": x["color__id"], "title": x["color__title"]} for x in colors_qs]
+        sizes = [{"id": x["size__id"], "title": x["size__title"]} for x in sizes_qs]
+
+       
         related_products = Product.objects.filter(
             category=product.category,
             status='active'
         ).exclude(id=product.id).select_related('category', 'brand') \
          .prefetch_related('reviews').annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))[:4]
-       
-        # ===== LOGGER =====
+
+
         logger.info(
             f"User {request.user if request.user.is_authenticated else 'Anonymous'} "
             f"visited ProductDetail page. Product: {product.title} (ID: {product.id}), "
             f"Variant: {variant.id if variant else 'None'}, "
             f"Related Products: {related_products.count()}"
         )
+
         context = {
             'product': product,
             'variant': variant,
-            'related_products': related_products
+            'related_products': related_products,
+            'colors': colors,   
+            'sizes': sizes,     
         }
 
         return render(request, 'store/product-detail.html', context)
