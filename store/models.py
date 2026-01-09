@@ -18,6 +18,12 @@ STATUS_CHOICES = (
     ('active', 'Active'),
     ('inactive', 'Inactive'),
 )
+VARIANTS_TYPE_CHOICES = (
+    ('color', 'Color'),
+    ('size', 'Size'),
+    ('color-size', 'Color Size'),
+    ('none', 'None'),
+)
 
 SLIDER_TYPE_CHOICES = (
     ('none', 'None'),
@@ -160,6 +166,7 @@ class Size(ImageTagMixin):
 class Product(ImageTagMixin):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand, related_name='products', on_delete=models.CASCADE)
+    variant = models.CharField(max_length=150, choices=VARIANTS_TYPE_CHOICES, default='none')
     title = models.CharField(max_length=150, unique=True)
     slug = models.SlugField(max_length=150, unique=True, blank=True, null=True)
 
@@ -238,16 +245,14 @@ class Product(ImageTagMixin):
 # 06 PRODUCT VARIANT MODEL
 # =========================================================
 class ProductVariant(ImageTagMixin):
+    title = models.CharField(max_length=150, blank=True, null=True)
     product = models.ForeignKey(Product, related_name='variants', on_delete=models.CASCADE)
     color = models.ForeignKey('Color', blank=True, null=True, on_delete=models.SET_NULL)
     size = models.ForeignKey('Size', blank=True, null=True, on_delete=models.SET_NULL)
-    image = models.ImageField(upload_to='variants/%Y/%m/%d/',
-                              default='defaults/default.jpg',
-                              validators=[validate_image_size])
+    image_id = models.PositiveIntegerField(blank=True, null=True, default=0)
     variant_price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     available_stock = models.PositiveIntegerField(default=0)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
-    is_default = models.BooleanField(default=False)  
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -259,14 +264,7 @@ class ProductVariant(ImageTagMixin):
         ]
 
     def save(self, *args, **kwargs):
-        # If no default variant exists for this product, make this one default
-        if not ProductVariant.objects.filter(product=self.product, is_default=True).exists():
-            self.is_default = True
-
-        # If this variant is default, make all other variants of the product not default
-        if self.is_default:
-            ProductVariant.objects.filter(product=self.product, is_default=True).exclude(id=self.id).update(is_default=False)
-
+        self.full_clean()
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -284,6 +282,23 @@ class ProductVariant(ImageTagMixin):
     def is_available(self):
         # Check if the variant is in stock and active
         return self.available_stock > 0 and self.status == 'active'
+    
+    def image(self):
+        # get the associated image from the product's image gallery
+        try:
+            image = ImageGallery.objects.get(id=self.image_id, product=self.product)
+            if image:
+                return image.image
+            return None
+        except ImageGallery.DoesNotExist:
+            return None
+    
+    @property
+    def image_tag(self):
+        img = self.image()
+        if img and hasattr(img, 'url'):
+            return mark_safe(f'<img src="{img.url}" style="max-width:50px; max-height:50px;" />')
+        return mark_safe('<span>No Image</span>')
 
 # =========================================================
 # 07 IMAGE GALLERY MODEL
