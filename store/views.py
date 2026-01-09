@@ -94,23 +94,17 @@ class ProductDetailView(generic.View):
             id=id,
             status='active'
         )
-
-
-
         related_products = Product.objects.filter(
             category=product.category,
             status='active'
         ).exclude(id=product.id).select_related('category', 'brand') \
          .prefetch_related('reviews').annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))[:4]
-
-
+        # ======= LOGGER =======
         logger.info(
             f"User {request.user if request.user.is_authenticated else 'Anonymous'} "
-            f"visited ProductDetail page. Product: {product.title} (ID: {product.id}), "
-           
+            f"visited ProductDetail page. Product: {product.title} (ID: {product.id})"
             f"Related Products: {related_products.count()}"
         )
-
         context = {
             'product': product,
             'related_products': related_products,    
