@@ -613,3 +613,19 @@ INFO 2026-01-07 00:01:18,685 project views User Anonymous visited ProductDetail 
 INFO 2026-01-07 00:01:26,510 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
 INFO 2026-01-07 00:01:29,660 project views User Anonymous visited ProductDetail page. Product: Exclusive Design Readymade Georgette Embroidered Party Dress02 (ID: 1), Variant: 1, Related Products: 3
 INFO 2026-01-07 00:21:34,419 project views User anb visited ProductDetail page. Product: Exclusive Design Readymade Georgette Embroidered Party Dress02 (ID: 1), Variant: 1, Related Products: 3
+INFO 2026-01-09 11:10:03,822 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-09 11:11:35,834 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-09 11:11:42,909 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-09 11:11:47,122 project views User Anonymous visited ProductDetail page. Product: Latest Designer Ready to Wear Lehenga Choli with Heavy Embroidery (ID: 3), Variant: 7, Related Products: 3
+INFO 2026-01-09 11:16:44,209 project views ShopView accessed | User: Anonymous | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8Banners: <bound method QuerySet.count of <QuerySet [<Slider: Solution (Active)>]>>
+INFO 2026-01-09 11:17:09,918 project views ShopView accessed | User: Anonymous | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8Banners: <bound method QuerySet.count of <QuerySet [<Slider: Solution (Active)>]>>
+INFO 2026-01-09 11:17:21,309 project views ShopView accessed | User: Anonymous | Page: 2/3 | Per page: 3 | Sort: latest | Total products: 8Banners: <bound method QuerySet.count of <QuerySet [<Slider: Solution (Active)>]>>
+INFO 2026-01-09 11:17:21,310 project views ShopView AJAX request detected
+INFO 2026-01-09 11:17:24,988 project views ShopView accessed | User: Anonymous | Page: 3/3 | Per page: 3 | Sort: latest | Total products: 8Banners: <bound method QuerySet.count of <QuerySet [<Slider: Solution (Active)>]>>
+INFO 2026-01-09 11:17:24,988 project views ShopView AJAX request detected
+INFO 2026-01-09 11:17:29,076 project views ShopView accessed | User: Anonymous | Page: 2/3 | Per page: 3 | Sort: latest | Total products: 8Banners: <bound method QuerySet.count of <QuerySet [<Slider: Solution (Active)>]>>
+INFO 2026-01-09 11:17:29,077 project views ShopView AJAX request detected
+INFO 2026-01-09 11:17:30,389 project views ShopView accessed | User: Anonymous | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8Banners: <bound method QuerySet.count of <QuerySet [<Slider: Solution (Active)>]>>
+INFO 2026-01-09 11:17:30,389 project views ShopView AJAX request detected
+INFO 2026-01-09 11:17:33,807 project views ShopView accessed | User: Anonymous | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8Banners: <bound method QuerySet.count of <QuerySet [<Slider: Solution (Active)>]>>
+INFO 2026-01-09 11:17:37,104 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5

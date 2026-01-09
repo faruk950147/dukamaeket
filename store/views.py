@@ -84,52 +84,6 @@ class HomeView(generic.View):
 # PRODUCT DETAIL VIEW
 # =========================================================
 @method_decorator(never_cache, name='dispatch')
-# class ProductDetailView(generic.View):
-#     def get(self, request, slug, id):
-#         # Fetch the main product with related data
-#         product = get_object_or_404(
-#             Product.objects.select_related('category', 'brand')
-#                 .prefetch_related('reviews', 'variants__color', 'variants__size', 'images')
-#                 .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active'))),
-#             slug=slug,
-#             id=id,
-#             status='active'
-#         )
-
-#         # Fetch default variant (fallback to first if none)
-#         default_variants = product.variants.filter(is_default=True)
-
-#         if default_variants.exists():
-#             variant = default_variants[0] 
-#         else:
-#             all_variants = product.variants.all()
-#             if all_variants.exists():
-#                 variant = all_variants[0]  
-#             else:
-#                 variant = None  
-
-#         # Fetch related products (same category, exclude current)
-#         related_products = Product.objects.filter(
-#             category=product.category,
-#             status='active'
-#         ).exclude(id=product.id).select_related('category', 'brand') \
-#          .prefetch_related('reviews').annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))[:4]
-       
-#         # ===== LOGGER =====
-#         logger.info(
-#             f"User {request.user if request.user.is_authenticated else 'Anonymous'} "
-#             f"visited ProductDetail page. Product: {product.title} (ID: {product.id}), "
-#             f"Variant: {variant.id if variant else 'None'}, "
-#             f"Related Products: {related_products.count()}"
-#         )
-#         context = {
-#             'product': product,
-#             'variant': variant,
-#             'related_products': related_products
-#         }
-
-#         return render(request, 'store/product-detail.html', context)
-
 class ProductDetailView(generic.View):
     def get(self, request, slug, id):
         product = get_object_or_404(
@@ -246,7 +200,7 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
                 </div>
                 <div class="name-date mb-30">
                     <h6>{user.username} –
-                        <span>{review.created_date.strftime('%Y-%m-%d %H:%M')}</span>
+                        <span>{review.created_at.strftime('%Y-%m-%d %H:%M')}</span>
                     </h6>
                 </div>
                 <p>{subject}</p>
@@ -297,15 +251,15 @@ class ShopView(generic.View):
         page_number = int(page_number) if page_number and page_number.isdigit() else 1
 
         sort_map = {
-            'latest': '-created_date',
-            'new': 'created_date',
+            'latest': '-created_at',
+            'new': 'created_at',
             'upcoming': 'deadline'
         }
 
         if sort_by == 'upcoming':
             products = products.filter(deadline__gt=timezone.now()).order_by('deadline')
         else:
-            products = products.order_by(sort_map.get(sort_by, '-created_date'))
+            products = products.order_by(sort_map.get(sort_by, '-created_at'))
 
         paginator = Paginator(products, per_page)
         page_obj = paginator.get_page(page_number)
