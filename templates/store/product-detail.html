@@ -111,21 +111,24 @@
                         <input type="hidden" name="product_id" id="product_id" value="{{ product.id }}">
 
                         <!-- Color Options -->
-                        {% if colors %}
+                        {% if variants %}
                         <div class="details-meta colors">
                             <label>Colors:</label>
                             <div class="color">
-                                {% for c in colors %}
+                                {% for color in variants %}
                                 <label class="custom-control custom-radio custom-control-inline">
                                     <input type="radio"
                                         name="color"
-                                        id="color{{ c.id }}"
-                                        value="{{ c.id }}"
+                                        id="color{{ color.color.id }}"
+                                        value="{{ color.color.id }}"
                                         class="custom-control-input"
-                                        required>
+                                        >
                                     <span class="custom-control-label">
-                                        {{ c.title }}
+                                        {{ color.color.title }}
                                     </span>
+                                    </br>
+                                    <img src="{{ color.image_url }}" alt="{% if color.image_url %}{{ color.color.title }}{% endif %}" style="width:30px; height:30px;" />
+
                                 </label>
                                 {% endfor %}
                                 <a href="#" class="color-guide"><i class="fal fa-list"></i> If you select colors extra price</a>

@@ -266,22 +266,6 @@ class ProductVariant(ImageTagMixin):
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
-
-    def __str__(self):
-        # Return a readable string showing product, size, and color
-        size = self.size.title if self.size else "No Size"
-        color = self.color.title if self.color else "No Color"
-        return f"{self.product.title} - {size} - {color}"
-    
-    @property
-    def final_price(self):
-        # Return the variant price if set, otherwise the product's sale price
-        return self.variant_price if self.variant_price > 0 else self.product.sale_price
-
-    @property
-    def is_available(self):
-        # Check if the variant is in stock and active
-        return self.available_stock > 0 and self.status == 'active'
     
     def image(self):
         # get the associated image from the product's image gallery
@@ -292,14 +276,37 @@ class ProductVariant(ImageTagMixin):
             return None
         except ImageGallery.DoesNotExist:
             return None
-    
+        
+    @property
+    def image_url(self):
+        img = self.image()
+        if img:
+            return img.url
+        return None
+
     @property
     def image_tag(self):
         img = self.image()
         if img and hasattr(img, 'url'):
             return mark_safe(f'<img src="{img.url}" style="max-width:50px; max-height:50px;" />')
-        return mark_safe('<span>No Image</span>')
+        return mark_safe('<span>No Image</span>')   
+    
+    @property
+    def final_price(self):
+        # Return the variant price if set, otherwise the product's sale price
+        return self.variant_price if self.variant_price > 0 else self.product.sale_price
 
+    @property
+    def is_available(self):
+        # Check if the variant is in stock and active
+        return self.available_stock > 0 and self.status == 'active'
+
+    def __str__(self):
+        # Return a readable string showing product, size, and color
+        size = self.size.title if self.size else "No Size"
+        color = self.color.title if self.color else "No Color"
+        return f"{self.product.title} - {size} - {color}"
+    
 # =========================================================
 # 07 IMAGE GALLERY MODEL
 # =========================================================

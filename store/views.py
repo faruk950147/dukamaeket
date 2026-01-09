@@ -1,3 +1,4 @@
+from itertools import product
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.utils.decorators import method_decorator
@@ -41,6 +42,7 @@ class HomeView(generic.View):
         acceptance_payments = AcceptancePayment.objects.filter(status='active')[:4]
 
         # Fetch top deals products (discounted & active deadline)
+        # select_related means join query for foreign key relationships
         top_deals = list(Product.objects.filter(
             status='active', discount_percent__gt=0, is_deadline=True, deadline__gte=timezone.now()
         ).select_related('category', 'brand')
@@ -83,7 +85,7 @@ class HomeView(generic.View):
 # =========================================================
 # PRODUCT DETAIL VIEW
 # =========================================================
-@method_decorator(never_cache, name='dispatch')
+""" @method_decorator(never_cache, name='dispatch')
 class ProductDetailView(generic.View):
     def get(self, request, slug, id):
         product = get_object_or_404(
@@ -109,9 +111,58 @@ class ProductDetailView(generic.View):
             'product': product,
             'related_products': related_products,    
         }
+        variants = ProductVariant.objects.filter(product=product)
+        if variants.exists():
+            context['variants'] = variants
+            
+    
+
 
         return render(request, 'store/product-detail.html', context)
+ """
+@method_decorator(never_cache, name='dispatch')
+class ProductDetailView(generic.View):
+    def get(self, request, slug, id):
+        product = get_object_or_404(
+            Product.objects
+            .select_related('category', 'brand')
+            .prefetch_related(
+                'images',
+                'reviews',
+                'variants__color',
+                'variants__size'
+            )
+            .annotate(
+                avg_rate=Avg(
+                    'reviews__rating',
+                    filter=Q(reviews__status='active')
+                )
+            ),
+            slug=slug,
+            id=id,
+            status='active'
+        )
 
+        related_products = (
+            Product.objects
+            .filter(category=product.category, status='active')
+            .exclude(id=product.id)
+            .annotate(
+                avg_rate=Avg(
+                    'reviews__rating',
+                    filter=Q(reviews__status='active')
+                )
+            )[:4]
+        )
+
+        variants = ProductVariant.objects.filter(product=product)
+        context = {
+            'product': product,
+            'related_products': related_products,
+            'variants': variants
+        }
+
+        return render(request, 'store/product-detail.html', context)
 
 # =========================================================
 # PRODUCT REVIEW VIEW (AJAX)

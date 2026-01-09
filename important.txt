@@ -1,0 +1,90 @@
+হ্যাঁ, select_related ঠিকই join query করে। 😎
+
+স্পষ্টভাবে বললে:
+
+select_related ForeignKey বা OneToOneField থাকা related object-এর জন্য SQL JOIN ব্যবহার করে।
+
+এতে আলাদা query না দিয়ে single query তে সব data fetch করা হয়।
+
+অর্থাৎ, তুমি যখন book.author.name access করবে, extra query চলে না।
+
+উদাহরণ:
+
+books = Book.objects.select_related('author').all()
+
+
+এর SQL হবে:
+
+SELECT book.id, book.title, book.author_id, author.id, author.name
+FROM book
+INNER JOIN author ON book.author_id = author.id;
+
+
+একটাই query, join দিয়ে সব কিছু নিয়ে আসে।
+
+লক্ষ্য: select_related ManyToManyField এর জন্য কাজ করে না, সেটা করতে হবে prefetch_related দিয়ে।
+
+1️⃣ Normal ForeignKey
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+
+class Book(models.Model):
+    title = models.CharField(max_length=100)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+
+
+এখানে Book এর মধ্যে author field আছে।
+
+অর্থাৎ Book → Author (Book জানে তার Author কে)
+
+আমরা সহজে access করতে পারি:
+
+book = Book.objects.first()
+print(book.author.name)  # book থেকে author
+
+
+এইটা forward relation।
+
+2️⃣ Reverse ForeignKey
+
+এখন Author জানে কে কে তার বই লিখেছে?
+
+Django automatically দেয় reverse relation: book_set
+
+author = Author.objects.first()
+books = author.book_set.all()  # reverse relation
+for book in books:
+    print(book.title)
+
+
+এখানে Author → multiple Books
+
+এইটা হলো reverse ForeignKey
+
+মূল ForeignKey Book → Author, কিন্তু Author থেকে access করা হলো reverse relation দিয়ে।
+
+3️⃣ Custom related_name
+class Book(models.Model):
+    title = models.CharField(max_length=100)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='books')
+
+
+এবার:
+
+author = Author.objects.first()
+author.books.all()  # book_set এর বদলে এখন books
+
+
+আরও readable name!
+
+4️⃣ Key Concept
+Direction	Example	Access
+Forward FK	Book → Author	book.author
+Reverse FK	Author → Books	author.book_set.all() বা custom name author.books.all()
+
+Forward FK = single object
+
+Reverse FK = multiple objects (QuerySet)
+
+💡 মূল কথা:
+Reverse ForeignKey মানে হলো “ForeignKey field এর উল্টো দিকে access করা”, সাধারণত multiple objects পাওয়ার জন্য।
