@@ -137,20 +137,20 @@
                         {% endif %}
 
                         <!-- Size Options -->
-                        {% if sizes %}
+                        {% if variants %}
                         <div class="details-meta sizes">
                             <label>Sizes:</label>
                             <div class="size">
-                                {% for s in sizes %}
+                                {% for size in variants %}
                                 <label class="custom-control custom-radio custom-control-inline">
                                     <input type="radio"
                                         name="size"
-                                        id="size{{ s.id }}"
-                                        value="{{ s.id }}"
+                                        id="size{{ size.size.id }}"
+                                        value="{{ size.size.id }}"
                                         class="custom-control-input"
-                                        required>
+                                        >
                                     <span class="custom-control-label">
-                                        {{ s.title }}
+                                        {{ size.size.title }}
                                     </span>
                                 </label>
                                 {% endfor %}
