@@ -674,3 +674,7 @@ INFO 2026-01-10 16:22:20,101 project views User admin visited Home page. Sliders
 INFO 2026-01-10 16:22:33,704 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
 INFO 2026-01-10 16:22:40,691 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
 INFO 2026-01-10 16:22:47,075 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-10 16:24:09,959 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-10 16:29:43,173 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-10 16:33:04,194 project views ShopView accessed | User: Anonymous | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8Banners: <bound method QuerySet.count of <QuerySet [<Slider: Solution (Active)>]>>
+INFO 2026-01-10 16:41:02,730 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
