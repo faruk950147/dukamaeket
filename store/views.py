@@ -85,41 +85,6 @@ class HomeView(generic.View):
 # =========================================================
 # PRODUCT DETAIL VIEW
 # =========================================================
-""" @method_decorator(never_cache, name='dispatch')
-class ProductDetailView(generic.View):
-    def get(self, request, slug, id):
-        product = get_object_or_404(
-            Product.objects.select_related('category', 'brand')
-                .prefetch_related('reviews', 'images')
-                .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active'))),
-            slug=slug,
-            id=id,
-            status='active'
-        )
-        related_products = Product.objects.filter(
-            category=product.category,
-            status='active'
-        ).exclude(id=product.id).select_related('category', 'brand') \
-         .prefetch_related('reviews').annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))[:4]
-        # ======= LOGGER =======
-        logger.info(
-            f"User {request.user if request.user.is_authenticated else 'Anonymous'} "
-            f"visited ProductDetail page. Product: {product.title} (ID: {product.id})"
-            f"Related Products: {related_products.count()}"
-        )
-        context = {
-            'product': product,
-            'related_products': related_products,    
-        }
-        variants = ProductVariant.objects.filter(product=product)
-        if variants.exists():
-            context['variants'] = variants
-            
-    
-
-
-        return render(request, 'store/product-detail.html', context)
- """
 @method_decorator(never_cache, name='dispatch')
 class ProductDetailView(generic.View):
     def get(self, request, slug, id):
