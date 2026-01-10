@@ -139,7 +139,7 @@ class SignInView(LogoutRequiredMixin, generic.View):
 class SignOutView(LoginRequiredMixin, generic.View):
     def get(self, request):
         logout(request)
-        messages.success(request, 'You have been logged out successfully.')
+        messages.success(request, 'You have been signed out successfully.')
         return redirect('sign-in')  
 
 # ChangesPasswordView
