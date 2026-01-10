@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 
 
 class LogoutRequiredMixin:
-    redirect_authenticated_url = reverse_lazy('account:profile')
+    redirect_authenticated_url = reverse_lazy('home')
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -11,7 +11,7 @@ class LogoutRequiredMixin:
         return super().dispatch(request, *args, **kwargs)
     
 class LoginRequiredMixin:
-    login_url = reverse_lazy('account:sign-in')
+    login_url = reverse_lazy('sign-in')
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
