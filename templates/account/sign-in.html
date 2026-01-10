@@ -1,53 +1,42 @@
 {% extends 'base.html' %} 
 {% load static %} 
 {% block title %}Sign In{% endblock title %} 
-{% block main %}
-  <!-- ============================ COMPONENT SIGN IN   ================================= -->
-  <div class="container">
-    <div class="d-flex flex-column text-center" style="max-width: 600px; margin: 0 auto;">
-      <div class="form-title text-center" style="margin: 50px;">
-        <h4 class="title0">Sign In</h4>
-      </div>
-      <form  id="form" method="POST">
-        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-
-        <div class="username-error form-group" style="display: none">
-
+{% block main_content %}
+  <!-- ============================ COMPONENT Sign up   ================================= -->
+    <main>
+        <!-- account-area-start -->
+        <div class="account-area mt-70 mb-70">
+            <div class="container">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-lg-6">
+                        <div class="basic-login mb-50">
+                            <h5>Login</h5>
+                            <form action="#">
+                                <label for="name">Username or email address  <span>*</span></label>
+                                <input id="name" type="text" placeholder="Enter Username">
+                                <label for="pass">Password <span>*</span></label>
+                                <input id="pass" type="password" placeholder="Enter password...">
+                                <div class="login-action mb-10 fix">
+                                    <span class="log-rem f-left">
+                                       <input id="remember" type="checkbox">
+                                       <label for="remember">Remember me</label>
+                                    </span>
+                                    <span class="forgot-login f-right">
+                                       <a href="#">Lost your password?</a>
+                                    </span>
+                                </div>
+                                <a href="login.html" class="tp-in-btn w-100">log in</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="form-group" style="margin-top: 15px;">
-          <input type="text" name="username" placeholder="Username Or Email" id="id_username" class="form-control" required/>
-        </div>
+        <!-- account-area-end -->
 
-        <div class="form-group eye-add" style="margin-top: 15px;">
-          <input type="password" name="password" placeholder="Password" id="id_password" class="form-control" required/>
-            <span class="text-muted eye-add-style" id="showHide">
-            <i class="fas fa-eye-slash fa-lg me-3 fa-fw text-info" id="icon"></i></span>
-        </div>
-
-        <div class="form-group" style="margin-top: 15px;">
-          <button  type="button" class="btn btn-info btn-lg form-control" id="signBtn">Sign In</button>
-        </div>
-      </form>
-      <span class="text-muted">Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></span><br>
-      <span class="text-muted">Forgot Password? <a href="{% url 'resetpasswordview' %}">Reset Password</a></span>
-      <div class="text-center text-muted delimiter">or use a social network</div>
-      <div class="d-flex justify-content-center social-buttons m-2">
-        <button type="button" class="btn btn-info btn-round m-2" data-toggle="tooltip" data-placement="top" title="Twitter">
-          <i class="fab fa-twitter"></i>
-        </button>
-        <button type="button" class="btn btn-info btn-round m-2" data-toggle="tooltip" data-placement="top" title="Facebook">
-          <i class="fab fa-facebook"></i>
-        </button>
-        <button type="button" class="btn btn-info btn-round m-2" data-toggle="tooltip" data-placement="top" title="Linkedin">
-          <i class="fab fa-linkedin"></i>
-        </button>
-      </div>
-    </div>
-  </div>
-  <!-- ============================ COMPONENT SIGN IN  END.// ================================= -->
-
-{% endblock main %}
-{% block extra_scripts %}
+    </main>
+  <!-- ============================ COMPONENT sign up  END.// ================================= -->
+{% endblock main_content %}
   <script>
     $(document).ready(function(){
 
@@ -141,4 +130,3 @@
 
   }); 
   </script>
-{% endblock extra_scripts %}
