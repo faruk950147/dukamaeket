@@ -27,15 +27,15 @@ class UsernameValidationView(generic.View):
             username = data.get('username', '').strip()
 
             if not isinstance(username, str) or not username.isalnum():
-                return JsonResponse({'username_error': 'Username should only contain alphanumeric characters', 'status': 400})
+                return JsonResponse({'username_error': 'Username should only contain alphanumeric characters'})
 
             if User.objects.filter(username=username).exists():
-                return JsonResponse({'username_error': 'Sorry, this username is already taken. Choose another one.', 'status': 400})
+                return JsonResponse({'username_error': 'Sorry, this username is already taken. Choose another one.'})
 
-            return JsonResponse({'username_valid': True})
+            return JsonResponse({'username_valid': 'Username is available'})
 
         except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON data', 'status': 400})
+            return JsonResponse({'error': 'Invalid JSON data'})
 
 
 # SignInValidationView

@@ -60,7 +60,7 @@ $(document).ready(function(){
                 dataType: 'json',
                 success: function(res){
                     if(res.username_valid){
-                        console.log("Username is valid");
+                        console.log(res.username_valid);
                     }
                     else if(res.username_error){
                        console.log(res.username_error);
