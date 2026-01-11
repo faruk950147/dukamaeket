@@ -1,105 +1,14 @@
+{% load static %}
+<script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
 <script>
   $(document).ready(function(){    
-   //All Validation
-  $( "#id_username" ).on( "keyup blur change input focus", function(e){
-    e.preventDefault();
-    const username = $("#form #id_username").val().trim();
-    if(username.length > 0){
-      $.ajax({
-        url:"{% url 'usernamevalidation' %}",
-        method:"POST",
-        data: JSON.stringify({username:username}),
-        contentType: "application/json",
-        dataType:"json",
-        success:function(res){
-          if(res.username_error){
-            $("#id_username").addClass("is-invalid");
-            $(".username-error").html(res.username_error);
-            $(".username-error").css("display", "block");
-            $("#signupBtn").attr('disabled', true);
-          }
-          else{
-            if(res.username_valid){
-              $("#id_username").removeClass("is-invalid");
-              $("#id_username").addClass("is-valid");
-              $(".username-error").css("display", "none");
-              $("#signupBtn").attr('disabled', false);
-            }
-          } 
-        },
-      });
-    }
-  });
+    //All Validation
+    $("#form #id_username" ).on( "keyup blur change input focus", function(e){
+        e.preventDefault();
 
-  $( "#id_email" ).on( "keyup blur change input focus", function(e){
-    e.preventDefault();
-    const email = $("#form #id_email").val().trim();
-    if(email.length > 0){
-      $.ajax({
-        url:"{% url 'emailvalidation' %}",
-        method:"POST",
-        data: JSON.stringify({email:email}),
-        contentType: "application/json",
-        dataType:"json",  
-        success:function(res){
-          if(res.email_error){
-            $("#id_email").addClass("is-invalid")
-            $(".email-error").html(res.email_error)
-            $(".email-error").css("display", "block");
-            $("#signupBtn").attr('disabled', true);
-          }
-          else{
-            if(res.email_valid){
-              $("#id_email").removeClass("is-invalid")
-              $("#id_email").addClass("is-valid")
-              $(".email-error").css("display", "none");   
-              $("#signupBtn").attr('disabled', false);             
-            }
-          }
-        }       
-      });
-    }
-  });
+        const username = $("#form #id_username").val().trim();
+        console.log(username);
 
-  $("#id_password, #id_password2").on("keyup blur change input focus", function(e){
-    e.preventDefault()
-    let password = $("#form #id_password").val().trim();
-    let password2 = $("#form #id_password2").val().trim();
-    if(password.length > 0 && password2.length > 0){
-      $.ajax({
-        url:"{% url 'passwordvalidation' %}",
-        method:"POST",
-        data: JSON.stringify({password:password, password2:password2}),
-        contentType: "application/json",
-        dataType:"json",  
-        success:function(res){
-          if(res.password_error){
-            $("#id_password, #id_password2").addClass("is-invalid")
-            $(".password-error").html(res.password_error)
-            $(".password-error").css("display", "block");
-            $("#signupBtn").attr('disabled', true);
-          }
-          if(res.password_info){
-            $("#id_password, #id_password2").removeClass("is-invalid")
-            $("#id_password, #id_password2").addClass("is-valid")
-            $(".password-error").html(res.password_info)
-            $(".password-error").css("display", "block");
-            $("#signupBtn").attr('disabled', false);
-          }
-          else{
-            if(res.password_valid){
-              $("#id_password, #id_password2").removeClass("is-invalid")
-              $("#id_password, #id_password2").addClass("is-valid")
-              $(".password-error").css("display", "none");   
-              $("#signupBtn").attr('disabled', false);             
-            }
-          }
-        }       
-      });
-    }
-  });
-  //All Validation
-
-
+    });
   }); 
 </script>

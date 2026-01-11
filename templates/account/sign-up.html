@@ -11,7 +11,7 @@
                     <div class="col-lg-6">
                         <div class="basic-login">
                             <h5>Sign Up</h5>
-                            <form method="post" action="" class="border p-4 rounded shadow-sm bg-light" novalidate>
+                            <form id="form" method="post" action="" class="border p-4 rounded shadow-sm bg-light" novalidate>
                                 {% csrf_token %}
                                 <div class="form-group alert-messages mb-3">
                                    
@@ -43,5 +43,7 @@
         <!-- account-area-end -->
 
     </main>
+
   <!-- ============================ COMPONENT sign up  END.// ================================= -->
+{% include "ajax/accounts.html" %}
 {% endblock main_content %}
