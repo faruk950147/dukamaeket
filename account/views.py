@@ -26,16 +26,11 @@ class UsernameValidationView(generic.View):
             data = json.loads(request.body)
             username = data.get('username', '').strip()
 
-            # Check if username is alphanumeric
-            if not isinstance(username, str) or not re.match(r'^[a-zA-Z0-9]+$', username):
-                return JsonResponse({'username_error': 'Username should only contain letters and numbers.'}, status=400)
-
-            # Check if username already exists
+            if not isinstance(username, str) or not username.isalnum():
+                return JsonResponse({'username_error': 'Username should only contain alphanumeric characters'}, status=400)
             if User.objects.filter(username=username).exists():
-                return JsonResponse({'username_error': 'Sorry, this username is already taken.'}, status=400)
-
+                return JsonResponse({'username_error': 'Sorry, this username is already taken. Choose another one.'}, status=400)
             return JsonResponse({'username_valid': True}, status=200)
-
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON data'}, status=400)
 

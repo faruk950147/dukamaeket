@@ -1,14 +1,1 @@
 {% load static %}
-<script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
-<script>
-  $(document).ready(function(){    
-    //All Validation
-    $("#form #id_username" ).on( "keyup blur change input focus", function(e){
-        e.preventDefault();
-
-        const username = $("#form #id_username").val().trim();
-        console.log(username);
-
-    });
-  }); 
-</script>
