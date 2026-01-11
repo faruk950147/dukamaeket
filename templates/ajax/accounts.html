@@ -1,51 +1,5 @@
 <script>
-  $(document).ready(function(){
-    
-  $('#signupBtn').on('click', function(e) {
-      e.preventDefault();
-  
-      let username = $('#form #id_username').val().trim();
-      let email = $('#form #id_email').val().trim();
-      let password = $('#form #id_password').val().trim();
-      let password2 = $('#form #id_password2').val().trim();
-      let csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
-  
-  
-      // Client-side validation
-      if (username.length > 0 && email.length > 0 && password.length > 0 && password === password2) {
-          $.ajax({
-              url: "{% url 'signup' %}",
-              method: "POST",
-              headers: {
-                  "X-CSRFToken": csrfmiddlewaretoken  // CSRF token passing
-              },
-              contentType: "application/json",
-              data: JSON.stringify({
-                  username: username,
-                  email: email,
-                  password: password,
-                  password2: password2
-              }),
-              dataType: "json",
-              success: function(res) {
-                  if (res.status == 200) {
-                      alertify.success(res.messages);
-                      $('#form').load(location.href + ' #form');
-                      // Optionally, redirect or show a success message
-                  } else if (res.status == 400) {
-                      alertify.error(res.messages);
-                  }
-              }
-          });
-      } else {
-          if (username == "") alertify.error('Please fill up your username');
-          if (email == "") alertify.error('Please fill up your email');
-          if (password == "") alertify.error('Please fill up your password');
-          if (password2 == "") alertify.error('Please fill up your confirm password');
-          if (password !== password2) alertify.error('Passwords do not match');
-      }
-  })
-    
+  $(document).ready(function(){    
    //All Validation
   $( "#id_username" ).on( "keyup blur change input focus", function(e){
     e.preventDefault();
