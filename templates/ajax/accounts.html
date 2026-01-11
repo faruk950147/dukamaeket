@@ -14,19 +14,19 @@ $(document).ready(function(){
                 data: JSON.stringify({ 'username': username }),
                 dataType: 'json',
                 success: function(res){
-                    if(res.username_valid){
+                    if(res.valid){
                         $("#id_username").removeClass("is-invalid");
                         $("#id_username").addClass("is-valid");
                         $(".alert-error").css("display", "none");
-                        $(".alert-success").html(res.username_valid);
+                        $(".alert-success").html(res.valid);
                         $(".alert-success").css("display", "block");
                         $("#sign-up-btn").attr('disabled', false);
                     }
-                    else if(res.username_error){
+                    else if(res.error){
                         $("#id_username").addClass("is-invalid");
                         $("#id_username").removeClass("is-valid");
                         $(".alert-success").css("display", "none");
-                        $(".alert-error").html(res.username_error);
+                        $(".alert-error").html(res.error);
                         $(".alert-error").css("display", "block");
                         $("#sign-up-btn").attr('disabled', true);
                     }
@@ -50,19 +50,19 @@ $(document).ready(function(){
                 data: JSON.stringify({ 'email': email }),
                 dataType: 'json',
                 success: function(res){
-                    if(res.email_valid){
+                    if(res.valid){
                         $("#id_email").removeClass("is-invalid");
                         $("#id_email").addClass("is-valid");
                         $(".alert-error").css("display", "none");
-                        $(".alert-success").html(res.email_valid);
+                        $(".alert-success").html(res.valid);
                         $(".alert-success").css("display", "block");
                         $("#sign-up-btn").attr('disabled', false);
                     }
-                    else if(res.email_error){
+                    else if(res.error){
                         $("#id_email").addClass("is-invalid");
                         $("#id_email").removeClass("is-valid");
                         $(".alert-success").css("display", "none");
-                        $(".alert-error").html(res.email_error);
+                        $(".alert-error").html(res.error);
                         $(".alert-error").css("display", "block");
                         $("#sign-up-btn").attr('disabled', true);
                     }

@@ -1,20 +1,15 @@
 from django.shortcuts import redirect, render
-from django.views import generic
 from django.views.decorators.cache import never_cache
 from django.utils.decorators import method_decorator
 from django.http import JsonResponse
+from django.views import generic
 from django.contrib.auth import get_user_model
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
-import json
-import re
-from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
+from django.db.models import Q
 from django.contrib import messages
-from urllib3 import request
 from account.mixing import LoginRequiredMixin, LogoutRequiredMixin
 from account.forms import SignUpForm, SignInForm, ResetPasswordForm
-
+import json
 User = get_user_model()
 
 
@@ -35,10 +30,10 @@ class UsernameValidationView(generic.View):
             if User.objects.filter(username=username).exists():
                 return JsonResponse({'error': 'This username is already taken'})
 
-            return JsonResponse({'valid': True})
+            return JsonResponse({'valid': 'Username is valid and available'})
 
         except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+            return JsonResponse({'error': 'Invalid JSON data'})
 
 
 # Email Validation
@@ -48,20 +43,18 @@ class EmailValidationView(generic.View):
         try:
             data = json.loads(request.body)
             email = data.get('email', '').strip()
-
+            
             if not email:
                 return JsonResponse({'error': 'Email cannot be empty'})
+            
 
-            if not validate_email(email):
-                return JsonResponse({'error': 'Email is invalid'})
-                    
             if User.objects.filter(email__iexact=email).exists():
                 return JsonResponse({'error': 'This email is already in use'})
 
-            return JsonResponse({'valid': True})
+            return JsonResponse({'valid': 'Email is valid and available'})
 
         except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+            return JsonResponse({'error': 'Invalid JSON data'})
 
 
 # SignInValidationView
