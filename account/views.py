@@ -18,7 +18,7 @@ from account.forms import SignUpForm, SignInForm, ResetPasswordForm
 User = get_user_model()
 
 
-# UsernameValidationView
+# Username Validation
 @method_decorator(never_cache, name='dispatch')
 class UsernameValidationView(generic.View):
     def post(self, request):
@@ -26,16 +26,42 @@ class UsernameValidationView(generic.View):
             data = json.loads(request.body)
             username = data.get('username', '').strip()
 
-            if not isinstance(username, str) or not username.isalnum():
-                return JsonResponse({'username_error': 'Username should only contain alphanumeric characters'})
+            if not username:
+                return JsonResponse({'error': 'Username cannot be empty'})
+
+            if not username.isalnum():
+                return JsonResponse({'error': 'Username should only contain alphanumeric characters'})
 
             if User.objects.filter(username=username).exists():
-                return JsonResponse({'username_error': 'Sorry, this username is already taken. Choose another one.'})
+                return JsonResponse({'error': 'This username is already taken'})
 
-            return JsonResponse({'username_valid': 'Username is available'})
+            return JsonResponse({'valid': True})
 
         except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON data'})
+            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+
+
+# Email Validation
+@method_decorator(never_cache, name='dispatch')
+class EmailValidationView(generic.View):
+    def post(self, request):    
+        try:
+            data = json.loads(request.body)
+            email = data.get('email', '').strip()
+
+            if not email:
+                return JsonResponse({'error': 'Email cannot be empty'})
+
+            if not validate_email(email):
+                return JsonResponse({'error': 'Email is invalid'})
+                    
+            if User.objects.filter(email__iexact=email).exists():
+                return JsonResponse({'error': 'This email is already in use'})
+
+            return JsonResponse({'valid': True})
+
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
 
 
 # SignInValidationView
@@ -50,6 +76,7 @@ class SignInValidationView(generic.View):
             return JsonResponse({'username_valid': True}, status=200)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON data'}, status=404)
+
 
 # SignUpView
 @method_decorator(never_cache, name='dispatch')
@@ -73,6 +100,7 @@ class SignUpView(LogoutRequiredMixin, generic.View):
             messages.error(request, 'An error occurred during sign up. Please try again.')
             return render(request, 'account/sign-up.html', {'form': form})
 
+
 # SignInView     
 @method_decorator(never_cache, name='dispatch')
 class SignInView(LogoutRequiredMixin, generic.View):
@@ -94,6 +122,7 @@ class SignInView(LogoutRequiredMixin, generic.View):
                 messages.error(request, 'Invalid credentials. Please try again.')
         return render(request, 'account/sign-in.html', {'form': form})
 
+
 # SignOutView     
 @method_decorator(never_cache, name='dispatch')
 class SignOutView(LoginRequiredMixin, generic.View):
@@ -105,6 +134,7 @@ class SignOutView(LoginRequiredMixin, generic.View):
         except Exception as e:
             messages.error(request, 'An error occurred during sign out. Please try again.')
             return redirect('sign-in')  
+
 
 # ChangesPasswordView
 @method_decorator(never_cache, name='dispatch')
@@ -119,6 +149,7 @@ class ChangesPasswordView(LoginRequiredMixin, generic.View):
             print(str(e))
         return render(request, 'account/changes-password.html')
 
+
 # ResetPasswordView
 @method_decorator(never_cache, name='dispatch')
 class ResetPasswordView(LogoutRequiredMixin, generic.View):
@@ -131,6 +162,7 @@ class ResetPasswordView(LogoutRequiredMixin, generic.View):
             print(str(e))
 
         return render(request, 'account/reset-password.htm')  
+  
     
 # ResetPasswordConfirmView
 @method_decorator(never_cache, name='dispatch')

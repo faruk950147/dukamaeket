@@ -37,6 +37,42 @@ $(document).ready(function(){
             });
         }
     });
+
+    $("#form #id_email").on("keyup", function(e){
+        e.preventDefault();
+
+        const email = $(this).val().trim();
+        if(email.length > 0){
+            $.ajax({
+                url: "{% url 'validate-email' %}",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ 'email': email }),
+                dataType: 'json',
+                success: function(res){
+                    if(res.email_valid){
+                        $("#id_email").removeClass("is-invalid");
+                        $("#id_email").addClass("is-valid");
+                        $(".alert-error").css("display", "none");
+                        $(".alert-success").html(res.email_valid);
+                        $(".alert-success").css("display", "block");
+                        $("#sign-up-btn").attr('disabled', false);
+                    }
+                    else if(res.email_error){
+                        $("#id_email").addClass("is-invalid");
+                        $("#id_email").removeClass("is-valid");
+                        $(".alert-success").css("display", "none");
+                        $(".alert-error").html(res.email_error);
+                        $(".alert-error").css("display", "block");
+                        $("#sign-up-btn").attr('disabled', true);
+                    }
+                },
+                error: function(err){
+                    console.log("An error occurred: ", err);
+                }
+            });
+        }
+    });
 });
 
 </script>
