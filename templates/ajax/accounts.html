@@ -15,10 +15,20 @@ $(document).ready(function(){
                 dataType: 'json',
                 success: function(res){
                     if(res.username_valid){
-                        console.log(res.username_valid);
+                        $("#id_username").removeClass("is-invalid");
+                        $("#id_username").addClass("is-valid");
+                        $(".alert-error").css("display", "none");
+                        $(".alert-success").html(res.username_valid);
+                        $(".alert-success").css("display", "block");
+                        $("#sign-up-btn").attr('disabled', false);
                     }
                     else if(res.username_error){
-                       console.log(res.username_error);
+                        $("#id_username").addClass("is-invalid");
+                        $("#id_username").removeClass("is-valid");
+                        $(".alert-success").css("display", "none");
+                        $(".alert-error").html(res.username_error);
+                        $(".alert-error").css("display", "block");
+                        $("#sign-up-btn").attr('disabled', true);
                     }
                 },
                 error: function(err){
