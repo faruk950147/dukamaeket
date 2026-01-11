@@ -13,7 +13,8 @@
                             <h5>Sign Up</h5>
                             <form id="form" method="post" action="" class="border p-4 rounded shadow-sm bg-light" novalidate>
                                 {% csrf_token %}
-                                <div class="form-group alert-messages mb-3" style="display: none;"></div>
+                                <div class="alert alert-danger alert-error mb-3" style="display: none;"></div>
+
                                 <div class="form-group mb-3">
                                     {{ form.username }}
                                     {{form.errors.username}}
@@ -59,21 +60,9 @@
                 data: JSON.stringify({ 'username': username }),
                 dataType: 'json',
                 success: function(res, textStatus, xhr){
-                    if (xhr.status === 200) {
-                        console.log(res);
-                        $("#id_username").removeClass("is-invalid");
-                        $("#id_username").addClass("is-valid");
-                        $(".alert-messages").text(res.messages);  
-                        $(".alert-messages").css("display", "block");
-                        $("#sign-up-btn").attr('disabled', false);
-                    }
-                    else if (xhr.status === 400) {
-                        console.log(res);
-                        $("#id_username").removeClass("is-valid");
-                        $("#id_username").addClass("is-invalid");
-                        $(".alert-messages").text(res.messages); 
-                        $(".alert-messages").css("display", "block");
-                        $("#sign-up-btn").attr('disabled', true);
+                    if (xhr.status === 400) {
+                        $("#form .alert-error").html(res.username_error)
+                        $("#form .alert-error").css("display", "block");
                     }
                 },
             });

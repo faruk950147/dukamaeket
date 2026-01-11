@@ -34,48 +34,6 @@ class UsernameValidationView(generic.View):
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON data'}, status=400)
 
-# EmailValidationView
-@method_decorator(never_cache, name='dispatch')
-class EmailValidationView(generic.View):
-    def post(self, request):    
-        try:
-            data = json.loads(request.body)
-            email = data.get('email', '').strip()
-
-            # Validate email format
-            try:
-                validate_email(email)
-            except ValidationError:
-                return JsonResponse({'email_error': 'Email is invalid'}, status=400)
-                    
-            # Check if email already exists
-            if User.objects.filter(email__iexact=email).exists():
-                return JsonResponse({'email_error': 'Sorry, this email is already in use. Choose another one.'}, status=400)
-
-            return JsonResponse({'email_valid': True}, status=200)
-
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
-
-# PasswordValidationView
-@method_decorator(never_cache, name='dispatch')
-class PasswordValidationView(generic.View):
-    def post(self, request):   
-        try:
-            data = json.loads(request.body)
-            password = data.get('password', '').strip()
-            password2 = data.get('password2', '').strip()
-            
-            if password != password2:
-                return JsonResponse({'password_error': 'Passwords do not match!'}, status=400)
-            
-            if len(password) < 8:
-                return JsonResponse({'password_error': 'Your password must be at least 8 characters long.'}, status=400)
-
-            return JsonResponse({'password_valid': True} , status=200)
-
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
 
 # SignInValidationView
 @method_decorator(never_cache, name='dispatch')
