@@ -46,12 +46,11 @@
   <!-- ============================ COMPONENT sign up  END.// ================================= -->
 <script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
 <script>
-  $(document).ready(function(){    
-    //All Validation
-    $("#form #id_username" ).on( "keyup blur change input focus", function(e){
+$(document).ready(function(){    
+    $("#form #id_username").on("keyup", function(e){
         e.preventDefault();
 
-        const username = $("#form #id_username").val().trim();
+        const username = $(this).val().trim();
         if(username.length > 0){
             $.ajax({
                 url: "{% url 'validate-username' %}",
@@ -59,16 +58,19 @@
                 contentType: "application/json",
                 data: JSON.stringify({ 'username': username }),
                 dataType: 'json',
-                success: function(res, textStatus, xhr){
-                    if (xhr.status === 400) {
-                        $("#form .alert-error").html(res.username_error)
-                        $("#form .alert-error").css("display", "block");
+                success: function(res){
+                    if(res.username_valid){
+                        console.log("Username is valid");
+                    }
+                    else if(res.username_error){
+                       console.log(res.username_error);
                     }
                 },
-            });
 
+            });
         }
     });
-  }); 
+});
+
 </script>
 {% endblock main_content %}

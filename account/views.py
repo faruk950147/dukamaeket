@@ -27,12 +27,15 @@ class UsernameValidationView(generic.View):
             username = data.get('username', '').strip()
 
             if not isinstance(username, str) or not username.isalnum():
-                return JsonResponse({'username_error': 'Username should only contain alphanumeric characters'}, status=400)
+                return JsonResponse({'username_error': 'Username should only contain alphanumeric characters', 'status': 400})
+
             if User.objects.filter(username=username).exists():
-                return JsonResponse({'username_error': 'Sorry, this username is already taken. Choose another one.'}, status=400)
-            return JsonResponse({'username_valid': True}, status=200)
+                return JsonResponse({'username_error': 'Sorry, this username is already taken. Choose another one.', 'status': 400})
+
+            return JsonResponse({'username_valid': True})
+
         except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+            return JsonResponse({'error': 'Invalid JSON data', 'status': 400})
 
 
 # SignInValidationView
@@ -57,13 +60,17 @@ class SignUpView(LogoutRequiredMixin, generic.View):
 
     def post(self, request):
         form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])
-            user.save()
-            messages.success(request, 'Account created successfully. Please sign in.')
-            return redirect('sign-in')
-        else:
+        try:
+            if form.is_valid():
+                user = form.save(commit=False)
+                user.set_password(form.cleaned_data['password'])
+                user.save()
+                messages.success(request, 'Account created successfully. Please sign in.')
+                return redirect('sign-in')
+            else:
+                return render(request, 'account/sign-up.html', {'form': form})
+        except Exception as e:
+            messages.error(request, 'An error occurred during sign up. Please try again.')
             return render(request, 'account/sign-up.html', {'form': form})
 
 # SignInView     
@@ -91,17 +98,26 @@ class SignInView(LogoutRequiredMixin, generic.View):
 @method_decorator(never_cache, name='dispatch')
 class SignOutView(LoginRequiredMixin, generic.View):
     def get(self, request):
-        logout(request)
-        messages.success(request, 'You have been signed out successfully.')
-        return redirect('sign-in')  
+        try:
+            logout(request)
+            messages.success(request, 'You have been signed out successfully.')
+            return redirect('sign-in')  
+        except Exception as e:
+            messages.error(request, 'An error occurred during sign out. Please try again.')
+            return redirect('sign-in')  
 
 # ChangesPasswordView
 @method_decorator(never_cache, name='dispatch')
 class ChangesPasswordView(LoginRequiredMixin, generic.View):
     def get(self, request):
+        
         return render(request, 'account/changes-password.html')
     def post(self, request):
-        return render(request, 'account/changes-password.html')    
+        try:
+            pass
+        except Exception as e:
+            print(str(e))
+        return render(request, 'account/changes-password.html')
 
 # ResetPasswordView
 @method_decorator(never_cache, name='dispatch')
@@ -109,6 +125,11 @@ class ResetPasswordView(LogoutRequiredMixin, generic.View):
     def get(self, request):
         return render(request, 'account/reset-password.htm')
     def post(self, request):
+        try:
+            pass
+        except Exception as e:
+            print(str(e))
+
         return render(request, 'account/reset-password.htm')  
     
 # ResetPasswordConfirmView
@@ -117,5 +138,9 @@ class ResetPasswordConfirmView(LoginRequiredMixin, generic.View):
     def get(self, request):
         return render(request, 'account/reset-password.htm')
     def post(self, request):
+        try:
+            pass
+        except Exception as e:
+            print(str(e))
         return render(request, 'account/reset-password.htm')
     
