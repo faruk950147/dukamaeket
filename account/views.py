@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 from django.contrib import messages
+from validate_email import validate_email
 from account.mixing import LoginRequiredMixin, LogoutRequiredMixin
 from account.forms import SignUpForm, SignInForm, ResetPasswordForm
 import json
@@ -47,11 +48,34 @@ class EmailValidationView(generic.View):
             if not email:
                 return JsonResponse({'error': 'Email cannot be empty'})
             
+            if not validate_email(email):
+                return JsonResponse({'error': 'Email is not valid'})
 
             if User.objects.filter(email__iexact=email).exists():
                 return JsonResponse({'error': 'This email is already in use'})
 
             return JsonResponse({'valid': 'Email is valid and available'})
+
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON data'})
+
+
+# Password Validation
+@method_decorator(never_cache, name='dispatch')
+class PasswordValidationView(generic.View):
+    def post(self, request):   
+        try:
+            data = json.loads(request.body)
+            password = data.get('password', '').strip()
+            password2 = data.get('password2', '').strip()
+
+            if password != password2:
+                return JsonResponse({'error': 'Passwords does not match!'})
+
+            if len(password) < 8:
+                return JsonResponse({'error': 'Your password is too short! It must be at least 8 characters long.'})
+
+            return JsonResponse({'valid': 'Password is valid.'})
 
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON data'})
