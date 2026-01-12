@@ -2,6 +2,8 @@ Main product image (Product page)	1000 × 1000 px বা 1200 × 1200 px
 Thumbnail / Category page	300 × 300 px বা 400 × 400 px
 Zoom-enabled product image	1500 × 1500 px বা 2000 × 2000 px
 Banner-like hero product	1600 × 900 px বা 1920 × 1080 px
+
+
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.utils.decorators import method_decorator
@@ -45,6 +47,7 @@ class HomeView(generic.View):
         acceptance_payments = AcceptancePayment.objects.filter(status='active')[:4]
 
         # Fetch top deals products (discounted & active deadline)
+        # select_related means join query for foreign key relationships
         top_deals = list(Product.objects.filter(
             status='active', discount_percent__gt=0, is_deadline=True, deadline__gte=timezone.now()
         ).select_related('category', 'brand')
@@ -59,7 +62,7 @@ class HomeView(generic.View):
             status='active', is_featured=True
         ).select_related('category', 'brand').prefetch_related('reviews') \
          .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))[:5]
-
+         
         # order_items = OrderItem.objects.filter(order__user=request.user)
         # product_ids = order_items.values_list('product_id', flat=True)
 
@@ -68,21 +71,29 @@ class HomeView(generic.View):
         # ).exclude(id__in=product_ids).annotate(
         #     count=Count('orderitem')
         # ).order_by('-count')[:5]
-
+        # ======= LOGGER =======
+        logger.info(
+            f"User {request.user if request.user.is_authenticated else 'Anonymous'} visited Home page. "
+            f"Sliders: {sliders.count()}, "
+            f"Feature Sliders: {feature_sliders.count()}, "
+            f"Add Sliders: {add_sliders.count()}, "
+            f"Promo Sliders: {promo_sliders.count()}, "
+            f"Top Deals: {len(top_deals)}, "
+            f"Featured Products: {featured_products.count()}"
+        )
         context = {
             'sliders': sliders,
             'feature_sliders': feature_sliders,
             'add_sliders': add_sliders,
             'promo_sliders': promo_sliders,
             'acceptance_payments': acceptance_payments,
-            'brands': brands,
-            'cates': cates,
             'top_deals': top_deals,
             'first_top_deal': first_top_deal,
             'featured_products': featured_products,
-            # 'recommended_products': recommended_products,
         }
+
         return render(request, 'store/home.html', context)
+
 
 # =========================================================
 # PRODUCT DETAIL VIEW
@@ -90,46 +101,43 @@ class HomeView(generic.View):
 @method_decorator(never_cache, name='dispatch')
 class ProductDetailView(generic.View):
     def get(self, request, slug, id):
-        # Fetch the main product with related data
         product = get_object_or_404(
-            Product.objects.select_related('category', 'brand')
-                .prefetch_related('reviews', 'variants__color', 'variants__size', 'images')
-                .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active'))),
+            Product.objects
+            .select_related('category', 'brand')
+            .prefetch_related(
+                'images',
+                'reviews',
+                'variants__color',
+                'variants__size'
+            )
+            .annotate(
+                avg_rate=Avg(
+                    'reviews__rating',
+                    filter=Q(reviews__status='active')
+                )
+            ),
             slug=slug,
             id=id,
             status='active'
         )
 
-        # Fetch default variant (fallback to first if none)
-        default_variants = product.variants.filter(is_default=True)
-
-        if default_variants.exists():
-            variant = default_variants[0] 
-        else:
-            all_variants = product.variants.all()
-            if all_variants.exists():
-                variant = all_variants[0]  
-            else:
-                variant = None  
-
-        # Fetch related products (same category, exclude current)
-        related_products = Product.objects.filter(
-            category=product.category,
-            status='active'
-        ).exclude(id=product.id).select_related('category', 'brand') \
-         .prefetch_related('reviews').annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))[:4]
-       
-        # ===== LOGGER =====
-        logger.info(
-            f"User {request.user if request.user.is_authenticated else 'Anonymous'} "
-            f"visited ProductDetail page. Product: {product.title} (ID: {product.id}), "
-            f"Variant: {variant.id if variant else 'None'}, "
-            f"Related Products: {related_products.count()}"
+        related_products = (
+            Product.objects
+            .filter(category=product.category, status='active')
+            .exclude(id=product.id)
+            .annotate(
+                avg_rate=Avg(
+                    'reviews__rating',
+                    filter=Q(reviews__status='active')
+                )
+            )[:4]
         )
+
+        variants = ProductVariant.objects.filter(product=product)
         context = {
             'product': product,
-            'variant': variant,
-            'related_products': related_products
+            'related_products': related_products,
+            'variants': variants
         }
 
         return render(request, 'store/product-detail.html', context)
@@ -151,7 +159,7 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
         if not rating or not rating.isdigit() or not subject or not comment:
             return JsonResponse({'status': 'error', 'message': 'All fields are required and rating must be a number'}, status=400)
 
-        rating = int(rating)
+        rating = float(rating)
         if rating < 1 or rating > 5:
             return JsonResponse({'status': 'error', 'message': 'Rating must be between 1 and 5'}, status=400)
 
@@ -167,7 +175,6 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
             rating=rating,
             subject=subject,
             comment=comment,
-            status='active'
         )
 
         review_count = product.reviews.filter(status='active').count()
@@ -196,7 +203,7 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
                 </div>
                 <div class="name-date mb-30">
                     <h6>{user.username} –
-                        <span>{review.created_date.strftime('%Y-%m-%d %H:%M')}</span>
+                        <span>{review.created_at.strftime('%Y-%m-%d %H:%M')}</span>
                     </h6>
                 </div>
                 <p>{subject}</p>
@@ -247,15 +254,15 @@ class ShopView(generic.View):
         page_number = int(page_number) if page_number and page_number.isdigit() else 1
 
         sort_map = {
-            'latest': '-created_date',
-            'new': 'created_date',
+            'latest': '-created_at',
+            'new': 'created_at',
             'upcoming': 'deadline'
         }
 
         if sort_by == 'upcoming':
             products = products.filter(deadline__gt=timezone.now()).order_by('deadline')
         else:
-            products = products.order_by(sort_map.get(sort_by, '-created_date'))
+            products = products.order_by(sort_map.get(sort_by, '-created_at'))
 
         paginator = Paginator(products, per_page)
         page_obj = paginator.get_page(page_number)
@@ -333,6 +340,9 @@ class GetFilterProductsView(generic.View):
 # =========================================================
 # AJAX: GET PRODUCT VARIANT PRICE / STOCK / IMAGE
 # =========================================================
+
+
+
 
 
 
