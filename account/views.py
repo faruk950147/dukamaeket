@@ -146,7 +146,7 @@ class SignInView(generic.View):
                 login(request, user)
                 messages.success(request, f'Welcome back, {user.username}!')
                 return redirect('home')
-            messages.error(request, 'Activate your account first.')
+            messages.error(request, 'Your account is not activated yet.')
         else:
             messages.error(request, 'Invalid username or password.')
 
