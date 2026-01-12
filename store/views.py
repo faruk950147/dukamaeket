@@ -129,6 +129,7 @@ class ProductDetailView(generic.View):
 
         return render(request, 'store/product-detail.html', context)
 
+
 # =========================================================
 # PRODUCT REVIEW VIEW (AJAX)
 # =========================================================
