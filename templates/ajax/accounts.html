@@ -2,7 +2,7 @@
 <script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
 <script>
 $(document).ready(function(){    
-    $("#form #id_username").on("keyup", function(e){
+    $("#form #id_username").on("keyup input", function(e){
         e.preventDefault();
 
         const username = $(this).val().trim();
@@ -38,7 +38,7 @@ $(document).ready(function(){
         }
     });
 
-    $("#form #id_email").on("keyup", function(e){
+    $("#form #id_email").on("keyup input", function(e){
         e.preventDefault();
 
         const email = $(this).val().trim();
@@ -74,7 +74,7 @@ $(document).ready(function(){
         }
     });
 
-   $("#id_password, #id_password2").on("keyup", function(e){
+   $("#id_password, #id_password2").on("keyup input", function(e){
         e.preventDefault()
         let password = $("#form #id_password").val().trim();
         let password2 = $("#form #id_password2").val().trim();

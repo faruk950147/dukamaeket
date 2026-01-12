@@ -20,30 +20,6 @@ User = get_user_model()
 
 logger = logging.getLogger('project')
 
-import json
-from django.http import JsonResponse
-from django.utils.decorators import method_decorator
-from django.views import generic
-from django.views.decorators.cache import never_cache
-from django.contrib.auth import get_user_model
-from django.core.validators import validate_email as django_validate_email
-from django.core.exceptions import ValidationError
-
-User = get_user_model()
-
-import json
-from django.http import JsonResponse
-from django.utils.decorators import method_decorator
-from django.views import generic
-from django.views.decorators.cache import never_cache
-from django.contrib.auth import get_user_model
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
-from django.db.models import Q
-
-User = get_user_model()
-
-
 # Username Validation
 @method_decorator(never_cache, name='dispatch')
 class UsernameValidationView(generic.View):
@@ -96,7 +72,7 @@ class PasswordValidationView(generic.View):
         if len(password) < 8:
             return JsonResponse({'error': 'Your password is too short! Minimum 8 characters required.'})
 
-        return JsonResponse({'valid': 'Password is valid'})
+        return JsonResponse({'valid': 'Password and confirmation password matched'})
 
 
 # SignIn Validation
@@ -147,7 +123,7 @@ class SignUpView(generic.View):
 
             # Send activation email
             ActivationEmailSender(user, request).send()
-            messages.success(request, 'Account created. Check email to activate.')
+            messages.success(request, 'Account created. Check your email to activate your account via the link sent.')
             return redirect('sign-in')
 
         messages.error(request, 'Correct the errors below.')
