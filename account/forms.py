@@ -140,9 +140,6 @@ class ChangePasswordForm(forms.Form):
         password = cleaned_data.get('password')
         password2 = cleaned_data.get('password2')
 
-        if not password:
-            raise ValidationError("New password is required")
-
         if len(password) < 8:
             raise ValidationError("New password must be at least 8 characters long")
 

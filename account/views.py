@@ -188,25 +188,10 @@ class ChangesPasswordView(LoginRequiredMixin, generic.View):
         return render(request, 'account/changes-password.html', {'form': form})
 
     def post(self, request):
-        current = request.POST.get('current_password')
-        new = request.POST.get('new_password')
-        confirm = request.POST.get('confirm_password')
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('password')
+        new_password2 = request.POST.get('password2')
 
-        if not request.user.check_password(current):
-            messages.error(request, 'Current password incorrect')
-            return redirect('change-password')
-
-        if new != confirm:
-            messages.error(request, 'Passwords do not match')
-            return redirect('change-password')
-
-        if len(new) < 8:
-            messages.error(request, 'Password too short')
-            return redirect('change-password')
-
-        request.user.set_password(new)
-        request.user.save()
-        logout(request)
-        messages.success(request, 'Password changed. Login again.')
-        return redirect('sign-in')
+        messages.success(request, 'Password changed. signed again.')
+        # return redirect('sign-in')
     
