@@ -20,6 +20,7 @@ User = get_user_model()
 
 logger = logging.getLogger('project')
 
+
 # Username Validation
 @method_decorator(never_cache, name='dispatch')
 class UsernameValidationView(generic.View):
@@ -27,28 +28,18 @@ class UsernameValidationView(generic.View):
         data = json.loads(request.body)
         username = data.get('username', '').strip()
 
-        if username == '':
-            return JsonResponse(
-                {'status': 'error', 'message': 'Username cannot be empty'},
-                status=400
-            )
+        if not username:
+            return JsonResponse({'status': 'error', 'message': 'Username cannot be empty'})
 
         if not username.isalnum():
-            return JsonResponse(
-                {'status': 'error', 'message': 'Username should only contain letters and numbers'},
-                status=400
-            )
+            return JsonResponse({'status': 'error', 'message': 'Username should only contain letters and numbers'})
 
         if User.objects.filter(username__iexact=username).exists():
             return JsonResponse(
-                {'status': 'error', 'message': 'This username is already taken'},
-                status=400
-            )
+                {'status': 'error', 'message': 'This username is already taken'})
 
         return JsonResponse(
-            {'status': 'success', 'message': 'Username is valid and available'},
-            status=200
-        )
+            {'status': 'success', 'message': 'Username is valid and available'})
 
 
 # Email Validation
@@ -58,28 +49,20 @@ class EmailValidationView(generic.View):
         data = json.loads(request.body)
         email = data.get('email', '').strip().lower()
 
-        if email == '':
+        if not email:
             return JsonResponse(
-                {'status': 'error', 'message': 'Email cannot be empty'},
-                status=400
-            )
+                {'status': 'error', 'message': 'Email cannot be empty'})
 
         if not validate_email(email):
             return JsonResponse(
-                {'status': 'error', 'message': 'Email is not valid'},
-                status=400
-            )
+                {'status': 'error', 'message': 'Email is not valid'})
 
         if User.objects.filter(email__iexact=email).exists():
             return JsonResponse(
-                {'status': 'error', 'message': 'This email is already in use'},
-                status=400
-            )
+                {'status': 'error', 'message': 'This email is already in use'})
 
         return JsonResponse(
-            {'status': 'success', 'message': 'Email is valid and available'},
-            status=200
-        )
+            {'status': 'success', 'message': 'Email is valid and available'})
 
 
 # Password Validation
@@ -92,47 +75,35 @@ class PasswordValidationView(generic.View):
 
         if password != password2:
             return JsonResponse(
-                {'status': 'error', 'message': 'Passwords do not match'},
-                status=400
-            )
+                {'status': 'error', 'message': 'Passwords do not match'})
 
         if len(password) < 8:
             return JsonResponse(
-                {'status': 'error', 'message': 'Password must be at least 8 characters long'},
-                status=400
-            )
+                {'status': 'error', 'message': 'Password must be at least 8 characters long'})
 
         return JsonResponse(
-            {'status': 'success', 'message': 'Password is valid'},
-            status=200
-        )
+            {'status': 'success', 'message': 'Passwords match'})
 
 
-# Signed Validation
+# Sign In Validation
 @method_decorator(never_cache, name='dispatch')
 class SignInValidationView(generic.View):
     def post(self, request):
         data = json.loads(request.body)
-        username = data.get('username', '').strip()
+        username_or_email = data.get('username', '').strip()
 
-        if username == '':
+        if not username_or_email:
             return JsonResponse(
-                {'status': 'error', 'message': 'Username or email is required'},
-                status=400
-            )
+                {'status': 'error', 'message': 'Username or email is required'})
 
         if not User.objects.filter(
-            Q(username__iexact=username) | Q(email__iexact=username)
+            Q(username__iexact=username_or_email) | Q(email__iexact=username_or_email)
         ).exists():
             return JsonResponse(
-                {'status': 'error', 'message': 'No account found with this username or email'},
-                status=400
-            )
+                {'status': 'error', 'message': 'No account found with this username or email'})
 
         return JsonResponse(
-            {'status': 'success', 'message': 'Account exists'},
-            status=200
-        )
+            {'status': 'success', 'message': 'Account exists'})
 
 
 # Account Activation View
