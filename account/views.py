@@ -5,7 +5,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.http import JsonResponse
 from django.views import generic
 from django.contrib.auth import get_user_model
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.db.models import Q
 from django.contrib import messages
 from validate_email import validate_email
@@ -183,15 +183,28 @@ class SignOutView(LoginRequiredMixin, generic.View):
 # Change Password View
 @method_decorator(never_cache, name='dispatch')
 class ChangesPasswordView(LoginRequiredMixin, generic.View):
+    
     def get(self, request):
-        form = ChangePasswordForm()
+        form = ChangePasswordForm(user=request.user)
         return render(request, 'account/changes-password.html', {'form': form})
 
     def post(self, request):
-        current_password = request.POST.get('current_password')
-        new_password = request.POST.get('password')
-        new_password2 = request.POST.get('password2')
+        form = ChangePasswordForm(user=request.user, data=request.POST)
+        
+        if form.is_valid():
+            new_password = form.cleaned_data.get('password')
+            
+            # Update user password
+            request.user.set_password(new_password)
+            request.user.save()
+            
+            # Update session so user doesn't get logged out immediately
+            update_session_auth_hash(request, request.user)
+            
+            messages.success(request, "Password successfully changed!")
+            
+            # logout user after password change
+            logout(request)
+            return redirect('sign-in')  
 
-        messages.success(request, 'Password changed. signed again.')
-        # return redirect('sign-in')
-    
+        return render(request, 'account/changes-password.html', {'form': form})

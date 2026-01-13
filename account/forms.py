@@ -129,22 +129,25 @@ class ChangePasswordForm(forms.Form):
         widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'})
     )
 
+    # Validate current password
     def clean_current_password(self):
         current_password = self.cleaned_data.get('current_password')
         if self.user and not self.user.check_password(current_password):
             raise ValidationError("Current password is incorrect")
         return current_password
 
+    # Validate new password & confirm password
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get('password')
         password2 = cleaned_data.get('password2')
 
-        if len(password) < 8:
-            raise ValidationError("New password must be at least 8 characters long")
+        if password:
+            if len(password) < 8:
+                self.add_error('password', "New password must be at least 8 characters long")
 
-        if password != password2:
-            raise ValidationError("Passwords do not match")
+            if password != password2:
+                self.add_error('password2', "Passwords do not match")
 
         return cleaned_data
 
