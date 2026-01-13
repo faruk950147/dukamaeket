@@ -209,3 +209,4 @@ class ChangesPasswordView(LoginRequiredMixin, generic.View):
         logout(request)
         messages.success(request, 'Password changed. Login again.')
         return redirect('sign-in')
+    

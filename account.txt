@@ -1,0 +1,16 @@
+@method_decorator(never_cache, name='dispatch')
+class ChangesPasswordView(LoginRequiredMixin, generic.View):
+    def get(self, request):
+        form = ChangePasswordForm(user=request.user)
+        return render(request, 'account/changes-password.html', {'form': form})
+
+    def post(self, request):
+        form = ChangePasswordForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            request.user.set_password(form.cleaned_data['password'])
+            request.user.save()
+            logout(request)
+            messages.success(request, 'Password changed. Login again.')
+            return redirect('sign-in')
+        messages.error(request, 'Please correct the errors below.')
+        return render(request, 'account/changes-password.html', {'form': form})
