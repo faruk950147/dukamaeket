@@ -13,9 +13,9 @@
                             <h5>Sign In</h5>
                             <form method="post" action="" class="border p-4 rounded shadow-sm bg-light" novalidate>
                                 {% csrf_token %}
-                                <div class="form-group alert-messages mb-3">
+                                <div class="alert alert-success alert-success mb-3" style="display: none;"></div> 
+                                <div class="alert alert-danger alert-error mb-3" style="display: none;"></div>
 
-                                </div>
                                 <div class="form-group mb-3">
                                     {{ form.username }}
                                     {{form.errors.username}}
