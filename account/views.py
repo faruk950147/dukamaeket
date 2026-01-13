@@ -10,7 +10,7 @@ from django.db.models import Q
 from django.contrib import messages
 from validate_email import validate_email
 from account.mixing import LoginRequiredMixin, LogoutRequiredMixin
-from account.forms import SignUpForm, SignInForm, ResetPasswordForm
+from account.forms import SignUpForm, SignInForm, ChangePasswordForm, ResetPasswordForm
 from account.utilities import account_activation_token, ActivationEmailSender
 import json
 import logging
@@ -184,7 +184,8 @@ class SignOutView(LoginRequiredMixin, generic.View):
 @method_decorator(never_cache, name='dispatch')
 class ChangesPasswordView(LoginRequiredMixin, generic.View):
     def get(self, request):
-        return render(request, 'account/changes-password.html')
+        form = ChangePasswordForm()
+        return render(request, 'account/changes-password.html', {'form': form})
 
     def post(self, request):
         current = request.POST.get('current_password')
