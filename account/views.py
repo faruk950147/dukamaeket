@@ -152,24 +152,30 @@ class SignUpView(generic.View):
 @method_decorator(never_cache, name='dispatch')
 class SignInView(generic.View):
     def get(self, request):
-        return render(request, 'account/sign-in.html', {'form': SignInForm()})
+        form = SignInForm()
+        return render(request, 'account/sign-in.html', {'form': form})
 
     def post(self, request):
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
+        form = SignInForm(request.POST)
 
-        if user:
-            if user.is_active:
-                login(request, user)
-                messages.success(request, f'Welcome back, {user.username}!')
-                return redirect('home')
-            messages.error(request, 'Your account is not activated yet.')
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+
+            if user:
+                if user.is_active:
+                    login(request, user)
+                    messages.success(request, f'Welcome back, {user.username}!')
+                    return redirect('home')
+                else:
+                    messages.error(request, 'Your account is not activated yet.')
+            else:
+                messages.error(request, 'Invalid username or password.')
         else:
-            messages.error(request, 'Invalid username or password.')
+            messages.error(request, 'Please correct the errors below.')
 
-        return redirect('sign-in')
-
+        return render(request, 'account/sign-in.html', {'form': form})
 
 # Sign Out View
 @method_decorator(never_cache, name='dispatch')
