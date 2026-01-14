@@ -126,7 +126,7 @@ class AccountActivationView(generic.View):
                 backend = get_backends()[0].__class__.__module__ + "." + get_backends()[0].__class__.__name__
                 login(request, user, backend=backend)
 
-                messages.success(request, 'Account activated successfully and logged in.')
+                messages.success(request, 'Account activated successfully and signsd in.')
             else:
                 messages.info(request, 'Account already activated.')
                 # Optional: auto-login already active user
