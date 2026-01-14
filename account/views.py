@@ -15,13 +15,11 @@ from account.utilities import account_activation_token, ActivationEmailSender, r
 import json
 import logging
 
-
 User = get_user_model()
-
 logger = logging.getLogger('project')
 
 
-# Username Validation
+# Username Validation 
 @method_decorator(never_cache, name='dispatch')
 class UsernameValidationView(generic.View):
     def post(self, request):
@@ -29,17 +27,19 @@ class UsernameValidationView(generic.View):
         username = data.get('username', '').strip()
 
         if not username:
+            logger.info("Username validation failed: empty input")
             return JsonResponse({'status': 'error', 'message': 'Username cannot be empty'})
 
         if not username.isalnum():
+            logger.info(f"Username validation failed: {username} contains non-alphanumeric characters")
             return JsonResponse({'status': 'error', 'message': 'Username should only contain letters and numbers'})
 
         if User.objects.filter(username__iexact=username).exists():
-            return JsonResponse(
-                {'status': 'error', 'message': 'This username is already taken'})
+            logger.info(f"Username validation failed: {username} already exists")
+            return JsonResponse({'status': 'error', 'message': 'This username is already taken'})
 
-        return JsonResponse(
-            {'status': 'success', 'message': 'Username is valid and available'})
+        logger.info(f"Username validated successfully: {username}")
+        return JsonResponse({'status': 'success', 'message': 'Username is valid and available'})
 
 
 # Email Validation
@@ -50,22 +50,22 @@ class EmailValidationView(generic.View):
         email = data.get('email', '').strip().lower()
 
         if not email:
-            return JsonResponse(
-                {'status': 'error', 'message': 'Email cannot be empty'})
+            logger.info("Email validation failed: empty input")
+            return JsonResponse({'status': 'error', 'message': 'Email cannot be empty'})
 
         if not validate_email(email):
-            return JsonResponse(
-                {'status': 'error', 'message': 'Email is not valid'})
+            logger.info(f"Email validation failed: {email} is invalid")
+            return JsonResponse({'status': 'error', 'message': 'Email is not valid'})
 
         if User.objects.filter(email__iexact=email).exists():
-            return JsonResponse(
-                {'status': 'error', 'message': 'This email is already in use'})
+            logger.info(f"Email validation failed: {email} already in use")
+            return JsonResponse({'status': 'error', 'message': 'This email is already in use'})
 
-        return JsonResponse(
-            {'status': 'success', 'message': 'Email is valid and available'})
+        logger.info(f"Email validated successfully: {email}")
+        return JsonResponse({'status': 'success', 'message': 'Email is valid and available'})
 
 
-# Password Validation
+# Password Validation 
 @method_decorator(never_cache, name='dispatch')
 class PasswordValidationView(generic.View):
     def post(self, request):
@@ -74,18 +74,18 @@ class PasswordValidationView(generic.View):
         password2 = data.get('password2', '')
 
         if password != password2:
-            return JsonResponse(
-                {'status': 'error', 'message': 'Passwords do not match'})
+            logger.info("Password validation failed: passwords do not match")
+            return JsonResponse({'status': 'error', 'message': 'Passwords do not match'})
 
         if len(password) < 8:
-            return JsonResponse(
-                {'status': 'error', 'message': 'Password must be at least 8 characters long'})
+            logger.info("Password validation failed: password too short")
+            return JsonResponse({'status': 'error', 'message': 'Password must be at least 8 characters long'})
 
-        return JsonResponse(
-            {'status': 'success', 'message': 'Passwords match'})
+        logger.info("Password validated successfully")
+        return JsonResponse({'status': 'success', 'message': 'Passwords match'})
 
 
-# Sign In Validation
+# Sign In Validation 
 @method_decorator(never_cache, name='dispatch')
 class SignInValidationView(generic.View):
     def post(self, request):
@@ -93,20 +93,20 @@ class SignInValidationView(generic.View):
         username_or_email = data.get('username', '').strip()
 
         if not username_or_email:
-            return JsonResponse(
-                {'status': 'error', 'message': 'Username or email is required'})
+            logger.info("Sign-in validation failed: empty input")
+            return JsonResponse({'status': 'error', 'message': 'Username or email is required'})
 
         if not User.objects.filter(
             Q(username__iexact=username_or_email) | Q(email__iexact=username_or_email)
         ).exists():
-            return JsonResponse(
-                {'status': 'error', 'message': 'No account found with this username or email'})
+            logger.info(f"Sign-in validation failed: no account found for {username_or_email}")
+            return JsonResponse({'status': 'error', 'message': 'No account found with this username or email'})
 
-        return JsonResponse(
-            {'status': 'success', 'message': 'Account exists'})
+        logger.info(f"Sign-in validation success: account exists for {username_or_email}")
+        return JsonResponse({'status': 'success', 'message': 'Account exists'})
 
 
-# Account Activation View
+# Account Activation 
 @method_decorator(never_cache, name='dispatch')
 class AccountActivationView(generic.View):
     def get(self, request, uidb64, token):
@@ -115,6 +115,7 @@ class AccountActivationView(generic.View):
             user = User.objects.get(id=uid)
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
             messages.error(request, 'Activation link is invalid.')
+            logger.warning("Account activation failed: invalid UID")
             return redirect('sign-in')
 
         if account_activation_token.check_token(user, token):
@@ -122,24 +123,24 @@ class AccountActivationView(generic.View):
                 user.is_active = True
                 user.save()
 
-                # Explicit backend required if multiple backends configured
                 backend = get_backends()[0].__class__.__module__ + "." + get_backends()[0].__class__.__name__
                 login(request, user, backend=backend)
-
-                messages.success(request, 'Account activated successfully and signsd in.')
+                logger.info(f"Account activated: {user.username} ({user.id})")
+                messages.success(request, 'Account activated successfully and signed in.')
             else:
                 messages.info(request, 'Account already activated.')
-                # Optional: auto-login already active user
                 if not request.user.is_authenticated:
                     backend = get_backends()[0].__class__.__module__ + "." + get_backends()[0].__class__.__name__
                     login(request, user, backend=backend)
+                    logger.info(f"Account already active, auto-logged in: {user.username} ({user.id})")
         else:
             messages.error(request, 'Activation link is invalid or expired.')
+            logger.warning(f"Account activation failed: invalid or expired token for user {user.username} ({user.id})")
 
-        return redirect('home')  # or 'sign-in' if you prefer
+        return redirect('home')
 
 
-# Sign Up View
+# Sign Up 
 @method_decorator(never_cache, name='dispatch')
 class SignUpView(generic.View):
     def get(self, request):
@@ -153,16 +154,17 @@ class SignUpView(generic.View):
             user.is_active = False
             user.save()
 
-            # Send activation email
             ActivationEmailSender(user, request).send()
+            logger.info(f"New account created (inactive): {user.username} ({user.id})")
             messages.success(request, 'Account created. Check your email to activate your account via the link sent.')
             return redirect('sign-in')
 
+        logger.info("Sign-up form invalid")
         messages.error(request, 'Correct the errors below.')
         return render(request, 'account/sign-up.html', {'form': form})
 
 
-# Sign In View
+# Sign In 
 @method_decorator(never_cache, name='dispatch')
 class SignInView(generic.View):
     def get(self, request):
@@ -171,7 +173,6 @@ class SignInView(generic.View):
 
     def post(self, request):
         form = SignInForm(request.POST)
-
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
@@ -180,57 +181,57 @@ class SignInView(generic.View):
             if user:
                 if user.is_active:
                     login(request, user)
+                    logger.info(f"User signed in: {user.username} ({user.id})")
                     messages.success(request, f'Welcome back, {user.username}!')
                     return redirect('home')
                 else:
                     messages.error(request, 'Your account is not activated yet.')
+                    logger.warning(f"Inactive user attempted sign-in: {user.username} ({user.id})")
             else:
                 messages.error(request, 'Invalid username or password.')
+                logger.warning(f"Failed sign-in attempt for username: {username}")
         else:
             messages.error(request, 'Please correct the errors below.')
+            logger.info("Sign-in form invalid")
 
         return render(request, 'account/sign-in.html', {'form': form})
 
-# Sign Out View
+
+# Sign Out 
 @method_decorator(never_cache, name='dispatch')
 class SignOutView(LoginRequiredMixin, generic.View):
     def get(self, request):
+        logger.info(f"User signed out: {request.user.username} ({request.user.id})")
         logout(request)
         messages.success(request, 'Signed out successfully.')
         return redirect('sign-in')
 
 
-# Change Password View
+# Change Password 
 @method_decorator(never_cache, name='dispatch')
 class ChangesPasswordView(LoginRequiredMixin, generic.View):
-    
     def get(self, request):
         form = ChangePasswordForm(user=request.user)
         return render(request, 'account/changes-password.html', {'form': form})
 
     def post(self, request):
         form = ChangePasswordForm(user=request.user, data=request.POST)
-        
         if form.is_valid():
             new_password = form.cleaned_data.get('password')
-            
-            # Update user password
             request.user.set_password(new_password)
             request.user.save()
-            
-            # Update session so user doesn't get logged out immediately
             update_session_auth_hash(request, request.user)
-            
-            messages.success(request, "Password successfully changed!")
-            
-            # logout user after password change
-            logout(request)
-            return redirect('sign-in')  
+            logger.info(f"Password changed for user: {request.user.username} ({request.user.id})")
 
+            logout(request)
+            messages.success(request, "Password successfully changed!")
+            return redirect('sign-in')
+
+        logger.info(f"Password change failed for user: {request.user.username} ({request.user.id})")
         return render(request, 'account/changes-password.html', {'form': form})
 
 
-# Reset Password View
+# Reset Password 
 @method_decorator(never_cache, name='dispatch')
 class ResetPasswordView(generic.View):
     def get(self, request):
@@ -243,12 +244,15 @@ class ResetPasswordView(generic.View):
             email = form.cleaned_data.get('email')
             user = User.objects.get(email__iexact=email)
             ResetPasswordEmailSender(user, request).send()
+            logger.info(f"Password reset email sent to: {email} (user_id={user.id})")
             messages.success(request, "Password reset link has been sent to your email.")
             return redirect('reset-password')
+
+        logger.info(f"Password reset form invalid for email: {request.POST.get('email')}")
         return render(request, 'account/reset-password.html', {'form': form})
 
 
-# Reset Password Confirm View
+# Reset Password Confirm 
 @method_decorator(never_cache, name='dispatch')
 class ResetPasswordConfirmView(generic.View):
     def get(self, request, uidb64, token):
@@ -256,6 +260,7 @@ class ResetPasswordConfirmView(generic.View):
         user = User.objects.get(id=uid)
         if not reset_password_token.check_token(user, token):
             messages.error(request, "Invalid or expired reset link.")
+            logger.warning(f"Invalid password reset attempt for user: {user.username} ({user.id})")
             return redirect('reset-password')
         form = ResetPasswordConfirmForm()
         return render(request, 'account/reset-password-confirm.html', {'form': form})
@@ -265,14 +270,14 @@ class ResetPasswordConfirmView(generic.View):
         user = User.objects.get(id=uid)
         if not reset_password_token.check_token(user, token):
             messages.error(request, "Invalid or expired reset link.")
+            logger.warning(f"Invalid password reset attempt for user: {user.username} ({user.id})")
             return redirect('reset-password')
         form = ResetPasswordConfirmForm(request.POST)
         if form.is_valid():
             password = form.cleaned_data.get('password')
             user.set_password(password)
             user.save()
-            messages.success(request, "Password reset successful. You can signed now.")
+            logger.info(f"Password reset successful for user: {user.username} ({user.id})")
+            messages.success(request, "Password reset successful. You can sign in now.")
             return redirect('sign-in')
         return render(request, 'account/reset-password-confirm.html', {'form': form})
-
-
