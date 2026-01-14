@@ -1,6 +1,6 @@
 {% extends 'base.html' %} 
 {% load static %} 
-{% block title %} Profile {% endblock title %} 
+{% block title %} User Original Info {% endblock title %} 
 {% block main_content %}
   <!-- ============================ COMPONENT Sign up   ================================= -->
     <main>
@@ -10,54 +10,61 @@
                 <div class="row justify-content-center align-items-center">
                     <div class="col-lg-6">
                         <div class="basic-login">
-                            <h5>Profile</h5>
-                            <form method="post"
-                                enctype="multipart/form-data"
-                                class="border p-4 rounded shadow-sm bg-light">
+                            <h5>User original info</h5>
+                            <form method="post" enctype="multipart/form-data" class="border p-4 rounded shadow-sm bg-light">
                                 {% csrf_token %}
 
-                                <!-- USER FORM -->
                                 <div class="form-group mb-3">
-                                    {{ user_form.username }}
-                                    {{ user_form.username.errors }}
+                                    {{ form.username }}
+                                    {{ form.username.errors }}
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    {{ user_form.email }}
-                                    {{ user_form.email.errors }}
-                                </div>
-
-                                <hr>
-
-                                <!-- PROFILE FORM -->
-
-                                <div class="form-group mb-3">
-                                    {{ profile_form.country }}
+                                    {{ form.email }}
+                                    {{ form.email.errors }}
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    {{ profile_form.city }}
+                                    {{ form.country }}                           
+                                    {{ form.country.errors }}
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    {{ profile_form.home_city }}
+                                    {{ form.city }}
+                                    {{ form.city.errors }}
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    {{ profile_form.zip_code }}
+                                    
+                                    {{ form.home_city }}
+                                    {{ form.home_city.errors }}
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    {{ profile_form.phone }}
+                                    {{ form.zip_code }}
+                                    {{ form.zip_code.errors }}
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    {{ profile_form.address }}
+                                    {{ form.phone }}
+                                    {{ form.phone.errors }}
                                 </div>
 
-                                <button type="submit" class="tp-in-btn w-100">
-                                    Changes Now
-                                </button>
+                                <div class="form-group mb-3">
+                                    {{ form.address }}
+                                    {{ form.address.errors }}
+                                </div>
+                                <div class="form-group mb-3">
+                                    {% if user.image %}
+                                        <img src="{{ user.image.url }}" alt="User Image" style="width: 50px; height: 50px;" class="mb-2"/>
+                                    {% else %}
+                                        <img src="{% static 'media/defaults/default.jpg' %}" alt="No Image" style="width: 50px; height: 50px;" class="mb-2"/>
+                                    {% endif %}
+                                    {{ form.image }}
+                                    {{ form.image.errors }}
+                                </div>
+
+                                <button type="submit" class="tp-in-btn w-100">Changes Now</button>
                             </form>
                         </div>
                     </div>

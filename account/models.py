@@ -49,7 +49,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=False,
         null=False
     )
-    image = models.ImageField(upload_to='profiles', default='defaults/default.jpg')
+    image = models.ImageField(upload_to='user', default='defaults/default.jpg')
     country = models.CharField(max_length=150, null=True, blank=True)
     city = models.CharField(max_length=150, null=True, blank=True)
     home_city = models.CharField(max_length=150, null=True, blank=True)
@@ -85,7 +85,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 # ---------------- CUSTOMER ----------------
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='customer')
-    image = models.ImageField(upload_to='profiles', default='defaults/default.jpg')
+    image = models.ImageField(upload_to='customer', default='defaults/default.jpg')
     country = models.CharField(max_length=150, null=True, blank=True)
     city = models.CharField(max_length=150, null=True, blank=True)
     home_city = models.CharField(max_length=150, null=True, blank=True)

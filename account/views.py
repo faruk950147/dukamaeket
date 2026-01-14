@@ -293,14 +293,21 @@ class ResetPasswordConfirmView(LogoutRequiredMixin, generic.View):
 
 
 # User Info
-class UserInfoView(LogoutRequiredMixin, generic.View):
+class UserInfoView(LoginRequiredMixin, generic.View):
     def get(self, request):
-        return render(request, 'account/user-info.html')
+        form = UserForm(instance=request.user)
+        return render(request, 'account/user-info.html', {'form': form})
+
     def post(self, request):
-        return render(request, 'account/user-info.html')
+        # Bind form with POST data and current user instance
+        form = UserForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('user-info')  
+        return render(request, 'account/user-info.html', {'form': form})
 
 
-class CustomerView(LogoutRequiredMixin, generic.View):
+class CustomerView(LoginRequiredMixin, generic.View):
     def get(self, request):
         return render(request, 'account/customer.html')
     def post(self, request):
