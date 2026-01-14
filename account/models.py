@@ -71,6 +71,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         ordering = ['id']
         verbose_name_plural = '01. Users'
+        
+    @property
+    def image_tag(self):
+        if self.image:
+            return mark_safe(f'<img src="{self.image.url}" width="50" height="50"/>')
+        return mark_safe('<span>No Image</span>')
 
     def __str__(self):
         return self.username
