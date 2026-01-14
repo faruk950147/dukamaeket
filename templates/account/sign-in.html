@@ -24,6 +24,15 @@
                                     {{ form.password }}
                                     {{form.errors.password}}
                                 </div>
+                                <div class="login-action mb-10 fix">
+                                    <span class="log-rem f-left">
+                                       <input id="remember" type="checkbox">
+                                       <label for="remember">Remember me</label>
+                                    </span>
+                                    <span class="forgot-login f-right">
+                                       <a href="{% url "reset-password" %}">Lost your password?</a>
+                                    </span>
+                                </div>
                                 <button type="submit" class="tp-in-btn w-100">Sign In Now</button>
                             </form>
                         </div>

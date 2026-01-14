@@ -214,3 +214,9 @@ class ChangesPasswordView(LoginRequiredMixin, generic.View):
             return redirect('sign-in')  
 
         return render(request, 'account/changes-password.html', {'form': form})
+
+# Reset Password View
+class ResetPasswordView(generic.View):
+    def get(self, request):
+        form = ResetPasswordForm()
+        return render(request, 'account/reset-password.html', {'form': form})
