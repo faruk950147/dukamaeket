@@ -1,14 +1,42 @@
 {% load static %}
 <script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
 <script>
-    $(document).ready(function(){    
-        $("#form #id_username").on("keyup input", function(e){
-            e.preventDefault();
+$(document).ready(function(){    
+    $("#form #id_username").on("keyup input", function(e){
+        e.preventDefault();
 
-            const username = $(this).val().trim();
-            console.log(username)
-        });
-
+        const username = $(this).val().trim();
+        if(username.length > 0){
+            $.ajax({
+                url: "{% url 'validate-signin' %}",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ 'username': username }),
+                dataType: 'json',
+                success: function(res){
+                    if(res.status === 'success'){
+                        $("#id_username").removeClass("is-invalid");
+                        $("#id_username").addClass("is-valid");
+                        $(".alert-error").css("display", "none");
+                        $(".alert-success").html(res.message);
+                        $(".alert-success").css("display", "block");
+                        $("#sign-in-btn").attr('disabled', false);
+                    }
+                    else if(res.status === 'error'){
+                        $("#id_username").addClass("is-invalid");
+                        $("#id_username").removeClass("is-valid");
+                        $(".alert-success").css("display", "none");
+                        $(".alert-error").html(res.message);
+                        $(".alert-error").css("display", "block");
+                        $("#sign-in-btn").attr('disabled', true);
+                    }
+                },
+                error: function(err){
+                    console.log("An error occurred: ", err);
+                }
+            });
+        }
     });
+});
 
 </script>

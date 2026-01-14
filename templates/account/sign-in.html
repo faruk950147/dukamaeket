@@ -11,7 +11,7 @@
                     <div class="col-lg-6">
                         <div class="basic-login mb-50">
                             <h5>Sign In</h5>
-                            <form method="post" action="" class="border p-4 rounded shadow-sm bg-light" novalidate>
+                            <form id="form" method="post" action="" class="border p-4 rounded shadow-sm bg-light" novalidate>
                                 {% csrf_token %}
                                 <div class="alert alert-success alert-success mb-3" style="display: none;"></div> 
                                 <div class="alert alert-danger alert-error mb-3" style="display: none;"></div>
@@ -33,7 +33,7 @@
                                        <a href="{% url "reset-password" %}">Lost your password?</a>
                                     </span>
                                 </div>
-                                <button type="submit" class="tp-in-btn w-100">Sign In Now</button>
+                                <button type="submit" id="sign-in-btn" class="tp-in-btn w-100">Sign In Now</button>
                             </form>
                         </div>
                     </div>
@@ -44,5 +44,5 @@
 
     </main>
   <!-- ============================ COMPONENT sign in  END.// ================================= -->
-  {% include "ajax/signin.html" %}
+{% include "ajax/signin.html" %}
 {% endblock main_content %}
