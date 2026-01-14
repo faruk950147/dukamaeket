@@ -740,3 +740,8 @@ INFO 2026-01-14 13:30:04,439 project views User user1234 visited Home page. Slid
 INFO 2026-01-14 13:32:08,703 project views User user1234 visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
 INFO 2026-01-14 13:37:49,611 project views User user1234 visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
 INFO 2026-01-14 13:48:09,668 project views User signed out: user1234 (27)
+INFO 2026-01-14 13:54:37,737 project views Sign-in form invalid
+INFO 2026-01-14 13:55:00,069 project views User signed in: user1234 (27)
+INFO 2026-01-14 13:55:00,094 project views User user1234 visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-14 13:55:16,469 project views User signed out: user1234 (27)
+INFO 2026-01-14 13:55:46,098 project views Password reset email sent to: xitap67363@feanzier.com (user_id=27)
