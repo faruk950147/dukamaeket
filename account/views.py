@@ -253,7 +253,7 @@ class ResetPasswordView(generic.View):
 class ResetPasswordConfirmView(generic.View):
     def get(self, request, uidb64, token):
         uid = urlsafe_base64_decode(uidb64).decode()
-        user = User.objects.get(pk=uid)
+        user = User.objects.get(id=uid)
         if not reset_password_token.check_token(user, token):
             messages.error(request, "Invalid or expired reset link.")
             return redirect('reset-password')
@@ -262,7 +262,7 @@ class ResetPasswordConfirmView(generic.View):
 
     def post(self, request, uidb64, token):
         uid = urlsafe_base64_decode(uidb64).decode()
-        user = User.objects.get(pk=uid)
+        user = User.objects.get(id=uid)
         if not reset_password_token.check_token(user, token):
             messages.error(request, "Invalid or expired reset link.")
             return redirect('reset-password')
@@ -271,7 +271,7 @@ class ResetPasswordConfirmView(generic.View):
             password = form.cleaned_data.get('password')
             user.set_password(password)
             user.save()
-            messages.success(request, "Password reset successful. You can login now.")
+            messages.success(request, "Password reset successful. You can signed now.")
             return redirect('sign-in')
         return render(request, 'account/reset-password-confirm.html', {'form': form})
 

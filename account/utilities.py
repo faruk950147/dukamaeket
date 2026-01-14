@@ -28,7 +28,7 @@ class ResetPasswordTokenGenerator(PasswordResetTokenGenerator):
     Token generator for reset password
     """
     def _make_hash_value(self, user, timestamp):
-        return str(user.pk) + str(timestamp) + str(user.is_active)
+        return str(user.id) + str(timestamp) + str(user.is_active)
 
 
 reset_password_token = ResetPasswordTokenGenerator()
@@ -64,7 +64,7 @@ class ActivationEmailSender:
 
     def send(self):
         current_site = get_current_site(self.request)
-        uid = urlsafe_base64_encode(force_bytes(self.user.pk))
+        uid = urlsafe_base64_encode(force_bytes(self.user.id))
         token = account_activation_token.make_token(self.user)
 
         scheme = 'https' if self.request.is_secure() else 'http'
@@ -102,7 +102,7 @@ class ResetPasswordEmailSender:
 
     def send(self):
         current_site = get_current_site(self.request)
-        uid = urlsafe_base64_encode(force_bytes(self.user.pk))
+        uid = urlsafe_base64_encode(force_bytes(self.user.id))
         token = reset_password_token.make_token(self.user)
 
         scheme = 'https' if self.request.is_secure() else 'http'
