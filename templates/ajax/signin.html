@@ -1,0 +1,14 @@
+{% load static %}
+<script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
+<script>
+    $(document).ready(function(){    
+        $("#form #id_username").on("keyup input", function(e){
+            e.preventDefault();
+
+            const username = $(this).val().trim();
+            console.log(username)
+        });
+
+    });
+
+</script>

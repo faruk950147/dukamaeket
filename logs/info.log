@@ -733,3 +733,39 @@ INFO 2026-01-14 13:55:00,069 project views User signed in: user1234 (27)
 INFO 2026-01-14 13:55:00,094 project views User user1234 visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
 INFO 2026-01-14 13:55:16,469 project views User signed out: user1234 (27)
 INFO 2026-01-14 13:55:46,098 project views Password reset email sent to: xitap67363@feanzier.com (user_id=27)
+INFO 2026-01-14 14:08:03,452 project views Username validation failed: user1234 already exists
+INFO 2026-01-14 14:08:03,452 project views Username validation failed: user1234 already exists
+INFO 2026-01-14 14:10:48,969 project views Username validation failed: user1234 already exists
+INFO 2026-01-14 14:10:48,970 project views Username validation failed: user1234 already exists
+INFO 2026-01-14 14:11:10,648 project views Email validation failed: xitap67363@feanzier.com already in use
+INFO 2026-01-14 14:11:10,650 project views Email validation failed: xitap67363@feanzier.com already in use
+INFO 2026-01-14 14:11:13,570 project views Email validation failed: xitap67363@feanzier.com; is invalid
+INFO 2026-01-14 14:11:13,729 project views Email validation failed: xitap67363@feanzier.com; is invalid
+INFO 2026-01-14 14:11:15,847 project views Email validation failed: xitap67363@feanzier.com already in use
+INFO 2026-01-14 14:11:16,018 project views Email validation failed: xitap67363@feanzier.com already in use
+INFO 2026-01-14 14:11:17,816 project views Email validated successfully: xitap67363@feanzier.comj
+INFO 2026-01-14 14:11:18,042 project views Email validated successfully: xitap67363@feanzier.comj
+INFO 2026-01-14 14:12:02,462 project views Sign-in form invalid
+INFO 2026-01-14 14:13:05,216 project views Sign-in form invalid
+INFO 2026-01-14 14:13:19,876 project views Sign-in form invalid
+INFO 2026-01-14 14:13:41,060 project views Sign-in form invalid
+INFO 2026-01-14 14:13:56,184 project views Sign-in form invalid
+INFO 2026-01-14 14:14:11,160 project views Sign-in form invalid
+INFO 2026-01-14 14:14:21,015 project views User signed in: admin (26)
+INFO 2026-01-14 14:14:21,038 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-14 14:18:08,035 project views User signed out: admin (26)
+INFO 2026-01-14 14:19:05,122 project views Username validated successfully: y
+INFO 2026-01-14 14:19:05,367 project views Username validated successfully: y
+INFO 2026-01-14 14:19:11,613 project views Email validation failed: ; is invalid
+INFO 2026-01-14 14:19:11,840 project views Email validation failed: ; is invalid
+INFO 2026-01-14 14:19:20,361 project views Password validation failed: passwords do not match
+INFO 2026-01-14 14:19:20,623 project views Password validation failed: passwords do not match
+INFO 2026-01-14 14:50:37,493 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-14 15:03:38,328 project views Username validated successfully: u
+INFO 2026-01-14 15:03:38,508 project views Username validated successfully: u
+INFO 2026-01-14 15:03:39,232 project views Username validated successfully: ut
+INFO 2026-01-14 15:03:39,347 project views Username validated successfully: ut
+INFO 2026-01-14 15:03:39,588 project views Username validated successfully: utt
+INFO 2026-01-14 15:03:39,749 project views Username validated successfully: utt
+INFO 2026-01-14 15:03:40,937 project views Username validated successfully: ut
+INFO 2026-01-14 15:03:41,450 project views Username validated successfully: u
