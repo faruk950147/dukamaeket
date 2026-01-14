@@ -248,6 +248,7 @@ class ResetPasswordView(generic.View):
         return render(request, 'account/reset-password.html', {'form': form})
 
 
+# Reset Password Confirm View
 @method_decorator(never_cache, name='dispatch')
 class ResetPasswordConfirmView(generic.View):
     def get(self, request, uidb64, token):
