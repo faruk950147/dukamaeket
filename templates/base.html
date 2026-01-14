@@ -139,7 +139,7 @@
 
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="authDropdown">
                                         {% if request.user.is_authenticated %}
-                                        <li><a class="dropdown-item text-center" href="#">My Account</a></li>
+                                        <li><a class="dropdown-item text-center" href="{% url "user-info" %}">My Account</a></li>
                                         <li><a class="dropdown-item text-center" href="#">Checkout</a></li>
                                         <li><a class="dropdown-item text-center {% if request.resolver_match.url_name == "change-password" %}active {% endif %}" href="{% url "change-password" %}">Changes Password</a></li>
                                         <li><a class="dropdown-item text-center {% if request.resolver_match.url_name == "sign-out" %}active {% endif %}" href="{% url "sign-out" %}">Sign Out</a></li>

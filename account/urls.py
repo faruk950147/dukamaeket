@@ -11,7 +11,9 @@ from account.views import (
     SignOutView,
     ChangesPasswordView,
     ResetPasswordView,
-    ResetPasswordConfirmView,  # new
+    ResetPasswordConfirmView,  
+    UserInfoView,
+    CustomerView
 )
 
 urlpatterns = [
@@ -30,4 +32,6 @@ urlpatterns = [
     # Reset password flow
     path('reset-password/', ResetPasswordView.as_view(), name='reset-password'),
     path('reset-password/<uidb64>/<token>/', ResetPasswordConfirmView.as_view(), name='reset_password_confirm'),
+    path('user-info/', UserInfoView.as_view(), name='user-info'),
+    
 ]

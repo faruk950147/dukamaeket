@@ -1,0 +1,72 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %} Profile {% endblock title %} 
+{% block main_content %}
+  <!-- ============================ COMPONENT Sign up   ================================= -->
+    <main>
+        <!-- account-area-start -->
+        <div class="account-area mt-70 mb-70">
+            <div class="container">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-lg-6">
+                        <div class="basic-login">
+                            <h5>Profile</h5>
+                            <form method="post"
+                                enctype="multipart/form-data"
+                                class="border p-4 rounded shadow-sm bg-light">
+                                {% csrf_token %}
+
+                                <!-- USER FORM -->
+                                <div class="form-group mb-3">
+                                    {{ user_form.username }}
+                                    {{ user_form.username.errors }}
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    {{ user_form.email }}
+                                    {{ user_form.email.errors }}
+                                </div>
+
+                                <hr>
+
+                                <!-- PROFILE FORM -->
+
+                                <div class="form-group mb-3">
+                                    {{ profile_form.country }}
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    {{ profile_form.city }}
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    {{ profile_form.home_city }}
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    {{ profile_form.zip_code }}
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    {{ profile_form.phone }}
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    {{ profile_form.address }}
+                                </div>
+
+                                <button type="submit" class="tp-in-btn w-100">
+                                    Changes Now
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- account-area-end -->
+
+    </main>
+
+  <!-- ============================ COMPONENT sign up  END.// ================================= -->
+{% endblock main_content %}

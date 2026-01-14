@@ -9,12 +9,21 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.db.models import Q
 from django.contrib import messages
 from validate_email import validate_email
-from account.mixing import LoginRequiredMixin, LogoutRequiredMixin
-from account.forms import SignUpForm, SignInForm, ChangePasswordForm, ResetPasswordForm, ResetPasswordConfirmForm
-from account.utilities import account_activation_token, ActivationEmailSender, reset_password_token, ResetPasswordEmailSender 
 import json
 import logging
-
+from account.models import Customer
+from account.forms import (
+    SignUpForm, SignInForm, 
+    ChangePasswordForm, ResetPasswordForm, 
+    ResetPasswordConfirmForm,
+    UserForm,
+    CustomerForm
+)
+from account.utilities import (
+    account_activation_token, ActivationEmailSender, 
+    reset_password_token, ResetPasswordEmailSender
+) 
+from account.mixing import LoginRequiredMixin, LogoutRequiredMixin
 User = get_user_model()
 logger = logging.getLogger('project')
 
@@ -142,7 +151,7 @@ class AccountActivationView(generic.View):
 
 # Sign Up 
 @method_decorator(never_cache, name='dispatch')
-class SignUpView(generic.View):
+class SignUpView(LogoutRequiredMixin, generic.View):
     def get(self, request):
         return render(request, 'account/sign-up.html', {'form': SignUpForm()})
 
@@ -166,7 +175,7 @@ class SignUpView(generic.View):
 
 # Sign In 
 @method_decorator(never_cache, name='dispatch')
-class SignInView(generic.View):
+class SignInView(LogoutRequiredMixin, generic.View):
     def get(self, request):
         form = SignInForm()
         return render(request, 'account/sign-in.html', {'form': form})
@@ -233,7 +242,7 @@ class ChangesPasswordView(LoginRequiredMixin, generic.View):
 
 # Reset Password 
 @method_decorator(never_cache, name='dispatch')
-class ResetPasswordView(generic.View):
+class ResetPasswordView(LogoutRequiredMixin, generic.View):
     def get(self, request):
         form = ResetPasswordForm()
         return render(request, 'account/reset-password.html', {'form': form})
@@ -254,7 +263,7 @@ class ResetPasswordView(generic.View):
 
 # Reset Password Confirm 
 @method_decorator(never_cache, name='dispatch')
-class ResetPasswordConfirmView(generic.View):
+class ResetPasswordConfirmView(LogoutRequiredMixin, generic.View):
     def get(self, request, uidb64, token):
         uid = urlsafe_base64_decode(uidb64).decode()
         user = User.objects.get(id=uid)
@@ -281,3 +290,19 @@ class ResetPasswordConfirmView(generic.View):
             messages.success(request, "Password reset successful. You can sign in now.")
             return redirect('sign-in')
         return render(request, 'account/reset-password-confirm.html', {'form': form})
+
+
+# User Info
+class UserInfoView(LogoutRequiredMixin, generic.View):
+    def get(self, request):
+        return render(request, 'account/user-info.html')
+    def post(self, request):
+        return render(request, 'account/user-info.html')
+
+
+class CustomerView(LogoutRequiredMixin, generic.View):
+    def get(self, request):
+        return render(request, 'account/customer.html')
+    def post(self, request):
+        return render(request, 'account/customer.html')
+

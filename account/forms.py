@@ -3,7 +3,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
-
+from account.models import Customer
 User = get_user_model()
 
 
@@ -209,3 +209,53 @@ class ResetPasswordConfirmForm(forms.Form):
 
         return cleaned_data
 
+""" 
+User Form
+"""
+class UserForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+               
+    class Meta:
+        model = User
+        fields = (
+            'username', 'email', 'image', 'country', 'city', 'home_city', 'zip_code', 'phone', 'address',
+        )
+        widgets = {
+            'username': forms.TextInput(attrs={'placeholder': 'Username'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'Email'}),
+            'country': forms.TextInput(attrs={'placeholder': 'Country'}),
+            'city': forms.TextInput(attrs={'placeholder': 'City'}),
+            'home_city': forms.TextInput(attrs={'placeholder': 'Home City'}),
+            'zip_code': forms.TextInput(attrs={'placeholder': 'Zip Code'}),
+            'phone': forms.TextInput(attrs={'placeholder': 'Phone'}),
+            'address': forms.Textarea(attrs={'placeholder': 'Address', 'rows': 3}),
+        }
+
+
+""" 
+Customer Form
+"""
+class CustomerForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+            
+    class Meta:
+        model = Customer
+        fields = (
+            'image', 'country', 'city', 'home_city', 'zip_code', 'phone', 'address',
+        )
+        widgets = {
+            'country': forms.TextInput(attrs={'placeholder': 'Country'}),
+            'city': forms.TextInput(attrs={'placeholder': 'City'}),
+            'home_city': forms.TextInput(attrs={'placeholder': 'Home City'}),
+            'zip_code': forms.TextInput(attrs={'placeholder': 'Zip Code'}),
+            'phone': forms.TextInput(attrs={'placeholder': 'Phone'}),
+            'address': forms.Textarea(attrs={'placeholder': 'Address', 'rows': 3}),
+        }
+        
+     
