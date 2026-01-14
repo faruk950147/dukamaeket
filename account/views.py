@@ -5,13 +5,13 @@ from django.utils.http import urlsafe_base64_decode
 from django.http import JsonResponse
 from django.views import generic
 from django.contrib.auth import get_user_model
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash, get_backends
 from django.db.models import Q
 from django.contrib import messages
 from validate_email import validate_email
 from account.mixing import LoginRequiredMixin, LogoutRequiredMixin
-from account.forms import SignUpForm, SignInForm, ChangePasswordForm, ResetPasswordForm
-from account.utilities import account_activation_token, ActivationEmailSender
+from account.forms import SignUpForm, SignInForm, ChangePasswordForm, ResetPasswordForm, ResetPasswordConfirmForm
+from account.utilities import account_activation_token, ActivationEmailSender, reset_password_token, ResetPasswordEmailSender 
 import json
 import logging
 
@@ -110,19 +110,33 @@ class SignInValidationView(generic.View):
 @method_decorator(never_cache, name='dispatch')
 class AccountActivationView(generic.View):
     def get(self, request, uidb64, token):
-        uid = urlsafe_base64_decode(uidb64).decode('utf-8')
-        user = User.objects.get(id=uid)
+        try:
+            uid = urlsafe_base64_decode(uidb64).decode('utf-8')
+            user = User.objects.get(id=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            messages.error(request, 'Activation link is invalid.')
+            return redirect('sign-in')
+
         if account_activation_token.check_token(user, token):
             if not user.is_active:
                 user.is_active = True
                 user.save()
-                messages.success(request, 'Account activated successfully.')
+
+                # Explicit backend required if multiple backends configured
+                backend = get_backends()[0].__class__.__module__ + "." + get_backends()[0].__class__.__name__
+                login(request, user, backend=backend)
+
+                messages.success(request, 'Account activated successfully and logged in.')
             else:
                 messages.info(request, 'Account already activated.')
+                # Optional: auto-login already active user
+                if not request.user.is_authenticated:
+                    backend = get_backends()[0].__class__.__module__ + "." + get_backends()[0].__class__.__name__
+                    login(request, user, backend=backend)
         else:
             messages.error(request, 'Activation link is invalid or expired.')
-    
-        return redirect('sign-in')
+
+        return redirect('home')  # or 'sign-in' if you prefer
 
 
 # Sign Up View
@@ -215,8 +229,49 @@ class ChangesPasswordView(LoginRequiredMixin, generic.View):
 
         return render(request, 'account/changes-password.html', {'form': form})
 
+
 # Reset Password View
+@method_decorator(never_cache, name='dispatch')
 class ResetPasswordView(generic.View):
     def get(self, request):
         form = ResetPasswordForm()
         return render(request, 'account/reset-password.html', {'form': form})
+
+    def post(self, request):
+        form = ResetPasswordForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            user = User.objects.get(email__iexact=email)
+            ResetPasswordEmailSender(user, request).send()
+            messages.success(request, "Password reset link has been sent to your email.")
+            return redirect('reset-password')
+        return render(request, 'account/reset-password.html', {'form': form})
+
+
+@method_decorator(never_cache, name='dispatch')
+class ResetPasswordConfirmView(generic.View):
+    def get(self, request, uidb64, token):
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+        if not reset_password_token.check_token(user, token):
+            messages.error(request, "Invalid or expired reset link.")
+            return redirect('reset-password')
+        form = ResetPasswordConfirmForm()
+        return render(request, 'account/reset-password-confirm.html', {'form': form})
+
+    def post(self, request, uidb64, token):
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+        if not reset_password_token.check_token(user, token):
+            messages.error(request, "Invalid or expired reset link.")
+            return redirect('reset-password')
+        form = ResetPasswordConfirmForm(request.POST)
+        if form.is_valid():
+            password = form.cleaned_data.get('password')
+            user.set_password(password)
+            user.save()
+            messages.success(request, "Password reset successful. You can login now.")
+            return redirect('sign-in')
+        return render(request, 'account/reset-password-confirm.html', {'form': form})
+
+
