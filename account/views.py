@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views.decorators.cache import never_cache
 from django.utils.decorators import method_decorator
 from django.utils.http import urlsafe_base64_decode
@@ -292,7 +292,8 @@ class ResetPasswordConfirmView(LogoutRequiredMixin, generic.View):
         return render(request, 'account/reset-password-confirm.html', {'form': form})
 
 
-# User Info
+# User Info Edit
+@method_decorator(never_cache, name='dispatch')
 class UserInfoEditView(LoginRequiredMixin, generic.View):
     def get(self, request):
         form = UserForm(instance=request.user)
@@ -307,26 +308,68 @@ class UserInfoEditView(LoginRequiredMixin, generic.View):
         return render(request, 'account/user-info-edit.html', {'form': form})
 
 
-# Shipping 
+# Shipping Add
+@method_decorator(never_cache, name='dispatch')
 class ShippingAddressView(LoginRequiredMixin, generic.View):
     def get(self, request):
-        
-        return render(request, 'account/shipping.html', {'form': ShippingForm()})
+        form = ShippingForm()
+        return render(request, 'account/shipping.html', {'form': form})
+
     def post(self, request):
         form = ShippingForm(request.POST)
         if form.is_valid():
-            form.save()
+            shipping = form.save(commit=False)
+            shipping.user = request.user
+            shipping.save()
             return redirect('address-list')
-        return render(request, 'account/shipping.html', {'form': ShippingForm()})
-    
 
+        return render(request, 'account/shipping.html', {'form': form})
+
+
+
+# Shipping List
+@method_decorator(never_cache, name='dispatch')
 class ShippingAddressListView(LoginRequiredMixin, generic.View):
     def get(self, request):
         addresses = Shipping.objects.filter(user=request.user)
-        return render(request, 'account/address_list.html', {'addresses': addresses})
+        return render(request, 'account/address-list.html', {'addresses': addresses})
+
+
+
+# Shipping Delete
+@method_decorator(never_cache, name='dispatch')
+class ShippingAddressDeleteView(LoginRequiredMixin, generic.View):
+    def post(self, request, id):
+        shipping = get_object_or_404(Shipping, id=id, user=request.user)
+        if shipping:
+            shipping.delete()
+            messages.success(request, "Shipping address deleted successfully.")
+        else:
+            messages.error(request, "Shipping address not found.")
+        return redirect('address-list')
+
+
+
+# Shipping Edit
+@method_decorator(never_cache, name='dispatch')
+class ShippingAddressEditView(LoginRequiredMixin, generic.View):
+    def get(self, request, id):
+        shipping = get_object_or_404(Shipping, id=id, user=request.user)
+        form = ShippingForm(instance=shipping)
+        return render(request, 'account/shipping-edit.html', {'form': form})
+
+    def post(self, request, id):
+        shipping = get_object_or_404(Shipping, id=id, user=request.user)
+        form = ShippingForm(request.POST, instance=shipping)
+        if form.is_valid():
+            form.save()
+            return redirect('address-list')
+        return render(request, 'account/shipping-edit.html', {'form': form})
+
 
 
 # Account View
+@method_decorator(never_cache, name='dispatch')
 class AccountView(LoginRequiredMixin, generic.View):
     def get(self, request):
         return render(request, 'account/account.html')

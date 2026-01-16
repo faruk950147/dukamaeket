@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Add Shipping Address{% endblock title %}
+{% block title %}Edit Shipping Address{% endblock title %}
 
 {% block main_content %}
 <main>
@@ -18,7 +18,7 @@
                 <div class="col-9 mx-auto">
                     <form method="post" class="border p-4 rounded shadow-sm bg-light">
                         {% csrf_token %}
-                        <h3 class="mb-4">Add Shipping Address</h3>
+                        <h3 class="mb-4">Edit Shipping Address</h3>
                         <div class="form-group mb-3">
                             {{ form.name }}
                             {{ form.name.errors }}
@@ -54,7 +54,7 @@
                             {{ form.address.errors }}
                         </div>
 
-                        <button type="submit" class="tp-in-btn w-100">Add Now</button>  
+                        <button type="submit" class="tp-in-btn w-100">Changes Now</button>  
                     </form>
                 </div>
 

@@ -73,7 +73,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 # Shipping information model
 class Shipping(models.Model):
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='shipping'

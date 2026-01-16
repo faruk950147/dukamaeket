@@ -1128,3 +1128,40 @@ INFO 2026-01-16 07:40:36,271 project views User admin visited Home page. Sliders
 INFO 2026-01-16 07:47:52,915 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
 INFO 2026-01-16 09:59:32,398 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
 INFO 2026-01-16 09:59:37,050 project views ShopView accessed | User: admin | Page: 1/3 | Per page: 3 | Sort: latest | Total products: 8Banners: <bound method QuerySet.count of <QuerySet [<Slider: Solution (Active)>]>>
+INFO 2026-01-16 10:44:27,281 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-16 10:58:07,212 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:58:07,390 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:58:08,486 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:58:08,678 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:58:09,637 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:58:09,813 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:58:10,498 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:58:10,663 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:58:11,521 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:58:11,678 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:58:12,807 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:58:12,975 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:58:13,400 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:58:13,606 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:58:14,193 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:58:14,373 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:58:15,011 project views Password validated successfully
+INFO 2026-01-16 10:58:15,230 project views Password validated successfully
+INFO 2026-01-16 10:58:20,502 project views Password changed for user: admin (29)
+INFO 2026-01-16 10:58:25,949 project views Sign-in validation success: account exists for admin
+INFO 2026-01-16 10:58:25,957 project views Sign-in validation success: account exists for admin
+INFO 2026-01-16 10:58:41,968 project views User signed in: admin (29)
+INFO 2026-01-16 10:58:41,991 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-16 10:59:11,337 project views Password validation failed: password too short
+INFO 2026-01-16 10:59:11,558 project views Password validation failed: password too short
+INFO 2026-01-16 10:59:11,559 project views Password validation failed: password too short
+INFO 2026-01-16 10:59:30,120 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:59:30,237 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:59:30,753 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:59:30,948 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:59:31,484 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:59:31,685 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:59:32,268 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:59:32,453 project views Password validation failed: passwords do not match
+INFO 2026-01-16 10:59:46,015 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-16 10:59:47,422 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
