@@ -33,7 +33,7 @@ admin.site.register(User, UserAdmin)
 # ---------------- Shipping ADMIN ----------------
 class ShippingAdmin(admin.ModelAdmin):
     list_display = (
-        'get_username', 'get_email', 'country', 'city', 'home_city', 'zip_code', 'phone', 'address', 'created_at', 'updated_at'
+        'get_username', 'get_email', 'name', 'country', 'city', 'home_city', 'zip_code', 'phone', 'address', 'created_at', 'updated_at'
     )
     search_fields = ('user__username', 'user__email', )
     ordering = ('id',)

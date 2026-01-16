@@ -78,6 +78,7 @@ class Shipping(models.Model):
         on_delete=models.CASCADE,
         related_name='shipping'
     )
+    name = models.CharField(max_length=150, blank=True, null=True)
     country = models.CharField(max_length=150, blank=True, null=True)
     city = models.CharField(max_length=150, blank=True, null=True)
     home_city = models.CharField(max_length=150, blank=True, null=True)

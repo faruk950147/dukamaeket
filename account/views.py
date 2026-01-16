@@ -296,7 +296,7 @@ class ResetPasswordConfirmView(LogoutRequiredMixin, generic.View):
 class UserInfoEditView(LoginRequiredMixin, generic.View):
     def get(self, request):
         form = UserForm(instance=request.user)
-        return render(request, 'account/user-info.html', {'form': form})
+        return render(request, 'account/user-info-edit.html', {'form': form})
 
     def post(self, request):
         # Bind form with POST data and current user instance
@@ -304,20 +304,29 @@ class UserInfoEditView(LoginRequiredMixin, generic.View):
         if form.is_valid():
             form.save()
             return redirect('account')  
-        return render(request, 'account/user-info.html', {'form': form})
+        return render(request, 'account/user-info-edit.html', {'form': form})
 
 
 # Shipping 
 class ShippingAddressView(LoginRequiredMixin, generic.View):
     def get(self, request):
-        return render(request, 'account/shipping.html')
+        
+        return render(request, 'account/shipping.html', {'form': ShippingForm()})
     def post(self, request):
-        return render(request, 'account/shipping.html')
+        form = ShippingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('address-list')
+        return render(request, 'account/shipping.html', {'form': ShippingForm()})
+    
+
+class ShippingAddressListView(LoginRequiredMixin, generic.View):
+    def get(self, request):
+        addresses = Shipping.objects.filter(user=request.user)
+        return render(request, 'account/address_list.html', {'addresses': addresses})
 
 
 # Account View
 class AccountView(LoginRequiredMixin, generic.View):
     def get(self, request):
-        return render(request, 'account/account.html')
-    def post(self, request):
         return render(request, 'account/account.html')

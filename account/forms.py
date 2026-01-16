@@ -247,9 +247,10 @@ class ShippingForm(forms.ModelForm):
     class Meta:
         model = Shipping
         fields = (
-            'country', 'city', 'home_city', 'zip_code', 'phone', 'address',
+             'name', 'country', 'city', 'home_city', 'zip_code', 'phone', 'address',
         )
         widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Name'}),
             'country': forms.TextInput(attrs={'placeholder': 'Country'}),
             'city': forms.TextInput(attrs={'placeholder': 'City'}),
             'home_city': forms.TextInput(attrs={'placeholder': 'Home City'}),

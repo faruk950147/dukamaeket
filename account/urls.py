@@ -14,6 +14,7 @@ from account.views import (
     ResetPasswordConfirmView,  
     UserInfoEditView,
     ShippingAddressView,
+    ShippingAddressListView,
     AccountView
 )
 
@@ -36,5 +37,6 @@ urlpatterns = [
     
     path('user-info-edit/', UserInfoEditView.as_view(), name='user-info-edit'),
     path('shipping-address/', ShippingAddressView.as_view(), name='shipping-address'),
+    path('address-list/', ShippingAddressListView.as_view(), name='address-list'),
     path('account/', AccountView.as_view(), name='account'),
 ]
