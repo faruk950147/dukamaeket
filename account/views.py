@@ -11,13 +11,13 @@ from django.contrib import messages
 from validate_email import validate_email
 import json
 import logging
-from account.models import Customer
+from account.models import Shipping
 from account.forms import (
     SignUpForm, SignInForm, 
     ChangePasswordForm, ResetPasswordForm, 
     ResetPasswordConfirmForm,
     UserForm,
-    CustomerForm
+    ShippingForm
 )
 from account.utilities import (
     account_activation_token, ActivationEmailSender, 
@@ -293,7 +293,7 @@ class ResetPasswordConfirmView(LogoutRequiredMixin, generic.View):
 
 
 # User Info
-class UserInfoView(LoginRequiredMixin, generic.View):
+class UserInfoEditView(LoginRequiredMixin, generic.View):
     def get(self, request):
         form = UserForm(instance=request.user)
         return render(request, 'account/user-info.html', {'form': form})
@@ -307,9 +307,17 @@ class UserInfoView(LoginRequiredMixin, generic.View):
         return render(request, 'account/user-info.html', {'form': form})
 
 
-class CustomerView(LoginRequiredMixin, generic.View):
+# Shipping 
+class ShippingView(LoginRequiredMixin, generic.View):
     def get(self, request):
-        return render(request, 'account/customer.html')
+        return render(request, 'account/shipping.html')
     def post(self, request):
-        return render(request, 'account/customer.html')
+        return render(request, 'account/shipping.html')
 
+
+# Account View
+class AccountView(LoginRequiredMixin, generic.View):
+    def get(self, request):
+        return render(request, 'account/account.html')
+    def post(self, request):
+        return render(request, 'account/account.html')

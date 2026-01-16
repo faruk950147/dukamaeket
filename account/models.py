@@ -82,10 +82,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.username
 
 
-# ---------------- CUSTOMER ----------------
-class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='customer')
-    image = models.ImageField(upload_to='customer', default='defaults/default.jpg')
+# ---------------- Shipping ----------------
+class Shipping(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='shipping')
     country = models.CharField(max_length=150, null=True, blank=True)
     city = models.CharField(max_length=150, null=True, blank=True)
     home_city = models.CharField(max_length=150, null=True, blank=True)
@@ -97,23 +96,17 @@ class Customer(models.Model):
 
     class Meta:
         ordering = ['id']
-        verbose_name_plural = '02. Customer'
-
-    @property
-    def image_tag(self):
-        if self.image:
-            return mark_safe(f'<img src="{self.image.url}" width="50" height="50"/>')
-        return mark_safe('<span>No Image</span>')
+        verbose_name_plural = '02. Shipping'
 
     def __str__(self):
-        return f"{self.user.username}'s Customer"
+        return f"{self.user.username}'s Shipping"
 
 
 # ---------------- SIGNAL ----------------
 @receiver(post_save, sender=User)
-def create_or_update_customer(sender, instance, created, **kwargs):
+def create_or_update_shipping_address(sender, instance, created, **kwargs):
     if created:
-        Customer.objects.create(user=instance)
+        Shipping.objects.create(user=instance)
     else:
-        if hasattr(instance, 'customer'):
-            instance.customer.save()
+        if hasattr(instance, 'shipping'):
+            instance.shipping.save()

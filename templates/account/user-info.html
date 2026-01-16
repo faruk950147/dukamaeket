@@ -8,9 +8,12 @@
         <div class="account-area mt-70 mb-70">
             <div class="container">
                 <div class="row justify-content-center align-items-center">
-                    <div class="col-lg-6">
+                    <div class="col-4">
+                        kkk
+                    </div>
+                    <div class="col-6">
                         <div class="basic-login">
-                            <h5>User original info</h5>
+                            <h5>User original info {{request.user.username}} </h5>
                             <form method="post" enctype="multipart/form-data" class="border p-4 rounded shadow-sm bg-light">
                                 {% csrf_token %}
 

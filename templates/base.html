@@ -125,30 +125,34 @@
                         <div class="col-xl-4 col-lg-5 col-md-8 col-sm-8">
                             <div class="header-action">
                                 <div class="dropdown d-inline-flex align-items-center">
-                                    <div class="block-userlink d-inline-flex align-items-center dropdown-toggle" 
-                                        id="authDropdown" 
-                                        data-bs-toggle="dropdown" 
-                                        aria-expanded="false"
-                                        style="cursor: pointer;">
+                                    <a class="block-userlink d-inline-flex align-items-center dropdown-toggle text-white text-decoration-none"
+                                    href="#"
+                                    id="authDropdown"
+                                    role="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
 
                                         <i class="flaticon-user me-2 text-white" style="font-size: 20px;"></i>
+
                                         {% if request.user.is_authenticated %}
-                                        <a href="#" class="sub text-decoration-none text-white me-1">{{request.user.username}}</a>
+                                            {{ request.user.username }}
+                                        {% else %}
+                                            Account
                                         {% endif %}
-                                    </div>
+                                    </a>
 
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="authDropdown">
                                         {% if request.user.is_authenticated %}
-                                        <li><a class="dropdown-item text-center" href="{% url "user-info" %}">My Account</a></li>
-                                        <li><a class="dropdown-item text-center" href="#">Checkout</a></li>
-                                        <li><a class="dropdown-item text-center {% if request.resolver_match.url_name == "change-password" %}active {% endif %}" href="{% url "change-password" %}">Changes Password</a></li>
-                                        <li><a class="dropdown-item text-center {% if request.resolver_match.url_name == "sign-out" %}active {% endif %}" href="{% url "sign-out" %}">Sign Out</a></li>
+                                            <li><a class="dropdown-item {% if request.resolver_match.url_name == "account" %}active{% endif %}" href="{% url 'account' %}">Account</a></li>
+                                            <li><a class="dropdown-item {% if request.resolver_match.url_name == "change-password" %}active {% endif %}" href="{% url "change-password" %}">Changes Password</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'sign-out' %}">Sign out</a></li>
                                         {% else %}
-                                        <li><a class="dropdown-item  text-center {% if request.resolver_match.url_name == "sign-up" %}active {% endif %}" href="{% url "sign-up" %}">Sign Up</a></li>
-                                        <li><a class="dropdown-item text-center {% if request.resolver_match.url_name == "sign-in" %}active {% endif %}" href="{% url "sign-in" %}">Sign In</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'sign-in' %}">Sign In</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'sign-up' %}">Sign Up</a></li>
                                         {% endif %}
                                     </ul>
                                 </div>
+
                                 <div class="block-wishlist action">
                                     <a class="icon-link icon-link-2" href="wishlist.html">
                                     <i class="flaticon-heart"></i>

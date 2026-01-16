@@ -3,7 +3,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
-from account.models import Customer
+from account.models import Shipping
 User = get_user_model()
 
 
@@ -236,18 +236,18 @@ class UserForm(forms.ModelForm):
 
 
 """ 
-Customer Form
+Shipping Form
 """
-class CustomerForm(forms.ModelForm):
+class ShippingForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class': 'form-control'})
             
     class Meta:
-        model = Customer
+        model = Shipping
         fields = (
-            'image', 'country', 'city', 'home_city', 'zip_code', 'phone', 'address',
+            'country', 'city', 'home_city', 'zip_code', 'phone', 'address',
         )
         widgets = {
             'country': forms.TextInput(attrs={'placeholder': 'Country'}),

@@ -12,8 +12,9 @@ from account.views import (
     ChangesPasswordView,
     ResetPasswordView,
     ResetPasswordConfirmView,  
-    UserInfoView,
-    CustomerView
+    UserInfoEditView,
+    ShippingView,
+    AccountView
 )
 
 urlpatterns = [
@@ -32,6 +33,8 @@ urlpatterns = [
     # Reset password flow
     path('reset-password/', ResetPasswordView.as_view(), name='reset-password'),
     path('reset-password/<uidb64>/<token>/', ResetPasswordConfirmView.as_view(), name='reset_password_confirm'),
-    path('user-info/', UserInfoView.as_view(), name='user-info'),
     
+    path('user-info-edit/', UserInfoEditView.as_view(), name='user-info-edit'),
+    path('shipping-info/', ShippingView.as_view(), name='shipping-info'),
+    path('account/', AccountView.as_view(), name='account'),
 ]

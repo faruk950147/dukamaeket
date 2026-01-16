@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from account.models import User, Customer
+from account.models import User, Shipping
 
 # ---------------- USER ADMIN ----------------
 class UserAdmin(BaseUserAdmin):
@@ -30,10 +30,10 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(User, UserAdmin)
 
-# ---------------- CUSTOMER ADMIN ----------------
-class CustomerAdmin(admin.ModelAdmin):
+# ---------------- Shipping ADMIN ----------------
+class ShippingAdmin(admin.ModelAdmin):
     list_display = (
-        'get_username', 'get_email', 'image_tag', 'phone', 'city', 'country', 'created_at', 'updated_at'
+        'get_username', 'get_email', 'phone', 'city', 'country', 'created_at', 'updated_at'
     )
     search_fields = ('user__username', 'user__email', 'phone', 'city', 'country')
     ordering = ('id',)
@@ -46,4 +46,4 @@ class CustomerAdmin(admin.ModelAdmin):
         return obj.user.email
     get_email.short_description = 'Email'
 
-admin.site.register(Customer, CustomerAdmin)
+admin.site.register(Shipping, ShippingAdmin)
