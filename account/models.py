@@ -6,9 +6,8 @@ from django.utils.html import mark_safe
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
-
-# ---------------- USER MANAGER ----------------
-class UserManager(BaseUserManager):
+# Manager for custom user model
+class Manager(BaseUserManager):
     def create_user(self, username, email, password=None, **extra_fields):
         if not username:
             raise ValueError("Username must be set")
@@ -26,87 +25,80 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("is_active", True)
 
-        if extra_fields.get("is_staff") is not True:
-            raise ValueError("Superuser must have is_staff=True.")
-        if extra_fields.get("is_superuser") is not True:
-            raise ValueError("Superuser must have is_superuser=True.")
-
         return self.create_user(username, email, password, **extra_fields)
 
 
-# ---------------- USER ----------------
+# Custom user model
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
         max_length=150,
         unique=True,
-        validators=[UnicodeUsernameValidator()],
-        blank=False,
-        null=False
+        validators=[UnicodeUsernameValidator()]
     )
-    email = models.EmailField(
-        max_length=150,
-        unique=True,
-        blank=False,
-        null=False
-    )
-    image = models.ImageField(upload_to='user', default='defaults/default.jpg')
-    country = models.CharField(max_length=150, null=True, blank=True)
-    city = models.CharField(max_length=150, null=True, blank=True)
-    home_city = models.CharField(max_length=150, null=True, blank=True)
-    zip_code = models.CharField(max_length=15, null=True, blank=True)
-    phone = models.CharField(max_length=16, null=True, blank=True)
-    address = models.TextField(max_length=500, null=True, blank=True)
-    
+    email = models.EmailField(max_length=150, unique=True)
+
+    image = models.ImageField(upload_to='user/', default='defaults/default.jpg')
+
+    country = models.CharField(max_length=150, blank=True, null=True)
+    city = models.CharField(max_length=150, blank=True, null=True)
+    home_city = models.CharField(max_length=150, blank=True, null=True)
+    zip_code = models.CharField(max_length=15, blank=True, null=True)
+    phone = models.CharField(max_length=16, blank=True, null=True)
+    address = models.TextField(max_length=500, blank=True, null=True)
+
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    objects = UserManager()
+    objects = Manager()
 
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ["email"]
 
     class Meta:
         ordering = ['id']
-        verbose_name_plural = '01. Users'
-        
-    @property
-    def image_tag(self):
-        if self.image:
-            return mark_safe(f'<img src="{self.image.url}" width="50" height="50"/>')
-        return mark_safe('<span>No Image</span>')
+        verbose_name_plural = "01. Users"
 
     def __str__(self):
         return self.username
 
+    @property
+    def image_tag(self):
+        if self.image:
+            return mark_safe(f'<img src="{self.image.url}" width="40"/>')
+        return "No Image"
 
-# ---------------- Shipping ----------------
+
+# Shipping information model
 class Shipping(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='shipping')
-    country = models.CharField(max_length=150, null=True, blank=True)
-    city = models.CharField(max_length=150, null=True, blank=True)
-    home_city = models.CharField(max_length=150, null=True, blank=True)
-    zip_code = models.CharField(max_length=15, null=True, blank=True)
-    phone = models.CharField(max_length=16, null=True, blank=True)
-    address = models.TextField(max_length=500, null=True, blank=True)
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name='shipping'
+    )
+    country = models.CharField(max_length=150, blank=True, null=True)
+    city = models.CharField(max_length=150, blank=True, null=True)
+    home_city = models.CharField(max_length=150, blank=True, null=True)
+    zip_code = models.CharField(max_length=15, blank=True, null=True)
+    phone = models.CharField(max_length=16, blank=True, null=True)
+    address = models.TextField(max_length=500, blank=True, null=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['id']
-        verbose_name_plural = '02. Shipping'
+        verbose_name_plural = "02. Shipping"
 
     def __str__(self):
-        return f"{self.user.username}'s Shipping"
+        return f"{self.user.username} Shipping"
 
 
-# ---------------- SIGNAL ----------------
+# Signal to create Shipping instance when a User is created
 @receiver(post_save, sender=User)
-def create_or_update_shipping_address(sender, instance, created, **kwargs):
+def create_shipping(sender, instance, created, **kwargs):
     if created:
         Shipping.objects.create(user=instance)
-    else:
-        if hasattr(instance, 'shipping'):
-            instance.shipping.save()
+

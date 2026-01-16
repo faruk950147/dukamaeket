@@ -33,9 +33,9 @@ admin.site.register(User, UserAdmin)
 # ---------------- Shipping ADMIN ----------------
 class ShippingAdmin(admin.ModelAdmin):
     list_display = (
-        'get_username', 'get_email', 'phone', 'city', 'country', 'created_at', 'updated_at'
+        'get_username', 'get_email', 'country', 'city', 'home_city', 'zip_code', 'phone', 'address', 'created_at', 'updated_at'
     )
-    search_fields = ('user__username', 'user__email', 'phone', 'city', 'country')
+    search_fields = ('user__username', 'user__email', )
     ordering = ('id',)
 
     def get_username(self, obj):
