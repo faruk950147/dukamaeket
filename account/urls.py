@@ -13,7 +13,7 @@ from account.views import (
     ResetPasswordView,
     ResetPasswordConfirmView,  
     UserInfoEditView,
-    ShippingView,
+    ShippingAddressView,
     AccountView
 )
 
@@ -35,6 +35,6 @@ urlpatterns = [
     path('reset-password/<uidb64>/<token>/', ResetPasswordConfirmView.as_view(), name='reset_password_confirm'),
     
     path('user-info-edit/', UserInfoEditView.as_view(), name='user-info-edit'),
-    path('shipping-info/', ShippingView.as_view(), name='shipping-info'),
+    path('shipping-address/', ShippingAddressView.as_view(), name='shipping-address'),
     path('account/', AccountView.as_view(), name='account'),
 ]

@@ -144,8 +144,6 @@
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="authDropdown">
                                         {% if request.user.is_authenticated %}
                                             <li><a class="dropdown-item {% if request.resolver_match.url_name == "account" %}active{% endif %}" href="{% url 'account' %}">Account</a></li>
-                                            <li><a class="dropdown-item {% if request.resolver_match.url_name == "change-password" %}active {% endif %}" href="{% url "change-password" %}">Changes Password</a></li>
-                                            <li><a class="dropdown-item" href="{% url 'sign-out' %}">Sign out</a></li>
                                         {% else %}
                                             <li><a class="dropdown-item" href="{% url 'sign-in' %}">Sign In</a></li>
                                             <li><a class="dropdown-item" href="{% url 'sign-up' %}">Sign Up</a></li>

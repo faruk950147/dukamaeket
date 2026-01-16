@@ -303,12 +303,12 @@ class UserInfoEditView(LoginRequiredMixin, generic.View):
         form = UserForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('user-info')  
+            return redirect('account')  
         return render(request, 'account/user-info.html', {'form': form})
 
 
 # Shipping 
-class ShippingView(LoginRequiredMixin, generic.View):
+class ShippingAddressView(LoginRequiredMixin, generic.View):
     def get(self, request):
         return render(request, 'account/shipping.html')
     def post(self, request):
