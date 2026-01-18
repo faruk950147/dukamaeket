@@ -1,0 +1,8 @@
+{% for v in colors %}
+    <label class="custom-control custom-radio">
+        <input type="radio" name="variant_id" value="{{ v.id }}" class="variant-color"
+            {% if v.id == variant.id %} checked {% endif %}>
+        <span>{{ v.color.title }}</span>
+        <img src="{{ v.image.url }}" style="width:30px; height:30px;">
+    </label>
+{% endfor %}

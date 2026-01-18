@@ -3,7 +3,6 @@ from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
-from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from django.db.models import Avg, Q, Max, Min
 from django.core.paginator import Paginator
@@ -88,6 +87,9 @@ class HomeView(generic.View):
 @method_decorator(never_cache, name='dispatch')
 class ProductDetailView(generic.View):
     def get(self, request, slug, id):
+        # --------------------------
+        # Fetch main product
+        # --------------------------
         product = get_object_or_404(
             Product.objects
             .select_related('category', 'brand')
@@ -108,10 +110,14 @@ class ProductDetailView(generic.View):
             status='active'
         )
 
+        # --------------------------
+        # Related products (max 4)
+        # --------------------------
         related_products = (
             Product.objects
             .filter(category=product.category, status='active')
             .exclude(id=product.id)
+            .select_related('brand')
             .annotate(
                 avg_rate=Avg(
                     'reviews__rating',
@@ -120,14 +126,80 @@ class ProductDetailView(generic.View):
             )[:4]
         )
 
-        variants = ProductVariant.objects.filter(product=product)
         context = {
             'product': product,
-            'related_products': related_products,
-            'variants': variants
+            'related_products': related_products
         }
 
+        # --------------------------
+        # Variant handling
+        # --------------------------
+        if product.variant != "None":
+            variants = ProductVariant.objects.filter(product_id=product.id)\
+                        .select_related('size', 'color')
+
+            # Default variant: first available
+            variant = variants.filter(size__isnull=False, color__isnull=False).first()
+            if not variant:
+                variant = variants.first()
+
+            # Available colors for selected size
+            if variant.size:
+                colors = variants.filter(size_id=variant.size.id)
+            else:
+                colors = variants.filter(color__isnull=False)
+
+            # Unique sizes (DB-side deduplication)
+            sizes = variants.filter(size__isnull=False) \
+                            .values('size_id', 'size__title') \
+                            .distinct()
+
+            context.update({
+                'sizes': sizes,
+                'colors': colors,
+                'variant': variant,
+                'variants': variants
+            })
+
         return render(request, 'store/product-detail.html', context)
+
+
+# ==============================
+# AJAX endpoint for variant selection
+# ==============================
+@method_decorator(never_cache, name='dispatch')
+class GetProductVariantView(generic.View):
+    def post(self, request, *args, **kwargs):
+        action = request.POST.get('action')
+        data = {}
+
+        if action == 'post':
+            size_id = request.POST.get('size')
+            product_id = request.POST.get('product_id')
+            variants = ProductVariant.objects.filter(product_id=product_id)
+
+            # Filter by size
+            if size_id:
+                variants = variants.filter(size_id=size_id)
+
+            # Render color options HTML
+            rendered_table = render_to_string(
+                'ajax/color_options.html',
+                {'variants': variants}
+            )
+
+            # Default variant
+            variant = variants.first()
+
+            data = {
+                'rendered_table': rendered_table,
+                'price': variant.variant_price if variant else 0,
+                'stock': variant.available_stock if variant else 0,
+                'variant_id': variant.id if variant else 0
+            }
+            return JsonResponse(data)
+
+        return JsonResponse({'error': 'Invalid request'})
 
 
 # =========================================================

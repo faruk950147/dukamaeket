@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block title %}Product details{% endblock title %}
 
 {% block main_content %}
+
 <!-- breadcrumb__area-start -->
 <section class="breadcrumb__area box-plr-75">
     <div class="container">
@@ -26,35 +28,46 @@
 <div class="product-details">
     <div class="container">
         <div class="row">
+
             <!-- Product Images -->
             <div class="col-xl-6">
                 <div class="product__details-nav d-sm-flex align-items-start">
                     {% if product.images.exists %}
-                    <ul class="nav nav-tabs flex-sm-column justify-content-between" id="productThumbTab" role="tablist">
-                        {% for img in product.images.all %}
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link {% if forloop.first %}active{% endif %}" id="thumb{{ img.id }}-tab" data-bs-toggle="tab" data-bs-target="#thumb{{ img.id }}" type="button" role="tab" aria-controls="thumb{{ img.id }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
-                                <img src="{{ img.image.url }}" alt="{{ product.title|title }}" class="img-fluid" style="width:100px; height:150px; object-fit:cover;">
-                            </button>
-                        </li>
-                        {% endfor %}
-                    </ul>
+                        <ul class="nav nav-tabs flex-sm-column justify-content-between" id="productThumbTab" role="tablist">
+                            {% for img in product.images.all %}
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link {% if forloop.first %}active{% endif %}" 
+                                            id="thumb{{ img.id }}-tab" 
+                                            data-bs-toggle="tab" 
+                                            data-bs-target="#thumb{{ img.id }}" 
+                                            type="button" role="tab" 
+                                            aria-controls="thumb{{ img.id }}" 
+                                            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+                                        <img src="{{ img.image.url }}" 
+                                             alt="{{ product.title|title }}" 
+                                             class="img-fluid" 
+                                             style="width:100px; height:150px; object-fit:cover;">
+                                    </button>
+                                </li>
+                            {% endfor %}
+                        </ul>
                     {% endif %}
-
 
                     <div class="product__details-thumb">
                         <div class="tab-content" id="productThumbContent">
                             {% if product.images.exists %}
-                            {% for img in product.images.all %}
-                            <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" 
-                                id="thumb{{ img.id }}" 
-                                role="tabpanel" 
-                                aria-labelledby="thumb{{ img.id }}-tab">
-                                <div class="product__details-nav-thumb w-img">
-                                    <img src="{{ img.image.url }}" alt="{{ product.title|title }}" style="width: 350px; height: 500px; object-fit:cover;">
-                                </div>
-                            </div>
-                            {% endfor %}
+                                {% for img in product.images.all %}
+                                    <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" 
+                                         id="thumb{{ img.id }}" 
+                                         role="tabpanel" 
+                                         aria-labelledby="thumb{{ img.id }}-tab">
+                                        <div class="product__details-nav-thumb w-img">
+                                            <img src="{{ img.image.url }}" 
+                                                 alt="{{ product.title|title }}" 
+                                                 style="width: 350px; height: 500px; object-fit:cover;">
+                                        </div>
+                                    </div>
+                                {% endfor %}
                             {% endif %}
                         </div>
                     </div>
@@ -65,16 +78,14 @@
             <!-- Product Details Content -->
             <div class="col-xl-6">
                 <div class="product__details-content">
-                    <h6>{{product.title|title}}</h6>
+                    <h6>{{ product.title|title }}</h6>
 
                     <!-- Rating -->
                     <div class="pd-rating mb-10">
                         <ul class="rating">
-                            <i class="fa {% if product.avg_rate >= 1 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
-                            <i class="fa {% if product.avg_rate >= 2 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
-                            <i class="fa {% if product.avg_rate >= 3 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
-                            <i class="fa {% if product.avg_rate >= 4 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
-                            <i class="fa {% if product.avg_rate >= 5 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                            {% for i in "12345" %}
+                                <i class="fa {% if product.avg_rate >= i|add:0 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                            {% endfor %}
                         </ul>
                         <span>({{ product.reviews.count }} review{{ product.reviews.count|pluralize }})</span>
                     </div>
@@ -82,419 +93,157 @@
                     <!-- Price -->
                     <div class="price mb-10">
                         <span>
-                        $ <span id="product-price">{{product.sale_price}}</span>
-                        <del class="text-danger">
-                                {% if product.old_price %}
-                                $ {{product.old_price}}
-                                {% endif %}
-                        </del>
+                            $ <span id="product-price">{{ product.sale_price }}</span>
+                            <del class="text-danger">
+                                {% if product.old_price %} $ {{ product.old_price }} {% endif %}
+                            </del>
                         </span>
                     </div>
 
                     <!-- Features -->
                     <div class="features-des mb-20 mt-10">
                         <ul>
-                            <li><span><i class="fas fa-circle"></i> Discount: {{product.discount_percent}} %.</span></li>
-                            <li><span><i class="fas fa-circle"></i> Category: {{product.category.title|title}}.</span></li>
-                            <li><span><i class="fas fa-circle"></i> Brand: {{product.brand.title|title}}.</span></li>
+                            <li><span><i class="fas fa-circle"></i> Discount: {{ product.discount_percent }} %.</span></li>
+                            <li><span><i class="fas fa-circle"></i> Category: {{ product.category.title|title }}.</span></li>
+                            <li><span><i class="fas fa-circle"></i> Brand: {{ product.brand.title|title }}.</span></li>
                         </ul>
                     </div>
 
                     <!-- Stock -->
                     <div class="product-stock mb-20">
-                        <h5>Availability: <span>{{product.available_stock}}</span></h5>
+                        <h5>Availability: <span>{{ product.available_stock }}</span></h5>
                     </div>
-                    <!-- Add to Cart Form -->
-                    <form method="POST" action="{% url 'add-to-cart' %}" id="cart-form">
-                        {% csrf_token %}
-                        <input type="hidden" name="product_slug" id="product_slug" value="{{ product.slug }}">
-                        <input type="hidden" name="product_id" id="product_id" value="{{ product.id }}">
-                        <input type="hidden" name="variant_id" id="variant_id" value="1">
-                        <!-- Color Options -->
+
+                    <!-- Variants Section -->
+                    {% if product.variant %}
                         {% if product.variant == "color-size" %}
-                            <div class="details-meta colors">
-                                <label>Colors:</label>
-                                <div class="color">
-                                    {% for color in variants %}
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio"
-                                            name="color"
-                                            id="color{{ color.color.id }}"
-                                            value="{{ color.color.id }}"
-                                            class="custom-control-input"
-                                            >
-                                        <span class="custom-control-label">
-                                            {{ color.color.title }}
-                                        </span>
-                                        </br>
-                                        <img src="{{ color.image_url }}" alt="{% if color.image_url %}{{ color.color.title }}{% endif %}" style="width:30px; height:30px;" />
-
-                                    </label>
-                                    {% endfor %}
-                                    <a href="#" class="color-guide"><i class="fal fa-list"></i> If you select colors extra price</a>
-                                </div>
-                            </div>
-
-                            <!-- Size Options -->
-                            <div class="details-meta sizes">
-                                <label>Sizes:</label>
-                                <select name="size" id="size" class="size">
-                                    {% for size in variants %}
-                                    <option value="{{ size.size.id }}">{{ size.size.title }}</option>
-                                    {% endfor %}
-                                </select>
-                                <a href="#" class="size-guide"><i class="fal fa-list"></i> If you select sizes extra price</a>
-                            </div>
-
-                        {% elif product.variant == "color" %}
                             <!-- Color Options -->
                             <div class="details-meta colors">
                                 <label>Colors:</label>
-                                <div class="color">
+                                <div id="colors-show" class="color">
                                     {% for color in variants %}
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio"
-                                            name="color"
-                                            id="color{{ color.color.id }}"
-                                            value="{{ color.color.id }}"
-                                            class="custom-control-input"
-                                            >
-                                        <span class="custom-control-label">
-                                            {{ color.color.title }}
-                                        </span>
-                                        </br>
-                                        <img src="{{ color.image_url }}" alt="{% if color.image_url %}{{ color.color.title }}{% endif %}" style="width:30px; height:30px;"
-                                        />
-                                    </label>
+                                        <label class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio"
+                                                   name="variant_id"
+                                                   class="variant-color"
+                                                   value="{{ color.id }}"
+                                                   {% if forloop.first %}checked{% endif %}>
+                                            <span>{{ color.color.title }}</span><br>
+                                            <img src="{{ color.image_url }}" 
+                                                 alt="{{ color.color.title }}" 
+                                                 style="width:30px; height:30px;">
+                                        </label>
                                     {% endfor %}
-                                    <a href="#" class="color-guide"><i class="fal fa-list"></i> If you select colors extra price</a>
                                 </div>
                             </div>
-                            
-                        {% elif product.variant == "size" %}
+
                             <!-- Size Options -->
-                            <div class="details-meta sizes">
+                            <div class="details-meta sizes mt-15">
                                 <label>Sizes:</label>
-                                <select name="size" id="size" class="size">
+                                <select name="size" id="size-select" class="size">
                                     {% for size in variants %}
-                                    <option value="{{ size.size.id }}">{{ size.size.title }}</option>
+                                        <option value="{{ size.size.id }}">{{ size.size.title }}</option>
                                     {% endfor %}
                                 </select>
-                                <a href="#" class="size-guide"><i class="fal fa-list"></i> If you select sizes extra price</a>
                             </div>
 
-                        {% else %}
-                            <!-- No Variants Available -->
-                             <div class="details-meta">
-                                <p>No variants available for this product.</p>
-                             </div>
+                        {% elif product.variant == "color" %}
+                            <div class="details-meta colors">
+                                <label>Colors:</label>
+                                <div id="colors-show" class="color">
+                                    {% for color in variants %}
+                                        <label class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio"
+                                                   name="variant_id"
+                                                   class="variant-color"
+                                                   value="{{ color.id }}"
+                                                   {% if forloop.first %}checked{% endif %}>
+                                            <span>{{ color.color.title }}</span><br>
+                                            <img src="{{ color.image_url }}" 
+                                                 alt="{{ color.color.title }}" 
+                                                 style="width:30px; height:30px;">
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                        {% elif product.variant == "size" %}
+                            <div class="details-meta sizes">
+                                <label>Sizes:</label>
+                                <select name="size" id="size-select" class="size">
+                                    {% for size in variants %}
+                                        <option value="{{ size.size.id }}">{{ size.size.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
                         {% endif %}
+                    {% else %}
+                        <div class="details-meta">
+                            <p>No variants available for this product.</p>
+                        </div>
+                    {% endif %}
 
-
-                        <!-- Quantity + Add To Cart -->
+                    <!-- Add to Cart Form -->
+                    <form method="POST" action="{% url 'add-to-cart' %}" id="cart-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_slug" value="{{ product.slug }}">
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <input type="hidden" name="variant_id" id="variant_id" value="{{ variants.id }}">
+                        
                         <div class="cart-option mb-15">
                             <div class="product-quantity mr-20">
                                 <input type="number"
-                                    name="quantity"
-                                    id="quantity"
-                                    value="1"
-                                    min="1"
-                                    max="{{ product.available_stock }}">
+                                       name="quantity"
+                                       id="quantity"
+                                       value="1"
+                                       min="1"
+                                       max="{{ product.available_stock }}">
                             </div>
-
                             <button type="submit" class="cart-btn">Add to Cart</button>
                         </div>
                     </form>
-                    <!-- Wishlist -->
-                    <div class="details-meta">
-                        <div class="d-meta-left">
-                            <div class="dm-item mr-20">
-                                <a href="#"><i class="fal fa-heart"></i> Add to wishlist</a>
-                            </div>
-                            <div class="dm-item">
-                                <a href="#"><i class="fal fa-layer-group"></i> Compare</a>
-                            </div>
-                        </div>
-                        <div class="d-meta-left">
-                            <div class="dm-item">
-                                <a href="#"><i class="fal fa-share-alt"></i> Share</a>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Tags & SKU -->
-                    <div class="product-tag-area mt-15">
-                        <div class="product_info">
-                            <span class="sku_wrapper">
-                                <span class="title">SKU:</span>
-                            
-                                <span class="sku">
-                                    Red - L
-                                </span>
-
-                            </span>
-
-
-                            <span class="tagged_as">
-                                <span class="title">Tags:</span>
-                                <a href="#">{{product.tag}}</a>
-                            </span>
-                        </div>
-                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
 <!-- product-details-end -->
 
-<!-- product-details-des-start -->
-<div class="product-details-des mt-40 mb-60">
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="product__details-des-tab">
-                    <ul class="nav nav-tabs" id="productDesTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="des-tab" data-bs-toggle="tab" data-bs-target="#des" type="button" role="tab" aria-controls="des" aria-selected="true">Description</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="aditional-tab" data-bs-toggle="tab" data-bs-target="#aditional" type="button" role="tab" aria-controls="aditional" aria-selected="false">Additional information</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="false">Reviews <span id="review_count">({{product.reviews.count}})</span></button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="tab-content" id="prodductDesTaContent">
-            <div class="tab-pane fade active show" id="des" role="tabpanel" aria-labelledby="des-tab">
-                <div class="product__details-des-wrapper">
-                    <h6 class="des-sm-title">{{product.prev_des}}</h6>
-                    <p class="des-text mb-35">
-                        {{product.add_des}}
-                    </p>
-                </div>
-                <div class="product__details-des-wrapper">
-                    <h6 class="des-sm-title">{{product.short_des}}</h6>
-                    <p class="des-text mb-35">
-                        {{product.long_des}}
-                    </p>
-                </div>
-            </div>
+<!-- AJAX for variant changes -->
+<script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
+<script>
+$(document).ready(function(){
+    // Size change → update colors
+    $('#size-select').change(function(){
+        var size_id = $(this).val();
+        var product_id = "{{ product.id }}";
 
-            <div class="tab-pane fade" id="aditional" role="tabpanel" aria-labelledby="aditional-tab">
-                <div class="product__desc-info">
-                    <ul>
-                        <li><h6>Weight</h6><span>2 lbs</span></li>
-                        <li><h6>Dimensions</h6><span>12 × 16 × 19 in</span></li>
-                        <li><h6>Product</h6><span>Purchase this product on rag-bone.com</span></li>
-                        <li><h6>Color</h6><span>Gray, Black</span></li>
-                        <li><h6>Size</h6><span>S, M, L, XL</span></li>
-                        <li><h6>Model</h6><span>Model</span></li>
-                        <li><h6>Shipping</h6><span>Standard shipping: $5,95</span></li>
-                        <li><h6>Care Info</h6><span>Machine Wash up to 40ºC/86ºF Gentle Cycle</span></li>
-                        <li><h6>Brand</h6><span>Kazen</span></li>
-                    </ul>
-                </div>
-            </div>
+        $.ajax({
+            type: "POST",
+            url: "{% url 'get-product-variant' %}",
+            data: {
+                'action': 'post',
+                'size': size_id,
+                'product_id': product_id,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response){
+                $('#colors-show').html(response.rendered_table);
+                var first_variant_id = $('#colors-show input[type=radio]').first().val();
+                $('#variant_id').val(first_variant_id);
+                $('#product-price').text(response.price);
+                $('#quantity').attr('max', response.stock);
+            }
+        });
+    });
 
-            <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
-                <div class="product__details-review">
-                    <div class="row">
-                        <div class="col-xl-4">
-                            <div class="review-des-infod">
-                                <div id="reviews-items">
-                                    {% if product.reviews.all %}
-                                    {% for review in product.reviews.all %}
-                                    <div class="review-details-des">
-                                        <div class="author-image mr-15">
-                                            <img src="{{ review.user.profile.image.url }}" alt="{{ review.user.username }}" style="width: 50px; height: 50px">
-                                        </div>
-                                        <div class="review-details-content">
-                                            <h5>{{ review.rating|floatformat:2 }}</h5>
-                                            <div class="str-info">
-                                                <div class="review-star mr-15">
-                                                    <i class="text-warning fa {% if review.rating >= 1 %}fa-star{% else %}fa-star-o{% endif %}"></i>
-                                                    <i class="text-warning fa {% if review.rating >= 2 %}fa-star{% else %}fa-star-o{% endif %}"></i>
-                                                    <i class="text-warning fa {% if review.rating >= 3 %}fa-star{% else %}fa-star-o{% endif %}"></i>
-                                                    <i class="text-warning fa {% if review.rating >= 4 %}fa-star{% else %}fa-star-o{% endif %}"></i>
-                                                    <i class="text-warning fa {% if review.rating >= 5 %}fa-star{% else %}fa-star-o{% endif %}"></i>
-                                                </div>
-                                            </div>
-                                            <div class="name-date mb-30">
-                                                <h6>{{ review.user.username }} – <span>{{ review.created_at|date:"Y-m-d H:i" }}</span></h6>
-                                            </div>
-                                            <p>{{ review.subject }}</p>
-                                            <p>{{ review.comment }}</p>
-                                        </div>
-                                    </div>
-                                    {% endfor %}
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-8">
-                            <div class="product__details-comment">
-                                <div class="comment-title mb-20">
-                                    <h3>Add A Review</h3>
-                                </div>
-
-                                <div class="comment-input-box">
-                                    <form action="#" id="review-form" novalidate>
-                                        {% csrf_token %}
-                                        <input type="hidden" name="product_slug" id="product_slug" value="{{ product.slug }}">
-                                        <input type="hidden" name="product_id" id="product_id" value="{{ product.id }}">
-                                        <div class="comment-rating mb-20">
-                                            <label>Your Review Ratings</label>
-                                            <ul class="rating">
-                                                <input type="radio" name="rating" id="rating5" value="5" required />
-                                                <label for="rating5" title="5"></label>
-
-                                                <input type="radio" name="rating" id="rating4" value="4" required />
-                                                <label for="rating4" title="4"></label>
-
-                                                <input type="radio" name="rating" id="rating3" value="3" required />
-                                                <label for="rating3" title="3"></label>
-
-                                                <input type="radio" name="rating" id="rating2" value="2" required />
-                                                <label for="rating2" title="2"></label>
-
-                                                <input type="radio" name="rating" id="rating1" value="1" required />
-                                                <label for="rating1" title="1"></label>
-                                            </ul>
-                                        </div>
-
-                                        <div class="row g-3">
-                                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 comment-input">
-                                                <input type="text" name="subject" id="subject" class="form-control" placeholder="Your subject" required>
-                                            </div>
-
-                                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 comment-input">
-                                                <textarea name="comment" id="comment" class="form-control" rows="5" placeholder="Your comment" required></textarea>
-                                            </div>
-
-                                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 comment-submit">
-                                                <button type="submit" class="cart-btn form-control">Submit</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- product-details-des-end -->
-
-<!-- relative product start -->
-<section class="relative-product pb-60">
-    <div class="container">
-        <div class="row">
-            <div class="col-xxl-12">
-                <div class="section__title-wrapper text-center mb-40">
-                    <h2 class="section__title">Related Products</h2>
-                </div>
-            </div>
-        </div>
-       <div class="row">
-            <div class="product-bs-slider">
-                <div class="product-slider swiper-container">
-                    <div class="swiper-wrapper">
-                    {% if related_products %}
-                    {% for product in related_products %}
-                        <!-- product-1 -->
-                        <div class="product__item swiper-slide">
-                            <div class="product__thumb fix">
-                                <div class="product-image w-img">
-                                    <a href="{% url 'product-detail' product.slug product.id %}">
-                                        <img src="{{product.images.first.image.url}}" alt="{{product.title|title}}" style="width: 260px; height: 300px; object-fit: cover">
-                                    </a>
-                                </div>
-                                {% if product.deadline %}
-                                <div class="countdown countdown-small mt-5">
-                                    <div class="countdown-inner b-radius"
-                                        data-countdown=""
-                                        data-date="{{ product.deadline|date:'c' }}">
-                                        <ul class="text-center" style="padding:0; list-style:none; display:flex; justify-content:center; gap:10px;">
-                                            <li><span data-days="">0</span>d</li>
-                                            <li><span data-hours="">0</span>h</li>
-                                            <li><span data-minutes="">0</span>m</li>
-                                            <li><span data-seconds="">0</span>s</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                {% endif %}
-                                <div class="product__offer">
-                                    <span class="discount">-{{product.discount_percent}}%</span>
-                                </div>
-                                <div class="product-action">
-                                    <a href="#" class="icon-box icon-box-1" data-bs-toggle="modal" data-bs-target="#productModalId">
-                                        <i class="fal fa-eye"></i>
-                                        <i class="fal fa-eye"></i>
-                                    </a>
-                                    <a href="#" class="icon-box icon-box-1">
-                                        <i class="fal fa-heart"></i>
-                                        <i class="fal fa-heart"></i>
-                                    </a>
-                                    <a href="#" class="icon-box icon-box-1">
-                                        <i class="fal fa-layer-group"></i>
-                                        <i class="fal fa-layer-group"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="product__content">
-                                <h6><a href="{% url 'product-detail' product.slug product.id %}">{{product.title|title|truncatewords:5}}</a></h6>
-                                <div class="rating mb-5">
-                                    <ul>
-                                        <i class="fa {% if product.avg_rate >= 1 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
-                                        <i class="fa {% if product.avg_rate >= 2 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
-                                        <i class="fa {% if product.avg_rate >= 3 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
-                                        <i class="fa {% if product.avg_rate >= 4 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
-                                        <i class="fa {% if product.avg_rate >= 5 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
-                                    </ul>
-                                    <span>({{ product.reviews.count }} review{{ product.reviews.count|pluralize }})</span>
-                                </div>
-                                <div class="price mb-10"><span>
-                                   $ {{product.sale_price}}
-                                    <del class="text-danger">
-                                    {% if product.old_price %}
-                                       $ {{product.old_price}}
-                                    {% endif %}
-                                    </del>
-                                </span></div>
-                                <div class="progress mb-5">
-                                    <div class="progress-bar bg-danger" style="width:10%"></div>
-                                </div>
-                                <div class="progress-rate"><span>Sold {{product.sold}}</span></div>
-                            </div>
-                            <div class="product__add-cart text-center">
-                                <button class="cart-btn w-100">Add to Cart</button>
-                            </div>
-                        </div>
-                    {% endfor %}
-                    {% else %}
-                    <p>No products found </p>
-                    {% endif %}
-                    </div>
-                </div>
-
-                <div class="bs-button bs-button-prev"><i class="fal fa-chevron-left"></i></div>
-                <div class="bs-button bs-button-next"><i class="fal fa-chevron-right"></i></div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- relative product end -->
-
-<!-- shop modal start -->
-{% include 'store/product-modals.html' %}
-<!-- shop modal end -->
-
-{% include 'ajax/detail_page_ajax.html' %}
+    // Color change → update hidden variant_id
+    $(document).on('change', '.variant-color', function(){
+        $('#variant_id').val($(this).val());
+    });
+});
+</script>
 
 {% endblock main_content %}
