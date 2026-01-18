@@ -1165,3 +1165,20 @@ INFO 2026-01-16 10:59:32,268 project views Password validation failed: passwords
 INFO 2026-01-16 10:59:32,453 project views Password validation failed: passwords do not match
 INFO 2026-01-16 10:59:46,015 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
 INFO 2026-01-16 10:59:47,422 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-17 20:58:00,583 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-17 20:58:24,987 project views Sign-in validation failed: no account found for a
+INFO 2026-01-17 20:58:25,156 project views Sign-in validation failed: no account found for a
+INFO 2026-01-17 20:58:25,582 project views Sign-in validation failed: no account found for ad
+INFO 2026-01-17 20:58:25,776 project views Sign-in validation failed: no account found for ad
+INFO 2026-01-17 20:58:26,706 project views Sign-in validation failed: no account found for adm
+INFO 2026-01-17 20:58:26,902 project views Sign-in validation failed: no account found for adm
+INFO 2026-01-17 20:58:27,677 project views Sign-in validation failed: no account found for admi
+INFO 2026-01-17 20:58:27,886 project views Sign-in validation failed: no account found for admi
+INFO 2026-01-17 20:58:28,880 project views Sign-in validation success: account exists for admin
+INFO 2026-01-17 20:58:29,039 project views Sign-in validation success: account exists for admin
+INFO 2026-01-17 20:58:46,900 project views Sign-in form invalid
+INFO 2026-01-17 20:59:02,932 project views User signed in: admin (29)
+INFO 2026-01-17 20:59:02,969 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-17 21:00:15,208 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-17 21:02:23,819 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-18 18:23:52,484 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
