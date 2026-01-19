@@ -113,33 +113,37 @@
                     <div class="product-stock mb-20">
                         <h5>Availability: <span>{{ product.available_stock }}</span></h5>
                     </div>
+                    <div class="product-color mb-20">
+                        <h5>Selected color: <span>RED</span></h5>
+                    </div>
+
+                    <div class="product-size mb-20">
+                        <h5>Selected size: <span>Large</span></h5>
+                    </div>
 
                     <!-- Variants Section -->
                     {% if product.variant == "color-size" %}
                         <!-- Color Options -->
-                        <div class="details-meta colors">
-                            <label>Colors:</label>
-                            <div id="colors-show" class="color">
+                        <div style="display: flex; align-items: flex-start; margin-bottom: 20px;">
+                            <label style="min-width: 80px; font-weight: bold;">Colors:</label>
+                            <div id="colors-show" style="display: flex; flex-wrap: wrap; gap: 15px;">
                                 {% for color in variants %}
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio"
-                                                name="variant_id"
-                                                class="variant-color"
-                                                value="{{ color.id }}"
-                                                {% if forloop.first %}checked{% endif %}>
-                                        <span>{{ color.color.title }}</span><br>
-                                        <img src="{{ color.image_url }}" 
-                                                alt="{{ color.color.title }}" 
-                                                style="width:30px; height:30px;">
+                                    <label style="display: flex; flex-direction: column; align-items: center; cursor: pointer; margin: 0;">
+                                        <div style="display: flex; align-items: center; gap: 5px;">
+                                            <input type="radio" name="variant_id" value="{{ color.id }}" {% if forloop.first %}checked{% endif %}>
+                                            <span style="font-size: 14px;">{{ color.color.title }}</span>
+                                        </div>
+                                        <img src="{{ color.image_url }}" alt="{{ color.color.title }}" style="width:30px; height:30px; border: 1px solid #eee; margin-top: 5px;">
                                     </label>
                                 {% endfor %}
                             </div>
                         </div>
 
                         <!-- Size Options -->
-                        <div class="details-meta sizes mt-15">
-                            <label>Sizes:</label>
-                            <select name="size" id="size-select" class="size">
+                        <div style="display: flex; align-items: center; margin-top: 15px;">
+                            <label style="min-width: 80px; font-weight: bold;">Sizes:</label>
+                            <select name="size" id="size-select" style="padding: 5px; min-width: 120px;">
+                                <option value="">Select Size</option>
                                 {% for size in variants %}
                                     <option value="{{ size.size.id }}">{{ size.size.title }}</option>
                                 {% endfor %}
@@ -147,29 +151,27 @@
                         </div>
 
                     {% elif product.variant == "color" %}
-                        <div class="details-meta colors">
-                            <label>Colors:</label>
-                            <div id="colors-show" class="color">
+                        <!-- Color Options -->
+                        <div style="display: flex; align-items: flex-start; margin-bottom: 20px;">
+                            <label style="min-width: 80px; font-weight: bold;">Colors:</label>
+                            <div id="colors-show" style="display: flex; flex-wrap: wrap; gap: 15px;">
                                 {% for color in variants %}
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio"
-                                                name="variant_id"
-                                                class="variant-color"
-                                                value="{{ color.id }}"
-                                                {% if forloop.first %}checked{% endif %}>
-                                        <span>{{ color.color.title }}</span><br>
-                                        <img src="{{ color.image_url }}" 
-                                                alt="{{ color.color.title }}" 
-                                                style="width:30px; height:30px;">
+                                    <label style="display: flex; flex-direction: column; align-items: center; cursor: pointer; margin: 0;">
+                                        <div style="display: flex; align-items: center; gap: 5px;">
+                                            <input type="radio" name="variant_id" value="{{ color.id }}" {% if forloop.first %}checked{% endif %}>
+                                            <span style="font-size: 14px;">{{ color.color.title }}</span>
+                                        </div>
+                                        <img src="{{ color.image_url }}" alt="{{ color.color.title }}" style="width:30px; height:30px; border: 1px solid #eee; margin-top: 5px;">
                                     </label>
                                 {% endfor %}
                             </div>
                         </div>
 
                     {% elif product.variant == "size" %}
-                        <div class="details-meta sizes">
-                            <label>Sizes:</label>
-                            <select name="size" id="size-select" class="size">
+                        <div style="display: flex; align-items: center; margin-top: 15px;">
+                            <label style="min-width: 80px; font-weight: bold;">Sizes:</label>
+                            <select name="size" id="size-select" style="padding: 5px; min-width: 120px;">
+                                <option value="">Select Size</option>
                                 {% for size in variants %}
                                     <option value="{{ size.size.id }}">{{ size.size.title }}</option>
                                 {% endfor %}
@@ -177,10 +179,10 @@
                         </div>
                     {% endif %}
                     <!-- End Variants Section -->
-
+                    </br>
                     {% if product.variant %}
                     <!-- Add to Cart Form -->
-                    <form method="POST" action="{% url 'add-to-cart' %}" id="cart-form">
+                    <form class="mt-2" method="POST" action="{% url 'add-to-cart' %}" id="cart-form">
                         {% csrf_token %}
                         <input type="hidden" name="product_slug" value="{{ product.slug }}">
                         <input type="hidden" name="product_id" value="{{ product.id }}">
@@ -188,6 +190,7 @@
                         
                         <div class="cart-option mb-15">
                             <div class="product-quantity mr-20">
+                                <span style="min-width: 80px; font-weight: bold;">Quantity:</span>
                                 <input type="number" name="quantity" id="quantity"
                                 value="1" min="1" max="{{ variant.available_stock }}">
                             </div>
