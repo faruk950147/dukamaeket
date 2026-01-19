@@ -342,8 +342,4 @@ class GetFilterProductsView(generic.View):
         return JsonResponse({'html': html})
     
 
-# =========================================================
-# AJAX: GET PRODUCT VARIANT PRICE / STOCK / IMAGE
-# =========================================================
-
 
