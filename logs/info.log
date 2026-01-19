@@ -1174,3 +1174,57 @@ INFO 2026-01-18 21:53:10,861 project views User Anonymous visited Home page. Sli
 INFO 2026-01-18 22:22:39,947 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
 INFO 2026-01-19 00:22:17,666 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
 INFO 2026-01-19 08:36:55,622 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-19 10:21:47,120 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-19 10:26:40,959 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-19 10:26:55,372 project views Sign-in validation failed: no account found for a
+INFO 2026-01-19 10:26:55,569 project views Sign-in validation failed: no account found for a
+INFO 2026-01-19 10:26:55,840 project views Sign-in validation failed: no account found for ad
+INFO 2026-01-19 10:26:56,046 project views Sign-in validation failed: no account found for ad
+INFO 2026-01-19 10:26:56,538 project views Sign-in validation failed: no account found for adm
+INFO 2026-01-19 10:26:56,753 project views Sign-in validation failed: no account found for adm
+INFO 2026-01-19 10:26:57,002 project views Sign-in validation failed: no account found for admi
+INFO 2026-01-19 10:26:57,195 project views Sign-in validation failed: no account found for admi
+INFO 2026-01-19 10:26:57,422 project views Sign-in validation success: account exists for admin
+INFO 2026-01-19 10:26:57,659 project views Sign-in validation success: account exists for admin
+INFO 2026-01-19 10:26:59,021 project views Sign-in validation failed: no account found for admin@
+INFO 2026-01-19 10:26:59,265 project views Sign-in validation failed: no account found for admin@
+INFO 2026-01-19 10:26:59,489 project views Sign-in validation failed: no account found for admin@
+INFO 2026-01-19 10:27:02,899 project views Sign-in validation failed: no account found for admin@g
+INFO 2026-01-19 10:27:03,084 project views Sign-in validation failed: no account found for admin@g
+INFO 2026-01-19 10:27:03,410 project views Sign-in validation failed: no account found for admin@gm
+INFO 2026-01-19 10:27:03,601 project views Sign-in validation failed: no account found for admin@gm
+INFO 2026-01-19 10:27:03,990 project views Sign-in validation failed: no account found for admin@gma
+INFO 2026-01-19 10:27:04,208 project views Sign-in validation failed: no account found for admin@gma
+INFO 2026-01-19 10:27:04,547 project views Sign-in validation failed: no account found for admin@gmai
+INFO 2026-01-19 10:27:04,737 project views Sign-in validation failed: no account found for admin@gmai
+INFO 2026-01-19 10:27:04,995 project views Sign-in validation failed: no account found for admin@gmail
+INFO 2026-01-19 10:27:05,240 project views Sign-in validation failed: no account found for admin@gmail
+INFO 2026-01-19 10:27:06,522 project views Sign-in validation failed: no account found for admin@gmail.
+INFO 2026-01-19 10:27:06,713 project views Sign-in validation failed: no account found for admin@gmail.
+INFO 2026-01-19 10:27:07,084 project views Sign-in validation failed: no account found for admin@gmail.c
+INFO 2026-01-19 10:27:07,297 project views Sign-in validation failed: no account found for admin@gmail.c
+INFO 2026-01-19 10:27:07,555 project views Sign-in validation failed: no account found for admin@gmail.co
+INFO 2026-01-19 10:27:07,659 project views Sign-in validation failed: no account found for admin@gmail.co
+INFO 2026-01-19 10:27:08,021 project views Sign-in validation success: account exists for admin@gmail.com
+INFO 2026-01-19 10:27:08,258 project views Sign-in validation success: account exists for admin@gmail.com
+INFO 2026-01-19 10:27:37,182 project views User signed in: admin (30)
+INFO 2026-01-19 10:27:41,309 project views User signed in: admin (30)
+INFO 2026-01-19 10:27:41,847 project views User signed in: admin (30)
+INFO 2026-01-19 10:27:42,145 project views User signed in: admin (30)
+INFO 2026-01-19 10:27:42,460 project views User signed in: admin (30)
+INFO 2026-01-19 10:27:42,849 project views User signed in: admin (30)
+INFO 2026-01-19 10:27:43,124 project views User signed in: admin (30)
+INFO 2026-01-19 10:27:43,199 project views User signed in: admin (30)
+INFO 2026-01-19 10:27:43,548 project views User signed in: admin (30)
+INFO 2026-01-19 10:27:43,633 project views User signed in: admin (30)
+INFO 2026-01-19 10:27:44,134 project views User signed in: admin (30)
+INFO 2026-01-19 10:27:44,161 project views User signed in: admin (30)
+INFO 2026-01-19 10:27:44,757 project views User signed in: admin (30)
+INFO 2026-01-19 10:27:44,869 project views User signed in: admin (30)
+INFO 2026-01-19 10:27:45,048 project views User signed in: admin (30)
+INFO 2026-01-19 10:27:45,083 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-19 10:32:14,312 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-19 10:32:50,851 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-19 10:33:13,038 project views User admin visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-19 10:35:53,940 project views User Anonymous visited Home page. Sliders: 5, Feature Sliders: 4, Add Sliders: 2, Promo Sliders: 3, Top Deals: 6, Featured Products: 5
+INFO 2026-01-19 11:12:14,071 project views User admin (ID: 30) submitted a review for Product: Exclusive Desighn Indian Handmade new designer embroidery (ID: 2), Rating: 5.0, Subject: Good

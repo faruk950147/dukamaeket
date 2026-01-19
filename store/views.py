@@ -184,11 +184,12 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
 
         review_count = product.reviews.filter(status='active').count()
 
-        # -------- SAFE profile image --------
-        if hasattr(user, 'profile') and user.profile.image:
-            image_url = user.profile.image.url
+        # -------- SAFE User image with hasattr --------
+        if hasattr(user, 'image') and user.image:
+            image_url = user.image.url
         else:
             image_url = '/media/defaults/default.jpg'
+
 
         review_html = f"""
         <div class="review-details-des">

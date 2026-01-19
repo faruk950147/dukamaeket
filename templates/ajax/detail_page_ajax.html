@@ -2,6 +2,37 @@
 <script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
 <script>
    $(document).ready(function(){
+        // Size change → update colors
+        $('#size-select').change(function(){
+            var size_id = $(this).val();
+            var product_id = "{{ product.id }}";
+
+            $.ajax({
+                type: "POST",
+                url: "{% url 'get-product-variant' %}",
+                data: {
+                    'action': 'post',
+                    'size': size_id,
+                    'product_id': product_id,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(res){
+                    console.log(res);
+                    $('#colors-show').html(res.rendered_table); 
+
+                    $('#variant_id').val(res.variant_id); 
+                    
+                    $('#product-price').text(res.price);
+                    $('.product-stock h5 span').text(res.stock);
+                }
+            });
+        });
+
+        // Color change → update hidden variant_id
+        $(document).on('change', '.variant-color', function(){
+            $('#variant_id').val($(this).val());
+        });
+
         // Review form submission via AJAX
         $('#review-form').on('submit', function (e) {
             e.preventDefault();
@@ -52,7 +83,6 @@
             });
         });
 
-        
         // Add to Cart form submission via AJAX
         $("#cart-form").on("submit", function(e){
             e.preventDefault();
