@@ -115,74 +115,70 @@
                     </div>
 
                     <!-- Variants Section -->
-                    {% if product.variant %}
-                        {% if product.variant == "color-size" %}
-                            <!-- Color Options -->
-                            <div class="details-meta colors">
-                                <label>Colors:</label>
-                                <div id="colors-show" class="color">
-                                    {% for color in variants %}
-                                        <label class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio"
-                                                   name="variant_id"
-                                                   class="variant-color"
-                                                   value="{{ color.id }}"
-                                                   {% if forloop.first %}checked{% endif %}>
-                                            <span>{{ color.color.title }}</span><br>
-                                            <img src="{{ color.image_url }}" 
-                                                 alt="{{ color.color.title }}" 
-                                                 style="width:30px; height:30px;">
-                                        </label>
-                                    {% endfor %}
-                                </div>
+                    {% if product.variant == "color-size" %}
+                        <!-- Color Options -->
+                        <div class="details-meta colors">
+                            <label>Colors:</label>
+                            <div id="colors-show" class="color">
+                                {% for color in variants %}
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio"
+                                                name="variant_id"
+                                                class="variant-color"
+                                                value="{{ color.id }}"
+                                                {% if forloop.first %}checked{% endif %}>
+                                        <span>{{ color.color.title }}</span><br>
+                                        <img src="{{ color.image_url }}" 
+                                                alt="{{ color.color.title }}" 
+                                                style="width:30px; height:30px;">
+                                    </label>
+                                {% endfor %}
                             </div>
+                        </div>
 
-                            <!-- Size Options -->
-                            <div class="details-meta sizes mt-15">
-                                <label>Sizes:</label>
-                                <select name="size" id="size-select" class="size">
-                                    {% for size in variants %}
-                                        <option value="{{ size.size.id }}">{{ size.size.title }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                        <!-- Size Options -->
+                        <div class="details-meta sizes mt-15">
+                            <label>Sizes:</label>
+                            <select name="size" id="size-select" class="size">
+                                {% for size in variants %}
+                                    <option value="{{ size.size.id }}">{{ size.size.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
 
-                        {% elif product.variant == "color" %}
-                            <div class="details-meta colors">
-                                <label>Colors:</label>
-                                <div id="colors-show" class="color">
-                                    {% for color in variants %}
-                                        <label class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio"
-                                                   name="variant_id"
-                                                   class="variant-color"
-                                                   value="{{ color.id }}"
-                                                   {% if forloop.first %}checked{% endif %}>
-                                            <span>{{ color.color.title }}</span><br>
-                                            <img src="{{ color.image_url }}" 
-                                                 alt="{{ color.color.title }}" 
-                                                 style="width:30px; height:30px;">
-                                        </label>
-                                    {% endfor %}
-                                </div>
+                    {% elif product.variant == "color" %}
+                        <div class="details-meta colors">
+                            <label>Colors:</label>
+                            <div id="colors-show" class="color">
+                                {% for color in variants %}
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio"
+                                                name="variant_id"
+                                                class="variant-color"
+                                                value="{{ color.id }}"
+                                                {% if forloop.first %}checked{% endif %}>
+                                        <span>{{ color.color.title }}</span><br>
+                                        <img src="{{ color.image_url }}" 
+                                                alt="{{ color.color.title }}" 
+                                                style="width:30px; height:30px;">
+                                    </label>
+                                {% endfor %}
                             </div>
+                        </div>
 
-                        {% elif product.variant == "size" %}
-                            <div class="details-meta sizes">
-                                <label>Sizes:</label>
-                                <select name="size" id="size-select" class="size">
-                                    {% for size in variants %}
-                                        <option value="{{ size.size.id }}">{{ size.size.title }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        {% endif %}
-                    {% else %}
-                        <div class="details-meta">
-                            <p>No variants available for this product.</p>
+                    {% elif product.variant == "size" %}
+                        <div class="details-meta sizes">
+                            <label>Sizes:</label>
+                            <select name="size" id="size-select" class="size">
+                                {% for size in variants %}
+                                    <option value="{{ size.size.id }}">{{ size.size.title }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                     {% endif %}
+                    <!-- End Variants Section -->
 
+                    {% if product.variant %}
                     <!-- Add to Cart Form -->
                     <form method="POST" action="{% url 'add-to-cart' %}" id="cart-form">
                         {% csrf_token %}
@@ -192,17 +188,28 @@
                         
                         <div class="cart-option mb-15">
                             <div class="product-quantity mr-20">
-                                <input type="number"
-                                       name="quantity"
-                                       id="quantity"
-                                       value="1"
-                                       min="1"
-                                       max="{{ product.available_stock }}">
+                                <input type="number" name="quantity" id="quantity"
+                                value="1" min="1" max="{{ variant.available_stock }}">
                             </div>
                             <button type="submit" class="cart-btn">Add to Cart</button>
                         </div>
                     </form>
+                    {% else %}
+                    <!-- Add to Cart Form -->
+                    <form method="POST" action="{% url 'add-to-cart' %}" id="cart-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_slug" value="{{ product.slug }}">
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
 
+                        <div class="cart-option mb-15">
+                            <div class="product-quantity mr-20">
+                                <input type="number" name="quantity" id="quantity"
+                                value="1" min="1" max="{{ product.available_stock }}">
+                            </div>
+                            <button type="submit" class="cart-btn">Add to Cart</button>
+                        </div>
+                    </form>
+                    {% endif %}
                 </div>
             </div>
 
@@ -229,12 +236,14 @@ $(document).ready(function(){
                 'product_id': product_id,
                 'csrfmiddlewaretoken': '{{ csrf_token }}'
             },
-            success: function(response){
-                $('#colors-show').html(response.rendered_table);
-                var first_variant_id = $('#colors-show input[type=radio]').first().val();
-                $('#variant_id').val(first_variant_id);
-                $('#product-price').text(response.price);
-                $('#quantity').attr('max', response.stock);
+            success: function(res){
+                console.log(res);
+                $('#colors-show').html(res.rendered_table); 
+
+                $('#variant_id').val(res.variant_id); 
+                
+                $('#product-price').text(res.price);
+                $('.product-stock h5 span').text(res.stock);
             }
         });
     });
