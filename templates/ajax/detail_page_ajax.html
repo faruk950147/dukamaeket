@@ -2,10 +2,15 @@
 <script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
 <script>
    $(document).ready(function(){
-        // Size change → update colors
+        // Size change → update colors and text
         $('#size-select').change(function(){
             var size_id = $(this).val();
+            // Get selected size name
+            var size_name = $(this).find('option:selected').text();
             var product_id = "{{ product.id }}";
+
+            // Display selected size name
+            $('#display-size').text(size_name);
 
             $.ajax({
                 type: "POST",
@@ -17,20 +22,29 @@
                     'csrfmiddlewaretoken': '{{ csrf_token }}'
                 },
                 success: function(res){
-                    console.log(res);
                     $('#colors-show').html(res.rendered_table); 
-
                     $('#variant_id').val(res.variant_id); 
-                    
                     $('#product-price').text(res.price);
                     $('.product-stock h5 span').text(res.stock);
+
+                    // AJAX response selected color set 
+                    var default_color = $('.variant-color:checked').next('label').text();
+                    if(default_color) {
+                        $('#display-color').text(default_color);
+                    }
                 }
             });
         });
 
-        // Color change → update hidden variant_id
+        // Color change → update text and hidden variant_id
         $(document).on('change', '.variant-color', function(){
-            $('#variant_id').val($(this).val());
+            var variant_id = $(this).val();
+            // radio button after label text get
+            var color_name = $(this).next('label').text();
+
+            // display selected color name
+            $('#display-color').text(color_name);
+            $('#variant_id').val(variant_id);
         });
 
         // Review form submission via AJAX

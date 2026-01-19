@@ -114,11 +114,11 @@
                         <h5>Availability: <span>{{ product.available_stock }}</span></h5>
                     </div>
                     <div class="product-color mb-20">
-                        <h5>Selected color: <span>RED</span></h5>
+                        <p>Selected color: <span id="display-color">{{ variant.color.title }}</span></p>
                     </div>
 
                     <div class="product-size mb-20">
-                        <h5>Selected size: <span>Large</span></h5>
+                        <p>Selected size: <span id="display-size">{{ variant.size.title }}</span></p>
                     </div>
 
                     <!-- Variants Section -->
@@ -143,7 +143,6 @@
                         <div style="display: flex; align-items: center; margin-top: 15px;">
                             <label style="min-width: 80px; font-weight: bold;">Sizes:</label>
                             <select name="size" id="size-select" style="padding: 5px; min-width: 120px;">
-                                <option value="">Select Size</option>
                                 {% for size in variants %}
                                     <option value="{{ size.size.id }}">{{ size.size.title }}</option>
                                 {% endfor %}
@@ -171,7 +170,6 @@
                         <div style="display: flex; align-items: center; margin-top: 15px;">
                             <label style="min-width: 80px; font-weight: bold;">Sizes:</label>
                             <select name="size" id="size-select" style="padding: 5px; min-width: 120px;">
-                                <option value="">Select Size</option>
                                 {% for size in variants %}
                                     <option value="{{ size.size.id }}">{{ size.size.title }}</option>
                                 {% endfor %}

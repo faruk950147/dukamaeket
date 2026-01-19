@@ -109,7 +109,7 @@ class ProductVariantAdmin(ImagePreviewMixin, admin.ModelAdmin):
     list_filter = ('status', 'color', 'size', 'product', 'sku')
     search_fields = ('product__title', 'color__title', 'size__title', 'sku')
     readonly_fields = ('image_tag',)
-    list_editable = ('status', 'available_stock', 'image_id')
+    list_editable = ('status', 'available_stock', 'image_id', 'color', 'size', 'sku')
 
 
 
