@@ -1,4 +1,5 @@
 from itertools import product
+from turtle import color
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.utils.decorators import method_decorator
@@ -94,30 +95,71 @@ class ProductDetailView(generic.View):
             slug=slug, id=id, status='active'
         )
 
-        related_products = Product.objects.filter(category=product.category, status='active').exclude(id=product.id)[:4]
-        
+        related_products = Product.objects.filter(
+            category=product.category, status='active'
+        ).exclude(id=product.id)[:4]
+
         context = {
             'product': product,
-            'related_products': related_products
+            'related_products': related_products,
         }
 
-        if product.variant != "None":
-            variants = ProductVariant.objects.filter(product_id=product.id).select_related('size', 'color')
-            
-            # Default variant: get first variant with both size and color, else first available
-            variant = variants.filter(size__isnull=False, color__isnull=False).first() or variants.first()
-            
-            # unique sizes
-            sizes = variants.filter(size__isnull=False).values('size_id', 'size__title').distinct()
-            
-            # default color options for the default size
-            colors = variants.filter(size_id=variant.size.id) if variant and variant.size else variants.filter(color__isnull=False)
+        if product.variant != "None":  # Product have variants
+            variants = ProductVariant.objects.filter(product_id=id)
+
+            # default variant
+            variant = ProductVariant.objects.get(id=variants[0].id)
+
+            # sizes (GROUP BY size)
+            sizes = ProductVariant.objects.raw(
+                'SELECT * FROM store_productvariant WHERE product_id=%s GROUP BY size_id',
+                [id]
+            )
+
+            # colors for default size
+            colors = ProductVariant.objects.filter(
+                product_id=id,
+                size_id=variant.size_id
+            )
 
             context.update({
                 'sizes': sizes,
                 'colors': colors,
                 'variant': variant,
-                'variants': variants
+            })
+
+        return render(request, 'store/product-detail.html', context)
+
+    def post(self, request, slug, id):
+        product = get_object_or_404(Product, slug=slug, id=id, status='active')
+
+        context = {'product': product}
+
+        if product.variant != "None":  # if we select color
+            variant_id = request.POST.get('variant_id')
+            variant = ProductVariant.objects.get(id=variant_id)
+
+            colors = ProductVariant.objects.filter(
+                product_id=id,
+                size_id=variant.size_id
+            )
+
+            sizes = ProductVariant.objects.raw(
+                'SELECT * FROM store_productvariant WHERE product_id=%s GROUP BY size_id',
+                [id]
+            )
+
+            query = (
+                variant.title +
+                ' Size:' + str(variant.size) +
+                ' Color:' + str(variant.color)
+            )
+
+            context.update({
+                'sizes': sizes,
+                'colors': colors,
+                'variant': variant,
+                'query': query
             })
 
         return render(request, 'store/product-detail.html', context)
@@ -133,16 +175,14 @@ class GetProductVariantView(generic.View):
         if action == 'post':
             size_id = request.POST.get('size')
             product_id = request.POST.get('product_id')
-            
-            # select_related 
-            variants = ProductVariant.objects.filter(
-                product_id=product_id, 
+            print('size_id, product_id', size_id, product_id)
+
+            colors = ProductVariant.objects.filter(
+                product_id=product_id,
                 size_id=size_id
             ).select_related('color')
 
-            rendered_table = render_to_string('store/color_options.html', {'variants': variants}, request=request)
-            
-            variant = variants.first()
+            rendered_table = render_to_string('store/color_options.html', {'colors': colors}, request=request)
 
             return JsonResponse({
                 'rendered_table': rendered_table})

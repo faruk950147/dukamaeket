@@ -121,96 +121,123 @@
                         <p>Selected size: <span id="display-size">{{ variant.size.title }}</span></p>
                     </div>
 
-                    <!-- Variants Section -->
-                    {% if product.variant == "color-size" %}
-                        <!-- Color Options -->
-                        <div style="display: flex; align-items: flex-start; margin-bottom: 20px;">
-                            <label style="min-width: 80px; font-weight: bold;">Colors:</label>
-                            <div id="colors-show" style="display: flex; flex-wrap: wrap; gap: 15px;">
-                                {% for color in variants %}
-                                    <label style="display: flex; flex-direction: column; align-items: center; cursor: pointer; margin: 0;">
-                                        <div style="display: flex; align-items: center; gap: 5px;">
-                                            <input type="radio" name="variant_id" value="{{ color.id }}" {% if forloop.first %}checked{% endif %}>
-                                            <span style="font-size: 14px;">{{ color.color.title }}</span>
-                                        </div>
-                                        <img src="{{ color.image_url }}" alt="{{ color.color.title }}" style="width:30px; height:30px; border: 1px solid #eee; margin-top: 5px;">
-                                    </label>
-                                {% endfor %}
-                            </div>
-                        </div>
+                   <!-- ================= VARIANTS SECTION ================= -->
 
-                        <!-- Size Options -->
-                        <div style="display: flex; align-items: center; margin-top: 15px;">
-                            <label style="min-width: 80px; font-weight: bold;">Sizes:</label>
-                            <select name="size" id="size-select" style="padding: 5px; min-width: 120px;">
-                                {% for size in variants %}
-                                    <option value="{{ size.size.id }}">{{ size.size.code }}</option>
-                                {% endfor %}
-                            </select>
+                    {% if product.variant == "color-size" %}
+
+                    <!-- COLORS -->
+                    <div style="display:flex; align-items:flex-start; margin-bottom:20px;">
+                        <label style="min-width:80px; font-weight:bold;">Colors:</label>
+
+                        <div id="colors-show" style="display:flex; flex-wrap:wrap; gap:15px;">
+                            {% for color in colors %}
+                            <label style="cursor:pointer;">
+                                <input type="radio"
+                                    name="variant_radio"
+                                    value="{{ color.id }}"
+                                    {% if color.id == variant.id %}checked{% endif %}>
+                                <span>{{ color.color.title }}</span><br>
+                                <img src="{{ color.image_url }}" width="30" height="30">
+                            </label>
+                            {% endfor %}
                         </div>
+                    </div>
+
+                    <!-- SIZES -->
+                    <div style="display:flex; align-items:center; margin-bottom:15px;">
+                        <label style="min-width:80px; font-weight:bold;">Sizes:</label>
+
+                        <select name="size_select" id="size_select">
+                            {% for size in sizes %}
+                                <option value="{{ size.size_id }}" {% if size.size_id == variant.size_id %}selected{% endif %}>
+                                    {{ size.size.title }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
                     {% elif product.variant == "color" %}
-                        <!-- Color Options -->
-                        <div style="display: flex; align-items: flex-start; margin-bottom: 20px;">
-                            <label style="min-width: 80px; font-weight: bold;">Colors:</label>
-                            <div id="colors-show" style="display: flex; flex-wrap: wrap; gap: 15px;">
-                                {% for color in variants %}
-                                    <label style="display: flex; flex-direction: column; align-items: center; cursor: pointer; margin: 0;">
-                                        <div style="display: flex; align-items: center; gap: 5px;">
-                                            <input type="radio" name="variant_id" value="{{ color.id }}" {% if forloop.first %}checked{% endif %}>
-                                            <span style="font-size: 14px;">{{ color.color.title }}</span>
-                                        </div>
-                                        <img src="{{ color.image_url }}" alt="{{ color.color.title }}" style="width:30px; height:30px; border: 1px solid #eee; margin-top: 5px;">
-                                    </label>
-                                {% endfor %}
-                            </div>
+
+                    <!-- ONLY COLORS -->
+                    <div style="display:flex; align-items:flex-start; margin-bottom:20px;">
+                        <label style="min-width:80px; font-weight:bold;">Colors:</label>
+
+                        <div id="colors-show" style="display:flex; flex-wrap:wrap; gap:15px;">
+                            {% for color in colors %}
+                            <label style="cursor:pointer;">
+                                <input type="radio"
+                                    name="variant_radio"
+                                    value="{{ color.id }}"
+                                    {% if color.id == variant.id %}checked{% endif %}>
+                                <span>{{ color.color.title }}</span><br>
+                                <img src="{{ color.image_url }}" width="30" height="30">
+                            </label>
+                            {% endfor %}
                         </div>
+                    </div>
 
                     {% elif product.variant == "size" %}
-                        <div style="display: flex; align-items: center; margin-top: 15px;">
-                            <label style="min-width: 80px; font-weight: bold;">Sizes:</label>
-                            <select name="size" id="size-select" style="padding: 5px; min-width: 120px;">
-                                {% for size in variants %}
-                                    <option value="{{ size.size.id }}">{{ size.size.title }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
+
+                    <!-- ONLY SIZES -->
+                    <div style="display:flex; align-items:center; margin-bottom:15px;">
+                        <label style="min-width:80px; font-weight:bold;">Sizes:</label>
+
+                        <select name="size_select" id="size_select">
+                            {% for size in sizes %}
+                                <option value="{{ size.size_id }}" {% if size.size_id == variant.size_id %}selected{% endif %}>
+                                    {{ size.size.title }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
                     {% endif %}
-                    <!-- End Variants Section -->
-                    </br>
-                    {% if product.variant %}
-                    <!-- Add to Cart Form -->
-                    <form class="mt-2" method="POST" action="{% url 'add-to-cart' %}" id="cart-form">
+
+                    <!-- ================= ADD TO CART ================= -->
+
+                    {% if product.variant != "None" %}
+                    <form method="POST" action="{% url 'add-to-cart' %}">
                         {% csrf_token %}
-                        <input type="hidden" name="product_slug" value="{{ product.slug }}">
+
                         <input type="hidden" name="product_id" value="{{ product.id }}">
-                        <input type="hidden" name="variant_id" id="variant_id" value="{{ variants.id }}">
-                        
-                        <div class="cart-option mb-15">
-                            <div class="product-quantity mr-20">
-                                <span style="min-width: 80px; font-weight: bold;">Quantity:</span>
-                                <input type="number" name="quantity" id="quantity"
-                                value="1" min="1" max="{{ variant.available_stock }}">
-                            </div>
-                            <button type="submit" class="cart-btn">Add to Cart</button>
-                        </div>
-                    </form>
-                    {% else %}
-                    <!-- Add to Cart Form -->
-                    <form method="POST" action="{% url 'add-to-cart' %}" id="cart-form">
-                        {% csrf_token %}
                         <input type="hidden" name="product_slug" value="{{ product.slug }}">
-                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <input type="hidden" name="variant_id" id="variant_id" value="{{ variant.id }}">
 
                         <div class="cart-option mb-15">
                             <div class="product-quantity mr-20">
-                                <input type="number" name="quantity" id="quantity"
-                                value="1" min="1" max="{{ product.available_stock }}">
+                                <label style="font-weight:bold;">Quantity:</label>
+                                <input type="number"
+                                    name="quantity"
+                                    value="1"
+                                    min="1"
+                                    max="{{ variant.available_stock }}">
                             </div>
+
                             <button type="submit" class="cart-btn">Add to Cart</button>
                         </div>
                     </form>
+
+                    {% else %}
+
+                    <!-- NO VARIANT PRODUCT -->
+                    <form method="POST" action="{% url 'add-to-cart' %}">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <input type="hidden" name="product_slug" value="{{ product.slug }}">
+
+                        <div class="cart-option mb-15">
+                            <input type="number"
+                                name="quantity"
+                                value="1"
+                                min="1"
+                                max="{{ product.available_stock }}">
+
+                            <button type="submit" class="cart-btn">Add to Cart</button>
+                        </div>
+                    </form>
+
                     {% endif %}
+
                 </div>
             </div>
 
