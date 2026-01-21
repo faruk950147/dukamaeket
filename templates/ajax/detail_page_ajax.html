@@ -2,10 +2,11 @@
 <script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
 <script>
    $(document).ready(function(){
-        // Size change → update colors and text
+        // Size select → update colors + price + size + color
         $('#size_select').change(function(){
             var size_id = $(this).val();
             var product_id = '{{ product.id }}';
+
             $.ajax({
                 method: "POST",
                 url: "{% url 'get-product-variant' %}",
@@ -15,16 +16,39 @@
                     'csrfmiddlewaretoken': '{{ csrf_token }}'
                 },
                 success: function(res){
+                    // Update colors
+                    $('#colors-show').html(res.rendered_colors);
                     console.log(res);
-                    $('#colors-show').html(res.rendered_table); 
-                    $('#display-color').text(res.color.title);
-                    $('#display-size').text(res.size.code);
-
+                    console.log("Size ID selected:", size_id);
+                    // Update price, size, color
+                   // $('#display-price').text(res.price);
+                   // $('#display-size').text(res.size.title);
+                   // $('#display-color').text(res.color.title);
                 }
             });
         });
 
+        // Color select → update price + color
+        $(document).on('change', 'input[name="variant_radio"]', function(){
+            var variant_id = $(this).val();
+            var product_id = '{{ product.id }}';
 
+            $.ajax({
+                method: "POST",
+                url: "{% url 'get-product-variant' %}",
+                data: {
+                    'variant_id': variant_id,
+                    'product_id': product_id,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(res){
+                    console.log(res);
+                    console.log("Variant ID selected:", variant_id);
+                    // $('#display-price').text(res.price);
+                    // $('#display-color').text(res.color.title);
+                }
+            });
+        });
 
         // Review form submission via AJAX
         $('#review-form').on('submit', function (e) {

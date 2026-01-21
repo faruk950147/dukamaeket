@@ -131,14 +131,12 @@
 
                         <div id="colors-show" style="display:flex; flex-wrap:wrap; gap:15px;">
                             {% for color in colors %}
-                            <label style="cursor:pointer;">
-                                <input type="radio"
-                                    name="variant_radio"
-                                    value="{{ color.id }}"
-                                    {% if color.id == variant.id %}checked{% endif %}>
-                                <span>{{ color.color.title }}</span><br>
-                                <img src="{{ color.image_url }}" width="30" height="30">
-                            </label>
+                                <label style="cursor:pointer;">
+                                    <input type="radio" name="variant_radio" value="{{ color.id }}" {% if variant and color.id == variant.id %}checked{% endif %}>
+                                    <span>{{ color.color.title }}</span>
+                                    </br>
+                                    <img src="{{ color.image_url }}" width="30" height="30">
+                                </label>
                             {% endfor %}
                         </div>
                     </div>
@@ -149,7 +147,7 @@
 
                         <select name="size_select" id="size_select">
                             {% for size in sizes %}
-                                <option value="{{ size.size_id }}" {% if size.size_id == variant.size_id %}selected{% endif %}>
+                                <option value="{{ size.size_id }}" {% if variant and size.size_id == variant.size_id %}selected{% endif %}>
                                     {{ size.size.code }}
                                 </option>
                             {% endfor %}
@@ -163,16 +161,14 @@
                         <label style="min-width:80px; font-weight:bold;">Colors:</label>
 
                         <div id="colors-show" style="display:flex; flex-wrap:wrap; gap:15px;">
-                            {% for color in colors %}
+                        {% for color in colors %}
                             <label style="cursor:pointer;">
-                                <input type="radio"
-                                    name="variant_radio"
-                                    value="{{ color.id }}"
-                                    {% if color.id == variant.id %}checked{% endif %}>
-                                <span>{{ color.color.title }}</span><br>
+                                <input type="radio" name="variant_radio" value="{{ color.id }}" {% if variant and color.id == variant.id %}checked{% endif %}>
+                                <span>{{ color.color.title }}</span>
+                                </br>
                                 <img src="{{ color.image_url }}" width="30" height="30">
                             </label>
-                            {% endfor %}
+                        {% endfor %}
                         </div>
                     </div>
 
@@ -184,7 +180,7 @@
 
                         <select name="size_select" id="size_select">
                             {% for size in sizes %}
-                                <option value="{{ size.size_id }}" {% if size.size_id == variant.size_id %}selected{% endif %}>
+                                <option value="{{ size.size_id }}" {% if variant and size.size_id == variant.size_id %}selected{% endif %}>
                                     {{ size.size.code }}
                                 </option>
                             {% endfor %}

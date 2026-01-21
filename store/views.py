@@ -173,22 +173,30 @@ class ProductDetailView(generic.View):
 class GetProductVariantView(generic.View):
     def post(self, request, *args, **kwargs):
         size_id = request.POST.get('size')
+        variant_id = request.POST.get('variant_id')
         product_id = request.POST.get('product_id')
-        
+
+        if variant_id:
+            variant = ProductVariant.objects.get(id=variant_id)
+        elif size_id:
+            # get first variant of this size
+            variant = ProductVariant.objects.filter(product_id=product_id, size_id=size_id).first()
+        else:
+            variant = None
+
         colors = ProductVariant.objects.filter(
             product_id=product_id,
-            size_id=size_id
-        ).select_related('color')
+            size_id=variant.size_id if variant else None
+        ) if size_id else []
 
-        rendered_table = render_to_string('store/color_options.html', {'colors': colors}, request=request)
-
-        first_color = colors[0].color if colors else None
-        size_obj = Size.objects.filter(id=size_id).first()
+        rendered_colors = render_to_string('store/color_options.html', {'colors': colors}, request=request)
 
         return JsonResponse({
-            'rendered_table': rendered_table,
-            'color': {'title': first_color.title} if first_color else None,
-            'size': {'code': size_obj.code} if size_obj else None
+            # 'variant_id': variant.id if variant else None,
+            # 'price': variant.price if variant else None,
+            # 'size': {'title': variant.size.code} if variant else None,
+            # 'color': {'title': variant.color.title} if variant else None,
+            'rendered_colors': rendered_colors
         })
 
 
