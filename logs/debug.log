@@ -1262,3 +1262,19 @@ INFO 2026-01-21 15:04:43,997 project views User admin visited Home page. Sliders
 INFO 2026-01-21 15:04:55,854 project views User admin visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 0, Featured Products: 0
 INFO 2026-01-21 15:11:19,777 project views ShopView accessed | User: admin | Page: 1/1 | Per page: 3 | Sort: latest | Total products: 0Banners: <bound method QuerySet.count of <QuerySet []>>
 INFO 2026-01-21 15:11:49,912 project views ShopView accessed | User: admin | Page: 1/1 | Per page: 3 | Sort: latest | Total products: 0Banners: <bound method QuerySet.count of <QuerySet []>>
+INFO 2026-01-21 15:13:42,307 project views User admin visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 0, Featured Products: 0
+INFO 2026-01-21 15:14:31,304 project views User admin visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 0, Featured Products: 0
+INFO 2026-01-21 16:48:56,385 project views User admin visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 1, Featured Products: 1
+INFO 2026-01-21 16:49:49,106 project views User admin visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 1, Featured Products: 1
+INFO 2026-01-21 16:56:33,333 project views User Anonymous visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 1, Featured Products: 1
+INFO 2026-01-21 17:01:34,752 project views User admin visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 2, Featured Products: 2
+INFO 2026-01-21 17:06:26,275 project views User admin visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 4, Featured Products: 4
+INFO 2026-01-21 17:09:13,721 project views User admin visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 4, Featured Products: 4
+INFO 2026-01-21 17:09:55,737 project views User admin visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 5, Featured Products: 4
+INFO 2026-01-21 17:11:11,222 project views User admin visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 5, Featured Products: 4
+INFO 2026-01-21 17:11:46,769 project views User admin visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 5, Featured Products: 4
+INFO 2026-01-21 17:12:55,784 project views User admin visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 5, Featured Products: 4
+INFO 2026-01-21 17:22:47,886 project views User admin visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 5, Featured Products: 4
+INFO 2026-01-21 17:23:40,160 project views User admin visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 5, Featured Products: 4
+INFO 2026-01-21 17:28:11,219 project views User admin visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 5, Featured Products: 4
+INFO 2026-01-21 17:29:23,875 project views User admin visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 5, Featured Products: 4

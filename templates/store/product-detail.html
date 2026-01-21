@@ -144,7 +144,7 @@
                             <label style="min-width: 80px; font-weight: bold;">Sizes:</label>
                             <select name="size" id="size-select" style="padding: 5px; min-width: 120px;">
                                 {% for size in variants %}
-                                    <option value="{{ size.size.id }}">{{ size.size.title }}</option>
+                                    <option value="{{ size.size.id }}">{{ size.size.code }}</option>
                                 {% endfor %}
                             </select>
                         </div>

@@ -63,7 +63,7 @@ class ProductVariantInline(admin.TabularInline):
     model = ProductVariant
     extra = 1
     readonly_fields = ('image_tag',)
-    fields = ('color', 'size', 'variant_price', 'available_stock', 'status', 'image_id', 'image_tag')
+    fields = ('id', 'title', 'color', 'size', 'sku', 'variant_price', 'available_stock', 'status', 'image_id', 'image_tag')
 
 
 # =========================================================
