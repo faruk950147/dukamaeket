@@ -14,6 +14,7 @@ from store.models import (
     Category,
     Brand,
     Product,
+    Size,
     Slider,
     AcceptancePayment,
     ProductVariant,
@@ -171,21 +172,24 @@ class ProductDetailView(generic.View):
 @method_decorator(never_cache, name='dispatch')
 class GetProductVariantView(generic.View):
     def post(self, request, *args, **kwargs):
-        action = request.POST.get('action')
-        if action == 'post':
-            size_id = request.POST.get('size')
-            product_id = request.POST.get('product_id')
-            print('size_id, product_id', size_id, product_id)
+        size_id = request.POST.get('size')
+        product_id = request.POST.get('product_id')
+        
+        colors = ProductVariant.objects.filter(
+            product_id=product_id,
+            size_id=size_id
+        ).select_related('color')
 
-            colors = ProductVariant.objects.filter(
-                product_id=product_id,
-                size_id=size_id
-            ).select_related('color')
+        rendered_table = render_to_string('store/color_options.html', {'colors': colors}, request=request)
 
-            rendered_table = render_to_string('store/color_options.html', {'colors': colors}, request=request)
+        first_color = colors[0].color if colors else None
+        size_obj = Size.objects.filter(id=size_id).first()
 
-            return JsonResponse({
-                'rendered_table': rendered_table})
+        return JsonResponse({
+            'rendered_table': rendered_table,
+            'color': {'title': first_color.title} if first_color else None,
+            'size': {'code': size_obj.code} if size_obj else None
+        })
 
 
 # =========================================================

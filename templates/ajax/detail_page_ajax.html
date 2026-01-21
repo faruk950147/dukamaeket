@@ -10,7 +10,6 @@
                 method: "POST",
                 url: "{% url 'get-product-variant' %}",
                 data: {
-                    'action': 'post',
                     'size': size_id,
                     'product_id': product_id,
                     'csrfmiddlewaretoken': '{{ csrf_token }}'
@@ -18,6 +17,8 @@
                 success: function(res){
                     console.log(res);
                     $('#colors-show').html(res.rendered_table); 
+                    $('#display-color').text(res.color.title);
+                    $('#display-size').text(res.size.code);
 
                 }
             });

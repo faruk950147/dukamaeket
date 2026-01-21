@@ -118,7 +118,7 @@
                     </div>
 
                     <div class="product-size mb-20">
-                        <p>Selected size: <span id="display-size">{{ variant.size.title }}</span></p>
+                        <p>Selected size: <span id="display-size">{{ variant.size.code }}</span></p>
                     </div>
 
                    <!-- ================= VARIANTS SECTION ================= -->
@@ -150,7 +150,7 @@
                         <select name="size_select" id="size_select">
                             {% for size in sizes %}
                                 <option value="{{ size.size_id }}" {% if size.size_id == variant.size_id %}selected{% endif %}>
-                                    {{ size.size.title }}
+                                    {{ size.size.code }}
                                 </option>
                             {% endfor %}
                         </select>
@@ -185,7 +185,7 @@
                         <select name="size_select" id="size_select">
                             {% for size in sizes %}
                                 <option value="{{ size.size_id }}" {% if size.size_id == variant.size_id %}selected{% endif %}>
-                                    {{ size.size.title }}
+                                    {{ size.size.code }}
                                 </option>
                             {% endfor %}
                         </select>
