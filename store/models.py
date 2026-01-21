@@ -260,14 +260,11 @@ class ProductVariant(ImageTagMixin):
     class Meta:
         ordering = ['id']
         verbose_name_plural = '06. Product Variants'
-        constraints = [
-            models.UniqueConstraint(fields=['product', 'color', 'size'], name='unique_variant')
-        ]
 
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
-    
+
     def image(self):
         # get the associated image from the product's image gallery
         try:
