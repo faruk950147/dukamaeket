@@ -84,7 +84,7 @@ class HomeView(generic.View):
 
 
 # ========================================================
-# # PRODUCT DETAIL VIEW
+# Product Detail View
 # ========================================================
 @method_decorator(never_cache, name='dispatch')
 class ProductDetailView(generic.View):
@@ -97,9 +97,11 @@ class ProductDetailView(generic.View):
             slug=slug, id=id, status='active', available_stock__gt=0
         )
 
-        # Related products
-        related_products = Product.objects.filter(
-            category=product.category, status='active', available_stock__gt=0
+        # Related products (optimized)
+        related_products = Product.objects.select_related('brand').prefetch_related('images').filter(
+            category=product.category,
+            status='active',
+            available_stock__gt=0
         ).exclude(id=product.id)[:4]
 
         context = {
@@ -107,31 +109,36 @@ class ProductDetailView(generic.View):
             'related_products': related_products,
         }
 
+        # Variant handling
         if product.variant != "None":
-            variants = ProductVariant.objects.filter(
-                product_id=id, status='active', available_stock__gt=0
-            ).select_related('size', 'color').order_by('id')
+            variants = list(
+                ProductVariant.objects.filter(
+                    product_id=id,
+                    status='active',
+                    available_stock__gt=0
+                ).select_related('size', 'color').order_by('id')
+            )
 
             if variants:
                 # Default variant
-                variant = variants[0]  # SQLite safe
+                variant = variants[0] if variants else None
 
-                # Row-wise unique sizes (SQLite compatible)
+                # Row-wise unique sizes
                 seen = set()
                 sizes = []
                 for v in variants:
-                    if v.size_id not in seen:
+                    if v.size_id and v.size_id not in seen:
                         seen.add(v.size_id)
                         sizes.append({
-                            'size_id': v.size_id,  # template-এ তুমি size.size_id ব্যবহার করবে
-                            'code': v.size.code    # template-এ তুমি size.code ব্যবহার করবে
+                            'size_id': v.size_id,
+                            'code': v.size.code
                         })
 
                 # Colors for default size
-                colors = [v for v in variants if v.size_id == variant.size_id]
+                colors = [v for v in variants if variant and v.size_id == variant.size_id]
 
                 context.update({
-                    'sizes': sizes,   # dict list
+                    'sizes': sizes,
                     'colors': colors,
                     'variant': variant,
                 })
@@ -144,28 +151,26 @@ class ProductDetailView(generic.View):
 
         return render(request, 'store/product-detail.html', context)
 
-# =======================================================
-# AJAX endpoint for variant selection by size
-# =======================================================
+
+# ========================================================
+# AJAX endpoint: Get Variant by Size
+# ========================================================
 @method_decorator(never_cache, name='dispatch')
 class GetVariantBySizeView(generic.View):
     def post(self, request, *args, **kwargs):
         product_id = request.POST.get('product_id')
         size_id = request.POST.get('size_id')
 
-        variant = ProductVariant.objects.filter(
+        # Get all variants for this size
+        variants_qs = ProductVariant.objects.filter(
             product_id=product_id,
             size_id=size_id,
             status='active',
             available_stock__gt=0
-        ).order_by('id').first()
+        ).select_related('color', 'size')
 
-        colors = ProductVariant.objects.filter(
-            product_id=product_id,
-            size_id=size_id,
-            status='active',
-            available_stock__gt=0
-        )
+        variant = variants_qs.first()
+        colors = variants_qs
 
         rendered_colors = render_to_string(
             'store/color_options.html',
@@ -179,15 +184,15 @@ class GetVariantBySizeView(generic.View):
         return JsonResponse({
             'rendered_colors': rendered_colors,
             'variant_id': variant.id if variant else None,
-            'variant_price': str(variant.variant_price) if variant else None,
-            'variant_image': variant.image_url if variant else None,
-            'variant_stock': variant.available_stock if variant else 0,
+            'price': str(variant.final_price) if variant else None,
+            'image': variant.image_url if variant else None,
+            'stock': variant.available_stock if variant else 0,
         })
 
 
-# =======================================================
-# AJAX endpoint for variant selection by color
-# =======================================================
+# ========================================================
+# AJAX endpoint: Get Variant by Color
+# ========================================================
 @method_decorator(never_cache, name='dispatch')
 class GetVariantByColorView(generic.View):
     def post(self, request, *args, **kwargs):
