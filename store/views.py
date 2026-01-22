@@ -107,30 +107,38 @@ class ProductDetailView(generic.View):
         }
 
         if product.variant != "None":  # Product have variants
-            variants = ProductVariant.objects.filter(product_id=id, status='active', available_stock__gte=0)
+            variants = ProductVariant.objects.filter(product_id=id, status='active', available_stock__gte=0).order_by('id')
+            if variants.exists():
+                # default variant
+                variant = ProductVariant.objects.get(id=variants[0].id)
 
-            # default variant
-            variant = ProductVariant.objects.get(id=variants[0].id)
+                # sizes (GROUP BY size)
+                sizes = ProductVariant.objects.raw(
+                    'SELECT * FROM store_productvariant WHERE product_id=%s GROUP BY size_id',
+                    [id]
+                )
 
-            # sizes (GROUP BY size)
-            sizes = ProductVariant.objects.raw(
-                'SELECT * FROM store_productvariant WHERE product_id=%s GROUP BY size_id',
-                [id]
-            )
-
-            # colors for default size
-            colors = ProductVariant.objects.filter(
-                product_id=id,
-                size_id=variant.size_id,
-                available_stock__gte=0
-            )
-
-            context.update({
-                'sizes': sizes,
-                'colors': colors,
-                'variant': variant,
-            })
-
+                # colors for default size
+                colors = ProductVariant.objects.filter(
+                    product_id=id,
+                    size_id=variant.size_id,
+                    available_stock__gte=0
+                )
+                
+                # variants available 
+                context.update({
+                    'sizes': sizes,
+                    'colors': colors,
+                    'variant': variant,
+                })
+                
+            else:
+                # No variants available
+                context.update({
+                    'sizes': [],
+                    'colors': [],
+                    'variant': None,
+                })
         return render(request, 'store/product-detail.html', context)
 
 
@@ -150,12 +158,14 @@ class GetProductVariantView(generic.View):
         if size_id and not variant_id:
             variant = ProductVariant.objects.filter(
                 product_id=product_id,
-                size_id=size_id
+                size_id=size_id,
+                available_stock__gt=0
             ).order_by('id').first()
 
             colors = ProductVariant.objects.filter(
                 product_id=product_id,
-                size_id=size_id
+                size_id=size_id,
+                available_stock__gt=0
             )
 
             rendered_colors = render_to_string(
@@ -177,7 +187,8 @@ class GetProductVariantView(generic.View):
             variant = get_object_or_404(
                 ProductVariant.objects.select_related('color', 'size', 'product'),
                 id=variant_id,
-                status='active'
+                status='active',
+                available_stock__gt=0
             )
 
             response_data = {
