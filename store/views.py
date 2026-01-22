@@ -45,8 +45,7 @@ class HomeView(generic.View):
         # Fetch top deals products (discounted & active deadline)
         # select_related means join query for foreign key relationships
         top_deals = list(Product.objects.filter(
-            status='active', discount_percent__gt=0, is_deadline=True, deadline__gte=timezone.now(),
-            available_stock__gte=0
+            status='active', discount_percent__gt=0, is_deadline=True, deadline__gte=timezone.now()
         ).select_related('category', 'brand')
          .prefetch_related('reviews')
          .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
@@ -56,7 +55,7 @@ class HomeView(generic.View):
 
         # Fetch featured products
         featured_products = Product.objects.filter(
-            status='active', is_featured=True, available_stock__gte=0
+            status='active', is_featured=True
         ).select_related('category', 'brand').prefetch_related('reviews') \
          .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))[:5]
          
@@ -84,21 +83,23 @@ class HomeView(generic.View):
         return render(request, 'store/home.html', context)
 
 
-# =========================================================
-# PRODUCT DETAIL VIEW
-# =========================================================
+# ========================================================
+# # PRODUCT DETAIL VIEW
+# ========================================================
 @method_decorator(never_cache, name='dispatch')
 class ProductDetailView(generic.View):
     def get(self, request, slug, id):
+        # Main product with related fields
         product = get_object_or_404(
             Product.objects.select_related('category', 'brand')
             .prefetch_related('images', 'reviews', 'variants__color', 'variants__size')
             .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active'))),
-            slug=slug, id=id, status='active', available_stock__gte=0
+            slug=slug, id=id, status='active', available_stock__gt=0
         )
 
+        # Related products
         related_products = Product.objects.filter(
-            category=product.category, status='active', available_stock__gte=0
+            category=product.category, status='active', available_stock__gt=0
         ).exclude(id=product.id)[:4]
 
         context = {
@@ -106,101 +107,107 @@ class ProductDetailView(generic.View):
             'related_products': related_products,
         }
 
-        if product.variant != "None":  # Product have variants
-            variants = ProductVariant.objects.filter(product_id=id, status='active', available_stock__gte=0).order_by('id')
-            if variants.exists():
-                # default variant
-                variant = ProductVariant.objects.get(id=variants[0].id)
+        if product.variant != "None":
+            variants = ProductVariant.objects.filter(
+                product_id=id, status='active', available_stock__gt=0
+            ).select_related('size', 'color').order_by('id')
 
-                # sizes (GROUP BY size)
-                sizes = ProductVariant.objects.raw(
-                    'SELECT * FROM store_productvariant WHERE product_id=%s GROUP BY size_id',
-                    [id]
-                )
+            if variants:
+                # Default variant
+                variant = variants[0]  # SQLite safe
 
-                # colors for default size
-                colors = ProductVariant.objects.filter(
-                    product_id=id,
-                    size_id=variant.size_id,
-                    available_stock__gte=0
-                )
-                
-                # variants available 
+                # Row-wise unique sizes (SQLite compatible)
+                seen = set()
+                sizes = []
+                for v in variants:
+                    if v.size_id not in seen:
+                        seen.add(v.size_id)
+                        sizes.append({
+                            'size_id': v.size_id,  # template-এ তুমি size.size_id ব্যবহার করবে
+                            'code': v.size.code    # template-এ তুমি size.code ব্যবহার করবে
+                        })
+
+                # Colors for default size
+                colors = [v for v in variants if v.size_id == variant.size_id]
+
                 context.update({
-                    'sizes': sizes,
+                    'sizes': sizes,   # dict list
                     'colors': colors,
                     'variant': variant,
                 })
-                
             else:
-                # No variants available
                 context.update({
                     'sizes': [],
                     'colors': [],
                     'variant': None,
                 })
+
         return render(request, 'store/product-detail.html', context)
 
-
-# ==============================
-# AJAX endpoint for variant selection
-# ==============================
+# =======================================================
+# AJAX endpoint for variant selection by size
+# =======================================================
 @method_decorator(never_cache, name='dispatch')
-class GetProductVariantView(generic.View):
+class GetVariantBySizeView(generic.View):
     def post(self, request, *args, **kwargs):
         product_id = request.POST.get('product_id')
         size_id = request.POST.get('size_id')
+
+        variant = ProductVariant.objects.filter(
+            product_id=product_id,
+            size_id=size_id,
+            status='active',
+            available_stock__gt=0
+        ).order_by('id').first()
+
+        colors = ProductVariant.objects.filter(
+            product_id=product_id,
+            size_id=size_id,
+            status='active',
+            available_stock__gt=0
+        )
+
+        rendered_colors = render_to_string(
+            'store/color_options.html',
+            {
+                'colors': colors,
+                'variant': variant
+            },
+            request=request
+        )
+
+        return JsonResponse({
+            'rendered_colors': rendered_colors,
+            'variant_id': variant.id if variant else None,
+            'variant_price': str(variant.variant_price) if variant else None,
+            'variant_image': variant.image_url if variant else None,
+            'variant_stock': variant.available_stock if variant else 0,
+        })
+
+
+# =======================================================
+# AJAX endpoint for variant selection by color
+# =======================================================
+@method_decorator(never_cache, name='dispatch')
+class GetVariantByColorView(generic.View):
+    def post(self, request, *args, **kwargs):
         variant_id = request.POST.get('variant_id')
 
-        response_data = {}
+        variant = get_object_or_404(
+            ProductVariant.objects.select_related('color', 'size', 'product'),
+            id=variant_id,
+            status='active',
+            available_stock__gt=0
+        )
 
-        # ================= SIZE CHANGE =================
-        if size_id and not variant_id:
-            variant = ProductVariant.objects.filter(
-                product_id=product_id,
-                size_id=size_id,
-                available_stock__gt=0
-            ).order_by('id').first()
-
-            colors = ProductVariant.objects.filter(
-                product_id=product_id,
-                size_id=size_id,
-                available_stock__gt=0
-            )
-
-            rendered_colors = render_to_string(
-                'store/color_options.html',
-                {'colors': colors, 'variant': variant},
-                request=request
-            )
-
-            response_data = {
-                'rendered_colors': rendered_colors,
-                'variant_id': variant.id if variant else None,
-                'variant_price': str(variant.variant_price) if variant else None,
-                'variant_image': variant.image_url if variant else None,
-                'variant_stock': variant.available_stock if variant else 0,
-            }
-
-        # ================= COLOR/VARIANT CHANGE =================
-        elif variant_id:
-            variant = get_object_or_404(
-                ProductVariant.objects.select_related('color', 'size', 'product'),
-                id=variant_id,
-                status='active',
-                available_stock__gt=0
-            )
-
-            response_data = {
-                'variant_id': variant.id,
-                'price': str(variant.final_price),
-                'stock': variant.available_stock,
-                'color': variant.color.title if variant.color else '',
-                'size': variant.size.title if variant.size else '',
-                'image': variant.image_url,
-            }
-
-        return JsonResponse(response_data)
+        return JsonResponse({
+            'variant_id': variant.id,
+            'price': str(variant.final_price),
+            'stock': variant.available_stock,
+            'color': variant.color.title if variant.color else '',
+            'size': variant.size.title if variant.size else '',
+            'image': variant.image_url,
+        })
 
 
 # =========================================================
@@ -223,7 +230,7 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
         if rating < 1 or rating > 5:
             return JsonResponse({'status': 'error', 'message': 'Rating must be between 1 and 5'}, status=400)
 
-        product = get_object_or_404(Product, slug=product_slug, id=product_id, status='active')
+        product = get_object_or_404(Product, slug=product_slug, id=product_id, status='active', available_stock__gt=0)
 
         # ---------- duplicate check ----------
         if Review.objects.filter(user=user, product=product).exists():
@@ -298,7 +305,7 @@ class ShopView(generic.View):
 
         products = (
             Product.objects
-            .filter(status='active', available_stock__gte=0)
+            .filter(status='active', available_stock__gt=0)
             .select_related('category', 'brand')
             .prefetch_related('reviews')
             .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
@@ -396,6 +403,4 @@ class GetFilterProductsView(generic.View):
         html = render_to_string('store/grid.html', {'products': products}, request=request)
 
         return JsonResponse({'html': html})
-    
-
 

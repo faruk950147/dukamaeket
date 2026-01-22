@@ -8,7 +8,7 @@
             let product_id = "{{ product.id }}";
 
             $.ajax({
-                url: "{% url 'get-product-variant' %}",
+                url: "{% url 'get-variant-by-size' %}",
                 type: "POST",
                 data: {
                     size_id: size_id,
@@ -20,10 +20,9 @@
                     $('#colors-show').html(res.rendered_colors);
 
                     // update main product info
-                    $('#product-price').text(res.variant_price);
-                    $('#main-product-image').attr('src', res.variant_image);
-                    $('#stock-info').text('Stock: ' + res.variant_stock);
-
+                    // $('#product-price').text(res.variant_price);
+                    // $('#main-product-image').attr('src', res.variant_image);
+                    // $('#stock-info').text('Stock: ' + res.variant_stock);
                     console.log(res);
                 }
             });
@@ -34,7 +33,7 @@
             let variant_id = $(this).val();
 
             $.ajax({
-                url: "{% url 'get-product-variant' %}",
+                url: "{% url 'get-variant-by-color' %}",
                 type: "POST",
                 data: {
                     variant_id: variant_id,
@@ -42,15 +41,13 @@
                 },
                 success: function (res) {
                     // update main product info
-                    $('#product-price').text(res.price);
-                    $('#main-product-image').attr('src', res.image);
-                    $('#stock-info').text('Stock: ' + res.stock);
-
+                    // $('#product-price').text(res.price);
+                    // $('#main-product-image').attr('src', res.image);
+                    // $('#stock-info').text('Stock: ' + res.stock);
                     console.log(res);
                 }
             });
         });
-
 
         // Review form submission via AJAX
         $('#review-form').on('submit', function (e) {
