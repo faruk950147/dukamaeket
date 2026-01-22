@@ -45,7 +45,8 @@ class HomeView(generic.View):
         # Fetch top deals products (discounted & active deadline)
         # select_related means join query for foreign key relationships
         top_deals = list(Product.objects.filter(
-            status='active', discount_percent__gt=0, is_deadline=True, deadline__gte=timezone.now()
+            status='active', discount_percent__gt=0, is_deadline=True, deadline__gte=timezone.now(),
+            available_stock__gte=0
         ).select_related('category', 'brand')
          .prefetch_related('reviews')
          .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
@@ -55,7 +56,7 @@ class HomeView(generic.View):
 
         # Fetch featured products
         featured_products = Product.objects.filter(
-            status='active', is_featured=True
+            status='active', is_featured=True, available_stock__gte=0
         ).select_related('category', 'brand').prefetch_related('reviews') \
          .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))[:5]
          
@@ -93,11 +94,11 @@ class ProductDetailView(generic.View):
             Product.objects.select_related('category', 'brand')
             .prefetch_related('images', 'reviews', 'variants__color', 'variants__size')
             .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active'))),
-            slug=slug, id=id, status='active'
+            slug=slug, id=id, status='active', available_stock__gte=0
         )
 
         related_products = Product.objects.filter(
-            category=product.category, status='active'
+            category=product.category, status='active', available_stock__gte=0
         ).exclude(id=product.id)[:4]
 
         context = {
@@ -106,7 +107,7 @@ class ProductDetailView(generic.View):
         }
 
         if product.variant != "None":  # Product have variants
-            variants = ProductVariant.objects.filter(product_id=id)
+            variants = ProductVariant.objects.filter(product_id=id, status='active', available_stock__gte=0)
 
             # default variant
             variant = ProductVariant.objects.get(id=variants[0].id)
@@ -120,7 +121,8 @@ class ProductDetailView(generic.View):
             # colors for default size
             colors = ProductVariant.objects.filter(
                 product_id=id,
-                size_id=variant.size_id
+                size_id=variant.size_id,
+                available_stock__gte=0
             )
 
             context.update({
@@ -285,7 +287,7 @@ class ShopView(generic.View):
 
         products = (
             Product.objects
-            .filter(status='active')
+            .filter(status='active', available_stock__gte=0)
             .select_related('category', 'brand')
             .prefetch_related('reviews')
             .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
@@ -357,7 +359,7 @@ class GetFilterProductsView(generic.View):
     def post(self, request):
         products = (
             Product.objects
-            .filter(status='active')
+            .filter(status='active', available_stock__gte=0)
             .select_related('category', 'brand')
             .prefetch_related('reviews')
             .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
