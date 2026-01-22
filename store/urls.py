@@ -7,11 +7,13 @@ from store.views import(
     ShopView,
     GetFilterProductsView,
     GetProductVariantView,
+    GetVariantInfoView
 )
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('product/<slug:slug>/<int:id>/', ProductDetailView.as_view(), name='product-detail'),
     path('get-product-variant/', GetProductVariantView.as_view(), name='get-product-variant'),
+    path('ajax/get-variant-info/', GetVariantInfoView.as_view(), name='get-variant-info'),
     path('product-review/', ProductReviewView.as_view(), name='product-review'),
     path('shop/', ShopView.as_view(), name='shop'),
     path('get-filter-products/', csrf_exempt(GetFilterProductsView.as_view()), name='get-filter-products'),

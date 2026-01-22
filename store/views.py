@@ -198,8 +198,33 @@ class GetProductVariantView(generic.View):
         return JsonResponse({
             'rendered_colors': rendered_colors,
             'variant_id': variant.id if variant else None,
-            'variant_price': variant.variant_price if variant else None,
+            'variant_price': str(variant.variant_price) if variant else None,
+            'variant_image': variant.image_url if variant else None,
+            'variant_stock': variant.available_stock if variant else 0,
         })
+
+
+
+@method_decorator(never_cache, name='dispatch')
+class GetVariantInfoView(generic.View):
+    def post(self, request, *args, **kwargs):
+        variant_id = request.POST.get('variant_id')
+        variant = get_object_or_404(
+            ProductVariant.objects.select_related('color', 'size', 'product'),
+            id=variant_id,
+            status='active'
+        )
+
+        return JsonResponse({
+            'variant_id': variant.id,
+            'price': str(variant.final_price),
+            'stock': variant.available_stock,
+            'color': variant.color.title if variant.color else '',
+            'size': variant.size.title if variant.size else '',
+            'image': variant.image_url,
+        })
+
+
 
 
 # =========================================================

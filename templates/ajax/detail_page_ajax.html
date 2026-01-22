@@ -2,6 +2,7 @@
 <script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
 <script>
    $(document).ready(function(){
+        // ================= SIZE CHANGE =================
         $('#size_select').on('change', function () {
             let size_id = $(this).val();
             let product_id = "{{ product.id }}";
@@ -15,7 +16,34 @@
                     csrfmiddlewaretoken: "{{ csrf_token }}"
                 },
                 success: function (res) {
+                    // update colors
                     $('#colors-show').html(res.rendered_colors);
+
+                    // update main product info
+                    // $('#product-price').text(res.variant_price);
+                    // $('#main-product-image').attr('src', res.variant_image);
+                    // $('#stock-info').text('Stock: ' + res.variant_stock);
+                    console.log(res);
+                }
+            });
+        });
+
+        // ================= COLOR SELECT =================
+        $(document).on('change', 'input[name="variant_radio"]', function () {
+            let variant_id = $(this).val();
+
+            $.ajax({
+                url: "{% url 'get-variant-info' %}",
+                type: "POST",
+                data: {
+                    variant_id: variant_id,
+                    csrfmiddlewaretoken: "{{ csrf_token }}"
+                },
+                success: function (res) {
+                    // update main product info
+                    // $('#product-price').text(res.price);
+                    // $('#main-product-image').attr('src', res.image);
+                    // $('#stock-info').text('Stock: ' + res.stock);
                     console.log(res);
                 }
             });
