@@ -184,7 +184,7 @@ class GetVariantBySizeView(generic.View):
         return JsonResponse({
             'rendered_colors': rendered_colors,
             'variant_id': variant.id if variant else None,
-            'price': str(variant.final_price) if variant else None,
+            'price': str(variant.variant_price) if variant else None,
             'image': variant.image_url if variant else None,
             'stock': variant.available_stock if variant else 0,
         })
@@ -207,7 +207,7 @@ class GetVariantByColorView(generic.View):
 
         return JsonResponse({
             'variant_id': variant.id,
-            'price': str(variant.final_price),
+            'price': str(variant.variant_price),
             'stock': variant.available_stock,
             'color': variant.color.title if variant.color else '',
             'size': variant.size.title if variant.size else '',
