@@ -131,40 +131,6 @@ class ProductDetailView(generic.View):
 
         return render(request, 'store/product-detail.html', context)
 
-    def post(self, request, slug, id):
-        product = get_object_or_404(Product, slug=slug, id=id, status='active')
-
-        context = {'product': product}
-
-        if product.variant != "None":  # if we select color
-            variant_id = request.POST.get('variant_id')
-            variant = ProductVariant.objects.get(id=variant_id)
-
-            colors = ProductVariant.objects.filter(
-                product_id=id,
-                size_id=variant.size_id
-            )
-
-            sizes = ProductVariant.objects.raw(
-                'SELECT * FROM store_productvariant WHERE product_id=%s GROUP BY size_id',
-                [id]
-            )
-
-            query = (
-                variant.title +
-                ' Size:' + str(variant.size) +
-                ' Color:' + str(variant.color)
-            )
-
-            context.update({
-                'sizes': sizes,
-                'colors': colors,
-                'variant': variant,
-                'query': query
-            })
-
-        return render(request, 'store/product-detail.html', context)
-
 
 # ==============================
 # AJAX endpoint for variant selection
@@ -172,59 +138,56 @@ class ProductDetailView(generic.View):
 @method_decorator(never_cache, name='dispatch')
 class GetProductVariantView(generic.View):
     def post(self, request, *args, **kwargs):
-        size_id = request.POST.get('size_id')
         product_id = request.POST.get('product_id')
-
-        # first variant of selected size
-        variant = ProductVariant.objects.filter(
-            product_id=product_id,
-            size_id=size_id
-        ).order_by('id').first()
-
-        colors = ProductVariant.objects.filter(
-            product_id=product_id,
-            size_id=size_id
-        )
-
-        rendered_colors = render_to_string(
-            'store/color_options.html',
-            {
-                'colors': colors,
-                'variant': variant
-            },
-            request=request
-        )
-
-        return JsonResponse({
-            'rendered_colors': rendered_colors,
-            'variant_id': variant.id if variant else None,
-            'variant_price': str(variant.variant_price) if variant else None,
-            'variant_image': variant.image_url if variant else None,
-            'variant_stock': variant.available_stock if variant else 0,
-        })
-
-
-
-@method_decorator(never_cache, name='dispatch')
-class GetVariantInfoView(generic.View):
-    def post(self, request, *args, **kwargs):
+        size_id = request.POST.get('size_id')
         variant_id = request.POST.get('variant_id')
-        variant = get_object_or_404(
-            ProductVariant.objects.select_related('color', 'size', 'product'),
-            id=variant_id,
-            status='active'
-        )
 
-        return JsonResponse({
-            'variant_id': variant.id,
-            'price': str(variant.final_price),
-            'stock': variant.available_stock,
-            'color': variant.color.title if variant.color else '',
-            'size': variant.size.title if variant.size else '',
-            'image': variant.image_url,
-        })
+        response_data = {}
 
+        # ================= SIZE CHANGE =================
+        if size_id and not variant_id:
+            variant = ProductVariant.objects.filter(
+                product_id=product_id,
+                size_id=size_id
+            ).order_by('id').first()
 
+            colors = ProductVariant.objects.filter(
+                product_id=product_id,
+                size_id=size_id
+            )
+
+            rendered_colors = render_to_string(
+                'store/color_options.html',
+                {'colors': colors, 'variant': variant},
+                request=request
+            )
+
+            response_data = {
+                'rendered_colors': rendered_colors,
+                'variant_id': variant.id if variant else None,
+                'variant_price': str(variant.variant_price) if variant else None,
+                'variant_image': variant.image_url if variant else None,
+                'variant_stock': variant.available_stock if variant else 0,
+            }
+
+        # ================= COLOR/VARIANT CHANGE =================
+        elif variant_id:
+            variant = get_object_or_404(
+                ProductVariant.objects.select_related('color', 'size', 'product'),
+                id=variant_id,
+                status='active'
+            )
+
+            response_data = {
+                'variant_id': variant.id,
+                'price': str(variant.final_price),
+                'stock': variant.available_stock,
+                'color': variant.color.title if variant.color else '',
+                'size': variant.size.title if variant.size else '',
+                'image': variant.image_url,
+            }
+
+        return JsonResponse(response_data)
 
 
 # =========================================================
