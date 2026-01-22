@@ -2,50 +2,21 @@
 <script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
 <script>
    $(document).ready(function(){
-        // Size select → update colors + price + size + color
-        $('#size_select').change(function(){
-            var size_id = $(this).val();
-            var product_id = '{{ product.id }}';
+        $('#size_select').on('change', function () {
+            let size_id = $(this).val();
+            let product_id = "{{ product.id }}";
 
             $.ajax({
-                method: "POST",
                 url: "{% url 'get-product-variant' %}",
+                type: "POST",
                 data: {
-                    'size': size_id,
-                    'product_id': product_id,
-                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    size_id: size_id,
+                    product_id: product_id,
+                    csrfmiddlewaretoken: "{{ csrf_token }}"
                 },
-                success: function(res){
-                    // Update colors
+                success: function (res) {
                     $('#colors-show').html(res.rendered_colors);
                     console.log(res);
-                    console.log("Size ID selected:", size_id);
-                    // Update price, size, color
-                   // $('#display-price').text(res.price);
-                   // $('#display-size').text(res.size.title);
-                   // $('#display-color').text(res.color.title);
-                }
-            });
-        });
-
-        // Color select → update price + color
-        $(document).on('change', 'input[name="variant_radio"]', function(){
-            var variant_id = $(this).val();
-            var product_id = '{{ product.id }}';
-
-            $.ajax({
-                method: "POST",
-                url: "{% url 'get-product-variant' %}",
-                data: {
-                    'variant_id': variant_id,
-                    'product_id': product_id,
-                    'csrfmiddlewaretoken': '{{ csrf_token }}'
-                },
-                success: function(res){
-                    console.log(res);
-                    console.log("Variant ID selected:", variant_id);
-                    // $('#display-price').text(res.price);
-                    // $('#display-color').text(res.color.title);
                 }
             });
         });
