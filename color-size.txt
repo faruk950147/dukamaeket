@@ -64,7 +64,140 @@ Banner-like hero product	1600 × 900 px বা 1920 × 1080 px
    ├─ If variant exists → send variant_id
    └─ Update cart with selected variant/quantity
 
+==========================================================================================
+1️⃣ Problem we are solving
 
+একটি প্রোডাক্ট হতে পারে:
+
+No variant – শুধু একটি price, একটি stock, একটি image।
+
+Size variant only – বিভিন্ন size আছে, সব size এর same color।
+
+Color variant only – শুধু color আছে, size irrelevant।
+
+Color + Size variant – প্রতিটি size এর বিভিন্ন color, প্রতিটি color এর price, stock, image আলাদা।
+
+Goal:
+
+User select করলে price, stock, image real-time update হবে।
+
+Page reload দরকার নেই।
+
+Add to Cart form সঠিক variant নিয়ে যাবে।
+
+2️⃣ Logic Step-by-Step
+Step 1: Page Load
+
+View (ProductDetailView) fetch করে product + variants।
+
+যদি variant থাকে:
+
+Pick default variant (usually first)
+
+Fetch all sizes (grouped)
+
+Fetch colors of default size
+
+Logic:
+
+User প্রথমে product page খুললেই দেখতে পায় valid size/color combination।
+
+Default variant ensures price/stock/image already loaded।
+
+Step 2: Template
+
+Show dropdown for size if applicable.
+
+Show radio buttons for colors if applicable.
+
+Add to Cart form:
+
+Hidden input variant_id → always points to currently selected variant
+
+Quantity input max = current variant stock
+
+Logic:
+
+Template dynamic: size/color fields শুধু তখনই দেখানো হবে যখন প্রোডাক্টে আছে।
+
+Hidden variant_id ensures Cart always gets correct variant.
+
+Step 3: User Interaction – AJAX
+A. Size change
+
+User selects new size.
+
+AJAX POST sends size_id + product_id → Server.
+
+Server:
+
+Filters all variants by product & size
+
+Picks first variant of that size → default for that size
+
+Fetches all colors available for that size
+
+Server returns:
+
+Rendered HTML of colors (rendered_colors)
+
+Variant info (price, stock, image)
+
+JS updates:
+
+Colors list
+
+Price
+
+Image
+
+Stock
+
+Logic:
+
+Size change can change available colors
+
+Default variant of that size selected automatically
+
+B. Color change
+
+User selects a color (radio button).
+
+AJAX POST sends variant_id.
+
+Server fetches exact variant → returns JSON (price, stock, image).
+
+JS updates page with new info.
+
+Logic:
+
+Every color can have different price, stock, image → must update dynamically
+
+Ensures Add to Cart form always points to correct variant
+
+Step 4: Add to Cart
+
+Form submits: product_id + variant_id + quantity.
+
+Server adds item to cart.
+
+Logic:
+
+Using variant_id guarantees correct combination added.
+
+Max quantity = current variant stock → prevents over-ordering.
+
+3️⃣ Why this works
+
+Default variant on page load → ensures all initial fields valid
+
+AJAX on size/color change → real-time update, no page reload
+
+Hidden variant_id + stock logic → always correct for cart
+
+Dynamic template → shows only relevant size/color inputs
+
+Result: User-friendly, dynamic, fully functional product variant system
 
 
 Advanced: Use Recommendation Engine / Package
