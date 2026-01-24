@@ -31,7 +31,7 @@ class AddToCartView(LoginRequiredMixin, generic.View):
             return JsonResponse({"status": "error", "message": "Quantity must be at least 1."})
         
         with transaction.atomic():
-
+            print(product_slug, product_id)
  
 
 
