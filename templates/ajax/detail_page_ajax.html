@@ -40,14 +40,16 @@
                     csrfmiddlewaretoken: "{{ csrf_token }}"
                 },
                 success: function (res) {
-                    // update main product info
-                    // $('#product-price').text(res.price);
-                    // $('#main-product-image').attr('src', res.image);
-                    // $('#stock-info').text('Stock: ' + res.stock);
+                    // variant_id IMPORTANT BECURSE UPDATED VARIANT ID
+                    $("#variant_id").val(res.variant_id);   
+                    $("#product-price").text(res.price);
+                    $("#display-color").text(res.color);
+                    $("#display-size").text(res.size);
                     console.log(res);
                 }
             });
         });
+
 
         // Review form submission via AJAX
         $('#review-form').on('submit', function (e) {
