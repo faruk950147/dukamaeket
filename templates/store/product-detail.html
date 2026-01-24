@@ -131,6 +131,8 @@
                             {% for variant_color in colors %}
                                 <label style="cursor:pointer;">
                                     <input type="radio" name="variant_radio" value="{{ variant_color.id }}"
+                                        data-size="{{ variant_color.size.id }}"
+                                        data-price="{{ variant_color.price }}"
                                         {% if variant and variant_color.id == variant.id %}checked{% endif %}>
                                     <span>{{ variant_color.color.title }}</span><br>
                                     <img src="{{ variant_color.image_url }}" width="30" height="30">
@@ -144,10 +146,10 @@
                         <label style="min-width:80px; font-weight:bold;">Sizes:</label>
 
                         <select name="size_select" id="size_select">
-                            {% for size in sizes %}
-                                <option value="{{ size.id }}"
-                                    {% if variant and size.id == variant.size_id %}selected{% endif %}>
-                                    {{ size.title }}
+                            {% for variant_size in sizes %}
+                                <option value="{{ variant_size.id }}"
+                                    {% if variant and variant_size.id == variant.size.id %}selected{% endif %}>
+                                    {{ variant_size.title }}
                                 </option>
                             {% endfor %}
                         </select>
@@ -161,6 +163,8 @@
                             {% for variant_color in colors %}
                                 <label style="cursor:pointer;">
                                     <input type="radio" name="variant_radio" value="{{ variant_color.id }}"
+                                        data-size="{{ variant_color.size.id }}"
+                                        data-price="{{ variant_color.price }}"
                                         {% if variant and variant_color.id == variant.id %}checked{% endif %}>
                                     <span>{{ variant_color.color.title }}</span><br>
                                     <img src="{{ variant_color.image_url }}" width="30" height="30">
@@ -174,13 +178,12 @@
                         <label style="min-width:80px; font-weight:bold;">Sizes:</label>
 
                         <select name="size_select" id="size_select">
-                            {% for size in sizes %}
-                                <option value="{{ size.id }}"
-                                    {% if variant and size.id == variant.size_id %}selected{% endif %}>
-                                    {{ size.title }}
+                            {% for variant_size in sizes %}
+                                <option value="{{ variant_size.id }}"
+                                    {% if variant and variant_size.id == variant.size.id %}selected{% endif %}>
+                                    {{ variant_size.title }}
                                 </option>
                             {% endfor %}
-
                         </select>
                     </div>
                     {% endif %}

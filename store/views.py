@@ -83,13 +83,13 @@ class HomeView(generic.View):
         return render(request, 'store/home.html', context)
 
 
+
 # ========================================================
 # Product Detail View
 # ========================================================
 @method_decorator(never_cache, name='dispatch')
 class ProductDetailView(generic.View):
     def get(self, request, slug, id):
-        # Main product with related fields
         product = get_object_or_404(
             Product.objects.select_related('category', 'brand')
             .prefetch_related('images', 'reviews', 'variants__color', 'variants__size')
@@ -97,7 +97,6 @@ class ProductDetailView(generic.View):
             slug=slug, id=id, status='active', available_stock__gt=0
         )
 
-        # Related products (optimized)
         related_products = Product.objects.select_related('brand').prefetch_related('images').filter(
             category=product.category,
             status='active',
@@ -109,7 +108,6 @@ class ProductDetailView(generic.View):
             'related_products': related_products,
         }
 
-        # Variant handling
         if product.variant != "None":
             variants = list(
                 ProductVariant.objects.filter(
@@ -120,20 +118,18 @@ class ProductDetailView(generic.View):
             )
 
             if variants:
-                # Default variant
-                variant = variants[0] if variants else None
+                variant = variants[0]
 
-                # Row-wise unique sizes
-                seen = set()
+                # Unique sizes
+                seen_sizes = set()
                 sizes = []
                 for v in variants:
-                   if v.size and v.size.id not in seen:
+                    if v.size and v.size.id not in seen_sizes:
                         sizes.append(v.size)
-                        seen.add(v.size.id)
-
+                        seen_sizes.add(v.size.id)
 
                 # Colors for default size
-                colors = [v for v in variants if variant and v.size_id == variant.size_id]
+                colors = [v for v in variants if v.size and v.size.id == variant.size.id]
 
                 context.update({
                     'sizes': sizes,
@@ -150,6 +146,7 @@ class ProductDetailView(generic.View):
         return render(request, 'store/product-detail.html', context)
 
 
+
 # ========================================================
 # AJAX endpoint: Get Variant by Size
 # ========================================================
@@ -159,7 +156,9 @@ class GetVariantBySizeView(generic.View):
         product_id = request.POST.get('product_id')
         size_id = request.POST.get('size_id')
 
-        # Get all variants for this size
+        if not product_id or not size_id:
+            return JsonResponse({'error': 'Missing product_id or size_id'}, status=400)
+
         variants_qs = ProductVariant.objects.filter(
             product_id=product_id,
             size_id=size_id,
@@ -188,6 +187,7 @@ class GetVariantBySizeView(generic.View):
         })
 
 
+
 # ========================================================
 # AJAX endpoint: Get Variant by Color
 # ========================================================
@@ -211,6 +211,7 @@ class GetVariantByColorView(generic.View):
             'size': variant.size.title if variant.size else '',
             'image': variant.image_url,
         })
+
 
 
 # =========================================================
@@ -297,6 +298,7 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
         })
 
 
+
 # =========================================================
 # SHOP VIEW WITH PAGINATION
 # =========================================================
@@ -370,6 +372,7 @@ class ShopView(generic.View):
             })
 
         return render(request, 'store/shop.html', context)
+
 
 
 # =========================================================
