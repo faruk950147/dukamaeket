@@ -39,7 +39,7 @@ class HomeView(generic.View):
         add_sliders = active_sliders.filter(Q(slider_type='add'))[:2]
         promo_sliders = active_sliders.filter(Q(slider_type='promotion'))[:3]
 
-        # Fetch acceptance payments
+        # Fetch acceptance payments [:4]  ==  [0:4]
         acceptance_payments = AcceptancePayment.objects.filter(status='active')[:4]
 
         # Fetch top deals products (discounted & active deadline)
