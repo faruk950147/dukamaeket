@@ -128,13 +128,13 @@
                         <label style="min-width:80px; font-weight:bold;">Colors:</label>
 
                         <div id="colors-show" style="display:flex; flex-wrap:wrap; gap:15px;">
-                            {% for color in colors %}
-                            <label style="cursor:pointer;">
-                                <input type="radio" name="variant_radio" value="{{ color.id }}" 
-                                    {% if variant and color.id == variant.id %}checked{% endif %}>
-                                <span>{{ color.color.title }}</span><br>
-                                <img src="{{ color.image_url }}" width="30" height="30">
-                            </label>
+                            {% for variant_color in colors %}
+                                <label style="cursor:pointer;">
+                                    <input type="radio" name="variant_radio" value="{{ variant_color.id }}"
+                                        {% if variant and variant_color.id == variant.id %}checked{% endif %}>
+                                    <span>{{ variant_color.color.title }}</span><br>
+                                    <img src="{{ variant_color.image_url }}" width="30" height="30">
+                                </label>
                             {% endfor %}
                         </div>
                     </div>
@@ -145,10 +145,10 @@
 
                         <select name="size_select" id="size_select">
                             {% for size in sizes %}
-                            <option value="{{ size.size_id }}"
-                                {% if variant and size.size_id == variant.size_id %}selected{% endif %}>
-                                {{ size.code }}
-                            </option>
+                                <option value="{{ size.id }}"
+                                    {% if variant and size.id == variant.size_id %}selected{% endif %}>
+                                    {{ size.title }}
+                                </option>
                             {% endfor %}
                         </select>
                     </div>
@@ -158,13 +158,13 @@
                         <label style="min-width:80px; font-weight:bold;">Colors:</label>
 
                         <div id="colors-show" style="display:flex; flex-wrap:wrap; gap:15px;">
-                            {% for color in colors %}
-                            <label style="cursor:pointer;">
-                                <input type="radio" name="variant_radio" value="{{ color.id }}" 
-                                    {% if variant and color.id == variant.id %}checked{% endif %}>
-                                <span>{{ color.color.title }}</span><br>
-                                <img src="{{ color.image_url }}" width="30" height="30">
-                            </label>
+                            {% for variant_color in colors %}
+                                <label style="cursor:pointer;">
+                                    <input type="radio" name="variant_radio" value="{{ variant_color.id }}"
+                                        {% if variant and variant_color.id == variant.id %}checked{% endif %}>
+                                    <span>{{ variant_color.color.title }}</span><br>
+                                    <img src="{{ variant_color.image_url }}" width="30" height="30">
+                                </label>
                             {% endfor %}
                         </div>
                     </div>
@@ -175,11 +175,12 @@
 
                         <select name="size_select" id="size_select">
                             {% for size in sizes %}
-                            <option value="{{ size.size_id }}"
-                                {% if variant and size.size_id == variant.size_id %}selected{% endif %}>
-                                {{ size.code }}
-                            </option>
+                                <option value="{{ size.id }}"
+                                    {% if variant and size.id == variant.size_id %}selected{% endif %}>
+                                    {{ size.title }}
+                                </option>
                             {% endfor %}
+
                         </select>
                     </div>
                     {% endif %}

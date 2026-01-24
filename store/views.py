@@ -127,12 +127,10 @@ class ProductDetailView(generic.View):
                 seen = set()
                 sizes = []
                 for v in variants:
-                    if v.size_id and v.size_id not in seen:
-                        seen.add(v.size_id)
-                        sizes.append({
-                            'size_id': v.size_id,
-                            'code': v.size.code
-                        })
+                   if v.size and v.size.id not in seen:
+                        sizes.append(v.size)
+                        seen.add(v.size.id)
+
 
                 # Colors for default size
                 colors = [v for v in variants if variant and v.size_id == variant.size_id]
