@@ -194,8 +194,8 @@
                     <form method="POST" id="cart-form">
                         {% csrf_token %}
 
-                        <input type="hidden" name="product_id" value="{{ product.id }}">
-                        <input type="hidden" name="product_slug" value="{{ product.slug }}">
+                        <input type="hidden" name="product_slug" id="product_slug" value="{{ product.slug }}">
+                        <input type="hidden" name="product_id" id="product_id" value="{{ product.id }}">
                         <input type="hidden" name="variant_id" id="variant_id" value="{{ variant.id }}">
 
                         <div class="cart-option mb-15">
@@ -218,8 +218,8 @@
                     <form method="POST" id="cart-form">
                         {% csrf_token %}
 
-                        <input type="hidden" name="product_id" value="{{ product.id }}">
-                        <input type="hidden" name="product_slug" value="{{ product.slug }}">
+                        <input type="hidden" name="product_slug" id="product_slug" value="{{ product.slug }}">
+                        <input type="hidden" name="product_id" id="product_id" value="{{ product.id }}">
 
                         <div class="cart-option mb-15">
                             <input type="number"
