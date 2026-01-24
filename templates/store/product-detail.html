@@ -191,7 +191,7 @@
                     <!-- ================= ADD TO CART ================= -->
 
                     {% if product.variant != "None" %}
-                    <form method="POST" action="{% url 'add-to-cart' %}">
+                    <form method="POST" id="cart-form">
                         {% csrf_token %}
 
                         <input type="hidden" name="product_id" value="{{ product.id }}">
@@ -215,7 +215,7 @@
                     {% else %}
 
                     <!-- NO VARIANT PRODUCT -->
-                    <form method="POST" action="{% url 'add-to-cart' %}">
+                    <form method="POST" id="cart-form">
                         {% csrf_token %}
 
                         <input type="hidden" name="product_id" value="{{ product.id }}">
