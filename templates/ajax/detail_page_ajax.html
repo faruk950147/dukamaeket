@@ -24,9 +24,11 @@
                     $('#colors-show').html(res.rendered_colors);
 
                     // update main product info
-                    $("#display-stock").text(res.stock || '0');
-                    $("#display-variant-stock").text();
-                    //.attr('src', res.image || '');
+                    $("#product-price").text(res.variant_price || '0');
+                    $("#display-color").text(res.color || '');
+                    $("#display-size").text(res.size || '');
+                    $("#product-image").attr('src', res.variant_image || '');
+                    $("#display-variant-stock").text('Availability (Variant Stock): ' + (res.available_stock || 0));
 
                     // bind color click events again
                     bindColorEvents();
@@ -49,11 +51,11 @@
                     success: function (res) {
                         console.log(res)
                         $("#variant_id").val(res.variant_id);   
-                        $("#product-price").text(res.price || '0');
+                        $("#product-price").text(res.variant_price || '0');
                         $("#display-color").text(res.color || '');
                         $("#display-size").text(res.size || '');
-                        $("#product-image").attr('src', res.image || '');
-                        $("#stock-info").text('Stock: ' + (res.stock || 0));
+                        $("#product-image").attr('src', res.variant_image || '');
+                        $("#display-variant-stock").text('Availability (Variant Stock): ' + (res.available_stock || 0));
                     }
                 });
             });

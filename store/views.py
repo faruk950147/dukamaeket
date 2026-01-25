@@ -183,7 +183,7 @@ class GetVariantBySizeView(generic.View):
             'variant_price': str(variant.variant_price) if variant else None,
             'variant_image': variant.image_url if variant else None,
             'available_stock': variant.available_stock if variant else 0,
-            'size': variant.size.title if variant.size else '',
+            'size': variant.size.code if variant.size else '',
             'color': variant.color.title if variant.color else '',
         })
 
@@ -208,7 +208,7 @@ class GetVariantByColorView(generic.View):
             'variant_price': str(variant.variant_price),
             'available_stock': variant.available_stock,
             'variant_image': variant.image_url,
-            'size': variant.size.title if variant.size else '',
+            'size': variant.size.code if variant.size else '',
             'color': variant.color.title if variant.color else '',
         })
 
