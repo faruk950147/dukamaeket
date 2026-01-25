@@ -27,7 +27,8 @@
                     $("#product-price").text(res.variant_price || '0');
                     $("#display-color").text(res.color || '');
                     $("#display-size").text(res.size || '');
-                    $("#product-image").attr('src', res.variant_image || '');
+                    // $("#variant-image").attr(res.variant_image);
+
                     $("#display-variant-stock").text('Availability (Variant Stock): ' + (res.available_stock || 0));
 
                     // bind color click events again
@@ -54,7 +55,8 @@
                         $("#product-price").text(res.variant_price || '0');
                         $("#display-color").text(res.color || '');
                         $("#display-size").text(res.size || '');
-                        $("#product-image").attr('src', res.variant_image || '');
+                        // $("#variant-image").attr(res.variant_image)
+
                         $("#display-variant-stock").text('Availability (Variant Stock): ' + (res.available_stock || 0));
                     }
                 });

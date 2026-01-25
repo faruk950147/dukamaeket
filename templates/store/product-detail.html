@@ -422,9 +422,7 @@
                         <div class="product__item swiper-slide">
                             <div class="product__thumb fix">
                                 <div class="product-image w-img">
-                                    <a href="{% url 'product-detail' product.slug product.id %}">
-                                        <img src="{{product.images.first.image.url}}" alt="{{product.title|title}}" style="width: 260px; height: 300px; object-fit: cover">
-                                    </a>
+                                    <img id="variant-image" src="{{product.images.first.image.url}}" alt="{{product.title|title}}" style="width: 260px; height: 300px; object-fit: cover">
                                 </div>
                                 {% if product.deadline %}
                                 <div class="countdown countdown-small mt-5">
