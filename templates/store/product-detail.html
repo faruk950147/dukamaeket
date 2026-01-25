@@ -208,8 +208,6 @@
                     {% endif %}
 
                     <!-- ================= ADD TO CART ================= -->
-
-                    {% if product.variant != "None" %}
                     <form method="POST" id="cart-form">
                         {% csrf_token %}
 
@@ -220,39 +218,13 @@
                         <div class="cart-option mb-15">
                             <div class="product-quantity mr-20">
                                 <label style="font-weight:bold;">Quantity:</label>
-                                <input type="number"
-                                    name="quantity"
-                                    value="1"
-                                    min="1"
-                                    max="{{ variant.available_stock }}">
+                                <input type="number" name="quantity" value="1" min="1"
+                                 max="{{ variant.available_stock }}">
                             </div>
 
                             <button type="submit" class="cart-btn">Add to Cart</button>
                         </div>
                     </form>
-
-                    {% else %}
-
-                    <!-- NO VARIANT PRODUCT -->
-                    <form method="POST" id="cart-form">
-                        {% csrf_token %}
-
-                        <input type="hidden" name="product_slug" id="product_slug" value="{{ product.slug }}">
-                        <input type="hidden" name="product_id" id="product_id" value="{{ product.id }}">
-
-                        <div class="cart-option mb-15">
-                            <input type="number"
-                                name="quantity"
-                                value="1"
-                                min="1"
-                                max="{{ product.available_stock }}">
-
-                            <button type="submit" class="cart-btn">Add to Cart</button>
-                        </div>
-                    </form>
-
-                    {% endif %}
-
                 </div>
             </div>
 
