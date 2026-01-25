@@ -225,6 +225,37 @@
                             <button type="submit" class="cart-btn">Add to Cart</button>
                         </div>
                     </form>
+                    <div class="details-meta">
+                        <div class="d-meta-left">
+                            <div class="dm-item mr-20">
+                                <a href="#"><i class="fal fa-heart"></i>Add to wishlist</a>
+                            </div>
+                            <div class="dm-item">
+                                <a href="#"><i class="fal fa-layer-group"></i>Compare</a>
+                            </div>
+                        </div>
+                        <div class="d-meta-left">
+                            <div class="dm-item">
+                                <a href="#"><i class="fal fa-share-alt"></i>Share</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-tag-area mt-15">
+                        <div class="product_info">
+                            <span class="sku_wrapper">
+                                <span class="title">SKU:</span>
+                                <span class="sku" id="sku">
+                                    {{ variant.sku|default:"N/A" }}
+                                </span>
+                            </span>
+                            <span class="tag_wrapper">
+                                <span class="title">TAG:</span>
+                                <span class="title" id="title">
+                                    {{ variant.title|default:"N/A" }}
+                                </span>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
