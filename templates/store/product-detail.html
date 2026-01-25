@@ -424,20 +424,6 @@
                                 <div class="product-image w-img">
                                     <img id="variant-image" src="{{product.images.first.image.url}}" alt="{{product.title|title}}" style="width: 260px; height: 300px; object-fit: cover">
                                 </div>
-                                {% if product.deadline %}
-                                <div class="countdown countdown-small mt-5">
-                                    <div class="countdown-inner b-radius"
-                                        data-countdown=""
-                                        data-date="{{ product.deadline|date:'c' }}">
-                                        <ul class="text-center" style="padding:0; list-style:none; display:flex; justify-content:center; gap:10px;">
-                                            <li><span data-days="">0</span>d</li>
-                                            <li><span data-hours="">0</span>h</li>
-                                            <li><span data-minutes="">0</span>m</li>
-                                            <li><span data-seconds="">0</span>s</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                {% endif %}
                                 <div class="product__offer">
                                     <span class="discount">-{{product.discount_percent}}%</span>
                                 </div>
