@@ -111,8 +111,8 @@
 
                     <!-- Stock -->
                     <div class="product-stock mb-20">
-                        <h5>Availability (Main Stock): <span id="display-stock">{% if product %}{{ product.available_stock }}{% else %}0{% endif %}</span></h5>
-                        <h5>Availability (Variant Stock): <span id="display-variant-stock">{% if variant %}{{ variant.available_stock }}{% else %}0{% endif %}</span></h5>
+                        <h5 id="display-stock">Availability (Main Stock): <span>{% if product %}{{ product.available_stock }}{% else %}0{% endif %}</span></h5>
+                        <h5 id="display-variant-stock">Availability (Variant Stock): <span>{% if variant %}{{ variant.available_stock }}{% else %}0{% endif %}</span></h5>
                     </div>
 
                     <!-- Selected Color -->

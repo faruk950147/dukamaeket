@@ -18,14 +18,15 @@
                     csrfmiddlewaretoken: "{{ csrf_token }}"
                 },
                 success: function (res) {
+                    console.log(res)
+                    $("#variant_id").val(res.variant_id);
                     // update colors HTML
                     $('#colors-show').html(res.rendered_colors);
 
                     // update main product info
-                    $("#variant_id").val(res.variant_id);
-                    $("#product-price").text(res.price || '0');
-                    $("#product-image").attr('src', res.image || '');
-                    $("#stock-info").text('Stock: ' + (res.stock || 0));
+                    $("#display-stock").text(res.stock || '0');
+                    $("#display-variant-stock").text();
+                    //.attr('src', res.image || '');
 
                     // bind color click events again
                     bindColorEvents();
