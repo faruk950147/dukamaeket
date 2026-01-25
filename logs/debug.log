@@ -1299,3 +1299,60 @@ INFO 2026-01-25 18:10:16,733 project views User admin visited Home page. Sliders
 INFO 2026-01-25 18:24:20,071 project views User admin visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 5, Featured Products: 5
 INFO 2026-01-25 20:26:57,698 project views User admin visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 5, Featured Products: 5
 INFO 2026-01-25 20:34:17,043 project views User admin visited Home page. Sliders: 0, Feature Sliders: 0, Add Sliders: 0, Promo Sliders: 0, Top Deals: 5, Featured Products: 5
+INFO 2026-01-25 20:50:40,706 project views Home page visited
+INFO 2026-01-25 20:50:51,995 project views Product detail viewed
+INFO 2026-01-25 20:51:07,049 project views Product detail viewed
+INFO 2026-01-25 20:51:15,958 project views GetVariantBySize AJAX
+INFO 2026-01-25 20:51:19,924 project views GetVariantBySize AJAX
+INFO 2026-01-25 20:51:24,064 project views GetVariantBySize AJAX
+INFO 2026-01-25 20:51:31,476 project views GetVariantBySize AJAX
+INFO 2026-01-25 20:51:34,058 project views GetVariantByColor AJAX
+INFO 2026-01-25 20:51:36,066 project views GetVariantByColor AJAX
+INFO 2026-01-25 20:51:37,409 project views GetVariantByColor AJAX
+INFO 2026-01-25 20:51:39,967 project views GetVariantBySize AJAX
+INFO 2026-01-25 21:09:23,299 project views Product detail viewed
+INFO 2026-01-25 21:16:19,331 project views Product detail viewed
+INFO 2026-01-25 21:19:06,377 project views Product detail viewed
+INFO 2026-01-25 21:20:14,863 project views Product detail viewed
+INFO 2026-01-25 21:20:20,299 project views Product detail viewed
+INFO 2026-01-25 21:21:10,241 project views Product detail viewed
+INFO 2026-01-25 21:21:17,552 project views GetVariantBySize AJAX
+INFO 2026-01-25 21:21:20,845 project views GetVariantBySize AJAX
+INFO 2026-01-25 21:21:23,959 project views GetVariantBySize AJAX
+INFO 2026-01-25 21:21:33,024 project views Product detail viewed
+INFO 2026-01-25 21:21:40,429 project views GetVariantBySize AJAX
+INFO 2026-01-25 21:21:44,518 project views GetVariantBySize AJAX
+INFO 2026-01-25 21:21:51,380 project views GetVariantBySize AJAX
+INFO 2026-01-25 21:21:58,747 project views Product detail viewed
+INFO 2026-01-25 21:23:30,942 project views Product detail viewed
+INFO 2026-01-25 21:23:35,206 project views Product detail viewed
+INFO 2026-01-25 21:23:40,430 project views GetVariantBySize AJAX
+INFO 2026-01-25 21:23:44,878 project views GetVariantBySize AJAX
+INFO 2026-01-25 21:23:48,079 project views GetVariantBySize AJAX
+INFO 2026-01-25 21:23:51,223 project views GetVariantBySize AJAX
+INFO 2026-01-25 21:34:15,210 project views Product detail viewed
+INFO 2026-01-25 21:34:19,607 project views GetVariantBySize AJAX
+INFO 2026-01-25 21:34:22,342 project views GetVariantByColor AJAX
+INFO 2026-01-25 21:34:23,726 project views GetVariantByColor AJAX
+INFO 2026-01-25 21:34:24,902 project views GetVariantByColor AJAX
+INFO 2026-01-25 21:34:27,531 project views GetVariantBySize AJAX
+INFO 2026-01-25 21:34:29,731 project views GetVariantBySize AJAX
+INFO 2026-01-25 21:34:32,026 project views Product detail viewed
+INFO 2026-01-25 21:40:06,661 project views Product detail viewed
+INFO 2026-01-25 21:40:11,328 project views GetVariantByColor AJAX
+INFO 2026-01-25 21:40:12,893 project views GetVariantByColor AJAX
+INFO 2026-01-25 21:40:14,285 project views GetVariantByColor AJAX
+INFO 2026-01-25 21:40:15,813 project views GetVariantByColor AJAX
+INFO 2026-01-25 21:40:17,077 project views GetVariantByColor AJAX
+INFO 2026-01-25 21:40:18,173 project views GetVariantByColor AJAX
+INFO 2026-01-25 21:40:21,249 project views Product detail viewed
+INFO 2026-01-25 21:40:24,534 project views GetVariantByColor AJAX
+INFO 2026-01-25 21:40:26,645 project views GetVariantByColor AJAX
+INFO 2026-01-25 21:40:28,829 project views GetVariantByColor AJAX
+INFO 2026-01-25 21:40:30,949 project views GetVariantByColor AJAX
+INFO 2026-01-25 21:40:37,362 project views GetVariantBySize AJAX
+INFO 2026-01-25 21:40:40,391 project views GetVariantBySize AJAX
+INFO 2026-01-25 21:40:42,894 project views Product detail viewed
+INFO 2026-01-25 21:43:22,229 project views Product detail viewed
+INFO 2026-01-25 21:43:26,777 project views Product detail viewed
+INFO 2026-01-25 21:43:36,111 project views Product detail viewed
