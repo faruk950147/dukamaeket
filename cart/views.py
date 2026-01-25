@@ -26,7 +26,6 @@ class AddToCartView(LoginRequiredMixin, generic.View):
         variant_id = request.POST.get("variant_id")
         quantity = int(request.POST.get("quantity", "1"))
         
-        print(request)
 
         if not product_slug or not product_id:
             return JsonResponse({"status": "error", "message": "Invalid product data."})
@@ -34,8 +33,8 @@ class AddToCartView(LoginRequiredMixin, generic.View):
             return JsonResponse({"status": "error", "message": "Quantity must be at least 1."})
         
         with transaction.atomic():
-            print("product slug :", product_slug, "product id", product_id, "variant id", variant_id)
- 
+            
+
 
 
             return JsonResponse({

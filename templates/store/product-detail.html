@@ -111,9 +111,9 @@
 
                     <!-- Stock -->
                     <div class="product-stock mb-20">
-                        <h5 id="display-stock">Availability (Main Stock): <span>{% if product %}{{ product.available_stock }}{% else %}0{% endif %}</span></h5>
+                        <h5 id="display-stock">Availability (Main Stock): <span>{% if product %}{{ product.available_stock }}{% endif %}</span></h5>
                         {% if product.variant != 'none' %}
-                        <h5 id="display-variant-stock">Availability (Variant Stock): <span>{% if variant %}{{ variant.available_stock }}{% else %}0{% endif %}</span></h5>
+                        <h5 id="display-variant-stock">Availability (Variant Stock): <span>{% if variant %}{{ variant.available_stock }}{% endif %}</span></h5>
                         {% endif %}
                     </div>
                     {% if product.variant != 'none' %}
@@ -135,21 +135,7 @@
                         <label style="min-width:80px; font-weight:bold;">Colors:</label>
 
                         <div id="colors-show" style="display:flex; flex-wrap:wrap; gap:15px;">
-                            {% for variant_color in colors %}
-                            <label style="cursor:pointer; display:inline-block; margin-right:10px;">
-                                
-                                <input type="radio" name="variant_radio" id="variant_{{ variant_color.id }}" value="{{ variant_color.id }}"
-                                    data-size="{{ variant_color.size.id }}"
-                                    data-price="{{ variant_color.variant_price }}"
-                                    {% if variant and variant_color.id == variant.id %}checked{% endif %}
-                                    hidden>
-
-                                <span>{{ variant_color.color.title }}</span><br>
-
-                                <img src="{{ variant_color.image_url }}" width="30" height="30" style="border:1px solid #ccc; padding:2px;">
-
-                            </label>
-                            {% endfor %}
+                            {% include "store/color_options.html" %}
                         </div>
                     </div>
 
@@ -158,13 +144,7 @@
                         <label style="min-width:80px; font-weight:bold;">Sizes:</label>
 
                         <select name="size_select" id="size_select">
-                            <option value="">Select Size</option>
-
-                            {% for variant_size in sizes %}
-                                <option value="{{ variant_size.id }}">
-                                    {{ variant_size.code }}
-                                </option>
-                            {% endfor %}
+                            {% include "store/size_options.html" %}
                         </select>
                     </div>
                     {% elif product.variant == "color" %}
@@ -173,21 +153,7 @@
                         <label style="min-width:80px; font-weight:bold;">Colors:</label>
 
                         <div id="colors-show" style="display:flex; flex-wrap:wrap; gap:15px;">
-                            {% for variant_color in colors %}
-                            <label style="cursor:pointer; display:inline-block; margin-right:10px;">
-                                
-                                <input type="radio" name="variant_radio" id="variant_{{ variant_color.id }}" value="{{ variant_color.id }}"
-                                    data-size="{{ variant_color.size.id }}"
-                                    data-price="{{ variant_color.variant_price }}"
-                                    {% if variant and variant_color.id == variant.id %}checked{% endif %}
-                                    hidden>
-
-                                <span>{{ variant_color.color.title }}</span><br>
-
-                                <img src="{{ variant_color.image_url }}" width="30" height="30" style="border:1px solid #ccc; padding:2px;">
-
-                            </label>
-                            {% endfor %}
+                            {% include "store/color_options.html" %}
                         </div>
                     </div>
                     {% elif product.variant == "size" %}
@@ -196,13 +162,7 @@
                         <label style="min-width:80px; font-weight:bold;">Sizes:</label>
 
                         <select name="size_select" id="size_select">
-                            <option value="">Select Size</option>
-
-                            {% for variant_size in sizes %}
-                                <option value="{{ variant_size.id }}">
-                                    {{ variant_size.code }}
-                                </option>
-                            {% endfor %}
+                            {% include "store/size_options.html" %}
                         </select>
                     </div>
                     {% endif %}
@@ -210,19 +170,19 @@
                     <!-- ================= ADD TO CART ================= -->
                     <form method="POST" id="cart-form">
                         {% csrf_token %}
-
-                        <input type="hidden" name="product_slug" id="product_slug" value="{{ product.slug }}">
-                        <input type="hidden" name="product_id" id="product_id" value="{{ product.id }}">
-                        <input type="hidden" name="variant_id" id="variant_id" value="{{ variant.id }}">
+                        <input type="hidden" name="product_slug" value="{{ product.slug }}">
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <input type="hidden" name="variant_id" id="variant_id"
+                            value="{% if variant %}{{ variant.id }}{% endif %}">
 
                         <div class="cart-option mb-15">
-                            <div class="product-quantity mr-20">
-                                <label style="font-weight:bold;">Quantity:</label>
-                                <input type="number" name="quantity" value="1" min="1"
-                                 max="{{ variant.available_stock }}">
-                            </div>
+                        <div class="product-quantity mr-20">
+                            <label style="font-weight:bold;">Quantity:</label>
+                            <input type="number" name="quantity" value="1" min="1"
+                                max="{% if variant %}{{ variant.available_stock }}{% else %}{{ product.available_stock }}{% endif %}">
 
-                            <button type="submit" class="cart-btn">Add to Cart</button>
+                        </div>
+                        <button type="submit" class="cart-btn">Add to Cart</button>
                         </div>
                     </form>
                     <div class="details-meta">
@@ -428,7 +388,9 @@
                             <div class="product__thumb fix">
                                 <div class="product-image w-img">
                                     <a href="{% url "product-detail" product.slug product.id %}">
-                                        <img src="{{product.images.first.image.url}}" alt="{{product.title|title}}" style="width: 260px; height: 300px; object-fit: cover">
+                                        {% if product.images.first %}
+                                            <img src="{{ product.images.first.image.url }}" alt="{{product.title|title}}" style="width: 260px; height: 300px; object-fit: cover">
+                                        {% endif %}
                                     </a>
                                 </div>
                                 <div class="product__offer">
