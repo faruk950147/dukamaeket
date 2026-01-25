@@ -47,6 +47,7 @@
                         csrfmiddlewaretoken: "{{ csrf_token }}"
                     },
                     success: function (res) {
+                        console.log(res)
                         $("#variant_id").val(res.variant_id);   
                         $("#product-price").text(res.price || '0');
                         $("#display-color").text(res.color || '');
