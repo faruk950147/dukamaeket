@@ -25,6 +25,10 @@ class AddToCartView(LoginRequiredMixin, generic.View):
         product_id = request.POST.get("product_id")
         variant_id = request.POST.get("variant_id")
         quantity = int(request.POST.get("quantity", "1"))
+        size = request.POST.get("")
+        color = request.POST.get("variant_radio")
+        
+        print(request)
 
         if not product_slug or not product_id:
             return JsonResponse({"status": "error", "message": "Invalid product data."})
@@ -38,6 +42,7 @@ class AddToCartView(LoginRequiredMixin, generic.View):
 
             return JsonResponse({
                 "status": "success",
+                "message": "Product Added Success"
             })
 
 

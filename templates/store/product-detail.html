@@ -130,7 +130,7 @@
                         <div id="colors-show" style="display:flex; flex-wrap:wrap; gap:15px;">
                             {% for variant_color in colors %}
                                 <label style="cursor:pointer;">
-                                    <input type="radio" name="variant_radio" value="{{ variant_color.id }}"
+                                    <input type="radio" name="variant_radio" id="variant_radio" value="{{ variant_color.id }}"
                                         data-size="{{ variant_color.size.id }}"
                                         data-price="{{ variant_color.price }}"
                                         {% if variant and variant_color.id == variant.id %}checked{% endif %}>
@@ -162,7 +162,7 @@
                         <div id="colors-show" style="display:flex; flex-wrap:wrap; gap:15px;">
                             {% for variant_color in colors %}
                                 <label style="cursor:pointer;">
-                                    <input type="radio" name="variant_radio" value="{{ variant_color.id }}"
+                                    <input type="radio" name="variant_radio" id="variant_radio" value="{{ variant_color.id }}"
                                         data-size="{{ variant_color.size.id }}"
                                         data-price="{{ variant_color.price }}"
                                         {% if variant and variant_color.id == variant.id %}checked{% endif %}>
