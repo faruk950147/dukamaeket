@@ -150,6 +150,7 @@ class ProductDetailView(generic.View):
         return render(request, 'store/product-detail.html', context)
 
 
+
 # ========================================================
 # AJAX endpoint: Get Variant by Size
 # ========================================================
@@ -180,12 +181,13 @@ class GetVariantBySizeView(generic.View):
         return JsonResponse({
             'rendered_colors': html,
             'variant_id': variant.id if variant else None,
-            'variant_price': str(variant.variant_price) if variant else None,
-            'variant_image': variant.image_url if variant else None,
+            'variant_price': str(variant.variant_price) if variant else '0',
+            'variant_image': variant.image_url if variant and variant.image_url else '',
             'available_stock': variant.available_stock if variant else 0,
             'size': variant.size.code if variant.size else '',
             'color': variant.color.title if variant.color else '',
         })
+
 
 
 # ========================================================
@@ -211,6 +213,7 @@ class GetVariantByColorView(generic.View):
             'size': variant.size.code if variant.size else '',
             'color': variant.color.title if variant.color else '',
         })
+
 
 
 # =========================================================
