@@ -1,10 +1,15 @@
 {% for variant_color in colors %}
-    <label style="cursor:pointer;">
-        <input type="radio" name="variant_radio" value="{{ variant_color.id }}"
-            data-size="{{ variant_color.size.id }}"
-            data-price="{{ variant_color.price }}"
-            {% if variant and variant_color.id == variant.id %}checked{% endif %}>
-        <span>{{ variant_color.color.title }}</span><br>
-        <img src="{{ variant_color.image_url }}" width="30" height="30">
-    </label>
+<label style="cursor:pointer; display:inline-block; margin-right:10px;">
+    
+    <input type="radio" name="variant_radio" id="variant_{{ variant_color.id }}" value="{{ variant_color.id }}"
+        data-size="{{ variant_color.size.id }}"
+        data-price="{{ variant_color.variant_price }}"
+        {% if variant and variant_color.id == variant.id %}checked{% endif %}
+        hidden>
+
+    <span>{{ variant_color.color.title }}</span><br>
+
+    <img src="{{ variant_color.image_url }}" width="30" height="30" style="border:1px solid #ccc; padding:2px;">
+
+</label>
 {% endfor %}

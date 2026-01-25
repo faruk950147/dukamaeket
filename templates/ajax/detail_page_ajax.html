@@ -7,6 +7,8 @@
             let size_id = $(this).val();
             let product_id = "{{ product.id }}";
 
+            if (!size_id) return; // no size selected
+
             $.ajax({
                 url: "{% url 'get-variant-by-size' %}",
                 type: "POST",
@@ -16,39 +18,48 @@
                     csrfmiddlewaretoken: "{{ csrf_token }}"
                 },
                 success: function (res) {
-                    // update colors
+                    // update colors HTML
                     $('#colors-show').html(res.rendered_colors);
 
                     // update main product info
-                    // $('#product-price').text(res.variant_price);
-                    // $('#main-product-image').attr('src', res.variant_image);
-                    // $('#stock-info').text('Stock: ' + res.variant_stock);
-                    console.log(res);
+                    $("#variant_id").val(res.variant_id);
+                    $("#product-price").text(res.price || '0');
+                    $("#product-image").attr('src', res.image || '');
+                    $("#stock-info").text('Stock: ' + (res.stock || 0));
+
+                    // bind color click events again
+                    bindColorEvents();
                 }
             });
         });
 
         // ================= COLOR SELECT =================
-        $(document).on('change', 'input[name="variant_radio"]', function () {
-            let variant_id = $(this).val();
+        function bindColorEvents() {
+            $('input[name="variant_radio"]').off('change').on('change', function () {
+                let variant_id = $(this).val();
 
-            $.ajax({
-                url: "{% url 'get-variant-by-color' %}",
-                type: "POST",
-                data: {
-                    variant_id: variant_id,
-                    csrfmiddlewaretoken: "{{ csrf_token }}"
-                },
-                success: function (res) {
-                    // variant_id IMPORTANT BECURSE UPDATED VARIANT ID
-                    $("#variant_id").val(res.variant_id);   
-                    $("#product-price").text(res.price);
-                    $("#display-color").text(res.color);
-                    $("#display-size").text(res.size);
-                    console.log(res);
-                }
+                $.ajax({
+                    url: "{% url 'get-variant-by-color' %}",
+                    type: "POST",
+                    data: {
+                        variant_id: variant_id,
+                        csrfmiddlewaretoken: "{{ csrf_token }}"
+                    },
+                    success: function (res) {
+                        $("#variant_id").val(res.variant_id);   
+                        $("#product-price").text(res.price || '0');
+                        $("#display-color").text(res.color || '');
+                        $("#display-size").text(res.size || '');
+                        $("#product-image").attr('src', res.image || '');
+                        $("#stock-info").text('Stock: ' + (res.stock || 0));
+                    }
+                });
             });
-        });
+        }
+
+        // initial bind
+        bindColorEvents();
+
 
         // Review form submission via AJAX
         $('#review-form').on('submit', function (e) {
