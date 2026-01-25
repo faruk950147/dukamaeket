@@ -62,7 +62,7 @@
                                          role="tabpanel" 
                                          aria-labelledby="thumb{{ img.id }}-tab">
                                         <div class="product__details-nav-thumb w-img">
-                                            <img src="{{ img.image.url }}" 
+                                            <img id="variant-image" src="{{ img.image.url }}" 
                                                  alt="{{ product.title|title }}" 
                                                  style="width: 350px; height: 500px; object-fit:cover;">
                                         </div>
@@ -112,9 +112,11 @@
                     <!-- Stock -->
                     <div class="product-stock mb-20">
                         <h5 id="display-stock">Availability (Main Stock): <span>{% if product %}{{ product.available_stock }}{% else %}0{% endif %}</span></h5>
+                        {% if product.variant != 'none' %}
                         <h5 id="display-variant-stock">Availability (Variant Stock): <span>{% if variant %}{{ variant.available_stock }}{% else %}0{% endif %}</span></h5>
+                        {% endif %}
                     </div>
-
+                    {% if product.variant != 'none' %}
                     <!-- Selected Color -->
                     <div class="product-color mb-20">
                         <p>Selected color: <span id="display-color">{% if variant and variant.color %}{{ variant.color.title }}{% else %}N/A{% endif %}</span></p>
@@ -124,7 +126,7 @@
                     <div class="product-size mb-20">
                         <p>Selected size: <span id="display-size">{% if variant and variant.size %}{{ variant.size.code }}{% else %}N/A{% endif %}</span></p>
                     </div>
-
+                    {% endif %}
 
                    <!-- ================= VARIANTS SECTION ================= -->
                     {% if product.variant == "color-size" %}
@@ -422,7 +424,9 @@
                         <div class="product__item swiper-slide">
                             <div class="product__thumb fix">
                                 <div class="product-image w-img">
-                                    <img id="variant-image" src="{{product.images.first.image.url}}" alt="{{product.title|title}}" style="width: 260px; height: 300px; object-fit: cover">
+                                    <a href="{% url "product-detail" product.slug product.id %}">
+                                        <img src="{{product.images.first.image.url}}" alt="{{product.title|title}}" style="width: 260px; height: 300px; object-fit: cover">
+                                    </a>
                                 </div>
                                 <div class="product__offer">
                                     <span class="discount">-{{product.discount_percent}}%</span>
