@@ -43,7 +43,7 @@ class HomeView(generic.View):
                 deadline__gte=timezone.now(),
                 available_stock__gt=0
             ).select_related('category', 'brand')
-             .prefetch_related('reviews')
+             .prefetch_related('reviews', 'variants')
              .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
              .order_by('-discount_percent', 'deadline')[:6]
         )
@@ -53,7 +53,7 @@ class HomeView(generic.View):
             status='active',
             is_featured=True,
             available_stock__gt=0
-        ).select_related('category', 'brand').prefetch_related('reviews') \
+        ).select_related('category', 'brand').prefetch_related('reviews', 'variants') \
          .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))[:5]
 
         logger.info(
@@ -90,7 +90,7 @@ class ProductDetailView(generic.View):
     def get(self, request, slug, id):
         product = get_object_or_404(
             Product.objects.select_related('category', 'brand')
-            .prefetch_related('images', 'reviews', 'variants__color', 'variants__size')
+            .prefetch_related('images', 'reviews', 'variants', 'variants__color', 'variants__size')
             .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active'))),
             slug=slug,
             id=id,
@@ -98,7 +98,7 @@ class ProductDetailView(generic.View):
             available_stock__gt=0
         )
 
-        related_products = Product.objects.select_related('brand').prefetch_related('images').filter(
+        related_products = Product.objects.select_related('category', 'brand').prefetch_related('images', 'reviews', 'variants').filter(
             category=product.category,
             status='active',
             available_stock__gt=0
@@ -180,7 +180,6 @@ class GetVariantBySizeView(generic.View):
             'size': variant.size.code if variant and variant.size else '',
             'color': variant.color.title if variant and variant.color else '',
             'sku': variant.sku if variant and variant.sku else '',
-            'tag': variant.tag if variant.tag else '',
             'title': variant.title if variant.title else ''
         })
 
@@ -216,7 +215,6 @@ class GetVariantByColorView(generic.View):
             'size': variant.size.code if variant.size else '',
             'color': variant.color.title if variant.color else '',
             'sku': variant.sku if variant.sku else '',
-            'tag': variant.tag if variant.tag else '',
             'title': variant.title if variant.title else ''
         })
 

@@ -250,8 +250,7 @@ class ProductVariant(ImageTagMixin):
     color = models.ForeignKey('Color', blank=True, null=True, on_delete=models.SET_NULL)
     size = models.ForeignKey('Size', blank=True, null=True, on_delete=models.SET_NULL)
     image_id = models.PositiveIntegerField(blank=True, null=True, default=0)
-    sku = models.CharField(max_length=100) 
-    tag = models.CharField(max_length=100) 
+    sku = models.CharField(max_length=100, unique=True)
     variant_price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     available_stock = models.PositiveIntegerField(default=0)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
@@ -265,8 +264,17 @@ class ProductVariant(ImageTagMixin):
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
+        
+    def clean(self):
+        if self.product.variant == 'color' and not self.color:
+            raise ValidationError("This product requires a color variant.")
+        if self.product.variant == 'size' and not self.size:
+            raise ValidationError("This product requires a size variant.")
+        if self.product.variant == 'color-size' and (not self.color or not self.size):
+            raise ValidationError("This product requires both color and size.")
 
-    def image(self):
+
+    def get_image(self):
         # get the associated image from the product's image gallery
         try:
             image = ImageGallery.objects.get(id=self.image_id, product=self.product)
@@ -278,14 +286,14 @@ class ProductVariant(ImageTagMixin):
         
     @property
     def image_url(self):
-        img = self.image()
+        img = self.get_image()
         if img:
             return img.url
         return None
 
     @property
     def image_tag(self):
-        img = self.image()
+        img = self.get_image()
         if img and hasattr(img, 'url'):
             return mark_safe(f'<img src="{img.url}" style="max-width:50px; max-height:50px;" />')
         return mark_safe('<span>No Image</span>')   
@@ -380,7 +388,7 @@ class AcceptancePayment(ImageTagMixin):
     image = models.ImageField(upload_to='acceptance_payments/%Y/%m/%d/',
                               default='defaults/default.jpg',
                               validators=[validate_image_size])
-    help_time = models.CharField(max_length=150, default=100)  
+    help_time = models.CharField(max_length=150, default="24/7 Support")
     shop_amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
     is_featured = models.BooleanField(default=False)

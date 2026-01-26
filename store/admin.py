@@ -22,6 +22,8 @@ class CategoryAdmin(ImagePreviewMixin, admin.ModelAdmin):
     search_fields = ('title', 'keyword', 'description')
     list_editable = ('parent', 'status', 'is_featured')
     readonly_fields = ('image_tag',)
+    
+
 # =========================================================
 # BRAND ADMIN
 # =========================================================
@@ -63,7 +65,7 @@ class ProductVariantInline(admin.TabularInline):
     model = ProductVariant
     extra = 1
     readonly_fields = ('image_tag',)
-    fields = ('id', 'title', 'color', 'size', 'sku', 'tag', 'variant_price', 'available_stock', 'status', 'image_id', 'image_tag')
+    fields = ('id', 'title', 'color', 'size', 'sku', 'variant_price', 'available_stock', 'status', 'image_id', 'image_tag')
 
 
 # =========================================================
@@ -105,11 +107,11 @@ class ProductAdmin(ImagePreviewMixin, admin.ModelAdmin):
 # =========================================================
 @admin.register(ProductVariant)
 class ProductVariantAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id', 'title', 'product', 'color', 'size', 'image_id', 'sku', 'tag', 'final_price', 'available_stock', 'status', 'image_tag')
-    list_filter = ('status', 'color', 'size', 'product', 'title', 'sku', 'tag')
-    search_fields = ('product__title', 'color__title', 'size__title', 'sku', 'tag')
+    list_display = ('id', 'title', 'product', 'color', 'size', 'image_id', 'sku', 'final_price', 'available_stock', 'status', 'image_tag')
+    list_filter = ('status', 'color', 'size', 'product', 'title', 'sku')
+    search_fields = ('product__title', 'color__title', 'size__title', 'sku')
     readonly_fields = ('image_tag',)
-    list_editable = ('status', 'available_stock', 'image_id', 'title', 'color', 'size', 'sku', 'tag')
+    list_editable = ('status', 'available_stock', 'image_id', 'title', 'color', 'size', 'sku')
 
 
 

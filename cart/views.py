@@ -139,11 +139,24 @@ class AddToCartView(LoginRequiredMixin, generic.View):
 # Cart Detail Page
 # ================================
 @method_decorator(never_cache, name='dispatch')
-class CartDetailView(LoginRequiredMixin, generic.View):
+class CartDetailView(LoginRequiredMixin, generic.TemplateView):
+    template_name = "cart/cart_detail.html"
     login_url = reverse_lazy('sign-in')
 
-    def get(self, request):
-        pass
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        cart_items = Cart.objects.filter(
+            user=self.request.user,
+            paid=False
+        ).select_related("product", "variant", "variant__color", "variant__size")
+
+        total_price = sum(
+            item.quantity * item.stored_unit_price for item in cart_items
+        )
+
+
+
 
 
 # ================================
@@ -154,7 +167,50 @@ class QuantityIncDec(LoginRequiredMixin, generic.View):
     login_url = reverse_lazy('sign-in')
 
     def post(self, request):
-        pass
+        cart_id = request.POST.get("cart_id")
+        action = request.POST.get("action")  # inc / dec
+
+        cart_item = get_object_or_404(
+            Cart,
+            id=cart_id,
+            user=request.user,
+            paid=False
+        )
+
+        # Stock resolve
+        if cart_item.variant:
+            max_stock = cart_item.variant.available_stock
+        else:
+            max_stock = cart_item.product.available_stock
+
+        if action == "inc":
+            if cart_item.quantity + 1 > max_stock:
+                return JsonResponse({
+                    "status": "error",
+                    "message": f"Stock limit exceeded ({max_stock})"
+                })
+            cart_item.quantity += 1
+
+        elif action == "dec":
+            if cart_item.quantity > 1:
+                cart_item.quantity -= 1
+
+        cart_item.save()
+
+        item_total = cart_item.quantity * cart_item.stored_unit_price
+
+        cart_items = Cart.objects.filter(user=request.user, paid=False)
+        cart_total = sum(
+            item.quantity * item.stored_unit_price for item in cart_items
+        )
+
+        return JsonResponse({
+            "status": "success",
+            "quantity": cart_item.quantity,
+            "item_total": item_total,
+            "cart_total": cart_total
+        })
+
 
 
 # ================================
@@ -165,4 +221,25 @@ class CartRemoveView(LoginRequiredMixin, generic.View):
     login_url = reverse_lazy('sign-in')
 
     def post(self, request):
-        pass
+        cart_id = request.POST.get("cart_id")
+
+        cart_item = get_object_or_404(
+            Cart,
+            id=cart_id,
+            user=request.user,
+            paid=False
+        )
+
+        cart_item.delete()
+
+        cart_items = Cart.objects.filter(user=request.user, paid=False)
+
+        total_price = sum(
+            item.quantity * item.stored_unit_price for item in cart_items
+        )
+
+        return JsonResponse({
+            "status": "success",
+            "cart_count": cart_items.count(),
+            "total_price": total_price
+        })
