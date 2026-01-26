@@ -180,7 +180,8 @@ class GetVariantBySizeView(generic.View):
             'size': variant.size.code if variant and variant.size else '',
             'color': variant.color.title if variant and variant.color else '',
             'sku': variant.sku if variant and variant.sku else '',
-            'title': variant.title if variant and variant.title else '',
+            'tag': variant.tag if variant.tag else '',
+            'title': variant.title if variant.title else ''
         })
 
 
@@ -215,7 +216,8 @@ class GetVariantByColorView(generic.View):
             'size': variant.size.code if variant.size else '',
             'color': variant.color.title if variant.color else '',
             'sku': variant.sku if variant.sku else '',
-            'title': variant.title if variant.title else '',
+            'tag': variant.tag if variant.tag else '',
+            'title': variant.title if variant.title else ''
         })
 
 

@@ -63,7 +63,7 @@ class ProductVariantInline(admin.TabularInline):
     model = ProductVariant
     extra = 1
     readonly_fields = ('image_tag',)
-    fields = ('id', 'title', 'color', 'size', 'sku', 'variant_price', 'available_stock', 'status', 'image_id', 'image_tag')
+    fields = ('id', 'title', 'color', 'size', 'sku', 'tag', 'variant_price', 'available_stock', 'status', 'image_id', 'image_tag')
 
 
 # =========================================================
@@ -105,9 +105,9 @@ class ProductAdmin(ImagePreviewMixin, admin.ModelAdmin):
 # =========================================================
 @admin.register(ProductVariant)
 class ProductVariantAdmin(ImagePreviewMixin, admin.ModelAdmin):
-    list_display = ('id', 'title', 'product', 'color', 'size', 'image_id', 'sku', 'final_price', 'available_stock', 'status', 'image_tag')
+    list_display = ('id', 'title', 'product', 'color', 'size', 'image_id', 'sku', 'tag', 'final_price', 'available_stock', 'status', 'image_tag')
     list_filter = ('status', 'color', 'size', 'product', 'sku')
-    search_fields = ('product__title', 'color__title', 'size__title', 'sku')
+    search_fields = ('product__title', 'color__title', 'size__title', 'sku', 'tag')
     readonly_fields = ('image_tag',)
     list_editable = ('status', 'available_stock', 'image_id', 'color', 'size', 'sku')
 
