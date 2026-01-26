@@ -101,9 +101,7 @@ class AddToCartView(LoginRequiredMixin, generic.View):
                 final_quantity = quantity
                 message = "Product added to cart successfully."
 
-            # -------------------------
             # Cart summary
-            # -------------------------
             cart_items = Cart.objects.filter(
                 user=request.user,
                 paid=False
