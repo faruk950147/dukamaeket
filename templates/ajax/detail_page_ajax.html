@@ -28,7 +28,6 @@
                     $("#variant-image").attr("src", res.variant_image);
                     $("#display-variant-stock").text('Availability (Variant Stock): ' + (res.available_stock || 0));
                     $("#sku").text(res.sku)
-                    $("#tag").text(res.tag)
                     // bind color click events again
                     bindColorEvents();
                 }
@@ -55,7 +54,6 @@
                         $("#display-size").text(res.size || '');
                         $("#variant-image").attr("src", res.variant_image);
                         $("#sku").text(res.sku)
-                        $("#tag").text(res.tag)
                         $("#display-variant-stock").text('Availability (Variant Stock): ' + (res.available_stock || 0));
                     }
                 });

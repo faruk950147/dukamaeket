@@ -194,3 +194,25 @@ class ProductDetailView(generic.View):
                 })
         return render(request, 'store/product-detail.html', context)
 
+=============================================================
+featured_products = Product.objects.filter(
+    status='active',
+    is_featured=True,
+    available_stock__gt=0
+).select_related('category', 'brand').prefetch_related('reviews', 'variants') \
+ .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))[:5]
+
+
+
+{% for product in featured_products %}
+    <h3>{{ product.title }}</h3>
+    <p>Average Rating: {{ product.avg_rate }}</p>
+    <p>Variants:</p>
+    <ul>
+        {% for variant in product.variants.all %}
+            <li>
+                {{ variant.size.title if variant.size }} - {{ variant.color.title if variant.color }} - Price: {{ variant.final_price }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endfor %}

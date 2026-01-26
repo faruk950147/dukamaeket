@@ -22,6 +22,7 @@ import logging
 
 logger = logging.getLogger('project')
 
+
 # =========================================================
 # HOME PAGE VIEW
 # =========================================================
@@ -56,19 +57,6 @@ class HomeView(generic.View):
         ).select_related('category', 'brand').prefetch_related('reviews', 'variants') \
          .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))[:5]
 
-        logger.info(
-            "Home page visited",
-            extra={
-                "user": request.user.username if request.user.is_authenticated else "Anonymous",
-                "sliders": sliders.count(),
-                "feature_sliders": feature_sliders.count(),
-                "add_sliders": add_sliders.count(),
-                "promo_sliders": promo_sliders.count(),
-                "top_deals": len(top_deals),
-                "featured_products": featured_products.count(),
-            }
-        )
-
         context = {
             'sliders': sliders,
             'feature_sliders': feature_sliders,
@@ -98,47 +86,64 @@ class ProductDetailView(generic.View):
             available_stock__gt=0
         )
 
-        related_products = Product.objects.select_related('category', 'brand').prefetch_related('images', 'reviews', 'variants').filter(
-            category=product.category,
-            status='active',
-            available_stock__gt=0
-        ).exclude(id=product.id)[:4]
+        # Related products
+        related_products = Product.objects.select_related('category', 'brand')\
+            .prefetch_related('images', 'reviews', 'variants')\
+            .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))\
+            .filter(category=product.category, status='active', available_stock__gt=0)\
+            .exclude(id=product.id)[:4]
 
-        context = {'product': product, 'related_products': related_products}
+        context = {
+            'product': product,
+            'related_products': related_products,
+        }
 
-        if product.variant != "None":
-            variants = ProductVariant.objects.filter(
-                product_id=id,
-                status='active',
-                available_stock__gt=0
-            ).select_related('size', 'color').order_by('id')
+        # VARIANTS
+        if product.variant != 'none':
+            variants = list(
+                ProductVariant.objects.filter(
+                    product_id=product.id,
+                    status='active',
+                    available_stock__gt=0
+                ).select_related('size', 'color').order_by('id')
+            )
 
-            if variants.exists():
+            if variants:
                 default_variant = variants[0]
-                sizes, used = [], set()
+
+                # Unique sizes
+                seen_sizes = set()
+                sizes = []
                 for v in variants:
-                    if v.size and v.size.id not in used:
+                    if v.size and v.size.id not in seen_sizes:
                         sizes.append(v.size)
-                        used.add(v.size.id)
-                colors = [v for v in variants if v.size and v.size.id == default_variant.size.id]
+                        seen_sizes.add(v.size.id)
+
+                # Size -> colors mapping
+                size_color_map = {}
+                for v in variants:
+                    if v.size:
+                        size_color_map.setdefault(v.size.id, []).append(v)
+
+                # Colors for default size
+                colors = size_color_map.get(default_variant.size.id, []) if default_variant.size else []
 
                 context.update({
                     'sizes': sizes,
                     'colors': colors,
                     'variant': default_variant,
+                    'size_color_map': size_color_map,
                 })
             else:
-                context.update({'sizes': [], 'colors': [], 'variant': None})
+                context.update({
+                    'sizes': [],
+                    'colors': [],
+                    'variant': None,
+                    'size_color_map': {},
+                })
+        else:
+            context.update({'sizes': [], 'colors': [], 'variant': None, 'size_color_map': {}})
 
-        logger.info(
-            "Product detail viewed",
-            extra={
-                "user": request.user.username if request.user.is_authenticated else "Anonymous",
-                "product_id": product.id,
-                "product_title": product.title,
-                "variant_type": product.variant,
-            }
-        )
         return render(request, 'store/product-detail.html', context)
 
 
@@ -158,29 +163,20 @@ class GetVariantBySizeView(generic.View):
             available_stock__gt=0
         ).select_related('size', 'color')
 
-        variant = variants.first()  # first available
+        variant = variants.first() if variants.exists() else None
 
         html = render_to_string('store/color_options.html', {'colors': variants, 'variant': variant}, request=request)
-
-        logger.info(
-            "GetVariantBySize AJAX",
-            extra={
-                "product_id": product_id,
-                "size_id": size_id,
-                "variant_id": variant.id if variant else None
-            }
-        )
 
         return JsonResponse({
             'rendered_colors': html,
             'variant_id': variant.id if variant else None,
             'variant_price': str(variant.variant_price) if variant else '0',
-            'variant_image': variant.image_url if variant and variant.image_url else '',
+            'variant_image': variant.image_url if variant else '',
             'available_stock': variant.available_stock if variant else 0,
             'size': variant.size.code if variant and variant.size else '',
             'color': variant.color.title if variant and variant.color else '',
-            'sku': variant.sku if variant and variant.sku else '',
-            'title': variant.title if variant.title else ''
+            'sku': variant.sku if variant else '',
+            'title': variant.title if variant and variant.title else ''
         })
 
 
@@ -197,14 +193,6 @@ class GetVariantByColorView(generic.View):
             id=variant_id,
             status='active',
             available_stock__gt=0
-        )
-
-        logger.info(
-            "GetVariantByColor AJAX",
-            extra={
-                "variant_id": variant.id,
-                "product_id": variant.product.id
-            }
         )
 
         return JsonResponse({
@@ -232,7 +220,7 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
         subject = request.POST.get('subject')
         comment = request.POST.get('comment')
 
-        if not rating or not rating.isdigit() or not subject or not comment:
+        if not rating or not rating.replace('.', '', 1).isdigit() or not subject or not comment:
             return JsonResponse({'status': 'error', 'message': 'All fields required and rating must be a number'}, status=400)
 
         rating = float(rating)
@@ -269,18 +257,6 @@ class ProductReviewView(LoginRequiredMixin, generic.View):
         </div>
         """
 
-        logger.info(
-            "Product review submitted",
-            extra={
-                "user_id": user.id,
-                "username": user.username,
-                "product_id": product.id,
-                "product_title": product.title,
-                "rating": rating,
-                "subject": subject
-            }
-        )
-
         return JsonResponse({'status': 'success', 'message': 'Review submitted successfully', 'review_count': review_count, 'review_html': review_html})
 
 
@@ -295,7 +271,7 @@ class ShopView(generic.View):
 
         products = Product.objects.filter(status='active', available_stock__gt=0) \
             .select_related('category','brand') \
-            .prefetch_related('reviews') \
+            .prefetch_related('reviews', 'variants') \
             .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
 
         banners = Slider.objects.filter(slider_type='add', status='active')[:1]
@@ -313,24 +289,21 @@ class ShopView(generic.View):
         paginator = Paginator(products, per_page)
         page_obj = paginator.get_page(page_number)
 
-        logger.info(
-            "ShopView accessed",
-            extra={
-                "user": request.user.username if request.user.is_authenticated else "Anonymous",
-                "page": page_obj.number,
-                "total_pages": paginator.num_pages,
-                "per_page": per_page,
-                "sort": sort_by,
-                "total_products": paginator.count,
-                "banners_count": banners.count()
-            }
-        )
-
-        context = {'products': page_obj,'banners': banners,'page_obj': page_obj,'per_page_options': per_page_options,'sort_options': sort_options,'selected_per_page': per_page,'selected_sort': sort_by}
+        context = {
+            'products': page_obj,
+            'banners': banners,
+            'page_obj': page_obj,
+            'per_page_options': per_page_options,
+            'sort_options': sort_options,
+            'selected_per_page': per_page,
+            'selected_sort': sort_by
+        }
 
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            logger.info("ShopView AJAX request detected")
-            return JsonResponse({'html': render_to_string('store/grid.html',context,request=request),'pagination_html': render_to_string('store/pagination.html',context,request=request)})
+            return JsonResponse({
+                'html': render_to_string('store/grid.html',context,request=request),
+                'pagination_html': render_to_string('store/pagination.html',context,request=request)
+            })
 
         return render(request,'store/shop.html',context)
 
@@ -343,7 +316,7 @@ class GetFilterProductsView(generic.View):
     def post(self, request):
         products = Product.objects.filter(status='active', available_stock__gt=0) \
             .select_related('category','brand') \
-            .prefetch_related('reviews') \
+            .prefetch_related('reviews', 'variants') \
             .annotate(avg_rate=Avg('reviews__rating', filter=Q(reviews__status='active')))
 
         category_ids = request.POST.getlist('category[]')
@@ -356,15 +329,5 @@ class GetFilterProductsView(generic.View):
         if max_price: products = products.filter(sale_price__lte=max_price)
 
         html = render_to_string('store/grid.html', {'products': products}, request=request)
-
-        logger.info(
-            "Filtered products AJAX",
-            extra={
-                "category_ids": category_ids,
-                "brand_ids": brand_ids,
-                "max_price": max_price,
-                "result_count": products.count()
-            }
-        )
 
         return JsonResponse({'html': html})
