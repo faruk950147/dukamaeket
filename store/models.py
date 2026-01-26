@@ -304,7 +304,7 @@ class ProductVariant(ImageTagMixin):
         # Return a readable string showing product, size, and color
         size = self.size.title if self.size else "No Size"
         color = self.color.title if self.color else "No Color"
-        return f"{self.product.title} - {size} - {color}"
+        return f"({self.product.title}) - ({size} - {color})"
     
 # =========================================================
 # 07 IMAGE GALLERY MODEL
