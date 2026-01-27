@@ -29,7 +29,13 @@
                                             <td>
                                                 <a href="{% url 'product-detail' item.product.slug item.product.id %}">
                                                     <img style="width:70px;height:80px;"
-                                                        src="{% if item.variant and item.variant.image_url %}{{ item.variant.image_url }}{% elif item.product.images.all.0 %}{{ item.product.images.all.0.image.url }}{% else %}/media/defaults/default.jpg{% endif %}"
+                                                        src="{% if item.variant and item.variant.image_url %}
+                                                        {{ item.variant.image_url }}
+                                                         {% elif item.product.images.all.0 %}
+                                                         {{ item.product.images.all.0.image.url }}
+                                                          {% else %}
+                                                          /media/defaults/default.jpg
+                                                          {% endif %}"
                                                         alt="{{ item.product.title }}">
                                                 </a>
                                             </td>

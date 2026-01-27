@@ -134,6 +134,7 @@ class AddToCartView(LoginRequiredMixin, generic.View):
                 "image_url": image_url
             })
 
+@method_decorator(never_cache, name='dispatch')
 class CartDetailView(LoginRequiredMixin, generic.View):
     login_url = reverse_lazy('sign-in')
     def get(self, request):
@@ -144,8 +145,10 @@ class CartDetailView(LoginRequiredMixin, generic.View):
             "total_price": total_price
         })
 
+@method_decorator(never_cache, name='dispatch')
 class QuantityIncDec(LoginRequiredMixin, generic.View):
     login_url = reverse_lazy('sign-in')
+
     def post(self, request):
         cart_id = request.POST.get("cart_id")
         action = request.POST.get("action")
@@ -154,32 +157,54 @@ class QuantityIncDec(LoginRequiredMixin, generic.View):
 
         max_stock = cart_item.variant.available_stock if cart_item.variant else cart_item.product.available_stock
 
-        if action == "inc" and cart_item.quantity < max_stock:
-            cart_item.quantity += 1
-        elif action == "dec" and cart_item.quantity > 1:
-            cart_item.quantity -= 1
+        if action == "inc":
+            if cart_item.quantity < max_stock:
+                cart_item.quantity += 1
+                message = "increased"
+            else:
+                message = "max stock reached"
+
+        elif action == "dec":
+            if cart_item.quantity > 1:
+                cart_item.quantity -= 1
+                message = "decreased"
+            else:
+                message = "minimum quantity is 1"
+        else:
+            message = "invalid action"
+
         cart_item.save()
 
         cart_items = Cart.objects.filter(user=request.user, paid=False)
-        cart_total = sum([item.subtotal for item in cart_items])
+        cart_total = sum(item.subtotal for item in cart_items)
 
         return JsonResponse({
             "status": "success",
+            "message": message,
             "quantity": cart_item.quantity,
             "item_total": float(cart_item.subtotal),
             "cart_total": float(cart_total)
         })
 
+@method_decorator(never_cache, name='dispatch')
 class CartRemoveView(LoginRequiredMixin, generic.View):
     login_url = reverse_lazy('sign-in')
+
     def post(self, request):
         cart_id = request.POST.get("cart_id")
+
         cart_item = get_object_or_404(Cart, id=cart_id, user=request.user, paid=False)
         cart_item.delete()
+
         cart_items = Cart.objects.filter(user=request.user, paid=False)
-        total_price = sum([item.subtotal for item in cart_items])
+
+        total_price = sum(item.subtotal for item in cart_items)
+        cart_count = cart_items.count()
+
         return JsonResponse({
             "status": "success",
-            "cart_count": cart_items.count(),
-            "total_price": float(total_price)
+            "message": "Item removed from cart",
+            "cart_count": cart_count,
+            "total_price": float(total_price),
+            "cart_empty": cart_count == 0
         })

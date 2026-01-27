@@ -18,39 +18,75 @@
     const csrftoken = getCookie('csrftoken');
 
     // Quantity change
-    $('.qty-btn').click(function(){
+    $('.qty-btn').click(function () {
+
         let parent = $(this).closest('.cart-item');
         let cartId = parent.data('id');
         let action = $(this).data('action');
 
-        $.post("{% url 'qty-inc-dec' %}", {
-            cart_id: cartId,
-            action: action,
-            csrfmiddlewaretoken: csrftoken
-        }, function(response){
-            if(response.status === 'success'){
-                parent.find('.quantity').text(response.quantity);
-                parent.find('.subtotal').text(parseFloat(response.item_total).toFixed(2));
-                $('#cart-total').text(parseFloat(response.cart_total).toFixed(2));
-                $('#grand-total').text(parseFloat(response.cart_total).toFixed(2));
+        $.ajax({
+            url: "{% url 'qty-inc-dec' %}",
+            type: "POST",
+            data: {
+                cart_id: cartId,
+                action: action,
+                csrfmiddlewaretoken: csrftoken
+            },
+            success: function (response) {
+
+                if (response.status === 'success') {
+                    parent.find('.quantity').text(response.quantity);
+                    parent.find('.subtotal').text(parseFloat(response.item_total).toFixed(2));
+                    $('#cart-total').text(parseFloat(response.cart_total).toFixed(2));
+                    $('#grand-total').text(parseFloat(response.cart_total).toFixed(2));
+                    alertify.success(response.message)
+                }
+
+            },
+            error: function (xhr, status, error) {
+                console.log("Error:", error);
             }
         });
+
     });
+
 
     // Remove item
-    $('.remove-item').click(function(){
-        let parent = $(this).closest('.cart-item');
+    $('.remove-item').click(function () {
+
+        let btn = $(this);
+        let parent = btn.closest('.cart-item');
         let cartId = parent.data('id');
 
-        $.post("{% url 'cart-remove-item' %}", {
-            cart_id: cartId,
-            csrfmiddlewaretoken: csrftoken
-        }, function(response){
-            if(response.status==='success'){
-                parent.remove();
-                $('#cart-total').text(parseFloat(response.total_price).toFixed(2));
-                $('#grand-total').text(parseFloat(response.total_price).toFixed(2));
+        $.ajax({
+            url: "{% url 'cart-remove-item' %}",
+            type: "POST",
+            data: {
+                cart_id: cartId,
+                csrfmiddlewaretoken: csrftoken
+            },
+            success: function (response) {
+
+                if (response.status === 'success') {
+
+                    // Remove item row
+                    parent.remove();
+
+                    // Update totals
+                    $('#cart-total').text(parseFloat(response.total_price).toFixed(2));
+                    $('#grand-total').text(parseFloat(response.total_price).toFixed(2));
+                    alertify.success(response.message)
+                    // If cart empty show message
+                    if ($('.cart-item').length === 0) {
+                        $('.cart-body').html('<h4>Your cart is empty</h4>');
+                    }
+                }
+            },
+            error: function () {
+                alert("Failed to remove item!");
             }
         });
+
     });
+
 </script>
