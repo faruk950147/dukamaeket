@@ -27,42 +27,24 @@ class AddToCartView(LoginRequiredMixin, generic.View):
 
         if not product_slug or not product_id:
             return JsonResponse({"status": "error", "message": "Invalid product data."})
-
         if quantity < 1:
             return JsonResponse({"status": "error", "message": "Quantity must be at least 1."})
 
         with transaction.atomic():
-
             # Product
-            product = get_object_or_404(
-                Product,
-                slug=product_slug,
-                id=product_id,
-                status='active'
-            )
+            product = get_object_or_404(Product, slug=product_slug, id=product_id, status='active')
             product.refresh_from_db(fields=["available_stock"])
 
             # Variant resolve
             variant = None
-
             if product.variant != 'none':
                 if not variant_id:
-                    return JsonResponse({
-                        "status": "error",
-                        "message": "Please select a product variant."
-                    })
-
-                variant = get_object_or_404(
-                    ProductVariant,
-                    id=variant_id,
-                    product=product,
-                    status='active'
-                )
+                    return JsonResponse({"status": "error", "message": "Please select a product variant."})
+                variant = get_object_or_404(ProductVariant, id=variant_id, product=product, status='active')
                 variant.refresh_from_db(fields=["available_stock"])
 
             # Stock check
             max_stock = variant.available_stock if variant else product.available_stock
-
             if max_stock <= 0:
                 return JsonResponse({
                     "status": "error",
@@ -70,56 +52,36 @@ class AddToCartView(LoginRequiredMixin, generic.View):
                 })
 
             # Cart merge
-            cart_qs = Cart.objects.filter(
-                user=request.user,
-                product=product,
-                variant=variant,
-                paid=False
-            )
-            cart_list = list(cart_qs)
-            existing_cart_item = cart_list[0] if cart_list else None
+            cart_item = Cart.objects.filter(user=request.user, product=product, variant=variant, paid=False).first()
 
-            if existing_cart_item:
-                new_quantity = existing_cart_item.quantity + quantity
+            if cart_item:
+                new_quantity = cart_item.quantity + quantity
                 if new_quantity > max_stock:
                     return JsonResponse({
                         "status": "error",
                         "message": f"Cannot exceed available stock ({max_stock})."
                     })
-                existing_cart_item.quantity = new_quantity
-                existing_cart_item.save()
+                cart_item.quantity = new_quantity
+                cart_item.save()
                 final_quantity = new_quantity
                 message = "Product quantity updated in cart successfully."
             else:
-                Cart.objects.create(
-                    user=request.user,
-                    product=product,
-                    variant=variant,
-                    quantity=quantity,
-                    paid=False
-                )
+                Cart.objects.create(user=request.user, product=product, variant=variant, quantity=quantity, paid=False)
                 final_quantity = quantity
                 message = "Product added to cart successfully."
 
-            # Cart summary
-            cart_items = Cart.objects.filter(
-                user=request.user,
-                paid=False
-            ).select_related("product", "variant", "variant__color", "variant__size")
-
-            cart_count = cart_items.count()
-            total_price = sum(
-                item.quantity * item.stored_unit_price for item in cart_items
+            # Cart summary using aggregation
+            cart_summary = Cart.objects.filter(user=request.user, paid=False).aggregate(
+                total_price=Sum(F('quantity') * F('stored_unit_price')),
+                cart_count=Sum(F('quantity'))
             )
+            cart_count = cart_summary['cart_count'] or 0
+            total_price = cart_summary['total_price'] or 0
 
             # Image resolve
-            image_url = "/media/defaults/default.jpg"
-
-            if variant and variant.image_url:
-                image_url = variant.image_url
-            elif product.images.exists():
-                image_url = product.images.first().image.url
-
+            image_url = variant.image_url if variant and variant.image_url else (
+                product.images.first().image.url if product.images.exists() else "/media/defaults/default.jpg"
+            )
 
             return JsonResponse({
                 "status": "success",
@@ -160,21 +122,23 @@ class QuantityIncDec(LoginRequiredMixin, generic.View):
         if action == "inc":
             if cart_item.quantity < max_stock:
                 cart_item.quantity += 1
-                message = "increased"
+                message = "Quantity increased"
             else:
-                message = "max stock reached"
+                return JsonResponse({'status': 'error', 'message': 'Maximum stock reached'})
 
         elif action == "dec":
             if cart_item.quantity > 1:
                 cart_item.quantity -= 1
-                message = "decreased"
+                message = "Quantity decreased"
             else:
-                message = "minimum quantity is 1"
+                return JsonResponse({'status': 'error', 'message': 'Minimum quantity is 1'})
         else:
-            message = "invalid action"
+            return JsonResponse({'status': 'error', 'message': 'Invalid action'})
 
+        # Save after changing quantity
         cart_item.save()
 
+        # Recalculate cart total
         cart_items = Cart.objects.filter(user=request.user, paid=False)
         cart_total = sum(item.subtotal for item in cart_items)
 
@@ -185,19 +149,23 @@ class QuantityIncDec(LoginRequiredMixin, generic.View):
             "item_total": float(cart_item.subtotal),
             "cart_total": float(cart_total)
         })
-
+        
+        
 @method_decorator(never_cache, name='dispatch')
 class CartRemoveView(LoginRequiredMixin, generic.View):
     login_url = reverse_lazy('sign-in')
 
     def post(self, request):
         cart_id = request.POST.get("cart_id")
+        if not cart_id:
+            return JsonResponse({"status": "error", "message": "No cart ID provided"})
 
+        # Get the cart item
         cart_item = get_object_or_404(Cart, id=cart_id, user=request.user, paid=False)
         cart_item.delete()
 
+        # Recalculate cart info
         cart_items = Cart.objects.filter(user=request.user, paid=False)
-
         total_price = sum(item.subtotal for item in cart_items)
         cart_count = cart_items.count()
 

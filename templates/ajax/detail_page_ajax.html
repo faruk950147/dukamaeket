@@ -114,36 +114,6 @@
             });
         });
 
-        // Add to Cart form submission via AJAX
-        $("#cart-form").on("submit", function(e){
-            e.preventDefault();
-            let formData = new FormData(this);
-
-            $.ajax({
-                url: "{% url 'add-to-cart' %}",
-                type: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                headers: {
-                    "X-CSRFToken": formData.get("csrfmiddlewaretoken")
-                },
-                success: function(res) {
-                    if(res.status === "success"){
-                        alertify.success(res.message);
-                        $("#quantity").val(1); 
-                    } else {
-                        alertify.error(res.message);
-                        console.log(res);
-                    }
-                },
-                error: function(xhr, status, error){
-                    console.error("AJAX Error:", error);
-                    alert("Something went wrong. Please try again.");
-                }
-            });
-        });
-
     });
     
 </script> 

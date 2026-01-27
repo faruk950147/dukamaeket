@@ -1,13 +1,13 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     // CSRF Token
-    function getCookie(name){
+    function getCookie(name) {
         let cookieValue = null;
-        if(document.cookie && document.cookie !== ''){
+        if (document.cookie && document.cookie !== '') {
             const cookies = document.cookie.split(';');
-            for(let cookie of cookies){
+            for (let cookie of cookies) {
                 cookie = cookie.trim();
-                if(cookie.startsWith(name + '=')){
+                if (cookie.startsWith(name + '=')) {
                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                     break;
                 }
@@ -17,9 +17,42 @@
     }
     const csrftoken = getCookie('csrftoken');
 
-    // Quantity change
-    $('.qty-btn').click(function () {
+    // Add to Cart form submission via AJAX
+    $("#cart-form").on("submit", function(e) {
+        e.preventDefault();
+        let formData = new FormData(this);
 
+        $.ajax({
+            url: "{% url 'add-to-cart' %}",
+            method: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                "X-CSRFToken": csrftoken
+            },
+            success: function(res) {
+                if (res.status === "success") {
+                    alertify.success(res.message);
+                    $("#cart-form")[0].reset();  
+                    // Optionally update cart count and total
+                    $("#cart-count").text(res.cart_count);
+                    $("#cart-total").text(res.total_price);
+                } else {
+                    alertify.error(res.message);
+                    console.log(res);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error:", error);
+                alert("Something went wrong. Please try again.");
+            }
+        });
+    });
+
+
+    // Quantity change (using event delegation)
+    $(document).on('click', '.qty-btn', function () {
         let parent = $(this).closest('.cart-item');
         let cartId = parent.data('id');
         let action = $(this).data('action');
@@ -33,27 +66,25 @@
                 csrfmiddlewaretoken: csrftoken
             },
             success: function (response) {
-
                 if (response.status === 'success') {
                     parent.find('.quantity').text(response.quantity);
                     parent.find('.subtotal').text(parseFloat(response.item_total).toFixed(2));
                     $('#cart-total').text(parseFloat(response.cart_total).toFixed(2));
                     $('#grand-total').text(parseFloat(response.cart_total).toFixed(2));
-                    alertify.success(response.message)
+                    alertify.success(response.message);
+                } else {
+                    alertify.error(response.message);
+                    console.log(response);
                 }
-
             },
             error: function (xhr, status, error) {
                 console.log("Error:", error);
             }
         });
-
     });
 
-
     // Remove item
-    $('.remove-item').click(function () {
-
+    $(document).on('click', '.remove-item', function () {
         let btn = $(this);
         let parent = btn.closest('.cart-item');
         let cartId = parent.data('id');
@@ -66,27 +97,27 @@
                 csrfmiddlewaretoken: csrftoken
             },
             success: function (response) {
-
                 if (response.status === 'success') {
-
                     // Remove item row
                     parent.remove();
 
                     // Update totals
                     $('#cart-total').text(parseFloat(response.total_price).toFixed(2));
                     $('#grand-total').text(parseFloat(response.total_price).toFixed(2));
-                    alertify.success(response.message)
+                    alertify.success(response.message);
+
                     // If cart empty show message
                     if ($('.cart-item').length === 0) {
                         $('.cart-body').html('<h4>Your cart is empty</h4>');
                     }
+                } else {
+                    alertify.error(response.message);
+                    console.log(response);
                 }
             },
             error: function () {
                 alert("Failed to remove item!");
             }
         });
-
     });
-
 </script>
