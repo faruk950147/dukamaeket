@@ -1,0 +1,56 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // CSRF Token
+    function getCookie(name){
+        let cookieValue = null;
+        if(document.cookie && document.cookie !== ''){
+            const cookies = document.cookie.split(';');
+            for(let cookie of cookies){
+                cookie = cookie.trim();
+                if(cookie.startsWith(name + '=')){
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    // Quantity change
+    $('.qty-btn').click(function(){
+        let parent = $(this).closest('.cart-item');
+        let cartId = parent.data('id');
+        let action = $(this).data('action');
+
+        $.post("{% url 'qty-inc-dec' %}", {
+            cart_id: cartId,
+            action: action,
+            csrfmiddlewaretoken: csrftoken
+        }, function(response){
+            if(response.status === 'success'){
+                parent.find('.quantity').text(response.quantity);
+                parent.find('.subtotal').text(parseFloat(response.item_total).toFixed(2));
+                $('#cart-total').text(parseFloat(response.cart_total).toFixed(2));
+                $('#grand-total').text(parseFloat(response.cart_total).toFixed(2));
+            }
+        });
+    });
+
+    // Remove item
+    $('.remove-item').click(function(){
+        let parent = $(this).closest('.cart-item');
+        let cartId = parent.data('id');
+
+        $.post("{% url 'cart-remove-item' %}", {
+            cart_id: cartId,
+            csrfmiddlewaretoken: csrftoken
+        }, function(response){
+            if(response.status==='success'){
+                parent.remove();
+                $('#cart-total').text(parseFloat(response.total_price).toFixed(2));
+                $('#grand-total').text(parseFloat(response.total_price).toFixed(2));
+            }
+        });
+    });
+</script>

@@ -152,6 +152,7 @@ class AccountActivationView(generic.View):
 # Sign Up 
 @method_decorator(never_cache, name='dispatch')
 class SignUpView(LogoutRequiredMixin, generic.View):
+    logout = 'sign-in'
     def get(self, request):
         return render(request, 'account/sign-up.html', {'form': SignUpForm()})
 
@@ -176,6 +177,7 @@ class SignUpView(LogoutRequiredMixin, generic.View):
 # Sign In 
 @method_decorator(never_cache, name='dispatch')
 class SignInView(LogoutRequiredMixin, generic.View):
+    logout = 'sign-in'
     def get(self, request):
         form = SignInForm()
         return render(request, 'account/sign-in.html', {'form': form})
@@ -209,6 +211,7 @@ class SignInView(LogoutRequiredMixin, generic.View):
 # Sign Out 
 @method_decorator(never_cache, name='dispatch')
 class SignOutView(LoginRequiredMixin, generic.View):
+    login_url = 'sign-in'
     def get(self, request):
         logger.info(f"User signed out: {request.user.username} ({request.user.id})")
         logout(request)
@@ -219,6 +222,8 @@ class SignOutView(LoginRequiredMixin, generic.View):
 # Change Password 
 @method_decorator(never_cache, name='dispatch')
 class ChangesPasswordView(LoginRequiredMixin, generic.View):
+    login_url = 'sign-in'
+
     def get(self, request):
         form = ChangePasswordForm(user=request.user)
         return render(request, 'account/changes-password.html', {'form': form})
@@ -243,6 +248,7 @@ class ChangesPasswordView(LoginRequiredMixin, generic.View):
 # Reset Password 
 @method_decorator(never_cache, name='dispatch')
 class ResetPasswordView(LogoutRequiredMixin, generic.View):
+    login_url = 'sign-in'
     def get(self, request):
         form = ResetPasswordForm()
         return render(request, 'account/reset-password.html', {'form': form})
@@ -264,6 +270,8 @@ class ResetPasswordView(LogoutRequiredMixin, generic.View):
 # Reset Password Confirm 
 @method_decorator(never_cache, name='dispatch')
 class ResetPasswordConfirmView(LogoutRequiredMixin, generic.View):
+    login_url = 'sign-in'
+
     def get(self, request, uidb64, token):
         uid = urlsafe_base64_decode(uidb64).decode()
         user = User.objects.get(id=uid)
@@ -295,6 +303,8 @@ class ResetPasswordConfirmView(LogoutRequiredMixin, generic.View):
 # User Info Edit
 @method_decorator(never_cache, name='dispatch')
 class UserInfoEditView(LoginRequiredMixin, generic.View):
+    login_url = 'sign-in'
+
     def get(self, request):
         form = UserForm(instance=request.user)
         return render(request, 'account/user-info-edit.html', {'form': form})
@@ -311,6 +321,8 @@ class UserInfoEditView(LoginRequiredMixin, generic.View):
 # Shipping Add
 @method_decorator(never_cache, name='dispatch')
 class ShippingAddressView(LoginRequiredMixin, generic.View):
+    login_url = 'sign-in'
+
     def get(self, request):
         form = ShippingForm()
         return render(request, 'account/shipping.html', {'form': form})
@@ -330,6 +342,7 @@ class ShippingAddressView(LoginRequiredMixin, generic.View):
 # Shipping List
 @method_decorator(never_cache, name='dispatch')
 class ShippingAddressListView(LoginRequiredMixin, generic.View):
+    login_url = 'sign-in'
     def get(self, request):
         addresses = Shipping.objects.filter(user=request.user)
         return render(request, 'account/address-list.html', {'addresses': addresses})
@@ -339,6 +352,8 @@ class ShippingAddressListView(LoginRequiredMixin, generic.View):
 # Shipping Delete
 @method_decorator(never_cache, name='dispatch')
 class ShippingAddressDeleteView(LoginRequiredMixin, generic.View):
+    login_url = 'sign-in'
+
     def post(self, request, id):
         shipping = get_object_or_404(Shipping, id=id, user=request.user)
         if shipping:
@@ -353,6 +368,8 @@ class ShippingAddressDeleteView(LoginRequiredMixin, generic.View):
 # Shipping Edit
 @method_decorator(never_cache, name='dispatch')
 class ShippingAddressEditView(LoginRequiredMixin, generic.View):
+    login_url = 'sign-in'
+
     def get(self, request, id):
         shipping = get_object_or_404(Shipping, id=id, user=request.user)
         form = ShippingForm(instance=shipping)
@@ -371,5 +388,7 @@ class ShippingAddressEditView(LoginRequiredMixin, generic.View):
 # Account View
 @method_decorator(never_cache, name='dispatch')
 class AccountView(LoginRequiredMixin, generic.View):
+    login_url = 'sign-in'
+
     def get(self, request):
         return render(request, 'account/account.html')

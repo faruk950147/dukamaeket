@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %} Cart Details {% endblock title %}
+
+{% block main_content %}
+<main>
+    <section class="cart-area pt-120 pb-120">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="table-content table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Images</th>
+                                    <th>Product</th>
+                                    <th>Variant</th>
+                                    <th>Unit Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if cart_items %}
+                                    {% for item in cart_items %}
+                                        <tr class="cart-item" data-id="{{ item.id }}">
+                                            <!-- Image -->
+                                            <td>
+                                                <a href="{% url 'product-detail' item.product.slug item.product.id %}">
+                                                    <img style="width:70px;height:80px;"
+                                                        src="{% if item.variant and item.variant.image_url %}{{ item.variant.image_url }}{% elif item.product.images.all.0 %}{{ item.product.images.all.0.image.url }}{% else %}/media/defaults/default.jpg{% endif %}"
+                                                        alt="{{ item.product.title }}">
+                                                </a>
+                                            </td>
+
+                                            <!-- Product Name -->
+                                            <td>
+                                                <a href="{% url 'product-detail' item.product.slug item.product.id %}">
+                                                    {{ item.product.title|title }}
+                                                </a>
+                                            </td>
+
+                                            <!-- Variant -->
+                                            <td>
+                                                {% if item.variant %}
+                                                    {{ item.variant.color.title|default:'' }} - {{ item.variant.size.code|default:'' }}
+                                                {% else %}
+                                                    —
+                                                {% endif %}
+                                            </td>
+
+                                            <!-- Unit Price -->
+                                            <td>${{ item.stored_unit_price }}</td>
+
+                                            <!-- Quantity -->
+                                            <td>
+                                                <button class="btn btn-sm qty-btn" data-action="dec">-</button>
+                                                <span class="quantity">{{ item.quantity }}</span>
+                                                <button class="btn btn-sm qty-btn" data-action="inc">+</button>
+                                            </td>
+
+                                            <!-- Subtotal -->
+                                            <td>$<span class="subtotal">{{ item.subtotal }}</span></td>
+
+                                            <!-- Remove -->
+                                            <td>
+                                                <button class="btn btn-sm remove-item">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="7" class="text-center">Your cart is empty.</td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="coupon-all">
+                                <div class="coupon">
+                                    <input id="coupon_code" class="input-text" name="coupon_code" value="" placeholder="Coupon code" type="text">
+                                    <button class="tp-btn-h1" name="apply_coupon" type="submit">Apply
+                                        coupon</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-end">
+                        <div class="col-md-5">
+                            <div class="cart-page-total">
+                                <h2>Cart totals</h2>
+                                <ul class="mb-20">
+                                    <li>Subtotal <span>$<span id="cart-total">{{ total_price }}</span></span></li>
+                                    <li>Total <span>$<span id="grand-total">{{ total_price }}</span></span></li>
+                                </ul>
+                                <a class="tp-btn-h1" href="">Proceed to checkout</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+{% include "ajax/cart.html" %}
+{% endblock main_content %}
