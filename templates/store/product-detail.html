@@ -83,9 +83,11 @@
                     <!-- Rating -->
                     <div class="pd-rating mb-10">
                         <ul class="rating">
-                            {% for i in "12345" %}
-                                <i class="fa {% if product.avg_rate >= i|add:0 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
-                            {% endfor %}
+                            <i class="fa {% if product.avg_rate >= 1 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                            <i class="fa {% if product.avg_rate >= 2 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                            <i class="fa {% if product.avg_rate >= 3 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                            <i class="fa {% if product.avg_rate >= 4 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
+                            <i class="fa {% if product.avg_rate >= 5 %}fa-star{% else %}fa-star-o{% endif %}" style="color: #FFD700;"></i>
                         </ul>
                         <span>({{ product.reviews.count }} review{{ product.reviews.count|pluralize }})</span>
                     </div>
@@ -93,7 +95,11 @@
                     <!-- Price -->
                     <div class="price mb-10">
                         <span>
+                            {% if variant.variant_price %}
+                            $ <span id="product-price">{{ variant.variant_price }}</span>
+                            {% else %}
                             $ <span id="product-price">{{ product.sale_price }}</span>
+                            {% endif %}
                             <del class="text-danger">
                                 {% if product.old_price %} $ {{ product.old_price }} {% endif %}
                             </del>
@@ -393,6 +399,20 @@
                                         {% endif %}
                                     </a>
                                 </div>
+                                {% if product.deadline %}
+                                <div class="countdown countdown-small mt-5">
+                                    <div class="countdown-inner b-radius"
+                                        data-countdown=""
+                                        data-date="{{ product.deadline|date:'c' }}">
+                                        <ul class="text-center" style="padding:0; list-style:none; display:flex; justify-content:center; gap:10px;">
+                                            <li><span data-days="">0</span>d</li>
+                                            <li><span data-hours="">0</span>h</li>
+                                            <li><span data-minutes="">0</span>m</li>
+                                            <li><span data-seconds="">0</span>s</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                {% endif %}
                                 <div class="product__offer">
                                     <span class="discount">-{{product.discount_percent}}%</span>
                                 </div>
