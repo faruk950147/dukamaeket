@@ -38,6 +38,7 @@
                     // Optionally update cart count and total
                     $("#cart-count").text(res.cart_count);
                     $("#cart-total").text(res.total_price);
+                    console.log(res);
                 } else {
                     alertify.error(res.message);
                     console.log(res);
@@ -67,6 +68,7 @@
             },
             success: function (response) {
                 if (response.status === 'success') {
+                    console.log(response);
                     parent.find('.quantity').text(response.quantity);
                     parent.find('.subtotal').text(parseFloat(response.item_total).toFixed(2));
                     $('#cart-total').text(parseFloat(response.cart_total).toFixed(2));
@@ -100,7 +102,7 @@
                 if (response.status === 'success') {
                     // Remove item row
                     parent.remove();
-
+                    console.log(response);
                     // Update totals
                     $('#cart-total').text(parseFloat(response.total_price).toFixed(2));
                     $('#grand-total').text(parseFloat(response.total_price).toFixed(2));

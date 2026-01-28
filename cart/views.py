@@ -9,6 +9,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from store.models import Product, ProductVariant
 from cart.models import Coupon, Cart, Wishlist
+from decimal import Decimal
 import logging
 
 logger = logging.getLogger('project')
@@ -25,25 +26,24 @@ class AddToCartView(LoginRequiredMixin, generic.View):
         variant_id = request.POST.get("variant_id")
         quantity = int(request.POST.get("quantity", "1"))
 
+        # Basic validation
         if not product_slug or not product_id:
             return JsonResponse({"status": "error", "message": "Invalid product data."})
         if quantity < 1:
             return JsonResponse({"status": "error", "message": "Quantity must be at least 1."})
 
         with transaction.atomic():
-            # Product
-            product = get_object_or_404(Product, slug=product_slug, id=product_id, status='active')
-            product.refresh_from_db(fields=["available_stock"])
+            # Fetch product with row lock to avoid overselling
+            product = get_object_or_404(Product.objects.select_for_update(), slug=product_slug, id=product_id, status='active')
 
             # Variant resolve
             variant = None
             if product.variant != 'none':
                 if not variant_id:
                     return JsonResponse({"status": "error", "message": "Please select a product variant."})
-                variant = get_object_or_404(ProductVariant, id=variant_id, product=product, status='active')
-                variant.refresh_from_db(fields=["available_stock"])
+                variant = get_object_or_404(ProductVariant.objects.select_for_update(), id=variant_id, product=product, status='active')
 
-            # Stock check
+            # Determine available stock
             max_stock = variant.available_stock if variant else product.available_stock
             if max_stock <= 0:
                 return JsonResponse({
@@ -51,7 +51,10 @@ class AddToCartView(LoginRequiredMixin, generic.View):
                     "message": "Selected variant is out of stock." if variant else "Product is out of stock."
                 })
 
-            # Cart merge
+            # Determine unit price (stored_unit_price)
+            unit_price = variant.variant_price if variant and variant.variant_price > 0 else product.sale_price
+
+            # Merge with existing cart if exists
             cart_item = Cart.objects.filter(user=request.user, product=product, variant=variant, paid=False).first()
 
             if cart_item:
@@ -62,39 +65,52 @@ class AddToCartView(LoginRequiredMixin, generic.View):
                         "message": f"Cannot exceed available stock ({max_stock})."
                     })
                 cart_item.quantity = new_quantity
+                cart_item.stored_unit_price = unit_price
                 cart_item.save()
                 final_quantity = new_quantity
                 message = "Product quantity updated in cart successfully."
             else:
-                Cart.objects.create(user=request.user, product=product, variant=variant, quantity=quantity, paid=False)
+                Cart.objects.create(
+                    user=request.user,
+                    product=product,
+                    variant=variant,
+                    quantity=quantity,
+                    stored_unit_price=unit_price,
+                    paid=False
+                )
                 final_quantity = quantity
                 message = "Product added to cart successfully."
 
-            # Cart summary using aggregation
+            # Cart summary
             cart_summary = Cart.objects.filter(user=request.user, paid=False).aggregate(
                 total_price=Sum(F('quantity') * F('stored_unit_price')),
                 cart_count=Sum(F('quantity'))
             )
             cart_count = cart_summary['cart_count'] or 0
-            total_price = cart_summary['total_price'] or 0
+            total_price = Decimal(cart_summary['total_price'] or 0).quantize(Decimal('0.01'))
 
             # Image resolve
-            image_url = variant.image_url if variant and variant.image_url else (
-                product.images.first().image.url if product.images.exists() else "/media/defaults/default.jpg"
-            )
+            image_url = None
+            if variant and variant.image_url:
+                image_url = variant.image_url
+            elif product.images.exists():
+                image_url = product.images.first().image.url
+            else:
+                image_url = "/media/defaults/default.jpg"
 
+            # JSON response
             return JsonResponse({
                 "status": "success",
                 "message": message,
-                "product_title": product.title,
-                "sale_price": str(product.sale_price),
-                "old_price": str(product.old_price),
+                "product_title": variant.title if variant else product.title,
+                "unit_price": str(unit_price),
                 "quantity": final_quantity,
                 "available_stock": max_stock,
                 "cart_count": cart_count,
                 "total_price": str(total_price),
                 "image_url": image_url
             })
+
 
 @method_decorator(never_cache, name='dispatch')
 class CartDetailView(LoginRequiredMixin, generic.View):
@@ -106,6 +122,7 @@ class CartDetailView(LoginRequiredMixin, generic.View):
             "cart_items": cart_items,
             "total_price": total_price
         })
+
 
 @method_decorator(never_cache, name='dispatch')
 class QuantityIncDec(LoginRequiredMixin, generic.View):
