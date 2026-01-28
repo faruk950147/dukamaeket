@@ -1458,3 +1458,17 @@ INFO 2026-01-28 08:19:15,291 project views Sign-in validation success: account e
 INFO 2026-01-28 08:20:56,306 project views Sign-in validation success: account exists for admin
 INFO 2026-01-28 08:20:56,307 project views Sign-in validation success: account exists for admin
 INFO 2026-01-28 08:21:11,815 project views User signed in: admin (1)
+INFO 2026-01-28 08:26:47,260 project views Sign-in validation failed: no account found for a
+INFO 2026-01-28 08:26:47,485 project views Sign-in validation failed: no account found for a
+INFO 2026-01-28 08:26:47,902 project views Sign-in validation failed: no account found for ad
+INFO 2026-01-28 08:26:48,031 project views Sign-in validation failed: no account found for ad
+INFO 2026-01-28 08:26:49,309 project views Sign-in validation failed: no account found for adm
+INFO 2026-01-28 08:26:49,434 project views Sign-in validation failed: no account found for adm
+INFO 2026-01-28 08:26:50,123 project views Sign-in validation failed: no account found for admi
+INFO 2026-01-28 08:26:50,240 project views Sign-in validation failed: no account found for admi
+INFO 2026-01-28 08:26:50,835 project views Sign-in validation success: account exists for admin
+INFO 2026-01-28 08:26:50,978 project views Sign-in validation success: account exists for admin
+INFO 2026-01-28 08:27:05,756 project views User signed in: admin (1)
+INFO 2026-01-28 08:37:57,674 project views User signed out: admin (1)
+INFO 2026-01-28 08:38:00,582 project views Sign-in validation success: account exists for admin
+INFO 2026-01-28 08:38:00,583 project views Sign-in validation success: account exists for admin
