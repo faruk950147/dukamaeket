@@ -101,6 +101,7 @@ $(document).ready(function(){
             $.ajax({
                 url: "{% url 'validate-password' %}",
                 type: "POST",
+                headers: { "X-CSRFToken": csrftoken },  // <-- CSRF token added here
                 contentType: "application/json",
                 data: JSON.stringify({ 'password': password, 'password2': password2 }),
                 dataType: 'json',
