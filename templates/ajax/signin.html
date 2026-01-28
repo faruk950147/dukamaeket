@@ -1,7 +1,24 @@
 {% load static %}
 <script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
 <script>
-$(document).ready(function(){    
+$(document).ready(function(){  
+    // CSRF helper function
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                cookie = cookie.trim();
+                if (cookie.startsWith(name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }  
+    const csrftoken = getCookie('csrftoken');
+
     $("#form #id_username").on("keyup input", function(e){
         e.preventDefault();
 
@@ -10,24 +27,21 @@ $(document).ready(function(){
             $.ajax({
                 url: "{% url 'validate-signin' %}",
                 type: "POST",
+                headers: { 'X-CSRFToken': csrftoken },  // CSRF added
                 contentType: "application/json",
                 data: JSON.stringify({ 'username': username }),
                 dataType: 'json',
                 success: function(res){
                     if(res.status === 'success'){
-                        $("#id_username").removeClass("is-invalid");
-                        $("#id_username").addClass("is-valid");
-                        $(".alert-error").css("display", "none");
-                        $(".alert-success").html(res.message);
-                        $(".alert-success").css("display", "block");
+                        $("#id_username").removeClass("is-invalid").addClass("is-valid");
+                        $(".alert-error").hide();
+                        $(".alert-success").html(res.message).show();
                         $("#sign-in-btn").attr('disabled', false);
                     }
                     else if(res.status === 'error'){
-                        $("#id_username").addClass("is-invalid");
-                        $("#id_username").removeClass("is-valid");
-                        $(".alert-success").css("display", "none");
-                        $(".alert-error").html(res.message);
-                        $(".alert-error").css("display", "block");
+                        $("#id_username").addClass("is-invalid").removeClass("is-valid");
+                        $(".alert-success").hide();
+                        $(".alert-error").html(res.message).show();
                         $("#sign-in-btn").attr('disabled', true);
                     }
                 },
@@ -37,6 +51,6 @@ $(document).ready(function(){
             });
         }
     });
-});
 
+});
 </script>
