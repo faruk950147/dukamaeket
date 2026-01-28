@@ -1614,3 +1614,6 @@ INFO 2026-01-28 09:24:37,302 project views Password reset successful for user: f
 INFO 2026-01-28 09:24:49,839 project views Sign-in validation success: account exists for faruk
 INFO 2026-01-28 09:24:49,841 project views Sign-in validation success: account exists for faruk
 INFO 2026-01-28 09:25:05,190 project views User signed in: faruk (2)
+INFO 2026-01-28 15:04:25,709 project views Sign-in validation success: account exists for admin
+INFO 2026-01-28 15:04:25,710 project views Sign-in validation success: account exists for admin
+INFO 2026-01-28 15:04:36,952 project views User signed in: admin (1)
