@@ -1476,3 +1476,93 @@ INFO 2026-01-28 08:49:08,678 project views Sign-in validation success: account e
 INFO 2026-01-28 08:49:08,678 project views Sign-in validation success: account exists for admin
 INFO 2026-01-28 08:49:26,950 project views Username validation failed: admin already exists
 INFO 2026-01-28 08:49:26,951 project views Username validation failed: admin already exists
+INFO 2026-01-28 08:52:09,126 project views Username validation failed: admin already exists
+INFO 2026-01-28 08:52:09,126 project views Username validation failed: admin already exists
+INFO 2026-01-28 08:52:13,035 project views Username validated successfully: admi
+INFO 2026-01-28 08:52:13,542 project views Username validated successfully: adm
+INFO 2026-01-28 08:52:13,651 project views Username validated successfully: ad
+INFO 2026-01-28 08:52:13,723 project views Username validated successfully: a
+INFO 2026-01-28 08:52:16,321 project views Username validated successfully: f
+INFO 2026-01-28 08:52:16,500 project views Username validated successfully: f
+INFO 2026-01-28 08:52:17,327 project views Username validated successfully: fa
+INFO 2026-01-28 08:52:17,474 project views Username validated successfully: fa
+INFO 2026-01-28 08:52:18,248 project views Username validated successfully: far
+INFO 2026-01-28 08:52:18,394 project views Username validated successfully: far
+INFO 2026-01-28 08:52:19,123 project views Username validated successfully: faru
+INFO 2026-01-28 08:52:19,290 project views Username validated successfully: faru
+INFO 2026-01-28 08:52:19,822 project views Username validated successfully: faruk
+INFO 2026-01-28 08:52:20,042 project views Username validated successfully: faruk
+INFO 2026-01-28 08:52:49,577 project views Email validated successfully: fibanig622@coswz.com
+INFO 2026-01-28 08:54:07,191 project views Username validated successfully: faruk
+INFO 2026-01-28 08:55:10,129 project views Username validation failed: admin already exists
+INFO 2026-01-28 08:55:10,134 project views Username validation failed: admin already exists
+INFO 2026-01-28 08:55:15,084 project views Username validated successfully: admi
+INFO 2026-01-28 08:55:15,576 project views Username validated successfully: adm
+INFO 2026-01-28 08:55:15,684 project views Username validated successfully: ad
+INFO 2026-01-28 08:55:15,756 project views Username validated successfully: a
+INFO 2026-01-28 08:55:17,440 project views Username validated successfully: f
+INFO 2026-01-28 08:55:17,643 project views Username validated successfully: f
+INFO 2026-01-28 08:55:18,911 project views Username validated successfully: fa
+INFO 2026-01-28 08:55:19,084 project views Username validated successfully: fa
+INFO 2026-01-28 08:55:19,639 project views Username validated successfully: far
+INFO 2026-01-28 08:55:19,819 project views Username validated successfully: far
+INFO 2026-01-28 08:55:20,458 project views Username validated successfully: faru
+INFO 2026-01-28 08:55:20,628 project views Username validated successfully: faru
+INFO 2026-01-28 08:55:21,240 project views Username validated successfully: faruk
+INFO 2026-01-28 08:55:21,475 project views Username validated successfully: faruk
+INFO 2026-01-28 08:55:27,745 project views Email validated successfully: fibanig622@coswz.com
+INFO 2026-01-28 08:55:27,902 project views Email validated successfully: fibanig622@coswz.com
+INFO 2026-01-28 08:55:27,979 project views Email validated successfully: fibanig622@coswz.com
+INFO 2026-01-28 08:55:28,689 project views Email validated successfully: fibanig622@coswz.comf
+INFO 2026-01-28 08:55:28,956 project views Email validated successfully: fibanig622@coswz.comf
+INFO 2026-01-28 08:55:30,855 project views Email validated successfully: fibanig622@coswz.com
+INFO 2026-01-28 08:55:31,026 project views Email validated successfully: fibanig622@coswz.com
+INFO 2026-01-28 08:55:32,000 project views Email validated successfully: fibanig622@coswz.com-
+INFO 2026-01-28 08:55:32,227 project views Email validated successfully: fibanig622@coswz.com-
+INFO 2026-01-28 08:55:37,271 project views Email validated successfully: fibanig622@coswz.com
+INFO 2026-01-28 08:55:37,483 project views Email validated successfully: fibanig622@coswz.com
+INFO 2026-01-28 08:55:38,829 project views Email validation failed: fibanig622@coswz.com. is invalid
+INFO 2026-01-28 08:55:39,073 project views Email validation failed: fibanig622@coswz.com. is invalid
+INFO 2026-01-28 08:55:43,073 project views Email validated successfully: fibanig622@coswz.com
+INFO 2026-01-28 08:55:43,275 project views Email validated successfully: fibanig622@coswz.com
+INFO 2026-01-28 08:57:19,751 project views Username validated successfully: f
+INFO 2026-01-28 08:57:19,910 project views Username validated successfully: f
+INFO 2026-01-28 08:57:21,498 project views Username validated successfully: fa
+INFO 2026-01-28 08:57:21,642 project views Username validated successfully: fa
+INFO 2026-01-28 08:57:22,201 project views Username validated successfully: far
+INFO 2026-01-28 08:57:22,364 project views Username validated successfully: far
+INFO 2026-01-28 08:57:25,884 project views Username validation failed: far@ contains non-alphanumeric characters
+INFO 2026-01-28 08:57:26,106 project views Username validation failed: far@ contains non-alphanumeric characters
+INFO 2026-01-28 08:57:26,111 project views Username validation failed: far@ contains non-alphanumeric characters
+INFO 2026-01-28 08:57:27,119 project views Username validation failed: far@r contains non-alphanumeric characters
+INFO 2026-01-28 08:57:27,377 project views Username validation failed: far@r contains non-alphanumeric characters
+INFO 2026-01-28 08:57:29,236 project views Username validation failed: far@ contains non-alphanumeric characters
+INFO 2026-01-28 08:57:29,441 project views Username validation failed: far@ contains non-alphanumeric characters
+INFO 2026-01-28 08:57:30,213 project views Username validation failed: far@u contains non-alphanumeric characters
+INFO 2026-01-28 08:57:30,377 project views Username validation failed: far@u contains non-alphanumeric characters
+INFO 2026-01-28 08:57:30,924 project views Username validation failed: far@uk contains non-alphanumeric characters
+INFO 2026-01-28 08:57:31,129 project views Username validation failed: far@uk contains non-alphanumeric characters
+INFO 2026-01-28 08:57:33,500 project views Username validation failed: far@uk contains non-alphanumeric characters
+INFO 2026-01-28 08:57:34,025 project views Username validation failed: far@uk contains non-alphanumeric characters
+INFO 2026-01-28 08:57:35,353 project views Username validated successfully: faruk
+INFO 2026-01-28 08:57:35,500 project views Username validated successfully: faruk
+INFO 2026-01-28 08:57:47,742 project views Password validation failed: password too short
+INFO 2026-01-28 08:57:47,962 project views Password validation failed: password too short
+INFO 2026-01-28 08:57:47,975 project views Password validation failed: password too short
+INFO 2026-01-28 08:57:54,887 project views Password validation failed: passwords do not match
+INFO 2026-01-28 08:57:55,025 project views Password validation failed: passwords do not match
+INFO 2026-01-28 08:57:55,516 project views Password validation failed: passwords do not match
+INFO 2026-01-28 08:57:55,673 project views Password validation failed: passwords do not match
+INFO 2026-01-28 08:57:56,581 project views Password validation failed: passwords do not match
+INFO 2026-01-28 08:57:56,761 project views Password validation failed: passwords do not match
+INFO 2026-01-28 08:57:59,421 project views Password validation failed: passwords do not match
+INFO 2026-01-28 08:57:59,585 project views Password validation failed: passwords do not match
+INFO 2026-01-28 08:57:59,956 project views Password validation failed: passwords do not match
+INFO 2026-01-28 08:58:00,137 project views Password validation failed: passwords do not match
+INFO 2026-01-28 08:58:00,805 project views Password validated successfully
+INFO 2026-01-28 08:58:01,042 project views Password validated successfully
+INFO 2026-01-28 08:58:10,489 project views Email validated successfully: fibanig622@coswz.com
+INFO 2026-01-28 08:58:16,922 project views New account created (inactive): faruk (2)
+INFO 2026-01-28 08:59:46,762 project views Sign-in validation success: account exists for faruk
+INFO 2026-01-28 08:59:46,766 project views Sign-in validation success: account exists for faruk
+WARNING 2026-01-28 09:00:15,125 project views Inactive user attempted sign-in: faruk (2)

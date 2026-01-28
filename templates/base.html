@@ -135,7 +135,7 @@
                                         <i class="flaticon-user me-2 text-white" style="font-size: 20px;"></i>
 
                                         {% if request.user.is_authenticated %}
-                                            {{ request.user.username }}
+                                            {{ request.user.username|title }}
                                         {% endif %}
                                     </a>
 
