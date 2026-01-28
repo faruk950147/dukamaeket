@@ -162,10 +162,10 @@
                                     {% if request.user.is_authenticated %}
                                     <a class="icon-link icon-link-2" href="{% url "cart-detail" %}">
                                     <i class="flaticon-shopping-bag"></i>
-                                    <span class="count count-2">{{cart_count}}</span>
+                                    <span class="count count-2" id="cart-count">{{cart_count}}</span>
                                     <span class="text">
-                                    <span class="sub">Your Cart:</span>
-                                    ${{total_price}} </span>
+                                        <span class="sub" id="cart-total">Your Cart:</br> ${{total_price}} </span>
+                                    </span>
                                     </a>
                                     <div class="cart">
                                         <div class="cart__mini">
