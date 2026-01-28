@@ -2,6 +2,24 @@
 <script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
 <script>
 $(document).ready(function() {
+    // ================== CSRF TOKEN ==================
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                cookie = cookie.trim();
+                if (cookie.startsWith(name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+
     // Checkbox or price change triggers filter
     $('.filter-checkbox, #maxPrice').on('change', function(e) {
         e.preventDefault();
@@ -24,9 +42,7 @@ $(document).ready(function() {
             url: "{% url 'get-filter-products' %}",
             type: "POST",
             data: filter_object,
-            headers: {
-                "X-CSRFToken": "{{ csrf_token }}"
-            },
+            headers: { 'X-CSRFToken': csrftoken },
             success: function(res) {
                 $('#product-grid').html(res.html);
             }

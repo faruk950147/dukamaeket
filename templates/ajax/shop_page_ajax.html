@@ -3,6 +3,23 @@
 <script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
 <script>
 $(document).ready(function(){
+    // ================== CSRF TOKEN ==================
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                cookie = cookie.trim();
+                if (cookie.startsWith(name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+    
     // Function to load products via AJAX
     function ajax_call(url) {
         $.ajax({

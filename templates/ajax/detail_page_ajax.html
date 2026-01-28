@@ -1,119 +1,131 @@
 {% load static %}
 <script src="{% static 'assets/js/vendor/jquery.js' %}"></script>
 <script>
-   $(document).ready(function(){
-        // ================= SIZE CHANGE =================
-        $('#size_select').on('change', function () {
-            let size_id = $(this).val();
-            let product_id = "{{ product.id }}";
+// static/js/product-ajax.js
+$(document).ready(function () {
+    // ================== CSRF TOKEN ==================
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                cookie = cookie.trim();
+                if (cookie.startsWith(name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    // ================== SIZE CHANGE ==================
+    $('#size_select').on('change', function () {
+        let size_id = $(this).val();
+        let product_id = $('#product_id').val(); 
+
+        $.ajax({
+            url: '/get-variant-by-size/',  // Django URL
+            type: 'POST',
+            headers: { 'X-CSRFToken': csrftoken },
+            data: {
+                size_id: size_id,
+                product_id: product_id,
+            },
+            success: function (res) {
+                console.log(res);
+                $("#variant_id").val(res.variant_id);
+                $('#colors-show').html(res.rendered_colors);
+                $("#product-price").text(res.variant_price || '0');
+                $("#display-color").text(res.color || '');
+                $("#display-size").text(res.size || '');
+                $("#variant-image").attr("src", res.variant_image);
+                $("#display-variant-stock").text('Availability (Variant Stock): ' + (res.available_stock || 0));
+                $("#sku").text(res.sku);
+
+                bindColorEvents(); // color radio button bind
+            },
+            error: function (xhr) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+
+    // ================== COLOR SELECT ==================
+    function bindColorEvents() {
+        $('input[name="variant_radio"]').off('change').on('change', function () {
+            let variant_id = $(this).val();
 
             $.ajax({
-                url: "{% url 'get-variant-by-size' %}",
-                type: "POST",
+                url: '/get-variant-by-color/',
+                type: 'POST',
+                headers: { 'X-CSRFToken': csrftoken },
                 data: {
-                    size_id: size_id,
-                    product_id: product_id,
-                    csrfmiddlewaretoken: "{{ csrf_token }}"
+                    variant_id: variant_id
                 },
                 success: function (res) {
-                    console.log(res)
+                    console.log(res);
                     $("#variant_id").val(res.variant_id);
-                    // update colors HTML
-                    $('#colors-show').html(res.rendered_colors);
-
-                    // update main product info
                     $("#product-price").text(res.variant_price || '0');
                     $("#display-color").text(res.color || '');
                     $("#display-size").text(res.size || '');
                     $("#variant-image").attr("src", res.variant_image);
+                    $("#sku").text(res.sku);
                     $("#display-variant-stock").text('Availability (Variant Stock): ' + (res.available_stock || 0));
-                    $("#sku").text(res.sku)
-                    // bind color click events again
-                    bindColorEvents();
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
                 }
             });
         });
+    }
 
-        // ================= COLOR SELECT =================
-        function bindColorEvents() {
-            $('input[name="variant_radio"]').off('change').on('change', function () {
-                let variant_id = $(this).val();
+    // Initial color binding
+    bindColorEvents();
 
-                $.ajax({
-                    url: "{% url 'get-variant-by-color' %}",
-                    type: "POST",
-                    data: {
-                        variant_id: variant_id,
-                        csrfmiddlewaretoken: "{{ csrf_token }}"
-                    },
-                    success: function (res) {
-                        console.log(res)
-                        $("#variant_id").val(res.variant_id);   
-                        $("#product-price").text(res.variant_price || '0');
-                        $("#display-color").text(res.color || '');
-                        $("#display-size").text(res.size || '');
-                        $("#variant-image").attr("src", res.variant_image);
-                        $("#sku").text(res.sku)
-                        $("#display-variant-stock").text('Availability (Variant Stock): ' + (res.available_stock || 0));
-                    }
-                });
-            });
+    // ================== REVIEW FORM ==================
+    $('#review-form').on('submit', function (e) {
+        e.preventDefault();
+
+        let form = $(this);
+        let data = new FormData(this);
+
+        // Validation
+        if (!$('input[name="rating"]:checked').length) {
+            alertify.error("Please select a rating");
+            return;
+        }
+        if (!$('#subject').val().trim() || !$('#comment').val().trim()) {
+            alertify.error("Please fill in subject and comment");
+            return;
         }
 
-        // initial bind
-        bindColorEvents();
-
-
-        // Review form submission via AJAX
-        $('#review-form').on('submit', function (e) {
-            e.preventDefault();
-
-            let form = $(this);
-            let data = new FormData(this);
-
-            // Validation: Check rating
-            if (!$('input[name="rating"]:checked').length) {
-                alertify.error("Please select a rating");
-                return;
-            }
-
-            // Validation: Check subject and comment
-            if (!$('#subject').val().trim() || !$('#comment').val().trim()) {
-                alertify.error("Please fill in subject and comment");
-                return;
-            }
-
-            $.ajax({
-                url: '{% url "product-review" %}',  // Django URL for review submission
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}'  // CSRF token
-                },
-                data: data,
-                processData: false,
-                contentType: false,
-                success: function (res) {
-                    if (res.status === 'success') {
-                        alertify.success(res.message);
-
-                        // Reset form
-                        form[0].reset();
-                        // review_count
-                        $('#review_count').text('Reviews (' + res.review_count + ')');
-
-                        // Append new review HTML to the reviews items
-                        $('#reviews-items').prepend(res.review_html);
-                    } else {
-                        alertify.error(res.message);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    alertify.error("Something went wrong.");
-                    console.log(error);
+        $.ajax({
+            url: '/product-review/',  // Django URL
+            type: 'POST',
+            headers: { 'X-CSRFToken': csrftoken },
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                if (res.status === 'success') {
+                    alertify.success(res.message);
+                    form[0].reset();
+                    $('#review_count').text('Reviews (' + res.review_count + ')');
+                    $('#reviews-items').prepend(res.review_html);
+                } else {
+                    alertify.error(res.message);
                 }
-            });
+            },
+            error: function (xhr) {
+                alertify.error("Something went wrong.");
+                console.error(xhr.responseText);
+            }
         });
-
     });
+
+});
+
     
 </script> 
