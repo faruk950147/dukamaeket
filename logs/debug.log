@@ -1472,3 +1472,7 @@ INFO 2026-01-28 08:27:05,756 project views User signed in: admin (1)
 INFO 2026-01-28 08:37:57,674 project views User signed out: admin (1)
 INFO 2026-01-28 08:38:00,582 project views Sign-in validation success: account exists for admin
 INFO 2026-01-28 08:38:00,583 project views Sign-in validation success: account exists for admin
+INFO 2026-01-28 08:49:08,678 project views Sign-in validation success: account exists for admin
+INFO 2026-01-28 08:49:08,678 project views Sign-in validation success: account exists for admin
+INFO 2026-01-28 08:49:26,950 project views Username validation failed: admin already exists
+INFO 2026-01-28 08:49:26,951 project views Username validation failed: admin already exists
