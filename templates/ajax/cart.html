@@ -107,11 +107,6 @@
                     $('#cart-total').text(parseFloat(response.total_price).toFixed(2));
                     $('#grand-total').text(parseFloat(response.total_price).toFixed(2));
                     alertify.success(response.message);
-
-                    // If cart empty show message
-                    if ($('.cart-item').length === 0) {
-                        $('.cart-body').html('<h4>Your cart is empty</h4>');
-                    }
                 } else {
                     alertify.error(response.message);
                     console.log(response);
