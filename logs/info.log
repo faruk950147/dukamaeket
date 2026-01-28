@@ -1554,3 +1554,63 @@ INFO 2026-01-28 08:58:16,922 project views New account created (inactive): faruk
 INFO 2026-01-28 08:59:46,762 project views Sign-in validation success: account exists for faruk
 INFO 2026-01-28 08:59:46,766 project views Sign-in validation success: account exists for faruk
 WARNING 2026-01-28 09:00:15,125 project views Inactive user attempted sign-in: faruk (2)
+INFO 2026-01-28 09:02:06,339 project views Account activated: faruk (2)
+INFO 2026-01-28 09:03:06,136 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:03:06,297 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:03:09,398 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:03:09,570 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:03:10,157 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:03:10,329 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:03:11,037 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:03:11,177 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:03:11,919 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:03:12,066 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:03:12,782 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:03:12,953 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:03:13,909 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:03:14,073 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:03:14,556 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:03:14,698 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:03:15,325 project views Password validated successfully
+INFO 2026-01-28 09:03:15,489 project views Password validated successfully
+INFO 2026-01-28 09:03:20,685 project views Password changed for user: faruk (2)
+INFO 2026-01-28 09:03:24,710 project views Sign-in validation success: account exists for faruk
+INFO 2026-01-28 09:03:24,710 project views Sign-in validation success: account exists for faruk
+INFO 2026-01-28 09:03:41,458 project views User signed in: faruk (2)
+INFO 2026-01-28 09:04:13,431 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:04:13,590 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:04:13,591 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:04:14,678 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:04:14,834 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:04:15,215 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:04:15,361 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:04:15,952 project views Password validated successfully
+INFO 2026-01-28 09:04:16,155 project views Password validated successfully
+INFO 2026-01-28 09:04:20,609 project views Password changed for user: faruk (2)
+INFO 2026-01-28 09:04:24,039 project views Sign-in validation success: account exists for faruk
+INFO 2026-01-28 09:04:24,039 project views Sign-in validation success: account exists for faruk
+INFO 2026-01-28 09:04:40,543 project views User signed in: faruk (2)
+INFO 2026-01-28 09:04:48,773 project views User signed out: faruk (2)
+INFO 2026-01-28 09:04:56,642 project views Password reset email sent to: fibanig622@coswz.com (user_id=2)
+INFO 2026-01-28 09:23:55,146 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:23:55,325 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:24:27,147 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:24:27,342 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:24:28,416 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:24:28,596 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:24:29,207 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:24:29,355 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:24:30,216 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:24:30,380 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:24:31,375 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:24:31,555 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:24:32,575 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:24:32,723 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:24:33,078 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:24:33,259 project views Password validation failed: passwords do not match
+INFO 2026-01-28 09:24:33,641 project views Password validated successfully
+INFO 2026-01-28 09:24:33,811 project views Password validated successfully
+INFO 2026-01-28 09:24:37,302 project views Password reset successful for user: faruk (2)
+INFO 2026-01-28 09:24:49,839 project views Sign-in validation success: account exists for faruk
+INFO 2026-01-28 09:24:49,841 project views Sign-in validation success: account exists for faruk
+INFO 2026-01-28 09:25:05,190 project views User signed in: faruk (2)
